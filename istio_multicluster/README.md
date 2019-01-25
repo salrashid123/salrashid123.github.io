@@ -331,7 +331,7 @@ then `http://localhost:20001` to access the dashboard (username/password:  `admi
 ![images/multi_istio_system.png](images/multi_istio_system.png)
 
 * Traffic to `cluster-2 - reviews:v3` is not shown.
-* Traffic from `cluster-2:reviews:v3` --> ``cluster-1:ratings:v2` shows as originatinf from `unknown`
+* Traffic from `cluster-2:reviews:v3` --> `cluster-1:ratings:v2` shows as originating from `unknown`
 
 ### Delete
 

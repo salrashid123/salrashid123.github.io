@@ -1,8 +1,8 @@
 # Writing Developer logs with Google Cloud Logging
 
-Several months ago Google Cloud Logging introduced two new [monitored resource](https://cloud.google.com/logging/docs/basic-concepts#monitored-resources) types geared towards allowing developers to emit cloud logging messages specifically for their own application centric logs.  Pereviously, application logs generally had to be tied to existing predefined `monitored_resources` such as `GCE`, `GKE`, `AppEngine`, `Dataflow` and so on.  Under those monitoried resources sources, multiple log entries were attributed to to specific `logNames` describing the subsytem like `syslog`, `apache2`, `nginx`, `mysql`, etc.  In the end, the `monitored_resource` defined the source system and the `logName` the source application/system.
+Several months ago Google Cloud Logging introduced two new [monitored resource](https://cloud.google.com/logging/docs/basic-concepts#monitored-resources) types geared towards allowing developers to emit cloud logging messages specifically for their own application centric logs.  Pereviously, application logs generally had to be tied to existing predefined `monitored_resources` such as `GCE`, `GKE`, `AppEngine`, `Dataflow` and so on.  Under those monitoried resources sources, multiple log entries were attributed to specific `logNames` describing the subsytem like `syslog`, `apache2`, `nginx`, `mysql`, etc.  In the end, the `monitored_resource` defined the source system and the `logName` the source application/system.
 
-What if you wanted to emit your own application logs that allows you to define a generic source resource _and_ the logName?  In other words, have a monitoired resource that specifically doens't prescribe the source system but allows you to define describe your own.  Thats where the new `generic_node` and `generic_task` resource types come in. These new resource types can be thought of as a generic source system that represents where your application runs (`generic_node`) and the specific instance of your application (`generic_task`).
+What if you wanted to emit your own application logs that allows you to define a generic source resource or task _and_ the logName?  In other words, have a monitoired resource that specifically doens't prescribe the source system and process withing that but allows you to define describe your own.  Thats where the new `generic_node` and `generic_task` resource types come in. These new resource types can be thought of as a generic source system that represents where your application runs (`generic_node`) and the specific instance of your application (`generic_task`).
 
 This article will describe the two new types and how to send log to GCP using both the GCP Logging API, the GCP logging agent and finally the off the shelf `fluentd` agent alone.
 
@@ -55,7 +55,7 @@ This article will show how to send `generic_task` and `generic_node` logs via
   - Supported anywhere `fluentd` runs.
   - Requires authentication credentials file.
 
-If you are running on GCE or EC2, the `Cloud Logging Agent` would be the best bet.  If you are already using `fluentd` elsewhere, adapt the generic agent and add the `gem` file.
+If you are running on GCE or EC2, the `Cloud Logging Agent` would be the best bet.  If you are already using `fluentd` elsewhere, just add the `fluent-plugin-google-cloud` gem.
 
 For refernece, here are some related articles on Cloud Logging I tried out over the year:
   - [Apache/Nginx Structured Logs with Cloud Logging Agent](https://medium.com/google-cloud/envoy-nginx-apache-http-structured-logs-with-google-cloud-logging-91fe5965badf)
@@ -105,7 +105,7 @@ and
 
 ## Cloud Logging Agent
 
-Apart from the API, Cloud Logging can consume logs emitted by a generic fluentd agent when configured to use [flutnet-plugin-google-cloud](https://github.com/GoogleCloudPlatform/fluent-plugin-google-cloud) or while on GCE/EC2, via the google [cloud logging agent](https://cloud.google.com/logging/docs/agent/).  The cloud logging agent is actually still just `fluentd` but with GCP-centric parsers and built in and an installer.
+More common than the API, Cloud Logging reads log files on source systems and emits them to GCP via a logging agent or a fluentd plugin.  While on GCE or EC2 instances, the [cloud logging agent](https://cloud.google.com/logging/docs/agent/) provides easy installation and [several pre-built configuration](https://github.com/GoogleCloudPlatform/fluentd-catch-all-config) to emit formatted log to GCP.  If the source system is running off the shelf `fluentd`, the cloud logging integration can be added in by simply applying the  [flutnet-plugin-google-cloud](https://github.com/GoogleCloudPlatform/fluent-plugin-google-cloud) gem.
 
 First we will install the `cloud logging agent` on GCE and then the `fluent-plugin-google-cloud` on generic, stan-alone `fluentd`.  This article does not show the installation steps on AWS and the links above describe its setup.
 
