@@ -13,6 +13,12 @@ This article is a walkthough on how to setup GCP API access from your remote sys
 
 ---
 
+# References
+
+- [Configuring Private Google Access for on-premises hosts](https://cloud.google.com/vpc/docs/configure-private-google-access-hybrid)
+- [Using APIs from an External Network](https://cloud.google.com/solutions/using-gcp-apis-from-an-external-network)
+- [Configuring Private Google Access](https://cloud.google.com/vpc/docs/configure-private-google-access)
+
 ## Architecture
 
 The steup is relatively simple:  connect the networks through a VPN tunnel and set the routing to resolve and emit GCP APIs through it. 
@@ -777,12 +783,3 @@ root@instance-2::~$ curl -vvvv -H "Authorization: Bearer ya29.Gl2bBV-45yiA1SJmYw
   {
    "kind": "storage#bucket",
 ```
-
-
-# References
-
-- [Configuring Private Google Access for on-premises hosts](https://cloud.google.com/vpc/docs/configure-private-google-access-hybrid)
-
-- [https://cloud.google.com/solutions/using-gcp-apis-from-an-external-network](https://cloud.google.com/solutions/using-gcp-apis-from-an-external-network)
-
-- [https://cloud.google.com/vpc/docs/configure-private-google-access](https://cloud.google.com/vpc/docs/configure-private-google-access)
