@@ -1,4 +1,4 @@
-# Private Access to GCP APIs thorough VPN Tunnels
+# Private Access to GCP APIs through VPN Tunnels
 
 GCP customers often have workloads spanning cloud proividers and their on-premises datacenters connected via VPN.  In many of those 
 situations, customers need to access various Google Cloud APIs where arbitrary outbound traffic from
