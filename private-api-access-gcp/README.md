@@ -7,17 +7,13 @@ any system is restricted or acutely controlled.
 This not a problem while the workload is on GCP:  accessing GCP APIs from within is directed
 towards internal interfaces where those services resides.  When accessing these same APIs from other restricted cloud providers or 
 even your own datacenter the situation is a bit different:  you need to either enumerate and selectively allow wide Google API IP ranges
-or apply the same treament to the traffic as if the workload is within GCP:  send the traffic securely through the VPN Tunnel.  
+or apply the same treament to the traffic as if the workload is within GCP:  send the traffic securely through the VPN Tunnel.
+
+[VPC Service Controls](https://cloud.google.com/vpc-service-controls/) are also enabled to demonstrate how to lock down specific API access to just authorized projects.  That is, once the private API is enabled, you can optionally lock down access to Google Cloud Storage APIs such that it is only accessible via the tunnel.  This is an optional security measure you can employ.
 
 This article is a walkthough on how to setup GCP API access from your remote system through a VPN tunnel.
 
 ---
-
-# References
-
-- [Configuring Private Google Access for on-premises hosts](https://cloud.google.com/vpc/docs/configure-private-google-access-hybrid)
-- [Using APIs from an External Network](https://cloud.google.com/solutions/using-gcp-apis-from-an-external-network)
-- [Configuring Private Google Access](https://cloud.google.com/vpc/docs/configure-private-google-access)
 
 ## Architecture
 
@@ -28,14 +24,13 @@ Some points to note:
 - This article does not use BGP dynamic routing as provided by [Cloud Router](https://cloud.google.com/router/docs/).  It instead utilizes setting up [routes](https://cloud.google.com/vpc/docs/routes#instancerouting) on both ends of the system.
 - Uses another GCP Project to "simulate" the remote network.
 - Remote nework VPN endpoint is a VM running [openswan](https://www.openswan.org/) for ipsec and [bind](https://en.wikipedia.org/wiki/BIND) for DNS.
-- Routes from internal VMs and VPN host on remote system is verified to connect to intenral VMs on the GCP network as well as GCP APIs
 
 Private access for Google APIs from remote systems requries a special ```CNAME``` map: 
 - Normally ```www.googleapis.com``` resolves for IP addresses that are external. but  over VPN, a specific CNAME map as such is required:
   * ```www.googlapis.com:  CNAME=restricted.googleapis.com``` --> ```199.36.153.4/30```
   * the IP reange ```199.36.153.4/30``` is routed though the tunnel and will handle only internal traffic within GCP as Private Acccess
 
-![images/ILB.png](images/ILB.png)
+![images/private_access.svg](images/private_access.svg)
 
 
 ## Project Structure/Specifications
@@ -73,6 +68,7 @@ The steps outlined below sets up the following (in order):
   - ```restricted.googleapis.com```
   - ```www.googleapis.com```
 - [Remote] verify connectivity from internal VM via gateway
+- [GCP] Configure VPC Service Controls
 
 
 ## Configure GCP.1
@@ -96,7 +92,9 @@ First export some variables (feel free to specify your own projectIDs, ofcourse)
 ```
   gcloud compute --project=$GCP_PROJECT networks create private-vpc --mode=custom
 
-  gcloud compute --project=$GCP_PROJECT networks subnets create private-network --network=private-vpc --region=$GCP_REGION --range=10.10.0.0/20 --enable-private-ip-google-access
+  gcloud compute --project=$GCP_PROJECT networks subnets create private-network \ 
+     --network=private-vpc --region=$GCP_REGION --range=10.10.0.0/20 \ 
+     --enable-private-ip-google-access
 ```
 
 ![images/gcp-project-network.png](images/gcp-project-network.png)
@@ -105,7 +103,8 @@ First export some variables (feel free to specify your own projectIDs, ofcourse)
   - Create route for traffic through to  ```199.36.153.4/30```
 
 ```
-gcloud --project=$GCP_PROJECT  compute routes create apis --network=private-vpc --destination-range=199.36.153.4/30  --next-hop-gateway=default-internet-gateway
+gcloud --project=$GCP_PROJECT  compute routes create apis --network=private-vpc \
+  --destination-range=199.36.153.4/30  --next-hop-gateway=default-internet-gateway
 ```
 
 ![images/gcp-project-private-apis.png](images/gcp-project-private-apis.png)
@@ -163,7 +162,7 @@ gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-ssh-vpn  \
   --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW \ 
   --rules=tcp:22 --source-ranges=0.0.0.0/0
 
-gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-icmp-mexperimental/users/srashid/misc/vpn_private_access/README.mdy-network \ 
+gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-icmp-my-network \ 
   --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW  \
   --rules=icmp --source-ranges=192.168.0.0/20
 
@@ -383,23 +382,23 @@ root@instance-1:~# service ipsec restart
 root@instance-1:~# service ipsec status
 ● strongswan.service - strongSwan IPsec IKEv1/IKEv2 daemon using ipsec.conf
    Loaded: loaded (/lib/systemd/system/strongswan.service; enabled; vendor preset: enabled)
-   Active: active (running) since Fri 2019-03-15 03:51:16 UTC; 36min ago
- Main PID: 6910 (starter)
+   Active: active (running) since Sun 2019-03-17 01:11:56 UTC; 3s ago
+ Main PID: 8886 (starter)
     Tasks: 18 (limit: 4915)
    CGroup: /system.slice/strongswan.service
-           ├─6910 /usr/lib/ipsec/starter --daemon charon --nofork
-           └─6925 /usr/lib/ipsec/charon
+           ├─8886 /usr/lib/ipsec/starter --daemon charon --nofork
+           └─8900 /usr/lib/ipsec/charon
 
-Mar 15 04:27:08 instance-1 charon[6925]: 13[IKE] sending DPD request
-Mar 15 04:27:08 instance-1 charon[6925]: 13[ENC] generating INFORMATIONAL request 137 [ ]
-Mar 15 04:27:08 instance-1 charon[6925]: 13[NET] sending packet: from 192.168.0.2[4500] to 35.184.203.133[4500] (49 bytes)
-Mar 15 04:27:08 instance-1 charon[6925]: 14[NET] received packet: from 35.184.203.133[4500] to 192.168.0.2[4500] (49 bytes)
-Mar 15 04:27:08 instance-1 charon[6925]: 14[ENC] parsed INFORMATIONAL response 137 [ ]
-Mar 15 04:27:23 instance-1 charon[6925]: 06[IKE] sending DPD request
-Mar 15 04:27:23 instance-1 charon[6925]: 06[ENC] generating INFORMATIONAL request 138 [ ]
-Mar 15 04:27:23 instance-1 charon[6925]: 06[NET] sending packet: from 192.168.0.2[4500] to 35.184.203.133[4500] (49 bytes)
-Mar 15 04:27:23 instance-1 charon[6925]: 08[NET] received packet: from 35.184.203.133[4500] to 192.168.0.2[4500] (49 bytes)
-Mar 15 04:27:23 instance-1 charon[6925]: 08[ENC] parsed INFORMATIONAL response 138 [ ]
+Mar 17 01:11:57 instance-1 charon[8900]: 16[IKE] authentication of '35.184.203.133' with pre-shared key successful
+Mar 17 01:11:57 instance-1 charon[8900]: 16[IKE] authentication of '35.192.118.145' (myself) with pre-shared key
+Mar 17 01:11:57 instance-1 charon[8900]: 16[IKE] IKE_SA site-to-site[3] established between 192.168.0.2[35.192.118.145]...35.184.203.133[35.184.203.133]
+Mar 17 01:11:57 instance-1 charon[8900]: 16[IKE] IKE_SA site-to-site[3] established between 192.168.0.2[35.192.118.145]...35.184.203.133[35.184.203.133]
+Mar 17 01:11:57 instance-1 charon[8900]: 16[IKE] scheduling reauthentication in 10535s
+Mar 17 01:11:57 instance-1 charon[8900]: 16[IKE] maximum IKE_SA lifetime 10715s
+Mar 17 01:11:57 instance-1 charon[8900]: 16[IKE] CHILD_SA site-to-site{2} established with SPIs c5349dc6_i a05b0780_o and TS 192.168.0.0/20 === 10.10.0.0/20 199.36.153.4/30
+Mar 17 01:11:57 instance-1 charon[8900]: 16[IKE] CHILD_SA site-to-site{2} established with SPIs c5349dc6_i a05b0780_o and TS 192.168.0.0/20 === 10.10.0.0/20 199.36.153.4/30
+Mar 17 01:11:57 instance-1 charon[8900]: 16[ENC] generating IKE_AUTH response 1 [ IDr AUTH SA TSi TSr N(AUTH_LFT) ]
+Mar 17 01:11:57 instance-1 charon[8900]: 16[NET] sending packet: from 192.168.0.2[4500] to 35.184.203.133[4500] (236 bytes)
 ```
 
 
@@ -601,7 +600,7 @@ Connected to 199.36.153.7.
 Escape character is '^]'.
 ```
 
-- Check lookup for ```www.googleapis.com``` using default DNS
+- Check lookup for ```www.googleapis.com``` using default GCE DNS
 
 ```
 root@instance-1:/etc/bind# nslookup www.googleapis.com
@@ -620,7 +619,7 @@ Name: googleapis.l.google.com
 Address: 173.194.192.95
 ```
 
-- Check lookup for ```www.googleapis.com``` usign local DNS
+- Check lookup for ```www.googleapis.com``` using local DNS override
 
 ```
 root@instance-1:/etc/bind# nslookup www.googleapis.com 127.0.0.1
@@ -670,7 +669,7 @@ Name: restricted.googleapis.com
 Address: 199.36.153.7
 ```
 
-This shoudl resolve to the IPs provided locally with CNAME
+This should resolve to the IPs provided locally with CNAME
 
 
 - Connect to a google APIs
@@ -678,21 +677,12 @@ This shoudl resolve to the IPs provided locally with CNAME
   - Acquire an access_token from your laptop ```gcloud auth print-access-token```
 
 ```
-# curl -vvvv -H "Authorization: Bearer ya29.Gl2aBdM1T9hOEwIhN8nKEqDGlSALQtxktKXY4Kvphxos2j6yBFD2WknVK1j3dmRu49c5GTeG5qOiJXCV8t9DfyprBoPz_Bj1Srqj9CGQGI-REDACTED" https://www.googleapis.com/storage/v1/b?project=mineral-minutia-820
+# curl -vvvv -H "Authorization: Bearer ya29.-REDACTED" https://www.googleapis.com/storage/v1/b?project=mineral-minutia-820
 
 * Connected to www.googleapis.com (199.36.153.5) port 443 (#0)
 
 < HTTP/2 200 
-< x-guploader-uploadid: AEnB2UofTb4GnEtpKQZIPZOAU6u_rt1_xfBU9avQYLKpYmpa7uB8U3Kt5txg5WnOSucmEvqGSkVtm0SoYAtlYeOKwUWiIOitHA
-< vary: Origin
-< vary: X-Origin
-< content-type: application/json; charset=UTF-8
-< expires: Wed, 11 Apr 2018 08:09:59 GMT
-< date: Wed, 11 Apr 2018 08:09:59 GMT
-< cache-control: private, max-age=0, must-revalidate, no-transform
-< content-length: 9849
-< server: UploadServer
-< 
+ 
 {
  "kind": "storage#buckets",
  "items": [
@@ -706,19 +696,21 @@ This shoudl resolve to the IPs provided locally with CNAME
 
  - Connecting from intenral VM (instance-2 --> GCP via gateway (instance-1)
 
-normally, routes are added directly if not BGP advertized:
+normally, routes are added directly if using BGP but since we're using static routes, you would have to set them up:
 
 ```
 ip route add 10.10.0.0/20 via 192.168.0.2
 ```
 
-but since our 'onprem' instance is itself on GCP, we need to add routes via gcloud globally
+however, since our 'onprem' instance is itself on GCP, we need to add routes via `gcloud` instead:
 
 ```
-gcloud compute --project=$ONPREM_PROJECT routes create route-to-gcp --network=my-network --priority=1000 --destination-range=10.10.0.0/20 --next-hop-instance=instance-1 --next-hop-instance-zone=us-central1-a
+gcloud compute --project=$ONPREM_PROJECT routes create route-to-gcp  \
+   --network=my-network --priority=1000 --destination-range=10.10.0.0/20 \ 
+   --next-hop-instance=instance-1 --next-hop-instance-zone=us-central1-a
 ```
 
-- Now from ```instance-2```, connect over to the VM on GCP:
+- Now from ```instance-2```, connect over to the reote VM on GCP through the VPN gateway VM:
 
 ```
 root@instance-2:~# ping 10.10.0.2
@@ -728,7 +720,7 @@ PING 10.10.0.2 (10.10.0.2) 56(84) bytes of data.
 64 bytes from 10.10.0.2: icmp_seq=3 ttl=63 time=1.20 ms
 ```
 
-- Set DNS Resolution to look for the VPN-gateway's bind9 server
+- Set DNS Resolution to look for the VPN-gateway's `bind9` server
 
 ```
 root@instance-2:~# more /etc/resolv.conf 
@@ -758,28 +750,121 @@ Address: 199.36.153.5
 
 ```
 
-- Access GCS and veirfy the IP connected to is restricted ```199.36.153.7```
+- Access GCS and veirfy the IP connected is our restricted ```199.36.153.7```
 
 ```
-root@instance-2::~$ curl -vvvv -H "Authorization: Bearer ya29.Gl2bBV-45yiA1SJmYwalfHqIkfivMD3ZFZzRmpMpe4NYGDBGWHpdTC0Gf4BNiYg3LY6W_CgD1U5i75vfAhWwRqqj4S06aPjhezG-REDACTED" https://www.googleapis.com/storage/v1/b?project=mineral-minutia-820 
+root@instance-2::~$ curl -vvvv -H "Authorization: Bearer ya29.Gl2bBV-REDACTED" \ 
+      https://www.googleapis.com/storage/v1/b?project=mineral-minutia-820 
 
 * Connected to www.googleapis.com (199.36.153.7) port 443 (#0)
 
 < HTTP/2 200 
-< x-guploader-uploadid: AEnB2Uoqjtt67ZrpFrCdqoTS9dA5gULlCOGlQFaHLYDqKxQinDwLOBOgEeJJ9ioX3cqWaxSFfMSbPGClMTZGQFQ1fQZlFHLCdQ
-< vary: Origin
-< vary: X-Origin
-< content-type: application/json; charset=UTF-8
-< expires: Thu, 12 Apr 2018 07:40:25 GMT
-< date: Thu, 12 Apr 2018 07:40:25 GMT
-< cache-control: private, max-age=0, must-revalidate, no-transform
-< content-length: 9849
-< server: UploadServer
-< 
-{ [5 bytes data]
+
 {
  "kind": "storage#buckets",
  "items": [
   {
    "kind": "storage#bucket",
 ```
+
+Verify API traffic is through the tunnel by running `ip xfrm monitor` on the VPN Gateway host (eg, `instance-1` on `project=your_vpn`)
+
+```
+root@instance-1:~# ip xfrm monitor
+Async event  (0x20)  timer expired 
+	src 192.168.0.2 dst 35.184.203.133  reqid 0x1 protocol esp  SPI 0xa8664240
+Async event  (0x20)  timer expired 
+	src 35.184.203.133 dst 192.168.0.2  reqid 0x1 protocol esp  SPI 0xc5d98368
+Async event  (0x20)  timer expired 
+	src 192.168.0.2 dst 35.184.203.133  reqid 0x1 protocol esp  SPI 0xa8664240
+Async event  (0x20)  timer expired 
+	src 35.184.203.133 dst 192.168.0.2  reqid 0x1 protocol esp  SPI 0xc5d98368
+```
+
+
+### VPC Service Control
+
+Now that we've established API access via the tunnel, you can optionally enable API access to GCP services such that it must go through a trusted project (in our case, via the tunnel).
+
+See [Service Perimeters](https://cloud.google.com/vpc-service-controls/docs/create-service-perimeters)
+
+First enable a security perimeter such that GCS access is only available via `project=gcp-project`:
+
+![images/service_perimeter.png](images/service_perimeter.png)
+
+> Note: once you enable this, all acess to GCS is blocked except via this specific project.
+
+
+on a host 'on prem' force traffic for `www.googleapis.com` to _not_ go through the tunnel.  We can do this buy just making the DNS resolve to the external address.  On `instance-2`, remove the name resolution entry.
+
+```
+root@instance-2:~# more /etc/resolv.conf 
+domain c.your-vpn.internal
+search c.your-vpn.internal. google.internal.
+#nameserver 192.168.0.2
+nameserver 169.254.169.254
+```
+
+Then attempt to access GCS:  
+
+(note the address is outside of the tunnel route: `74.125.70.95`)
+
+```
+root@instance-2:~# curl -vvvv -H "Authorization: Bearer ya29." https://www.googleapis.com/storage/v1/b?project=gcp-project-200601
+*   Trying 74.125.70.95...
+* TCP_NODELAY set
+* Connected to www.googleapis.com (74.125.70.95) port 443 (#0)
+
+
+< HTTP/2 403 
+
+{
+ "error": {
+  "errors": [
+   {
+    "domain": "global",
+    "reason": "vpcServiceControls",
+    "message": "Request violates VPC Service Controls."
+   }
+  ],
+  "code": 403,
+  "message": "Request violates VPC Service Controls."
+ }
+}
+
+```
+
+Now add in name resolution such that the traffic transits the gateway and tunnel:
+
+(note the address resolved is `199.36.153.4`)
+
+```
+root@instance-2:~# more /etc/resolv.conf 
+domain c.your-vpn.internal
+search c.your-vpn.internal. google.internal.
+nameserver 192.168.0.2
+nameserver 169.254.169.254
+```
+
+```
+root@instance-2:~# curl -vvvv -H "Authorization: Bearer ya29.<redacted>" https://www.googleapis.com/storage/v1/b?project=gcp-project-200601
+*   Trying 199.36.153.4...
+
+< HTTP/2 200
+{
+ "kind": "storage#buckets",
+```
+
+# Conclusion
+
+You've now got a tunnel from your onprem network through to google VMs you own...and as an added bonus, a private API endpoint for your use that will only be available via proxied projects you own.
+
+To cleanup, just delete the projects and any service controls you setup for the APIs.
+
+---
+
+# References
+
+- [Configuring Private Google Access for on-premises hosts](https://cloud.google.com/vpc/docs/configure-private-google-access-hybrid)
+- [Using APIs from an External Network](https://cloud.google.com/solutions/using-gcp-apis-from-an-external-network)
+- [Configuring Private Google Access](https://cloud.google.com/vpc/docs/configure-private-google-access)
