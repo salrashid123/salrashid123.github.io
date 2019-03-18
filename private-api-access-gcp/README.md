@@ -4,29 +4,29 @@ GCP customers often have workloads spanning cloud proividers and their on-premis
 situations, customers need to access various Google Cloud APIs where arbitrary outbound traffic from
 any system is restricted or acutely controlled.  
 
-This not a problem while the workload is on GCP:  accessing GCP APIs from within is directed
+This not a problem while the workload is running on GCP:  accessing GCP APIs from within is directed
 towards internal interfaces where those services resides.  When accessing these same APIs from other restricted cloud providers or 
 even your own datacenter the situation is a bit different:  you need to either enumerate and selectively allow wide Google API IP ranges
 or apply the same treament to the traffic as if the workload is within GCP:  send the traffic securely through the VPN Tunnel.
 
-[VPC Service Controls](https://cloud.google.com/vpc-service-controls/) are also enabled to demonstrate how to lock down specific API access to just authorized projects.  That is, once the private API is enabled, you can optionally lock down access to Google Cloud Storage APIs such that it is only accessible via the tunnel.  This is an optional security measure you can employ.
+This article is a baseline walkthrough how to setup an `ipsec` tunnel to Google and then access GCP APIs and your VMs residing on Google.
 
-This article is a walkthough on how to setup GCP API access from your remote system through a VPN tunnel.
+[VPC Service Controls](https://cloud.google.com/vpc-service-controls/) are also enabled to demonstrate how to lock down specific API access to just authorized projects.  That is, once the private API is enabled, you can optionally lock down access to APIs like Google Cloud Storage such that it is only accessible via the tunnel.  This is an optional security measure you can employ to further restrict access.
 
 ---
 
 ## Architecture
 
-The steup is relatively simple:  connect the networks through a VPN tunnel and set the routing to resolve and emit GCP APIs through it. 
+The setup is relatively simple:  connect the two networks through a VPN tunnel and set the routing to resolve and emit GCP APIs through the tunnel. 
 
 Some points to note:
 
 - This article does not use BGP dynamic routing as provided by [Cloud Router](https://cloud.google.com/router/docs/).  It instead utilizes setting up [routes](https://cloud.google.com/vpc/docs/routes#instancerouting) on both ends of the system.
-- Uses another GCP Project to "simulate" the remote network.
+- Uses another GCP Project to "simulate" the remote network.  Alternatively, you can setup a tunnel on any provider such as [AWS](https://cloud.google.com/files/CloudVPNGuide-UsingCloudVPNwithAmazonWebServices.pdf).
 - Remote nework VPN endpoint is a VM running [openswan](https://www.openswan.org/) for ipsec and [bind](https://en.wikipedia.org/wiki/BIND) for DNS.
 
 Private access for Google APIs from remote systems requries a special ```CNAME``` map: 
-- Normally ```www.googleapis.com``` resolves for IP addresses that are external. but  over VPN, a specific CNAME map as such is required:
+- Normally ```www.googleapis.com``` resolves for IP addresses that are external but over VPN, a specific CNAME map as such is required:
   * ```www.googlapis.com:  CNAME=restricted.googleapis.com``` --> ```199.36.153.4/30```
   * the IP reange ```199.36.153.4/30``` is routed though the tunnel and will handle only internal traffic within GCP as Private Acccess
 
@@ -73,28 +73,30 @@ The steps outlined below sets up the following (in order):
 
 ## Configure GCP.1
 
-This seciton details setting up the project on GCP. 
+This section details setting up the project on GCP. 
 
 It is advised to run all these commands in the same shell to avoid resetting environment variables.
 
 First export some variables (feel free to specify your own projectIDs, ofcourse):
 
-### [GCP] setup custom network
+### [GCP] setup project
+
+Create GCP project on GCP that will host the VPN gateway and VPC API access (substitute the projectID with your own; this article uses `gcp-project-200601` so the examples below are conistent)
+
+Export the envionment variables for the project and network region to setup
 
 ```
   export GCP_PROJECT=gcp-project-200601
   export GCP_ZONE=us-central1-a
-  export GCP_REGION=us-central
+  export GCP_REGION=us-central1
 ```
 
 ### [GCP] setup custom network
 
 ```
-  gcloud compute --project=$GCP_PROJECT networks create private-vpc --mode=custom
+  gcloud compute --project=$GCP_PROJECT networks create private-vpc --subnet-mode=custom
 
-  gcloud compute --project=$GCP_PROJECT networks subnets create private-network \ 
-     --network=private-vpc --region=$GCP_REGION --range=10.10.0.0/20 \ 
-     --enable-private-ip-google-access
+  gcloud compute --project=$GCP_PROJECT networks subnets create private-network --network=private-vpc --region=$GCP_REGION --range=10.10.0.0/20 --enable-private-ip-google-access
 ```
 
 ![images/gcp-project-network.png](images/gcp-project-network.png)
@@ -112,7 +114,7 @@ gcloud --project=$GCP_PROJECT  compute routes create apis --network=private-vpc 
 ### [GCP] create GCE instance for testing
 
 ```
-gcloud compute --project=GCP_PROJECT instances create instance-1 \
+gcloud compute --project=$GCP_PROJECT instances create instance-1 \
   --zone=$GCP_ZONE --machine-type=f1-micro --subnet=private-network \
   --no-address --can-ip-forward --no-service-account --no-scopes \
   --image=debian-9-stretch-v20180401 --image-project=debian-cloud \
@@ -134,6 +136,15 @@ $ gcloud compute instances list --project $GCP_PROJECT
 Setup the environment variables (as before, use your own project)
 
 ### [Remote] setup project
+
+This example sets up another GCP project to 'simulate' a remote network.  This project does NOT use Cloud VPN and instead terminates the VPN traffic directly on a VM.  In reality, you can setup any cloud provider VPN or appliance while this article shows raw, low-level `ipsec` configuration
+
+As before, the following command uses a project called `your-vpn`.  In your case, you should setup this project as (for example): `your-vpn-[randomcharacters]`
+
+```
+gcloud projects create your-vpn --name=onpremProject
+```
+
 ```
   export ONPREM_PROJECT=your-vpn
   export ONPREM_ZONE=us-central1-a
@@ -143,7 +154,7 @@ Setup the environment variables (as before, use your own project)
 ### [Remote] setup custom network
 
 ```  
-gcloud compute --project=$ONPREM_PROJECT networks create my-network --mode=custom
+gcloud compute --project=$ONPREM_PROJECT networks create my-network --subnet-mode=custom
 
 gcloud compute --project=$ONPREM_PROJECT networks subnets create my-subnet \
     --network=my-network --region=us-central1 --range=192.168.0.0/20
@@ -155,24 +166,21 @@ gcloud compute --project=$ONPREM_PROJECT networks subnets create my-subnet \
 
 ```
 gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-ipsec-500 \
-  --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW \
-  --rules=udp:500 --source-ranges=0.0.0.0/0
+  --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW --rules=udp:500 --source-ranges=0.0.0.0/0
 
 gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-ssh-vpn  \
-  --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW \ 
-  --rules=tcp:22 --source-ranges=0.0.0.0/0
+  --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW --rules=tcp:22 --source-ranges=0.0.0.0/0
 
 gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-icmp-my-network \ 
-  --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW  \
-  --rules=icmp --source-ranges=192.168.0.0/20
+   --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW  \
+   --rules=icmp --source-ranges=192.168.0.0/20
 
 gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-dns-my-network \
-  --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW  \ 
+  --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW \
   --rules=udp:53 --source-ranges=192.168.0.0/20
 
-gcloud compute --project=your-vpn firewall-rules create allow-443-my-network  \ 
-  --direction=EGRESS --priority=1000 --network=my-network --action=ALLOW \ 
-  --rules=tcp:443 --destination-ranges=192.168.0.0/20
+gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-443-my-network --direction=INGRESS \
+  --priority=1000 --network=default --action=ALLOW --rules=tcp:443 --source-ranges=192.168.0.0/20
 ```
 
 ![images/your_vpn_firewalls.png](images/your_vpn_firewalls.png)
@@ -180,28 +188,24 @@ gcloud compute --project=your-vpn firewall-rules create allow-443-my-network  \
 ### [Remote] create VM instance for VPN Gateway
 
 ```
-gcloud compute --project=$ONPREM_PROJECT instances create instance-1 \ 
-  --zone=$ONPREM_ZONE --machine-type=n1-standard-1 --subnet=my-subnet \ 
-  --can-ip-forward --no-service-account --no-scopes  --image=debian-9-stretch-v20180401  \ 
-  --image-project=debian-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard \ 
- --boot-disk-device-name=instance-1
+gcloud compute --project=$ONPREM_PROJECT instances create instance-1  --zone=$ONPREM_ZONE --machine-type=n1-standard-1 \
+  --subnet=my-subnet  --can-ip-forward --no-service-account --no-scopes  --image=debian-9-stretch-v20180401  \
+  --image-project=debian-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=instance-1
 ```
 
 ### [Remote] Add next-hop route thorugh VPN Gateway
 
 ```
-gcloud compute --project=your-vpn routes create route-to-gcp-apis \ 
-  --network=my-network --priority=1000 --destination-range=199.36.153.4/30 \ 
-  --next-hop-instance=instance-1 --next-hop-instance-zone=us-central1-a
+gcloud compute --project=$ONPREM_PROJECT routes create route-to-gcp-apis --network=my-network --priority=1000 \
+  --destination-range=199.36.153.4/30 --next-hop-instance=instance-1 --next-hop-instance-zone=us-central1-a
 ```
 
 ### [Remote] create VM for testing
 
 ```
-gcloud compute --project=$ONPREM_PROJECT instances create instance-2 --zone=$ONPREM_ZONE \ 
-  --machine-type=n1-standard-1 --subnet=my-subnet --can-ip-forward --no-service-account \ 
-  --no-scopes  --image=debian-9-stretch-v20180401 --image-project=debian-cloud \ 
-  --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=instance-2 
+gcloud compute --project=$ONPREM_PROJECT instances create instance-2 --zone=$ONPREM_ZONE --machine-type=n1-standard-1 \
+  --subnet=my-subnet --can-ip-forward --no-service-account --no-scopes  --image=debian-9-stretch-v20180401 \
+  --image-project=debian-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=instance-2 
 ```
 
 ```
@@ -226,18 +230,14 @@ export ONPREM_VPN_IP=35.192.118.145
 
 Create VPN using GUI.  
 
-- Select to create a new IP address. 
-   
-> NOTE public_ip of GCP VPN GATEWAY ```35.184.203.133```
-```
-export GCP_VPN_IP=35.184.203.133
-```
+- While setting up the tunnel, select to create a new IP address. 
 
-Use the following settings:
+Use the following specifications for the VPN.  The remote peer IP is the IP address of the VPN host VM we setup previously `35.192.118.145`
 
 - name: ```vpn-1```
 - network: ```private-vpc```
 - region: value of ```$ONPREM_REGION```
+- IP Address: [select reserve IP for GCP VPN]
 - Tunnels
   - name: vpn-1-tunnel-1
   - remote peer ip address: value of ```$ONPREM_VPN_IP```
@@ -245,24 +245,30 @@ Use the following settings:
   - remote network ip reanges: value of ```192.168.0.0/20```
 - Remote Peer IP Address: value of ```$ONPREM_VPN_IP``` which in the screenshot is ```35.192.118.145```
 
+> NOTE public_ip of GCP VPN GATEWAY that gets allocated.  In this article, its: ```35.184.203.133```
+
 ![images/gcp-project_vpn.png](images/gcp-project_vpn.png)
 
 > NOTE THE VPN GATEWAY PUBLIC IP   **>>>>  35.184.203.133  <<<<**experimental/users/srashid/misc/vpn_private_access/README.md
 
+export the ip as an env variable
+
+```
+export GCP_VPN_IP=35.184.203.133
+```
 
 ### [GCP] allow traffic through VPN
 
 ```
-gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-vpn-traffic \ 
-  --direction=INGRESS --priority=1000 --network=private-vpc --action=ALLOW \ 
-  --rules=tcp,udp,icmp --source-ranges=192.168.0.0/20
+gcloud compute --project=$GCP_PROJECT firewall-rules create allow-vpn-traffic --direction=INGRESS \
+  --priority=1000 --network=private-vpc --action=ALLOW --rules=tcp,udp,icmp --source-ranges=192.168.0.0/20
 ```
 
 ## Configure Remote.2
 
 ### [Remote] configure VPN gateway VM
 
-Configure the "ONPREM" VPN gatewa
+Configure the "ONPREM" VPN gateway
 
 ```
 gcloud compute ssh instance-1 --project=$ONPREM_PROJECT
@@ -272,7 +278,7 @@ then
 
 ```
   $ sudo su -
-  $ apt-get update && apt-get install -y strongswan iptables ipsec-tools dnsutils traceroute bind9
+  $ apt-get update && apt-get install -y strongswan iptables ipsec-tools dnsutils traceroute bind9 vim
 ```
 
 ### [Remote] configure VPN gateway VM
@@ -323,7 +329,7 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
   - Add
 
 ```
-YOUR_VPN_PUBLIC_IP GCP_VPN_IP :   PSK "VPNSECRET1#"
+GCP_VPN_IP YOUR_VPN_PUBLIC_IP:   PSK "VPNSECRET1#"
 ```
 
 for me its
@@ -338,6 +344,7 @@ for me its
 
   > Remember to replace ```right=``` with the IP address of the VPN Gateway VM on ```$GCP_VPN_IP```
 
+- Create `/etc/ipsec.conf`
 ``` 
 version 2.0
 config setup
@@ -363,10 +370,12 @@ conn site-to-site
         keyexchange=ikev2
  
         left=192.168.0.2
-        leftid=35.192.118.145
+        # *** YOUR_VPN_PUBLIC_IP ***        
+        leftid=YOUR_VPN_PUBLIC_IP
         leftsubnet=192.168.0.0/20
 
-        right=35.184.203.133
+        # *** GCP_VPN_IP ***
+        right=GCP_VPN_IP
         rightsubnet=10.10.0.0/20,199.36.153.4/30
 
 include /var/lib/strongswan/ipsec.conf.inc
@@ -463,6 +472,8 @@ PING 10.10.0.2 (10.10.0.2) 56(84) bytes of data.
 64 bytes from 10.10.0.2: icmp_seq=4 ttl=64 time=1.26 ms
 ```
 
+Open up a new window in `instance-`, and run `ip xfrm monitor`.
+
 You should see ipsec traffic through the gateway vm `instance-1`
 
 ```
@@ -479,6 +490,8 @@ Async event  (0x20)  timer expired
 
 #### [Remote] bind (dns)
 - Setup DNS CNAMES for ```restricted.googleapis.com```
+
+  On remote gateway VM (`instance-1`):
 
   - Edit/Create ```/etc/bind/named.conf.local```
 
@@ -541,6 +554,10 @@ service bind9 restart
 
 ### [Remote] verify connectivity to VM on [GCP]
 
+  On remote gateway VM (`instance-1`), open up two new shells.
+
+  In one window, run `ip xfrm monitor`,  In another window, try to access the GCE VM and a private API
+
 ```
 root@instance-1::~$ ping 10.10.0.2
 PING 10.10.0.2 (10.10.0.2) 56(84) bytes of data.
@@ -549,50 +566,7 @@ PING 10.10.0.2 (10.10.0.2) 56(84) bytes of data.
 64 bytes from 10.10.0.2: icmp_seq=3 ttl=64 time=0.954 ms
 ```
 
-### [Remote] verify DNS and route connectivy to 
-  - ```restricted.googleapis.com```
-  - ```www.googleapis.com```
-
-```
-root@instance-1:~# nslookup restricted.googleapis.com
-Server:   169.254.169.254
-Address:  169.254.169.254#53
-
-Non-authoritative answer:
-Name: restricted.googleapis.com
-Address: 199.36.153.7
-Name: restricted.googleapis.com
-Address: 199.36.153.6
-Name: restricted.googleapis.com
-Address: 199.36.153.5
-Name: restricted.googleapis.com
-Address: 199.36.153.4
-```
-   The value here are external, this isn't using our local server
-
-  - Lookup ```restricted.googleapis.com``` using local DNS 
-
-```
-# nslookup www.googleapis.com 127.0.0.1
-Server:   127.0.0.1
-Address:  127.0.0.1#53
-
-Non-authoritative answer:
-www.googleapis.com  canonical name = restricted.googleapis.com.
-Name: restricted.googleapis.com
-Address: 199.36.153.4
-Name: restricted.googleapis.com
-Address: 199.36.153.6
-Name: restricted.googleapis.com
-Address: 199.36.153.7
-Name: restricted.googleapis.com
-Address: 199.36.153.5
-```
-
-You should see the ```199.``` range
-
-- Verify connectivity to an IP for ```restricted.googleapis.com```
-
+Also verify the traffic through to `199.36.153.7` is via the tunnel
 ```
 root@instance-1:~# telnet 199.36.153.7 443
 Trying 199.36.153.7...
@@ -600,47 +574,15 @@ Connected to 199.36.153.7.
 Escape character is '^]'.
 ```
 
-- Check lookup for ```www.googleapis.com``` using default GCE DNS
+The session with `ip xfrm monitor` should show activity which indicates data sent via tunne.
 
-```
-root@instance-1:/etc/bind# nslookup www.googleapis.com
-Server:   169.254.169.254
-Address:  169.254.169.254#53
+### [Remote] verify DNS and route connectivy to 
+  - ```restricted.googleapis.com```
+  - ```www.googleapis.com```
 
-Non-authoritative answer:
-www.googleapis.com  canonical name = googleapis.l.google.com.
-Name: googleapis.l.google.com
-Address: 108.177.112.95
-Name: googleapis.l.google.com
-Address: 74.125.70.95
-Name: googleapis.l.google.com
-Address: 74.125.124.95
-Name: googleapis.l.google.com
-Address: 173.194.192.95
-```
+  On remote gateway VM (`instance-1`):
 
-- Check lookup for ```www.googleapis.com``` using local DNS override
-
-```
-root@instance-1:/etc/bind# nslookup www.googleapis.com 127.0.0.1
-Server:   127.0.0.1
-Address:  127.0.0.1#53
-
-Non-authoritative answer:
-www.googleapis.com  canonical name = restricted.googleapis.com.
-Name: restricted.googleapis.com
-Address: 199.36.153.6
-Name: restricted.googleapis.com
-Address: 199.36.153.5
-Name: restricted.googleapis.com
-Address: 199.36.153.7
-Name: restricted.googleapis.com
-Address: 199.36.153.4
-```
-
-It should resovle to the same CNAME for ```restricted.googleapis.com```
-
-- Set DNS server to resovle locally:
+- Set DNS server to resovle address locally first (add `nameserver 127.0.0.1` as first nameserver entry:
   - Create/Edit- ```/etc/resolv.conf```
 
 ```
@@ -649,6 +591,8 @@ search c.your-vpn.internal. google.internal.
 nameserver 127.0.0.1
 nameserver 169.254.169.254
 ```
+
+>> **NOTE:** GCP VMs overrides certain host entries likes `/etc/resolv.conf` so you may need to reset this if you leave the 'onprem' VMs running.
 
 - Now lookup ```www.googleapis.com```
 
@@ -669,15 +613,16 @@ Name: restricted.googleapis.com
 Address: 199.36.153.7
 ```
 
-This should resolve to the IPs provided locally with CNAME
+This should resolve to the IPs provided locally with CNAME and resolve to the `199.36.153.` range
 
 
 - Connect to a google APIs
 
-  - Acquire an access_token from your laptop ```gcloud auth print-access-token```
+  - Acquire an access_token _from your laptop_ ```gcloud auth print-access-token```
 
+  On remote gateway VM (`instance-1`), try to access a GCS endpoint.  (note, replace `?project=` value inthe URL with your project)
 ```
-# curl -vvvv -H "Authorization: Bearer ya29.-REDACTED" https://www.googleapis.com/storage/v1/b?project=mineral-minutia-820
+# curl -vvvv -H "Authorization: Bearer ya29.-REDACTED" https://www.googleapis.com/storage/v1/b?project=<YOUR_PROJECT>
 
 * Connected to www.googleapis.com (199.36.153.5) port 443 (#0)
 
@@ -692,7 +637,12 @@ This should resolve to the IPs provided locally with CNAME
 
 > Note the IP address you connected to: ```199.36.153.5```
 
+At this point, we have verified GCS API calls through the tunnel
+
 ### [Remote] verify connectivity from internal VM via gateway
+
+We have verified the remote gateway sends traffic to GCP via the tunnel.  We will now configure another host 'on prem' which will
+also send its traffic through to GCP via this gateway:
 
  - Connecting from intenral VM (instance-2 --> GCP via gateway (instance-1)
 
@@ -705,12 +655,14 @@ ip route add 10.10.0.0/20 via 192.168.0.2
 however, since our 'onprem' instance is itself on GCP, we need to add routes via `gcloud` instead:
 
 ```
-gcloud compute --project=$ONPREM_PROJECT routes create route-to-gcp  \
-   --network=my-network --priority=1000 --destination-range=10.10.0.0/20 \ 
-   --next-hop-instance=instance-1 --next-hop-instance-zone=us-central1-a
+gcloud compute --project=$ONPREM_PROJECT routes create route-to-gcp  --network=my-network --priority=1000 
+  --destination-range=10.10.0.0/20  --next-hop-instance=instance-1 --next-hop-instance-zone=us-central1-a
+
+gcloud compute --project=$ONPREM_PROJECT routes create route-to-gcp-api  --network=my-network --priority=1000 \ 
+  --destination-range=10.10.0.0/20  --next-hop-instance=instance-1 --next-hop-instance-zone=us-central1-a
 ```
 
-- Now from ```instance-2```, connect over to the reote VM on GCP through the VPN gateway VM:
+- Now from ```instance-2```, connect over to the remote VM on GCP through the VPN gateway VM:
 
 ```
 root@instance-2:~# ping 10.10.0.2
@@ -720,7 +672,7 @@ PING 10.10.0.2 (10.10.0.2) 56(84) bytes of data.
 64 bytes from 10.10.0.2: icmp_seq=3 ttl=63 time=1.20 ms
 ```
 
-- Set DNS Resolution to look for the VPN-gateway's `bind9` server
+- Set DNS Resolution to look for the VPN-gateway's `bind9` server.  In this case, the VPN gateway's ip is `192.168.0.2`
 
 ```
 root@instance-2:~# more /etc/resolv.conf 
@@ -730,31 +682,11 @@ nameserver 192.168.0.2
 nameserver 169.254.169.254
 ```
 
-- Verify DNS for  ```www.googleapis.com```
+- Access GCS and veirfy the IP connected is the restricted range (eg, in this example, its ```199.36.153.7```)
 
 ```
-root@instance-2:~# nslookup www.googleapis.com
-Server:   192.168.0.2
-Address:  192.168.0.2#53
-
-Non-authoritative answer:
-www.googleapis.com  canonical name = restricted.googleapis.com.
-Name: restricted.googleapis.com
-Address: 199.36.153.6
-Name: restricted.googleapis.com
-Address: 199.36.153.7
-Name: restricted.googleapis.com
-Address: 199.36.153.4
-Name: restricted.googleapis.com
-Address: 199.36.153.5
-
-```
-
-- Access GCS and veirfy the IP connected is our restricted ```199.36.153.7```
-
-```
-root@instance-2::~$ curl -vvvv -H "Authorization: Bearer ya29.Gl2bBV-REDACTED" \ 
-      https://www.googleapis.com/storage/v1/b?project=mineral-minutia-820 
+root@instance-2::~$ curl -vvvv -H "Authorization: Bearer ya29.-REDACTED" \ 
+      https://www.googleapis.com/storage/v1/b?project=YOUR_PROJECT
 
 * Connected to www.googleapis.com (199.36.153.7) port 443 (#0)
 
@@ -786,7 +718,7 @@ Async event  (0x20)  timer expired
 
 Now that we've established API access via the tunnel, you can optionally enable API access to GCP services such that it must go through a trusted project (in our case, via the tunnel).
 
-See [Service Perimeters](https://cloud.google.com/vpc-service-controls/docs/create-service-perimeters)
+See [Service Perimeters](https://cloud.google.com/vpc-service-controls/docs/create-service-perimeters) as well as [Cloud IAM Roles for Administering VPC Service Controls](https://cloud.google.com/vpc-service-controls/docs/access-control).
 
 First enable a security perimeter such that GCS access is only available via `project=gcp-project`:
 
