@@ -171,16 +171,14 @@ gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-ipsec-500 \
 gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-ssh-vpn  \
   --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW --rules=tcp:22 --source-ranges=0.0.0.0/0
 
-gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-icmp-my-network \ 
-   --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW  \
-   --rules=icmp --source-ranges=192.168.0.0/20
+gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-icmp-my-network \
+  --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW --rules=icmp --source-ranges=192.168.0.0/20
 
 gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-dns-my-network \
   --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW \
   --rules=udp:53 --source-ranges=192.168.0.0/20
 
-gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-443-my-network --direction=INGRESS \
-  --priority=1000 --network=default --action=ALLOW --rules=tcp:443 --source-ranges=192.168.0.0/20
+gcloud compute --project=$ONPREM_PROJECT firewall-rules create allow-443-my-network --direction=INGRESS --priority=1000 --network=my-network --action=ALLOW --rules=tcp:443 --source-ranges=192.168.0.0/20
 ```
 
 ![images/your_vpn_firewalls.png](images/your_vpn_firewalls.png)
@@ -237,7 +235,7 @@ Use the following specifications for the VPN.  The remote peer IP is the IP addr
 - name: ```vpn-1```
 - network: ```private-vpc```
 - region: value of ```$ONPREM_REGION```
-- IP Address: [select reserve IP for GCP VPN]
+- IP Address: [select reserve IP for GCP VPN; note the IP address allocated]
 - Tunnels
   - name: vpn-1-tunnel-1
   - remote peer ip address: value of ```$ONPREM_VPN_IP```
@@ -278,7 +276,7 @@ then
 
 ```
   $ sudo su -
-  $ apt-get update && apt-get install -y strongswan iptables ipsec-tools dnsutils traceroute bind9 vim
+  $ apt-get update && apt-get install -y strongswan iptables ipsec-tools dnsutils traceroute bind9 vim telnet
 ```
 
 ### [Remote] configure VPN gateway VM
@@ -329,10 +327,10 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
   - Add
 
 ```
-GCP_VPN_IP YOUR_VPN_PUBLIC_IP:   PSK "VPNSECRET1#"
+GCP_VPN_IP YOUR_VPN_PUBLIC_IP :   PSK "VPNSECRET1#"
 ```
 
-for me its
+for me its (remember the space between `:`!)
 
 ```
 35.184.203.133  35.192.118.145 :   PSK "VPNSECRET1#"
@@ -356,8 +354,8 @@ conn site-to-site
         authby=secret
         type=tunnel
 
-        ike=aes256-sha1-modp1536
-        esp=aes256-sha1-modp1536
+        ike=aes256-sha1-modp2048
+        esp=aes256-sha1-modp2048
         ikelifetime=3h
         lifetime=10h
         rekeymargin=3m
@@ -620,9 +618,9 @@ This should resolve to the IPs provided locally with CNAME and resolve to the `1
 
   - Acquire an access_token _from your laptop_ ```gcloud auth print-access-token```
 
-  On remote gateway VM (`instance-1`), try to access a GCS endpoint.  (note, replace `?project=` value inthe URL with your project)
+  On remote gateway VM (`instance-1`), try to access a GCS endpoint.  (note, replace `?project=` value in the URL with your $GCP_PROJECT)
 ```
-# curl -vvvv -H "Authorization: Bearer ya29.-REDACTED" https://www.googleapis.com/storage/v1/b?project=<YOUR_PROJECT>
+# curl -vvvv -H "Authorization: Bearer ya29.-REDACTED" https://www.googleapis.com/storage/v1/b?project=$GCP_PROJECT
 
 * Connected to www.googleapis.com (199.36.153.5) port 443 (#0)
 
@@ -655,11 +653,7 @@ ip route add 10.10.0.0/20 via 192.168.0.2
 however, since our 'onprem' instance is itself on GCP, we need to add routes via `gcloud` instead:
 
 ```
-gcloud compute --project=$ONPREM_PROJECT routes create route-to-gcp  --network=my-network --priority=1000 
-  --destination-range=10.10.0.0/20  --next-hop-instance=instance-1 --next-hop-instance-zone=us-central1-a
-
-gcloud compute --project=$ONPREM_PROJECT routes create route-to-gcp-api  --network=my-network --priority=1000 \ 
-  --destination-range=10.10.0.0/20  --next-hop-instance=instance-1 --next-hop-instance-zone=us-central1-a
+gcloud compute --project=$ONPREM_PROJECT routes create route-to-gcp  --network=my-network --priority=1000   --destination-range=10.10.0.0/20  --next-hop-instance=instance-1 --next-hop-instance-zone=us-central1-a
 ```
 
 - Now from ```instance-2```, connect over to the remote VM on GCP through the VPN gateway VM:
