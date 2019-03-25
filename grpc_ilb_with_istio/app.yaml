@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fe
+  labels:
+    app: fe   
+spec:
+  ports:
+  - name: grpc
+    port: 443
+  - name: fe-web
+    port: 8081     
+  selector:
+    app: fe
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: fe-deployment
+  labels:
+    app: fe
+spec:
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: fe
+    spec:
+      containers:
+      - name: fe-container
+        image: salrashid123/istioilb
+        imagePullPolicy: Always        
+        ports:
+        - containerPort: 443
+          name: grpc
+        - containerPort: 8081   
+          name: fe-web            
+        command: ["/grpc_server"]
+        args: ["--grpcport", "0.0.0.0:443", "--httpport", "0.0.0.0:8081", "--insecure"]
+        volumeMounts:
+        - name: certs-volume
+          mountPath: /data/certs
+      volumes:
+        - name: certs-volume
+          secret:
+            secretName: app-certs
