@@ -10,6 +10,8 @@ Sample application for GCP Binary Authorization + Vulernability Scanner.
   - If Vulernability Scanner Fails, Deployment Fails
   - If Succeeds, the imae is authorized for deployment to GKE
 
+> Note: this sample uses *one* cloud builder configuration to both build the image _and_ do attestation.  Normally, these functions are on separate but dependent workflows to prevent users that write and submit cloudbuild configrations from accessing attestors secrets (eg, run attestation from a cloud builder step in a separate project).  You can also setup external attestation which would address this issue.
+
 ## Setup
 
 ### Create Project
@@ -274,7 +276,7 @@ gcloud --project="${PROJECT}" \
     --public-key-file=certs/${ATTESTOR_NAME}.asc
 ```
 
-![images/attestor_iam.png.png](images/attestor_iam.png.png)
+![images/attestor_iam.png](images/attestor_iam.png)
 
 
 
