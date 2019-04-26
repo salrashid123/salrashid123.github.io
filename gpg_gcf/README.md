@@ -248,7 +248,11 @@ These are limits on GCF but if you choose to host it on another platform like GC
 
 Ive attached a standalone application `standalone/main.go` which does the full encryption/decryption pipeline in sequence against the local filesystem or to GCS.  Use that sample app to test/verify and experiment with the pipe IO.
 
-The follwoing shows a local plain text file of size 500MB encrypted and transmitted to GCS from my laptop
+The follwoing shows a local plain text file of size 100MB encrypted and transmitted to GCS from my laptop
+
+- 100Mb
+* Encryption:  29032, 
+* Decryption   86560, 
 
 > *Note* there is no change in memory usage footprint during the transfer: all the bytes read from file and uploaded to GCS happens over the stream
 
