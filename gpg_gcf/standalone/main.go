@@ -19,10 +19,15 @@ var (
 	gpgPacketConfig = &packet.Config{
 		DefaultCipher: packet.CipherAES256,
 	}
-	bucketName = "mineral-minutia-820-mlengine"
+	bucketName = "YOURBUCKETNAME"
 )
 
 func encryptHandler(w http.ResponseWriter, r *http.Request) {
+
+	fileName := r.URL.Query().Get("file")
+	if fileName != "" {
+		fileName = "plain.txt"
+	}
 
 	ctx := r.Context()
 	gcsClient, err := storage.NewClient(ctx)
@@ -31,8 +36,9 @@ func encryptHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer gcsClient.Close()
 
+	// read source file from GCS
 	srcBucket := gcsClient.Bucket(bucketName)
-	gcsSrcObject := srcBucket.Object("plain.txt")
+	gcsSrcObject := srcBucket.Object(fileName)
 	gcsSrcReader, err := gcsSrcObject.NewReader(ctx)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -40,7 +46,7 @@ func encryptHandler(w http.ResponseWriter, r *http.Request) {
 	defer gcsSrcReader.Close()
 
 	dstBucket := gcsClient.Bucket(bucketName)
-	gcsDstObject := dstBucket.Object("encrypted.txt")
+	gcsDstObject := dstBucket.Object(fileName + ".enc")
 	gcsDstWriter := gcsDstObject.NewWriter(ctx)
 	
 	pr, pw := io.Pipe()
@@ -57,6 +63,7 @@ func encryptHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 		if _, err := io.Copy(pt, gcsSrcReader); err != nil {
+		// or read the request body to decrypt
 		//if _, err := io.Copy(pt, r.Body); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -79,6 +86,10 @@ func encryptHandler(w http.ResponseWriter, r *http.Request) {
 
 func decryptHandler(w http.ResponseWriter, r *http.Request) {
 
+	fileName := r.URL.Query().Get("file")
+	if fileName != "" {
+		fileName = "plain.txt.enc"
+	}
 
 	ctx := r.Context()
 	gcsClient, err := storage.NewClient(ctx)
@@ -87,8 +98,9 @@ func decryptHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer gcsClient.Close()
 
+	// read source file from GCS
 	srcBucket := gcsClient.Bucket(bucketName)
-	gcsSrcObject := srcBucket.Object("encrypted.txt")
+	gcsSrcObject := srcBucket.Object(fileName)
 	gcsSrcReader, err := gcsSrcObject.NewReader(ctx)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -96,11 +108,13 @@ func decryptHandler(w http.ResponseWriter, r *http.Request) {
 	defer gcsSrcReader.Close()
 
 	dstBucket := gcsClient.Bucket(bucketName)
-	gcsDstObject := dstBucket.Object("decrypted_plain.txt")
+	gcsDstObject := dstBucket.Object(fileName + ".dec")
 	gcsDstWriter := gcsDstObject.NewWriter(ctx)
 	
 
 	armorBlock, err := armor.Decode(gcsSrcReader)
+
+	// or read the request body to decrypt
 	//armorBlock, err := armor.Decode(r.Body)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

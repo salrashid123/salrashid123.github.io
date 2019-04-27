@@ -4,9 +4,9 @@ About a year+ ago a colleague of mine ([Daz Wilkin](https://medium.com/@DazWilki
 
 So, a couple weeks ago another colleague asked how PGP encrypt a file using Cloud Functions.  Well, as you can imagine, you can apply the same stream technique there as well.  This article lifts Daz's code in golang and uses GPG libraries to encrypt or decrypt a file on GCS.
 
-> Note: I know perfectly well GCS has [Customer Supplied Encryption](https://cloud.google.com/storage/docs/encryption/using-customer-supplied-keys) keys as well as KMS backed keys to do encryption hands free; this article is just an exercise demonstrating the stream-read-write capability with golang-PGP.   The intent is for you to expand this pattern for other stream processing systems with GCF or GCP's Cloud Run.
+> Note: I know perfectly well GCS has [Customer Supplied Encryption](https://cloud.google.com/storage/docs/encryption/using-customer-supplied-keys) keys as well as KMS backed keys to do encryption hands free; this article is just an exercise demonstrating the stream-read-write capability with golang-PGP.   The intent is for you to expand this pattern for other stream processing systems with [Cloud Functions](https://cloud.google.com/functions/) or [Cloud Run](https://cloud.google.com/run/).
 
-This article shows how to deploy a GPG `Encryption` and `Decryption` functions that read in a file in GCS, and as the titles suggest, performs the named operations against the source file provided.
+This article shows how to deploy a GPG `Encryption` and `Decryption` functions that read in a file in GCS, and as the names suggests, performs the named operations against the source file provided.
 
 ## References
 
@@ -248,11 +248,7 @@ These are limits on GCF but if you choose to host it on another platform like GC
 
 Ive attached a standalone application `standalone/main.go` which does the full encryption/decryption pipeline in sequence against the local filesystem or to GCS.  Use that sample app to test/verify and experiment with the pipe IO.
 
-The follwoing shows a local plain text file of size 100MB encrypted and transmitted to GCS from my laptop
-
-- 100Mb
-* Encryption:  29032, 
-* Decryption   86560, 
+The following shows a local plain text file of size 100MB encrypted and transmitted to GCS from my laptop.  
 
 > *Note* there is no change in memory usage footprint during the transfer: all the bytes read from file and uploaded to GCS happens over the stream
 
@@ -261,6 +257,30 @@ The follwoing shows a local plain text file of size 100MB encrypted and transmit
 The following shows a local encrypted  file of size  decrypted and transmitted to GCS from my laptop
 
 ![images/decrypt.png](images/decrypt.png)
+
+## Deploying to Cloud Run
+
+You can also deploy to Cloud Run
+
+
+```
+cd standalone/
+```
+edit main.go, change `bucketName`
+
+then build, push, deploy
+
+```
+docker build -t gcr.io/<projectID>/gpgtest
+docker push gcr.io/<projectID>/gpgtest
+
+gcloud beta run deploy --image gcr.io/<projectID>/gpgtest --region=us-central1 --allow-unauthenticated --memory=128M
+```
+
+Finally invoke the cloud run deployment paths 
+
+* `/encrypt?filename=plain.txt`
+* `/decrypt?filename=plain.txt.enc`
 
 ## Conclusion
 
