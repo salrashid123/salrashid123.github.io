@@ -24,14 +24,14 @@ First let's setup the IAM permissions that allows impersonation. In the sample b
 This involves assigning the `Service Account Token Creator` Role:
 
 - `service_policy.json`
-```json
+```
 {
     "bindings": [
     {
       "members": [
         "source-service-account@projectA.iam.gserviceaccount.com"
       ],
-      "role": "roles/iam.serviceAccountTokenCreator",    
+      "role": "roles/iam.serviceAccountTokenCreator",
     }
   ]
 }
