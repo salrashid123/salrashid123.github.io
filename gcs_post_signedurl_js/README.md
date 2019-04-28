@@ -1,6 +1,6 @@
 # Upload/Download files from a browser with GCS Signed URLs and Signed Policy Documents
 
-Small javascript application showing how to upload/download files with [GCS Signed URLs](https://cloud.google.com/storage/docs/access-control/signed-urls) and [Signed Policy Documents](https://cloud.google.com/storage/docs/xml-api/post-object#policydocument).  This article will not cover in detail what those two mechanisms are but rather demonstrate a basic application that exercises both on the browser.  This is a simple client-server app that uploads files using these two mechanisms from a user's browser.  SignedURLs w/ javascript has been done many times before (see references); this article describes SinedURLs and Policy document differences and implementations.
+Small javascript application showing how to upload/download files with [GCS Signed URLs](https://cloud.google.com/storage/docs/access-control/signed-urls) and [Signed Policy Documents](https://cloud.google.com/storage/docs/xml-api/post-object#policydocument).  This article will not cover in detail what those two mechanisms are but rather demonstrate a basic application that exercises both on the browser.  This is a simple client-server app that uploads files using these two mechanisms from a user's browser.  SignedURLs w/ javascript has been done many times before (see references); this article describes SignedURLs and Policy document differences and implementations.
 
 Briefly, SignedURLs and Policy Document based operations are similar: a URL with a signature that an unauthenticated user can perform certain GCS operations.  There are a couple of differences to note:
 
@@ -62,12 +62,11 @@ Set CORS policy to allow request from a test domain:
 [
     {
       "origin": ["https://gcs.somedomain.com:8081"],
-      "responseHeader": ["Content-Type", "Authorization",  "Access-Control-Allow-Origin", "x-goog-resumable"],
+      "responseHeader": ["Content-Type", "Authorization",  "Content-Length", "User-Agent", "x-goog-resumable"],
       "method": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       "maxAgeSeconds": 3600
     }
 ]
-
 ```
 
 - set cors policy on the bucket
