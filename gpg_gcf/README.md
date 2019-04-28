@@ -1,4 +1,4 @@
-# GPG stream encryption and decryption on Google Cloud Functions
+# GPG stream encryption and decryption on Google Cloud Functions and Cloud Run
 
 About a year+ ago a colleague of mine ([Daz Wilkin](https://medium.com/@DazWilkin)) asked me how best to decompress/unzip a file using Google Cloud Functions.  The suggestion ended as a sample he provided demonstrating the `stream-read->stream-write` pattern with the pertinent input-outputs (input: unziped file; output zipped file).  The distinct advantage of stream processing the unzip function is that the data is never held in memory: as the unzipped content gets processed by GCF, its promptly written as a zip file to GCS.  He further went on to expand that [sample implementation in golang](https://medium.com/google-cloud/google-cloud-storage-exploder-2-9870d41fcee3) (and as a side note, I take credit for suggesting the 'exploder' name in the first article and the Caddyshack gopher in the second).  
 
