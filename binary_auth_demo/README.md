@@ -392,13 +392,13 @@ Hello World!
 
 # Verify Deployment Failure for vuleranable images
 
-Change the base image from `alpine` to `debain`.  This will cause the pipeline to fail since the number of CVE findings will exceed
+Change the base image from `gcr.io/distroless/static` to `debain`.  This will cause the pipeline to fail since the number of CVE findings will exceed
 the allocated threshold in `check_vulnerabilities.sh -p $PROJECT_ID -i gcr.io/$PROJECT_ID/hello-app:$SHORT_SHA -t 5`
 (default level: `5`)
 
 - edit `deployment/Docker
 ```
-#FROM alpine
+#FROM gcr.io/distroless/static
 FROM debian
 ```
 
