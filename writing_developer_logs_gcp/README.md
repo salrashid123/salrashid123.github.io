@@ -38,6 +38,8 @@ Taken from the documentation:
 * `task_id`: A unique identifier for the task within the namespace and job, such as a replica index identifying the task within the job. 
 
 
+>> NOTE: while you can set the location attribute to anything you want, if it not one of the GCE or EC2 zones, then logs-to-metrics with that attribute will not work (as of 2/13/19). However, it maybe possible to emit logs and still have metrics if the location and vmID matches an existing VM running on GCP (I havne't confirmed that yet though).
+
 ## Sending Logs
 
 This article will show how to send `generic_task` and `generic_node` logs via
@@ -56,6 +58,8 @@ This article will show how to send `generic_task` and `generic_node` logs via
   - Requires authentication credentials file.
 
 If you are running on GCE or EC2, the `Cloud Logging Agent` would be the best bet.  If you are already using `fluentd` elsewhere, just add the `fluent-plugin-google-cloud` gem.
+
+>> **NOTE** as of `2/5/19`, the changes needed to support generic_node and generic_task is NOT included in the fluent plugin for google cloud stackdriver. However, the changes are relatively simple so I've forked fluent-plugin-google-cloud and added in the changes here: https://github.com/salrashid123/fluent-plugin-google-cloud. The only real change is to out_google_cloud.rb. I'll keep sync with upstream every week or so to keep it uptodate. Of course to be clear, this fork is NOT supported by google cloud (the API is, the plugin fork isn’t!)
 
 For refernece, here are some related articles on Cloud Logging I tried out over the year:
   - [Apache/Nginx Structured Logs with Cloud Logging Agent](https://medium.com/google-cloud/envoy-nginx-apache-http-structured-logs-with-google-cloud-logging-91fe5965badf)
@@ -120,7 +124,24 @@ First we will install the `cloud logging agent` on GCE and then the `fluent-plug
     sudo bash install-logging-agent.sh --structured
 ```
 
-3) Add configuration to `/etc/google-fluentd/google-fluentd.conf`
+3) then apply a copy of `out_google_cloud.rb`:
+
+Find the lastest official `fluent-plugin-google-cloud`:
+```
+
+/opt/google-fluentd/embedded/bin/gem list fluent-plugin-google-cloud
+    fluent-plugin-google-cloud (0.7.11)
+```
+
+then
+```
+export GOOGLE_PLUGIN_VERSION="0.7.11"
+
+wget  https://raw.githubusercontent.com/salrashid123/fluent-plugin-google-cloud/master/lib/fluent/plugin/out_google_cloud.rb \
+       -O /opt/google-fluentd/embedded/lib/ruby/gems/2.4.0/gems/fluent-plugin-google-cloud-$GOOGLE_PLUGIN_VERSION/lib/fluent/plugin/out_google_cloud.rb
+```
+
+4) Add configuration to `/etc/google-fluentd/google-fluentd.conf`
 
 > Note: the `@type http` was added in just for testing; in real usecases, you will setup the log file source as described at the end of this article.
 
@@ -201,7 +222,25 @@ The following describes installing [fluent-plugin-google-cloud](https://github.c
   -rw-r----- 1 td-agent td-agent 2332 Jan 16 20:52 /etc/google/auth/application_default_credentials.json
 ```
 
-7) Configure fluentd
+7) Install out_google_cloud.rb from fork repository
+
+First get the current version of the offiical plugin that was installed
+```
+/opt/td-agent/embedded/bin/gem  list fluent-plugin-google-cloud
+    fluent-plugin-google-cloud (0.7.11)
+```
+so export the verison and copy the fork, then
+
+```
+export GOOGLE_PLUGIN_VERSION="0.7.11"
+
+wget  https://raw.githubusercontent.com/salrashid123/fluent-plugin-google-cloud/master/lib/fluent/plugin/out_google_cloud.rb \
+       -O /opt/td-agent/embedded/lib/ruby/gems/2.4.0/gems/fluent-plugin-google-cloud-$GOOGLE_PLUGIN_VERSION/lib/fluent/plugin/out_google_cloud.rb
+```
+
+
+
+8) Configure fluentd
   Edit `/etc/td-agent/td-agent.conf` and configurations for `generic_node` and `generic_task`:
 
 ```
@@ -233,7 +272,7 @@ The following describes installing [fluent-plugin-google-cloud](https://github.c
 
 > again, we're using  a test `@type http` source just as a demo.
 
-8) Restart fluentd
+9) Restart fluentd
 
 ```
   service td-agent restart
@@ -246,7 +285,7 @@ The following describes installing [fluent-plugin-google-cloud](https://github.c
   curl -X POST -d 'json={"foo":"bar"}' http://localhost:8888/gcp_task.log
 ```
 
-9) Check cloud logging console for output under `Generic Node` and `Generic Task`
+10) Check cloud logging console for output under `Generic Node` and `Generic Task`
 
 - ![images/generic_node_agent_fluent.png](images/generic_node_agent_fluent.png)
 
@@ -342,3 +381,8 @@ You should see the logs in GCP assuming you setup a JSON certficate file into (`
 
 You can use these new types to setup logs for your own application and ingest them into `Google Cloud Logging`.  While you don't get truly 'top-level' resource types (your'e still dealing with the `generic_*` ones), you are free here to define what system and application that sources logs.  Once you have logs with these fields sent, you can setup additional GCP capabilities like [logs-to-metrics](https://cloud.google.com/logging/docs/logs-based-metrics/), alerts, and so on based on your own applicaiton logs and devOPS needs.
 
+
+### Bonus Level: Azure
+The forked repo also supports Azure metadata server (for details, see commit). What this means is if you run fluentd on Azure and specify the path the the json certificate file, the plugin will retrieve the vmID and location attribute from the link-local metadata server. For examlple:
+
+![images/azure.png](images/azure.png)
