@@ -1,20 +1,30 @@
 
 # Google Cloud Trace context propagation and metrics graphs with Grafana+Prometheus and Stackdriver
 
-Sample app that uses opencensus to emit metrics and 'distributed' traces.
+Sample _stand alone_ app that uses opencensus to emit metrics and traces.  Also demonstrates how 'distributed' traces work with
+Google Cloud APIs and between webrequests.
 
-Specifially:
+This is really just a basic 'hello world' in golang showing how to integrate a webapp with opencensus.
 
--  Metrics
-   - tracks http latency for a web request handler
+Specifially, this app shows how to use [Opencensus](https://opencensus.io/) to track latency in a golang-app.
+
+Each request that comes in goes through middleware that handles the latency metrics collection and emission:
+
+- For Metrics:
+   - Tracks http latency for a web request handler using middleware
    - sends latency statistics to both promethus and stackdriver
    - view/graph metrics with grafana
    - view/graph metrics with stackdriver
 
-- Traces
-   - tracks the same trace between web request.
-   -  one webrequest calls another and both are shows as a "trace-span/subspan" format
-   - tracks Google Cloud GCS API calls also within the trace
+In addition to latency for request, the sample exposes endpoints that demonstrates Trace propagation between requests and with GCP libraries:
+
+- For Traces
+   - Tracks trace propagation between a simulated 'frontend' and 'backend' http service within the app:
+     - An inbound request to `/makereq` endpoint displays custom spans as well makes a *new* http request to the `/backend` endpoint
+     - Trace data emitted displays the spans within `/makereq` and also shows details of what happened within `/backend`
+   - Displays trace details of GCP API requests (i.,e what happned _within_ the request to retrive a file, for example)
+     - An inbound request to `/backend` will start custom spans and use `google-cloud-storage` golang library to retrive a file
+   - Sends traces to both Jaeger and Stackdriver
 
 The code smaple combines both but you can split up the tracing and monitoring components.
 
@@ -25,12 +35,11 @@ The code smaple combines both but you can split up the tracing and monitoring co
 - Grafana
 - Stackdriver
 - Cloud Trace
-
-
-## References:
-  [all of daz's work](https://medium.com/google-cloud/opencensus-and-prometheus-66812a7503f)
+- Jaeger
 
 # Setup
+
+The setup involves setting up everything locally so the install covers everything from scratch:
 
 ## Prometheus
 
@@ -79,28 +88,40 @@ $ ./prometheus
 
 5. Create a Dashboard and Graph
     (do this step after sending some metrics in so the values scraped/provided by promethus shows up)
+   - Note: setting up a graph in Grapfana isn't intuitive; you've got to setup a dashboard-graph, and within the graph select the 'Edit' dropdown..
 
+# Jaeger
 
+Download and start container image for `Jaeger`
+```
+docker run \
+--interactive \
+--tty \
+--publish=16686:16686 \
+--publish=14268:14268 \
+jaegertracing/all-in-one:latest
+```
+
+- Access WebUI:
+```
+http://localhost:16686/
+```
 
 # Download GCP Service Account JSON key file 
-  THis is only used by Cloud Trace and Stackdriver Metrics; Promethus and Grafana will ofcourse work without it.
+  This is only used by Cloud Trace and Stackdriver Metrics; Promethus and Grafana will ofcourse work without it.
 
-  Make sure the service account has  "Monitoring Metric Writer", "Cloud Trace Agent" IAM permissions
+  Make sure the service account has  `Monitoring Metric Writer`, `Cloud Trace Agent` IAM permissions
 
 # Start app
 
 ```
-export GOOGLE_APPLICATION_CREDENTIALS=/path/to/.json
-```
-
-```
-$ go get cloud.google.com/go/storage contrib.go.opencensus.io/exporter/stackdriver go.opencensus.io/exporter/prometheus go.opencensus.io/plugin/ochttp go.opencensus.io/stats go.opencensus.io/stats/view go.opencensus.io/tag go.opencensus.io/trace golang.org/x/net/context golang.org/x/oauth2 golang.org/x/oauth2/google google.golang.org/api/option 
+export GOOGLE_APPLICATION_CREDENTIALS=/path/to/svc.json
 ```
 
 Export env var defining your google cloud project:
 
 ```
-$ export GOOGLE_CLOUD_PROJECT=mineral-minutia-820
+$ export GOOGLE_CLOUD_PROJECT=your_project_id
 ```
 
 Upload a sample file to the default GCS Bucket for the project
@@ -112,10 +133,10 @@ $ gsutil cp some_file.txt gs://$GOOGLE_CLOUD_PROJECT/
 
 - Run App
 ```
-$ go run src/main.go 
+$ go run main.go 
 ```
 
-0 Access your app at these two endpoints
+Access your app at these two endpoints
 - http://localhost:8080/
   - Endpoint just displays the environment variables
   - Opencensus handlers are invoked to track the latency measures
@@ -263,7 +284,7 @@ An actual metric datapoint for this distribution type looks like
     {
 ```
 
-# Cloud trace
+# Tracing
 
 Finally, the trace context is propagated from `/makereq` --> `/backend` --> `GCS`
 
@@ -271,6 +292,9 @@ So what you should see is the full trace in stackdriver like this:
 
 ![images/trace.png](images/trace.png)
 
+in Jaeger console
+
+![images/jaeger_tracing.png](images/jaeger_tracing.png)
 
 WHat makes this possible is transferring the golang context forward:
  ```https://github.com/GoogleCloudPlatform/golang-samples/blob/master/trace/trace_quickstart/main.go#L51```
@@ -375,3 +399,6 @@ ctx := req.Context()
 
 storeageCient, err := storage.NewClient(ctx, option.WithTokenSource(tokenSource))
 ```
+
+## References:
+  [all of daz's work](https://medium.com/google-cloud/opencensus-and-prometheus-66812a7503f)

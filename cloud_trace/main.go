@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"contrib.go.opencensus.io/exporter/stackdriver"
-	"go.opencensus.io/exporter/prometheus"
+	"contrib.go.opencensus.io/exporter/prometheus"
 	"go.opencensus.io/stats/view"
 	"go.opencensus.io/trace"
 
@@ -19,11 +19,10 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/option"
+	"contrib.go.opencensus.io/exporter/jaeger"
 
 	"go.opencensus.io/stats"
-	//"go.opencensus.io/stats/view"
 	"go.opencensus.io/tag"
-	//"go.opencensus.io/trace"
 	//"go.opencensus.io/zpages"
 	//"contrib.go.opencensus.io/exporter/stackdriver/propagation"
 	"go.opencensus.io/plugin/ochttp"
@@ -45,50 +44,16 @@ var (
 
 
 func printInfo(resp http.ResponseWriter, req *http.Request) {
-
-	startTime := time.Now()
-	defer func() {
-		ms := float64(time.Since(startTime).Nanoseconds()) / 1e6
-		ctx, err := tag.New(context.Background(), tag.Insert(keyMethod, "recordVisit"))
-		if err != nil {
-			log.Println(err)
-		}
-		log.Printf("Recording: %v\n", ms)
-		stats.Record(ctx, mLatencyMs.M(ms))
-	}()
-
 	for _, e := range os.Environ() {
 		fmt.Fprintf(resp, "%s \n", e)
 	}
 }
 
 func hc(resp http.ResponseWriter, req *http.Request) {
-
-	startTime := time.Now()
-	defer func() {
-		ms := float64(time.Since(startTime).Nanoseconds()) / 1e6
-		ctx, err := tag.New(context.Background(), tag.Insert(keyMethod, "recordVisit"))
-		if err != nil {
-			log.Println(err)
-		}
-		log.Printf("Recording: %v\n", ms)
-		stats.Record(ctx, mLatencyMs.M(ms))
-	}()
-
 	fmt.Fprintf(resp, "ok")
 }
 
 func makereq(resp http.ResponseWriter, req *http.Request) {
-	startTime := time.Now()
-	defer func() {
-		ms := float64(time.Since(startTime).Nanoseconds()) / 1e6
-		ctx, err := tag.New(context.Background(), tag.Insert(keyMethod, "recordVisit"))		
-		if err != nil {
-			log.Println(err)
-		}
-		log.Printf("Recording: %v\n", ms)
-		stats.Record(ctx, mLatencyMs.M(ms))
-	}()
 
 	//client := &http.Client{}
 	client := &http.Client{Transport: &ochttp.Transport{}}
@@ -148,7 +113,7 @@ func backend(resp http.ResponseWriter, req *http.Request) {
 	// End GCS API call
 	
 	// Start Span
-	_, fileSpan := trace.StartSpan(ctx, "start=print_file")
+	_, fileSpan := trace.StartSpan(ctx, "start=print_file")	
 	if _, err := io.Copy(os.Stdout, r); err != nil {
 		log.Printf("Unable to print file contentt: %v", err)
 		http.Error(resp, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
@@ -160,9 +125,37 @@ func backend(resp http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(resp, "backend")
 }
 
+func enforceOCTraceHandler(next http.Handler) http.Handler {
+
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		startTime := time.Now()
+		defer func() {
+			ms := float64(time.Since(startTime).Nanoseconds()) / 1e6
+			ctx, err := tag.New(context.Background(), tag.Insert(keyMethod, "recordVisit"))		
+			if err != nil {
+				log.Println(err)
+			}
+			log.Printf("Recording: %v\n", ms)
+			stats.Record(ctx, mLatencyMs.M(ms))
+		}()
+		next.ServeHTTP(w, r)
+	  })
+}
+
 func main() {
 
 	var wg sync.WaitGroup
+
+	// Set exporters for tracing to both jaeger and stackdriver
+	jaegerURL := "http://localhost:14268"
+	je, err := jaeger.NewExporter(jaeger.Options{
+		Endpoint:    jaegerURL,
+		ServiceName: "jaeger-gcs",
+	})
+	defer je.Flush()
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	sd, err := stackdriver.NewExporter(stackdriver.Options{
 		ProjectID:    os.Getenv("GOOGLE_CLOUD_PROJECT"),
@@ -174,8 +167,12 @@ func main() {
 	trace.ApplyConfig(trace.Config{
 		DefaultSampler: trace.AlwaysSample(),
 	})
+
+	trace.RegisterExporter(je)
 	trace.RegisterExporter(sd)
 
+
+	// Set exporters for metrics to both promethus and stackdriver
 	if err := view.Register(latencyView); err != nil {
 		log.Fatal(err)
 	}
@@ -184,11 +181,12 @@ func main() {
 	})
 	if err != nil {
 		log.Fatalf("Failed to create Prometheus exporter: %v", err)
-	}
+	}	
 	view.RegisterExporter(sd)
 	view.RegisterExporter(pe)
 	view.SetReportingPeriod(60 * time.Second)
 
+	// Add handler for Prometheus to get data
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
@@ -197,10 +195,16 @@ func main() {
 		log.Fatal(http.ListenAndServe(":9091", mux))
 	}()
 
-	http.HandleFunc("/", printInfo)
-	http.HandleFunc("/_ah/health", hc)
-	http.HandleFunc("/makereq", makereq)
-	http.HandleFunc("/backend", backend)
+	// Register our handlers for the app;  make sure each request has laency metrics applied
+	printHandler := http.HandlerFunc(printInfo)
+	hcHandler := http.HandlerFunc(hc)
+	makereqHandler := http.HandlerFunc(makereq)
+	backendHandler := http.HandlerFunc(backend)
+
+	http.Handle("/", enforceOCTraceHandler(printHandler))
+	http.Handle("/_ah/health", enforceOCTraceHandler(hcHandler))
+	http.Handle("/makereq", enforceOCTraceHandler(makereqHandler))
+	http.Handle("/backend", enforceOCTraceHandler(backendHandler))
 
 	log.Fatal(http.ListenAndServe(":8080", &ochttp.Handler{
 		IsPublicEndpoint: false,
