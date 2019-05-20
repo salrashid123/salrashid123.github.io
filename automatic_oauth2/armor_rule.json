@@ -1,0 +1,10 @@
+{
+    "match": {
+      "config": {
+        "srcIpRanges": [
+          "73.162.112.208/32"
+        ]
+      },
+      "versionedExpr": "SRC_IPS_V1"
+    }
+  }

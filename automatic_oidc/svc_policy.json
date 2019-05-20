@@ -1,0 +1,16 @@
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-$PROJECT_ID@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/iam.serviceAccountTokenCreator"
+    },
+    {
+      "members": [
+        "serviceAccount:service-$PROJECT_ID@gcp-sa-cloudscheduler.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudscheduler.serviceAgent"
+    }    
+  ],
+}
