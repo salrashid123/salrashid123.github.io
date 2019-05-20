@@ -170,7 +170,7 @@ gs://mineral-minutia-820-logs/accessLog_usage_2019_05_19_18_00_00_02cbe51e4b7031
 If you download any of these files, you should see a `.csv` delimited access logs.  Specifically see the columns that describe:
 
 - `cs_referer`:
-  https://gcr.io/v2/mineral-minutia-820/distroless/blobs/sha256:7e19786cadab9f8ac0819c12ca0cc6abdf6fe5a75b876b130b77db0f42bdedd9
+  `https://gcr.io/v2/mineral-minutia-820/distroless/blobs/sha256:7e19786cadab9f8ac0819c12ca0cc6abdf6fe5a75b876b130b77db0f42bdedd9`
 
 - `cs_url`:
 
@@ -215,12 +215,14 @@ eg:
 Or directly via BQ cli:
 
 ```
-$ bq query --nouse_legacy_sql 'SELECT time_micros, cs_method FROM `mineral-minutia-820.storageanalysis.usage`   where cs_object ="containers/images/sha256:7e19786cadab9f8ac0819c12ca0cc6abdf6fe5a75b876b130b77db0f42bdedd9"'
+$ bq query --nouse_legacy_sql 'SELECT TIMESTAMP_MICROS(time_micros) as timestamp, cs_method FROM `mineral-minutia-820.storageanalysis.usage`   where cs_object ="containers/images/sha256:7e19786cadab9f8ac0819c12ca0cc6abdf6fe5a75b876b130b77db0f42bdedd9"'
  
-+------------------+-----------+
-|   time_micros    | cs_method |
-+------------------+-----------+
-| 1558296433770128 | GET       |
-| 1558291766787464 | GET       |
-+------------------+-----------+
++---------------------+-----------+
+|      timestamp      | cs_method |
++---------------------+-----------+
+| 2019-05-19 18:49:26 | GET       |
+| 2019-05-19 20:07:13 | GET       |
+| 2019-05-19 18:49:26 | GET       |
+| 2019-05-20 03:46:24 | GET       |
++---------------------+-----------+
 ```
