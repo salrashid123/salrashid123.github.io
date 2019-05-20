@@ -5,8 +5,6 @@ Sample flow to extract [Google Container Registry](https://cloud.google.com/cont
 There are several step sto getting the following pipeline to work but in is basic form, we setup GCS bucket used by GCR to export its usage stats to another GCS bucket.  We then setup that target bucket to automatically trigger a [Cloud Function](https://cloud.google.com/functions/docs/) everytime a new usage file is created..  The Cloud Function that is invoked will then instruct BigQuery to load the usage file directly usign its own internal GCS->BQ load functions. You will then have the GCR usage stats available in bigquery automatically.  The GCS usage statistics are exported hourly and since the pipeline is triggered automatically, your data lags by about an hour.
 
 
-The full describe above would be:
-
 ![images/flow.png](images/flow.png)
 
 
