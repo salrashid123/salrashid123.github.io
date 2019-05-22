@@ -183,7 +183,7 @@ $GOOGLE_PROJECT_ID@appspot.gserviceaccount.com
 
 so using that, go to the Cloud Consoles IAM page and for that account, add the `Composer User` IAM role
 
-![images/gcf_to_composer_iam.png](images/gcf_to_composer_iam.json)
+![images/gcf_to_composer_iam.png](images/gcf_to_composer_iam.png)
 
 GCF invokes a DAG directly using the  [Experimental Rest Endpoint](https://airflow.apache.org/api.html#experimental-rest-api)
 
