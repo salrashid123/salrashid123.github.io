@@ -245,10 +245,6 @@ Once uploaded, you should see the the files getting processed:  `OK` means nothi
 
 - GCF can run for at most `540s` so any file that is streamed to the VM must finish within this timeline.  If you need additional time, consider Cloud Run.
 
-## Scanning zip archives
-
-Your users may upload a .zip file or files in formats that require processing on its own right.  GCS does not provide any built-in capabilities to `auto unzip` a file.  You can, however run a similar preprocessor as described here to unzip.  For more information, see [GCS "Exploder"](https://medium.com/google-cloud/google-cloud-storage-exploder-2-9870d41fcee3).
-
 ## References
 
 - LICENSE
