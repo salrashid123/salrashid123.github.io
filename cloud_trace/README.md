@@ -1,14 +1,13 @@
 
 # Google Cloud Trace context propagation and metrics graphs with Grafana+Prometheus and Stackdriver
 
-Sample _stand alone_ app that uses opencensus to emit metrics and traces.  Also demonstrates how 'distributed' traces work with
-Google Cloud APIs and between webrequests.
 
-This is really just a basic 'hello world' in golang showing how to integrate a webapp with opencensus.
+I wanted to understand how to setup a standalone golang app that integrated [Opencensus](https://opencensus.io/)  specifically for Tracing and Metrics. The type of tracing i was after was both _automatic_ and *between* web requests. By automatic i mean if you initialize opencensus and then directly use a supporting library to access a resrouce (eg. Google Cloud Storage client), tracing information about specific actions within the GCS call is rendered (eg, time taken for each individual get/put operation).
 
-Specifially, this app shows how to use [Opencensus](https://opencensus.io/) to track latency in a golang-app.
+By between web requests I mean if my web application gets a request for an endpoint (eg, `/makereq`) and then within the handling of that request i make *ANOTHER* api call (eg `/makereq` makes an http call to `/backend`), Opencensus will show a trace between those requests.
 
-Each request that comes in goes through middleware that handles the latency metrics collection and emission:
+I find that feature pretty neat so I wrote up this article to demonstrate how you can trace automatically and between requests …and what happened on the other side in ONE trace root span
+Opencensus allows you to emit metrics and traces to a variety of sources and as a demonstration of those targets, this sample collects metrics and traces and sends them to *both* Google Stackdriver or a local Prometheus or Jaeger instance (for metrics and tracing, respectively)
 
 - For Metrics:
    - Tracks http latency for a web request handler using middleware
