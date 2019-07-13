@@ -159,7 +159,7 @@ Each while using
 
 ### python
 
-- [python/googleidentons.py](python/googleidentons.py)
+- [python/googleidtokens.py](python/googleidtokens.py)
 
 ### java
 
@@ -167,7 +167,7 @@ Each while using
 
 ### go
 
-- [golang/GoogleIDToken.go](golang/GoogleIdTOken.go)
+- [golang/GoogleIDToken.go](golang/GoogleIDToken.go)
 
 ### nodejs
 
