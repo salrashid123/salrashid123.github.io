@@ -165,27 +165,6 @@ Each while using
 
 - [java/GoogleIDToken.java](java/GoogleIDToken.java)
 
-- pom.xml
-```xml
-<dependency>
-  <groupId>com.google.auth</groupId>
-  <artifactId>google-auth-library-oauth2-http</artifactId>
-  <version>0.15.0</version>
-</dependency>
-
-<dependency>
-    <groupId>com.nimbusds</groupId>
-    <artifactId>nimbus-jose-jwt</artifactId>
-    <version>7.2.1</version>
-</dependency>
-
-<dependency>
-    <groupId>com.google.api-client</groupId>
-    <artifactId>google-api-client</artifactId>
-    <version>1.30.2</version>
-</dependency>
-```
-
 ### go
 
 - [golang/GoogleIDToken.go](golang/GoogleIdTOken.go)
