@@ -115,13 +115,13 @@ func getIDTokenFromComputeEngine(ctx context.Context, audience string) (string, 
     req.Header.Add("Metadata-Flavor", "Google")
     resp, err := client.Do(req)
     if err != nil {
-        log.Fatal(err)
+        return "", err
     }
     defer resp.Body.Close()
 
     bodyBytes, err := ioutil.ReadAll(resp.Body)
     if err != nil {
-        log.Fatal(err)
+        return "", err
     }
 
     bodyString := string(bodyBytes)
@@ -136,7 +136,7 @@ func verifyGoogleIDToken(ctx context.Context, aud string, token string) (bool, e
 		ClientID: aud,
 	}
 	verifier := oidc.NewVerifier("https://accounts.google.com", keySet, config)
-	
+
 	idt, err := verifier.Verify(ctx, token)
 	if err != nil {
 		return false, err
@@ -169,13 +169,13 @@ func makeAuthenticatedRequest(idToken string, url string) {
 func main() {
 
 	ctx := context.Background()
-	
+
 	// For Service Account
 	idToken, err := getIDTokenFromServiceAccount(ctx, audience)
-	
+
 	// For Compute Engine
 	//idToken, err := getIDTokenFromComputeEngine(ctx,audience)
-	
+
 	if err != nil {
 		log.Fatalf("%v",err)
 	}

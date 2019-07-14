@@ -18,7 +18,6 @@
 * [References](#references)
 
 
-
 This section covers authenticating against security perimeters which requires clients present valid [OpenID Connect tokens](https://openid.net/specs/openid-connect-core-1_0.html#IDToken). These security perimeters do not protect Google APIs but your services deployed behind certain Google Cloud Products. For example, if you deploy to [Cloud Functions](https://cloud.google.com/functions/docs/) or an application on [Cloud Run](https://cloud.google.com/run/docs/), you can enable a perimeter such that any client that wants to invoke the function or your application must present an ID token issued by Google. 
 
 These tokens are not Oauth2 [access_tokens](https://developers.google.com/identity/protocols/OAuth2) you would use to call a Google Service or API directly such as a Google Compute Engine API or Cloud Storage Bucket but id_tokens that assert identity and are signed by Google.
@@ -105,7 +104,7 @@ Furthermore, the token must have its aud: field set to the service name being in
 
 * [Google Cloud Run](https://cloud.google.com/run/)
 * [Google Cloud Functions](https://cloud.google.com/functions/docs/)
-* [Programmatic authentication Google Identity Aware Proxy](https://cloud.google.com/iap/docs/authentication-howto)
+* [Google Identity Aware Proxy](https://cloud.google.com/iap/docs/authentication-howto)
 * [Google Cloud Endpoints](https://cloud.google.com/endpoints/docs/openapi/authenticating-users-google-id) (if using Google OIDC)
 
 You can also deploy your own service outside of these services and verifying an OpenID Connect token. In this mode, your application that receives an OIDC token will need to manually verify its validity and audience field. You can use application frameworks like to do this like Spring Security, proxies like Envoy or even higher level Services like Istio.
@@ -172,7 +171,6 @@ Each while using
 ### nodejs
 
 - [nodejs/GoogleIdToken.js](nodejs/GoogleIDToken.js)
-
 
 ### dotnet
 
