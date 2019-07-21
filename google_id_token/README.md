@@ -18,7 +18,7 @@
 * [References](#references)
 
 
-This section covers authenticating against security perimeters which requires clients present valid [OpenID Connect tokens](https://openid.net/specs/openid-connect-core-1_0.html#IDToken). These security perimeters do not protect Google APIs but your services deployed behind certain Google Cloud Products. For example, if you deploy to [Cloud Functions](https://cloud.google.com/functions/docs/) or an application on [Cloud Run](https://cloud.google.com/run/docs/), you can enable a perimeter such that any client that wants to invoke the function or your application must present an ID token issued by Google. 
+This section covers authenticating against security perimeters which requires clients present valid [OpenID Connect tokens](https://openid.net/specs/openid-connect-core-1_0.html#IDToken). These security perimeters do not protect Google APIs but your services deployed behind certain Google Cloud Products. For example, if you deploy to [Cloud Functions](https://cloud.google.com/functions/docs/) or an application on [Cloud Run](https://cloud.google.com/run/docs/), you can enable a perimeter such that any client that wants to invoke the function or your application must present an ID token issued by Google.
 
 These tokens are not Oauth2 [access_tokens](https://developers.google.com/identity/protocols/OAuth2) you would use to call a Google Service or API directly such as a Google Compute Engine API or Cloud Storage Bucket but id_tokens that assert identity and are signed by Google.
 
@@ -163,6 +163,7 @@ Each while using
 ### java
 
 - [java/GoogleIDToken.java](java/GoogleIDToken.java)
+  ref[#99](https://github.com/googleapis/google-auth-library-java/issues/99)
 
 ### go
 
