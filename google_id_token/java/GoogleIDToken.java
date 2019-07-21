@@ -1,4 +1,18 @@
-
+/*
+ * Copyright 2019 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.test;
 
 import java.io.FileInputStream;
@@ -47,7 +61,7 @@ public class GoogleIDToken {
 
      public static void main(String[] args) throws Exception {
 
-          String target_audience = "https://cloud.run.endpoint.app";
+          String target_audience = "https://foo.com";
 
           GoogleIDToken tc = new GoogleIDToken();
 
@@ -63,7 +77,7 @@ public class GoogleIDToken {
           // System.out.println(GoogleIDToken.verifyToken(tok.getTokenValue(),
           // target_audience));
 
-          String url = "https://cloud.run.endpoint.app";
+          String url = "https://foo-endpont.a.run";
           tc.MakeAuthenticatedRequest(tok.getTokenValue(), url);
      }
 
@@ -85,25 +99,6 @@ public class GoogleIDToken {
                HttpRequest request = requestFactory.buildPostRequest(new GenericUrl(OAUTH_TOKEN_URI), content);
                request.setParser(new JsonObjectParser(jsonFactory));
 
-               request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
-               request.setUnsuccessfulResponseHandler(
-                         new HttpBackOffUnsuccessfulResponseHandler(new ExponentialBackOff())
-                                   .setBackOffRequired(new BackOffRequired() {
-                                        public boolean isRequired(HttpResponse response) {
-                                             int code = response.getStatusCode();
-                                             return (
-                                             // Server error --- includes timeout errors, which use 500 instead of 408
-                                             code / 100 == 5
-                                                       // Forbidden error --- for historical reasons, used for
-                                                       // rate_limit_exceeded
-                                                       // errors instead of 429, but there currently seems no robust
-                                                       // automatic way to
-                                                       // distinguish these cases: see
-                                                       // https://github.com/google/google-api-java-client/issues/662
-                                                       || code == 403);
-                                        }
-                                   }));
-
                HttpResponse response;
                try {
                     response = request.execute();
@@ -115,6 +110,8 @@ public class GoogleIDToken {
                GenericData responseData = response.parseAs(GenericData.class);
                String rawToken = validateString(responseData, "id_token", PARSE_ERROR_PREFIX);
 
+               if (rawToken.split("\\.").length !=4) 
+                 throw new Exception("Unable to parse segments of IDToken");
                String payload = rawToken.split("\\.")[1];
                String decodedToken = new String(BaseEncoding.base64().decode(payload), StandardCharsets.UTF_8);
                JsonWebToken.Payload jwtPayload = jsonFactory.fromString(decodedToken, JsonWebToken.Payload.class);
@@ -125,7 +122,7 @@ public class GoogleIDToken {
           }
      }
 
-     static String validateString(Map<String, Object> map, String key, String errorPrefix) throws IOException {
+     private static String validateString(Map<String, Object> map, String key, String errorPrefix) throws IOException {
           Object value = map.get(key);
           if (value == null) {
                throw new IOException(String.format("VALUE not found during prsing", errorPrefix, key));
@@ -183,15 +180,12 @@ public class GoogleIDToken {
                throw new IOException(String.format("Unable to get IDToken from metadataServer %s: %s", statusCode,
                          response.parseAsString()));
           }
-          InputStream is = response.getContent();
-          StringBuilder sb = new StringBuilder();
-          int ch;
-          while ((ch = is.read()) != -1) {
-               sb.append((char) ch);
-          }
-          response.disconnect();
-          String rawToken = sb.toString();
 
+          String rawToken = response.parseAsString();
+          response.disconnect();
+
+          if (rawToken.split("\\.").length !=3) 
+            throw new Exception("Unable to parse segments of IDToken");
           String payload = rawToken.split("\\.")[1];
           String decodedToken = new String(BaseEncoding.base64().decode(payload), StandardCharsets.UTF_8);
           JacksonFactory jsonFactory = new JacksonFactory();
@@ -223,14 +217,15 @@ public class GoogleIDToken {
           headers.put("Authorization", "Bearer " + id_token);
           request.setHeaders(headers);
           HttpResponse response = request.execute();
-          InputStream is = response.getContent();
-          StringBuilder sb = new StringBuilder();
-          int ch;
-          while ((ch = is.read()) != -1) {
-               sb.append((char) ch);
+          int statusCode = response.getStatusCode();
+          if (statusCode != HttpStatusCodes.STATUS_CODE_OK) {
+               throw new IOException(String.format("Unable to get IDToken from metadataServer %s: %s", statusCode,
+                         response.parseAsString()));
           }
+
+          System.out.println(response.parseAsString());
           response.disconnect();
-          System.out.println("Response from Cloud Run: " + sb.toString());
+
      }
 
 }
