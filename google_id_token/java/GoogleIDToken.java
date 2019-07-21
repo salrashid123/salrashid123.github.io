@@ -110,7 +110,7 @@ public class GoogleIDToken {
                GenericData responseData = response.parseAs(GenericData.class);
                String rawToken = validateString(responseData, "id_token", PARSE_ERROR_PREFIX);
 
-               if (rawToken.split("\\.").length !=4) 
+               if (rawToken.split("\\.").length !=3) 
                  throw new Exception("Unable to parse segments of IDToken");
                String payload = rawToken.split("\\.")[1];
                String decodedToken = new String(BaseEncoding.base64().decode(payload), StandardCharsets.UTF_8);
