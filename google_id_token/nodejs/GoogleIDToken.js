@@ -31,7 +31,6 @@ async function getIDTokenFromComputeEngine(audience) {
   .then(body => { return body });
 }
 
-
 async function getIDTokenFromServiceAccount(audience) {
   const keys = require('/path/to/svc.json');
   const opts = {
@@ -55,12 +54,18 @@ async function verifyIDToken(token, audience, url) {
   return true;
 }
 
+async function makeAuthenticatedRequest(idToken, url) {
+  return fetch(url,  { headers: {'Authorization': 'Bearer ' + idToken} })
+  .then(res => res.text())
+  .then(body => { return body });
+}
+
 async function main() {
-  // If ComputeEngine
-  //const id_token = await getIDTokenFromServiceAccount(audience);
-  
   // If Service Account
-  const id_token = await getIDTokenFromComputeEngine(audience);
+  const id_token = await getIDTokenFromServiceAccount(audience);
+  
+  // If Compute Engine
+  //const id_token = await getIDTokenFromComputeEngine(audience);
   
   console.log(id_token);
 
@@ -69,7 +74,7 @@ async function main() {
     console.log("id_token validated with audience " + audience);
   }
 
-
+  console.log(await makeAuthenticatedRequest(id_token, url));
 }
 
 main().catch(console.error);

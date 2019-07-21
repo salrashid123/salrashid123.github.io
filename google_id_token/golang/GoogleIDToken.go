@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019 Google LLC
  *
@@ -61,7 +60,7 @@ func getIDTokenFromServiceAccount(ctx context.Context, audience string) (string,
 		KeyID:     conf.PrivateKeyID,
 	}
 
-	privateClaims := map[string]interface{}{"target_audience": audience }
+	privateClaims := map[string]interface{}{"target_audience": audience}
 	iat := time.Now()
 	exp := iat.Add(time.Hour)
 
@@ -126,30 +125,31 @@ func getIDTokenFromServiceAccount(ctx context.Context, audience string) (string,
 }
 
 func getIDTokenFromComputeEngine(ctx context.Context, audience string) (string, error) {
-    client := &http.Client{}
-    req, err := http.NewRequest("GET", metadataIdentityDocURL + "?audience=" + audience, nil)
-    req.Header.Add("Metadata-Flavor", "Google")
-    resp, err := client.Do(req)
-    if err != nil {
-        return "", err
-    }
-    defer resp.Body.Close()
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", metadataIdentityDocURL+"?audience="+audience, nil)
+	req.Header.Add("Metadata-Flavor", "Google")
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
 
-    bodyBytes, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-        return "", err
-    }
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
 
-    bodyString := string(bodyBytes)
-    return bodyString, nil
+	bodyString := string(bodyBytes)
+	return bodyString, nil
 }
+
 func verifyGoogleIDToken(ctx context.Context, aud string, token string) (bool, error) {
 
 	keySet := oidc.NewRemoteKeySet(ctx, googleRootCertURL)
 
 	var config = &oidc.Config{
 		SkipClientIDCheck: true,
-		ClientID: aud,
+		ClientID:          aud,
 	}
 	verifier := oidc.NewVerifier("https://accounts.google.com", keySet, config)
 
@@ -163,24 +163,23 @@ func verifyGoogleIDToken(ctx context.Context, aud string, token string) (bool, e
 
 func makeAuthenticatedRequest(idToken string, url string) {
 
-    client := &http.Client{}
-    req, err := http.NewRequest("GET", url, nil)
-    req.Header.Add("Authorization", "Bearer " + idToken)
-    resp, err := client.Do(req)
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer resp.Body.Close()
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", url, nil)
+	req.Header.Add("Authorization", "Bearer "+idToken)
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
 
-    bodyBytes, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-        log.Fatal(err)
-    }
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    bodyString := string(bodyBytes)
-    log.Printf("Authenticated Response: %v",bodyString)
+	bodyString := string(bodyBytes)
+	log.Printf("Authenticated Response: %v", bodyString)
 }
-
 
 func main() {
 
@@ -193,17 +192,16 @@ func main() {
 	//idToken, err := getIDTokenFromComputeEngine(ctx,audience)
 
 	if err != nil {
-		log.Fatalf("%v",err)
+		log.Fatalf("%v", err)
 	}
 
 	log.Printf("IDToken: %v", idToken)
 	verified, err := verifyGoogleIDToken(ctx, audience, idToken)
 	if err != nil {
-		log.Fatalf("%v",err)
+		log.Fatalf("%v", err)
 	}
 	log.Printf("Verify %v", verified)
 
 	u := "https://example.com"
 	makeAuthenticatedRequest(idToken, u)
-
 }
