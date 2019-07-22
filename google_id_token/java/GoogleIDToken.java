@@ -13,25 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpBackOffIOExceptionHandler;
-import com.google.api.client.http.HttpBackOffUnsuccessfulResponseHandler;
-import com.google.api.client.http.HttpBackOffUnsuccessfulResponseHandler.BackOffRequired;
 import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -45,11 +40,9 @@ import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.json.webtoken.JsonWebSignature;
 import com.google.api.client.json.webtoken.JsonWebToken;
-import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.client.util.GenericData;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.common.base.MoreObjects;
-import com.google.common.io.BaseEncoding;
 
 public class GoogleIDToken {
 
@@ -69,16 +62,16 @@ public class GoogleIDToken {
           ServiceAccountCredentials sac = ServiceAccountCredentials.fromStream(new FileInputStream(credFile));
 
           IdToken tok = tc.getIDTokenFromServiceAccount(sac, target_audience);
-          System.out.println(tok);
-          System.out.println(GoogleIDToken.verifyToken(tok.getTokenValue(), target_audience));
+          //IdToken tok = tc.getIDTokenFromComputeEngine(target_audience);
 
-          // IdToken tok = tc.getIDTokenFromComputeEngine(target_audience);
-          // System.out.println(tok);
-          // System.out.println(GoogleIDToken.verifyToken(tok.getTokenValue(),
-          // target_audience));
+          System.out.println(tok.getRawToken());
+          System.out.println(tok.getJsonWebSignature().getPayload().getExpirationTimeSeconds());
+          System.out.println(tok.getJsonWebSignature().getPayload().getAudienceAsList());
 
-          String url = "https://foo-endpont.a.run";
-          tc.MakeAuthenticatedRequest(tok.getTokenValue(), url);
+          System.out.println(GoogleIDToken.verifyToken(tok.getRawToken(), target_audience));
+
+          String url = "https://foo.com";
+          tc.MakeAuthenticatedRequest(tok.getRawToken(), url);
      }
 
      public IdToken getIDTokenFromServiceAccount(ServiceAccountCredentials sc, String targetAudience) throws Exception {
@@ -109,14 +102,7 @@ public class GoogleIDToken {
 
                GenericData responseData = response.parseAs(GenericData.class);
                String rawToken = validateString(responseData, "id_token", PARSE_ERROR_PREFIX);
-
-               if (rawToken.split("\\.").length !=3) 
-                 throw new Exception("Unable to parse segments of IDToken");
-               String payload = rawToken.split("\\.")[1];
-               String decodedToken = new String(BaseEncoding.base64().decode(payload), StandardCharsets.UTF_8);
-               JsonWebToken.Payload jwtPayload = jsonFactory.fromString(decodedToken, JsonWebToken.Payload.class);
-               return new IdToken(rawToken, new Date(jwtPayload.getExpirationTimeSeconds() * 1000),
-                         jwtPayload.getAudienceAsList());
+               return new IdToken(rawToken);
           } catch (IOException ex) {
                throw new IOException("Unable to Parse IDToken " + ex.getMessage(), ex);
           }
@@ -154,13 +140,11 @@ public class GoogleIDToken {
 
           payload.set("target_audience", targetAudience);
 
-          String assertion;
           try {
-               assertion = JsonWebSignature.signUsingRsaSha256(sc.getPrivateKey(), jsonFactory, header, payload);
+               return JsonWebSignature.signUsingRsaSha256(sc.getPrivateKey(), jsonFactory, header, payload);
           } catch (GeneralSecurityException e) {
                throw new IOException("Error signing service account access token request with private key.", e);
           }
-          return assertion;
      }
 
      public IdToken getIDTokenFromComputeEngine(String audience) throws Exception {
@@ -180,18 +164,9 @@ public class GoogleIDToken {
                throw new IOException(String.format("Unable to get IDToken from metadataServer %s: %s", statusCode,
                          response.parseAsString()));
           }
-
           String rawToken = response.parseAsString();
           response.disconnect();
-
-          if (rawToken.split("\\.").length !=3) 
-            throw new Exception("Unable to parse segments of IDToken");
-          String payload = rawToken.split("\\.")[1];
-          String decodedToken = new String(BaseEncoding.base64().decode(payload), StandardCharsets.UTF_8);
-          JacksonFactory jsonFactory = new JacksonFactory();
-          JsonWebToken.Payload jwtPayload = jsonFactory.fromString(decodedToken, JsonWebToken.Payload.class);
-          return new IdToken(rawToken, new Date(jwtPayload.getExpirationTimeSeconds() * 1000),
-                    jwtPayload.getAudienceAsList());
+          return new IdToken(rawToken);
      }
 
      public static boolean verifyToken(String id_token, String audience) throws Exception {
@@ -222,47 +197,32 @@ public class GoogleIDToken {
                throw new IOException(String.format("Unable to get IDToken from metadataServer %s: %s", statusCode,
                          response.parseAsString()));
           }
-
           System.out.println(response.parseAsString());
           response.disconnect();
-
      }
 
 }
 
 class IdToken {
 
-     private final String tokenValue;
-     private final List<String> audience;
-     private final Long expirationTimeMillis;
+     private final String rawToken;
+     private final JsonWebSignature jws;
 
-     public IdToken(String tokenValue, Date expirationTime, List<String> audience) {
-          this.tokenValue = tokenValue;
-          this.expirationTimeMillis = (expirationTime == null) ? null : expirationTime.getTime();
-          this.audience = audience;
+     public IdToken(String rawToken) throws IOException {
+          this.rawToken = rawToken;
+          this.jws = JsonWebSignature.parse( new JacksonFactory(), rawToken);
      }
 
-     public String getTokenValue() {
-          return tokenValue;
+     public String getRawToken() {
+          return rawToken;
      }
 
-     public List<String> getAudience() {
-          return audience;
-     }
-
-     public Date getExpirationTime() {
-          if (expirationTimeMillis == null) {
-               return null;
-          }
-          return new Date(expirationTimeMillis);
-     }
-
-     Long getExpirationTimeMillis() {
-          return expirationTimeMillis;
+     public JsonWebSignature getJsonWebSignature() {
+          return jws;
      }
 
      public String toString() {
-          return MoreObjects.toStringHelper(this).add("tokenValue", tokenValue)
-                    .add("expirationTimeMillis", expirationTimeMillis).toString();
+          return MoreObjects.toStringHelper(this).add("rawToken", rawToken)
+                    .add("JsonWebSignature", jws).toString();
      }
 }
