@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fe-srv-ingress
+  labels:
+    type: fe-srv
+  annotations:
+    cloud.google.com/app-protocols: '{"fe-web": "HTTP", "fe-grpc":"HTTP2"}'
+    #cloud.google.com/neg: '{"ingress": true }'
+spec:
+  type: NodePort
+  ports:
+  - name: fe-web
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: fe-grpc
+    port: 443
+    protocol: TCP
+    targetPort: 50051
+  selector:
+    app: fe
