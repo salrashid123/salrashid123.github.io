@@ -6,6 +6,16 @@ Scratchpad for ingress-gce changes
 
 Testcases covered IG based deployment as well as NEG for both HTTP(S) services as well as gRPC
 
+- Instance Group
+  - Default HC (HTTP backend)
+  - Custom Path HC (HTTP backend)
+  - Custom Path HC (gRPC Backend)
+  - Custom Path + Protocol Change (gRPC)
+
+- NEG
+  - Custom Path (HTTP)
+  - Default HC (gRPC)
+
 > Note grpc+NEG doesn't work as is because the healthcheck NEG invokes is over HTTP/2 (not grpc)
 
 Potential solution is to use mux...
@@ -512,7 +522,7 @@ spec:
     app: fe
 ```
 
-- ![deployments_grpc/images/2_neg_grpc.png](deployments_grpc/images/2_neg_grp.png)
+- ![deployments_grpc/images/2_neg_grpc.png](deployments_grpc/images/2_neg_grpc.png)
 
 - ![deployments_grpc/images/2_neg_grpc_hc.png](deployments_grpc/images/2_neg_grpc_hc.png)
 
