@@ -168,6 +168,7 @@ Each while using
 ### go
 
 - [golang/GoogleIDToken.go](golang/GoogleIDToken.go)
+- [github.com/salrashid123/oauth2/google](https://github.com/salrashid123/oauth2)
 
 ### nodejs
 
