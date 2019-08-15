@@ -11,6 +11,8 @@ Testcases covered IG based deployment as well as NEG for both HTTP(S) services a
   - Custom Path HC (HTTP backend)
   - Custom Path HC (gRPC Backend)
   - Custom Path + Protocol Change (gRPC)
+  - Custom Path HC with namedPort (HTTP backend)
+  - Custom Path HC with namedPort (gRPC backend)
 
 - NEG
   - Custom Path (HTTP)
@@ -462,6 +464,148 @@ service/kubernetes       ClusterIP   10.0.0.1       <none>        443/TCP       
 - ![deployments_grpc/images/1_no_neg_custom_https_lb.png](deployments_grpc/images/1_no_neg_custom_https_lb.png)
 
 
+
+  - Custom Path HC with namedPort (HTTP backend)
+
+- 
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    type: myapp-deployment-label
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: myapp
+  template:
+    metadata:
+      labels:
+        type: myapp
+        tier: frontend
+        version: v1
+    spec:
+      containers:
+      - name: frontend
+        image: salrashid123/istioinit:1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: srv-port
+        livenessProbe:
+          httpGet:
+            path: /_ah/health
+            port: srv-port
+        readinessProbe:
+          httpGet:
+            path: /_ah/health
+            port: srv-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-srv
+  #annotations:
+  #  cloud.google.com/neg: '{"ingress": true, "exposed_ports":{"8080":{}}}'
+  labels:
+    type: myapp-srv
+spec:
+  type: NodePort
+  ports:
+  - name: fe
+    port: 8080
+    protocol: TCP
+    targetPort: srv-port
+  selector:
+    type: myapp
+
+```
+
+  - Custom Path HC with namedPort (gRPC backend)
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-deployment
+  labels:
+    app: fe
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fe
+  template:
+    metadata:
+      labels:
+        app: fe
+    spec:
+      containers:
+      - name: fe-hc
+        image: salrashid123/grpc_health_proxy
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: hc-port
+        livenessProbe:
+          httpGet:
+            path: "/_ah/health"
+            port: hc-port
+            scheme: HTTP
+        readinessProbe:
+          httpGet:
+            path: "/_ah/health"
+            scheme: HTTP
+            port: hc-port
+        # for scheme: HTTPS
+        #args: ["--http-listen-addr", ":8080", "--http-listen-path", "/_ah/health", "--https-listen-cert=/data/certs/http_server_crt.pem","--https-listen-key=/data/certs/http_server_key.pem", "--grpcaddr", "localhost:50051", "--grpctls", "--grpc-ca-cert=/data/certs/CA_crt.pem", "--grpc-sni-server-name=grpc.domain.com", "--service-name", "echo.EchoServer", "--logtostderr=1", "-v=10"]
+        # for scheme: HTTP
+        args: ["--http-listen-addr", ":8080", "--http-listen-path", "/_ah/health", "--grpcaddr", "localhost:50051", "--grpctls", "--grpc-ca-cert=/data/certs/CA_crt.pem", "--grpc-sni-server-name=grpc.domain.com", "--service-name", "echo.EchoServer", "--logtostderr=1", "-v=10"]
+        volumeMounts:
+        - name: certs-volume
+          mountPath: /data/certs
+      - name: fe-grpc
+        image: salrashid123/grpc_only_backend
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 50051
+          protocol: TCP
+        command: ["/grpc_server"]
+        args: ["--grpcport", ":50051"]
+      volumes:
+        - name: certs-volume
+          secret:
+            secretName: fe-ca-cert
+---
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fe-srv-ingress
+  labels:
+    type: fe-srv
+  annotations:
+    cloud.google.com/app-protocols: '{"fe-web": "HTTP", "fe-grpc":"HTTP2"}'
+    #cloud.google.com/neg: '{"ingress": true }'
+spec:
+  type: NodePort
+  ports:
+  - name: fe-web
+    port: 8080
+    protocol: TCP
+    targetPort: hc-port
+  - name: fe-grpc
+    port: 443
+    protocol: TCP
+    targetPort: 50051
+  selector:
+    app: fe
+
+```
 
 ### NEG
 
