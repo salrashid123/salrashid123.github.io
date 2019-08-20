@@ -18,155 +18,78 @@ package com.test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
-import java.util.Map;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
-import com.google.api.client.http.HttpStatusCodes;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.UrlEncodedContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.json.webtoken.JsonWebSignature;
-import com.google.api.client.json.webtoken.JsonWebToken;
-import com.google.api.client.util.GenericData;
+import com.google.auth.http.HttpCredentialsAdapter;
+import com.google.auth.oauth2.ComputeEngineCredentials;
+import com.google.auth.oauth2.ImpersonatedCredentials;
+import com.google.auth.oauth2.IdTokenCredentials;
+import com.google.auth.oauth2.IdTokenProvider;
 import com.google.auth.oauth2.ServiceAccountCredentials;
-import com.google.common.base.MoreObjects;
+import com.google.auth.oauth2.GoogleCredentials;
 
 public class GoogleIDToken {
 
-     private static final String OAUTH_TOKEN_URI = "https://www.googleapis.com/oauth2/v4/token";
-     private static final String GOOGLE_CERT_URL = "https://www.googleapis.com/oauth2/v3/certs";
-     private static final String METADATA_IDENTITY_DOC_URL = "http://metadata/computeMetadata/v1/instance/service-accounts/default/identity";
-     private static final String GRANT_TYPE = "urn:ietf:params:oauth:grant-type:jwt-bearer";
-     private static final String PARSE_ERROR_PREFIX = "Error parsing token refresh response. ";
+     private static final String CLOUD_PLATFORM_SCOPE =  "https://www.googleapis.com/auth/cloud-platform";
+     private static final String credFile = "/path/to/svc.json";
+     private static final String target_audience = "https://foo.com";
 
      public static void main(String[] args) throws Exception {
 
-          String target_audience = "https://foo.com";
-
           GoogleIDToken tc = new GoogleIDToken();
 
-          String credFile = "/path/to/svc.json";
+          // IdTokenCredentials tok = tc.getIDTokenFromComputeEngine(target_audience);
+
           ServiceAccountCredentials sac = ServiceAccountCredentials.fromStream(new FileInputStream(credFile));
+          sac = (ServiceAccountCredentials)sac.createScoped(Arrays.asList(CLOUD_PLATFORM_SCOPE));
 
-          IdToken tok = tc.getIDTokenFromServiceAccount(sac, target_audience);
-          //IdToken tok = tc.getIDTokenFromComputeEngine(target_audience);
+          IdTokenCredentials tok = tc.getIDTokenFromServiceAccount(sac, target_audience);
 
-          System.out.println(tok.getRawToken());
-          System.out.println(tok.getJsonWebSignature().getPayload().getExpirationTimeSeconds());
-          System.out.println(tok.getJsonWebSignature().getPayload().getAudienceAsList());
+          //String impersonatedServiceAccount = "impersonated-account@project.iam.gserviceaccount.com";
+          //IdTokenCredentials tok = tc.getIDTokenFromImpersonatedCredentials((GoogleCredentials)sac, impersonatedServiceAccount, target_audience);
 
-          System.out.println(GoogleIDToken.verifyToken(tok.getRawToken(), target_audience));
-
+          System.out.println("Making Authenticated API call:");
           String url = "https://foo.com";
-          tc.MakeAuthenticatedRequest(tok.getRawToken(), url);
+          tc.MakeAuthenticatedRequest(tok, url);
+
+          System.out.println("Verifying Token:");
+          System.out.println(TestApp.verifyToken(tok.getAccessToken().getTokenValue(), target_audience));
      }
 
-     public IdToken getIDTokenFromServiceAccount(ServiceAccountCredentials sc, String targetAudience) throws Exception {
-          try {
-
-               HttpTransport httpTransport = new NetHttpTransport();
-               JacksonFactory jsonFactory = new JacksonFactory();
-               long currentTime = new Date().getTime();
-               String assertion = createAssertionForIdToken(sc, jsonFactory, currentTime, OAUTH_TOKEN_URI,
-                         targetAudience);
-
-               GenericData tokenRequest = new GenericData();
-               tokenRequest.set("grant_type", GRANT_TYPE);
-               tokenRequest.set("assertion", assertion);
-               UrlEncodedContent content = new UrlEncodedContent(tokenRequest);
-
-               HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
-               HttpRequest request = requestFactory.buildPostRequest(new GenericUrl(OAUTH_TOKEN_URI), content);
-               request.setParser(new JsonObjectParser(jsonFactory));
-
-               HttpResponse response;
-               try {
-                    response = request.execute();
-               } catch (IOException e) {
-                    throw new IOException(
-                              String.format("Error getting idToken for service account: %s", e.getMessage()), e);
-               }
-
-               GenericData responseData = response.parseAs(GenericData.class);
-               String rawToken = validateString(responseData, "id_token", PARSE_ERROR_PREFIX);
-               return new IdToken(rawToken);
-          } catch (IOException ex) {
-               throw new IOException("Unable to Parse IDToken " + ex.getMessage(), ex);
-          }
+     public IdTokenCredentials getIDTokenFromServiceAccount(ServiceAccountCredentials saCreds, String targetAudience) {
+          IdTokenCredentials tokenCredential = IdTokenCredentials.newBuilder().setIdTokenProvider(saCreds)
+                    .setTargetAudience(targetAudience).build();
+          return tokenCredential;
      }
 
-     private static String validateString(Map<String, Object> map, String key, String errorPrefix) throws IOException {
-          Object value = map.get(key);
-          if (value == null) {
-               throw new IOException(String.format("VALUE not found during prsing", errorPrefix, key));
-          }
-          if (!(value instanceof String)) {
-               throw new IOException(String.format("Wrong type parsed: ", errorPrefix, "string", key));
-          }
-          return (String) value;
+     public IdTokenCredentials getIDTokenFromComputeEngine(String targetAudience) {
+          ComputeEngineCredentials caCreds = ComputeEngineCredentials.create();
+          IdTokenCredentials tokenCredential = IdTokenCredentials.newBuilder().setIdTokenProvider(caCreds)
+                    .setTargetAudience(targetAudience)
+                    .setOptions(Arrays.asList(IdTokenProvider.Option.FORMAT_FULL, IdTokenProvider.Option.LICENSES_TRUE))
+                    .build();
+          return tokenCredential;
      }
 
-     private String createAssertionForIdToken(ServiceAccountCredentials sc, JsonFactory jsonFactory, long currentTime,
-               String audience, String targetAudience) throws IOException {
-          JsonWebSignature.Header header = new JsonWebSignature.Header();
-          header.setAlgorithm("RS256");
-          header.setType("JWT");
-          header.setKeyId(sc.getPrivateKeyId());
-
-          JsonWebToken.Payload payload = new JsonWebToken.Payload();
-          payload.setIssuer(sc.getClientEmail());
-          payload.setIssuedAtTimeSeconds(currentTime / 1000);
-          payload.setExpirationTimeSeconds(currentTime / 1000 + 3600);
-          payload.setSubject(sc.getServiceAccountUser());
-
-          if (audience == null) {
-               payload.setAudience(OAUTH_TOKEN_URI.toString());
-          } else {
-               payload.setAudience(audience);
-          }
-
-          payload.set("target_audience", targetAudience);
-
-          try {
-               return JsonWebSignature.signUsingRsaSha256(sc.getPrivateKey(), jsonFactory, header, payload);
-          } catch (GeneralSecurityException e) {
-               throw new IOException("Error signing service account access token request with private key.", e);
-          }
-     }
-
-     public IdToken getIDTokenFromComputeEngine(String audience) throws Exception {
-
-          GenericUrl tokenUrl = new GenericUrl(METADATA_IDENTITY_DOC_URL);
-          tokenUrl.put("audience", audience);
-
-          HttpTransport httpTransport = new NetHttpTransport();
-          HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
-          HttpRequest request = requestFactory.buildGetRequest(tokenUrl);
-          HttpHeaders headers = new HttpHeaders();
-          headers.put("Metadata-Flavor", "Google");
-          request.setHeaders(headers);
-          HttpResponse response = request.execute();
-          int statusCode = response.getStatusCode();
-          if (statusCode != HttpStatusCodes.STATUS_CODE_OK) {
-               throw new IOException(String.format("Unable to get IDToken from metadataServer %s: %s", statusCode,
-                         response.parseAsString()));
-          }
-          String rawToken = response.parseAsString();
-          response.disconnect();
-          return new IdToken(rawToken);
+     public IdTokenCredentials getIDTokenFromImpersonatedCredentials(GoogleCredentials sourceCreds,
+               String impersonatedServieAccount, String targetAudience) {
+          ImpersonatedCredentials imCreds = ImpersonatedCredentials.create(sourceCreds, impersonatedServieAccount, null,
+                    Arrays.asList(CLOUD_PLATFORM_SCOPE), 300);
+          IdTokenCredentials tokenCredential = IdTokenCredentials.newBuilder().setIdTokenProvider(imCreds)
+                    .setTargetAudience(targetAudience).setOptions(Arrays.asList(IdTokenProvider.Option.INCLUDE_EMAIL))
+                    .build();
+          return tokenCredential;
      }
 
      public static boolean verifyToken(String id_token, String audience) throws Exception {
@@ -176,53 +99,26 @@ public class GoogleIDToken {
           GoogleIdToken idToken = verifier.verify(id_token);
           if (idToken != null) {
                Payload payload = idToken.getPayload();
-               // System.out.println(payload);
                return true;
           } else {
                return false;
           }
      }
 
-     public void MakeAuthenticatedRequest(String id_token, String url) throws IOException {
-          GenericUrl tokenUrl = new GenericUrl(url);
-          HttpTransport httpTransport = new NetHttpTransport();
-          HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
-          HttpRequest request = requestFactory.buildGetRequest(tokenUrl);
-          HttpHeaders headers = new HttpHeaders();
-          headers.put("Authorization", "Bearer " + id_token);
-          request.setHeaders(headers);
+     public void MakeAuthenticatedRequest(IdTokenCredentials id_token, String url) throws IOException {
+
+          GenericUrl genericUrl = new GenericUrl(url);
+          HttpCredentialsAdapter adapter = new HttpCredentialsAdapter(id_token);
+          HttpTransport transport = new NetHttpTransport();
+          HttpRequest request = transport.createRequestFactory(adapter).buildGetRequest(genericUrl);
+          request.setThrowExceptionOnExecuteError(false);
           HttpResponse response = request.execute();
-          int statusCode = response.getStatusCode();
-          if (statusCode != HttpStatusCodes.STATUS_CODE_OK) {
-               throw new IOException(String.format("Unable to get IDToken from metadataServer %s: %s", statusCode,
-                         response.parseAsString()));
-          }
-          System.out.println(response.parseAsString());
-          response.disconnect();
-     }
+          String r = response.parseAsString();
+          System.out.println(r);
 
-}
-
-class IdToken {
-
-     private final String rawToken;
-     private final JsonWebSignature jws;
-
-     public IdToken(String rawToken) throws IOException {
-          this.rawToken = rawToken;
-          this.jws = JsonWebSignature.parse( new JacksonFactory(), rawToken);
-     }
-
-     public String getRawToken() {
-          return rawToken;
-     }
-
-     public JsonWebSignature getJsonWebSignature() {
-          return jws;
-     }
-
-     public String toString() {
-          return MoreObjects.toStringHelper(this).add("rawToken", rawToken)
-                    .add("JsonWebSignature", jws).toString();
+          System.out.println(id_token.getAccessToken().getTokenValue());
+          response = request.execute();
+          r = response.parseAsString();
+          System.out.println(r);
      }
 }
