@@ -163,7 +163,6 @@ Each while using
 ### java
 
 - [java/GoogleIDToken.java](java/GoogleIDToken.java)
-  ref[#99](https://github.com/googleapis/google-auth-library-java/issues/99)
 
 ### go
 
