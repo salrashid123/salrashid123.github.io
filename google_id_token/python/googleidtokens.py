@@ -15,6 +15,7 @@
 
 import google.oauth2.credentials
 from google.oauth2 import id_token
+from google.auth import impersonated_credentials
 from google.oauth2 import service_account
 import google.auth
 import google.auth.transport.requests
@@ -45,6 +46,24 @@ def GetIDTokenFromComputeEngine(target_audience):
   resp = request(url, method='GET', headers=headers)
   return resp.data
 
+def GetIDTokenFromImpersonatedCredentials(svcAccountFile, target_audience):
+  source_credentials = service_account.Credentials.from_service_account_file(svcAccountFile)
+  target_scopes = ['https://www.googleapis.com/auth/cloud-platform']  
+
+  target_credentials = impersonated_credentials.Credentials(
+      source_credentials = source_credentials,
+      target_principal='impersonated-account@fabled-ray-104117.iam.gserviceaccount.com',
+      target_scopes = target_scopes,
+      delegates=[],
+      lifetime=300)
+
+  id_creds = impersonated_credentials.IDTokenCredentials(
+      target_credentials, target_audience=target_audience, include_email=False)
+
+  request = google.auth.transport.requests.Request()
+  id_creds.refresh(request)
+  return id_creds.token
+
 def VerifyIDToken(token, certs_url,  audience=None):
    request = google.auth.transport.requests.Request()
    result = id_token.verify_token(token,request,certs_url=certs_url)
@@ -64,6 +83,10 @@ token = GetIDTokenFromServiceAccount(svcAccountFile,target_audience)
 
 # For Compute Engine
 #token = GetIDTokenFromComputeEngine(target_audience)
+
+# For Impersonated Credentials
+#token = GetIDTokenFromImpersonatedCredentials(svcAccountFile, target_audience)
+
 
 print 'Token: ' + token
 if VerifyIDToken(token=token,certs_url=certs_url, audience=target_audience):
