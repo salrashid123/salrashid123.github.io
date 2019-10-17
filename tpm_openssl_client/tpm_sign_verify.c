@@ -23,7 +23,7 @@
 
 
 // export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/engines-1.1/
-// gcc -I./tpm2-tss-engine/include tpm_sign_verify.c -L/usr/lib/x86_64-linux-gnu/engines-1.1/ -lcrypto -ltpm2tss -o tpm_sign_verify
+// gcc tpm_sign_verify.c -L/usr/lib/x86_64-linux-gnu/engines-1.1/ -lcrypto -ltpm2tss -o tpm_sign_verify
 
 
 // attribution: https://cis.gvsu.edu/~kalafuta/cis457/w19/labs/cryptotest.c

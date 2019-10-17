@@ -4,7 +4,7 @@ Basic application that uses a the [tpm2-tss-engine](https://github.com/tpm2-soft
 
 This is intended to run on a system with a TPM as well as the the openssl engine library installed.  The TPM-based private key is generated directly using `tpm2tss-genkey` and from that, the openssl engine to surface the public part.  The tpm2-tss-engine surfaces the OpenSSL constructs like `EVP_PKEY_RSA` so you can directly use that against the TPM
 
-As its a basic helloworld app (and because i really don't know f c, _caveat emptor_)
+As its a basic helloworld app (and because i really don't know c, _caveat emptor_)
 
 
 ### Usage
@@ -71,8 +71,8 @@ openssl x509 -in public.crt -text -noout
 
 ```
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/engines-1.1/
-gcc -I./tpm2-tss-engine/include tpm_encrypt_decrypt.c -L/usr/lib/x86_64-linux-gnu/engines-1.1/ -lcrypto -ltpm2tss -o tpm_encrypt_decrypt
-gcc -I./tpm2-tss-engine/include tpm_sign_verify.c -L/usr/lib/x86_64-linux-gnu/engines-1.1/ -lcrypto -ltpm2tss -o tpm_sign_verify
+gcc tpm_encrypt_decrypt.c -L/usr/lib/x86_64-linux-gnu/engines-1.1/ -lcrypto -ltpm2tss -o tpm_encrypt_decrypt
+gcc tpm_sign_verify.c -L/usr/lib/x86_64-linux-gnu/engines-1.1/ -lcrypto -ltpm2tss -o tpm_sign_verify
 ```
 
 ```
