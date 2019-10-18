@@ -82,6 +82,11 @@ gcc tpm_sign_verify.c -L/usr/lib/x86_64-linux-gnu/engines-1.1/ -lcrypto -ltpm2ts
 
 I've left commented out sections in the code that shows how the operations run while reading non-TPM based keys
 
+### JWTAccess Token for GCP Authentication
+
+`gcp_jwt_token/gcs_auth.c` is a sample application that provides a Google Cloud Platform JWT Access Token.
+
+
 ### References
 - https://wiki.openssl.org/index.php/EVP_Signing_and_Verifying
 - https://wiki.openssl.org/index.php/EVP
