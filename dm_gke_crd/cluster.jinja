@@ -1,0 +1,67 @@
+{#
+Copyright 2016 Google Inc. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+#}
+
+
+resources:
+- name: {{ properties['clusterName'] }}
+  type: container.v1.cluster
+  properties:
+    zone: {{ properties['zone'] }}
+    cluster:
+      name: {{ properties['clusterName'] }}
+      initialNodeCount: {{ properties['initialNodeCount'] }}
+      initialClusterVersion: {{ properties['initialClusterVersion'] }}
+      enableKubernetesAlpha: {{ properties['enableKubernetesAlpha'] }}
+      nodeConfig:
+        oauthScopes:
+        - https://www.googleapis.com/auth/compute
+        - https://www.googleapis.com/auth/devstorage.read_only
+        - https://www.googleapis.com/auth/logging.write
+        - https://www.googleapis.com/auth/monitoring
+
+- name: {{ properties['clusterName'] }}-provider
+  type: deploymentmanager.v2beta.typeProvider
+  properties:
+    options:
+      validationOptions:
+        schemaValidation: FAIL
+      inputMappings:
+      - fieldName: name
+        location: PATH
+        methodMatch: ^(get|delete|put|patch|post)$
+        value: $.resource.properties.metadata.name
+      - fieldName: namespace
+        location: PATH
+        methodMatch: ^(get|delete|put|patch|post)$
+        value: $.resource.properties.metadata.namespace
+      - fieldName: metadata.resourceVersion
+        location: BODY
+        methodMatch: ^(put|patch)$
+        value: $.resource.self.metadata.resourceVersion    
+      - fieldName: Authorization
+        location: HEADER
+        value: >
+          $.concat("Bearer ", $.googleOauth2AccessToken())
+    collectionOverrides:
+    - collection: /api/v1/namespaces/{namespace}/services/{name}
+      options:
+        inputMappings:
+        - fieldName: spec.clusterIP
+          location: BODY
+          methodMatch: ^(put|patch)$
+          value: $.resource.self.spec.clusterIP
+    descriptorUrl: https://$(ref.{{ properties['clusterName'] }}.endpoint)/openapi/v2
+
+outputs:
+- name: clusterType
+  value: {{ properties['clusterName'] }}-provider
