@@ -1,4 +1,4 @@
-# GKE Cluster and Type
+# Managing Kubernetes CustomResourceDefinitions with Google Deployment Manager
 
 Defining and using [CustomResourceDefinitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions) (CRD) in kubernetes is very common but up until now, creating and using CRDs entirely within [Google Cloud Deployment Manager](https://cloud.google.com/deployment-manager/docs/) (DM) wasn't possible.  This was because the the new API endpoints a CRD would define wasn't 'visible' to DM at all since kubernetes itself did not dynamically update its own OpenAPI specifications to reflect any new CRD.  If k8s API server never got updated, DM would never know about them.
 
