@@ -1,0 +1,3 @@
+queue:
+- name: q1
+  rate: 1/s
