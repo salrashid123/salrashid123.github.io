@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Fluentd on 6equj5.dev</title>
-    <link>https://salrashid123.github.io/tags/fluentd/</link>
+    <link>https://blog.6equj5.dev/tags/fluentd/</link>
     <description>Recent content in Fluentd on 6equj5.dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 01 Jul 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://salrashid123.github.io/tags/fluentd/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.6equj5.dev/tags/fluentd/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Writing Developer logs with Google Cloud Logging</title>
-      <link>https://salrashid123.github.io/posts/writing_developer_logs_gcp/</link>
+      <link>https://blog.6equj5.dev/posts/writing_developer_logs_gcp/</link>
       <pubDate>Mon, 01 Jul 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/writing_developer_logs_gcp/</guid>
+      <guid>https://blog.6equj5.dev/posts/writing_developer_logs_gcp/</guid>
       <description>Several months ago Google Cloud Logging introduced two new monitored resource types geared towards allowing developers to emit cloud logging messages for their own application centric logs. Pereviously, application logs generally had to be tied to existing predefined monitored_resources such as GCE, GKE, AppEngine, Dataflow and so on. Under those monitoried resources sources, multiple log entries were attributed to specific logNames describing the subsystem like syslog, apache2, nginx, mysql, etc.</description>
     </item>
     

@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Oauth2 on 6equj5.dev</title>
-    <link>https://salrashid123.github.io/tags/oauth2/</link>
+    <link>https://blog.6equj5.dev/tags/oauth2/</link>
     <description>Recent content in Oauth2 on 6equj5.dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 20 May 2019 13:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://salrashid123.github.io/tags/oauth2/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.6equj5.dev/tags/oauth2/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Automatic oauth2:  Using Cloud Scheduler and Tasks to call Google APIs</title>
-      <link>https://salrashid123.github.io/posts/automatic_oauth2/</link>
+      <link>https://blog.6equj5.dev/posts/automatic_oauth2/</link>
       <pubDate>Mon, 20 May 2019 13:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/automatic_oauth2/</guid>
+      <guid>https://blog.6equj5.dev/posts/automatic_oauth2/</guid>
       <description>A month ago or so I tried out a pretty versatile feature in Cloud Scheduler and Cloud Tasks and Cloud Tasks that emits OpenIDConnect or oauth2 access_token to outbound webhook calls.
 When a Scheduled task fires and calls an HTTP endpoint, it can optionally automatically carry credentials for use with a GCP REST Endpoint. What does that mean? Well, you can automatically trigger most Google APIs directly do to any number of things on schedule or as a task instead of creating and running a cron elsewhere.</description>
     </item>
     
     <item>
       <title>Terraform &#39;Assume Role&#39; and service Account impersonation on Google Cloud</title>
-      <link>https://salrashid123.github.io/posts/terraform_gcp_impersonation/</link>
+      <link>https://blog.6equj5.dev/posts/terraform_gcp_impersonation/</link>
       <pubDate>Sun, 28 Apr 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/terraform_gcp_impersonation/</guid>
+      <guid>https://blog.6equj5.dev/posts/terraform_gcp_impersonation/</guid>
       <description>About two months ago, someone asked me to help them setup Terraform to automatically provision GCP projects. It was the first time I actually used it and found it capabilities pretty powerful: it&amp;rsquo;s easy to manage complex resources and maintain a picture of the state change. However, one aspect of its capabilities that struck me was its need to directly have permissions on all GCP resources it provisioned or manage.</description>
     </item>
     

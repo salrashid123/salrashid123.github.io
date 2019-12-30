@@ -28,7 +28,7 @@
     <meta property="og:title" content="GPG stream encryption and decryption on Google Cloud Functions and Cloud Run" />
 <meta property="og:description" content="About a year&#43; ago a colleague of mine (Daz Wilkin) asked me how best to decompress/unzip a file using Google Cloud Functions. The suggestion ended as a sample he provided demonstrating the stream-read-&gt;stream-write pattern with the pertinent input-outputs (input: unziped file; output zipped file). The distinct advantage of stream processing the unzip function is that the data is never held in memory: as the unzipped content gets processed by GCF, its promptly written as a zip file to GCS." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://salrashid123.github.io/posts/gpg_gcf/" />
+<meta property="og:url" content="https://blog.6equj5.dev/posts/gpg_gcf/" />
 <meta property="article:published_time" content="2019-04-28T14:34:01-08:00"/>
 <meta property="article:modified_time" content="2019-04-28T14:34:01-08:00"/>
 
@@ -70,11 +70,11 @@ if (!doNotTrack) {
 
   
   
-  <header class="cover bg-top" style="background-image: url('https://salrashid123.github.io/posts/gpg_gcf/images/encrypt.png');">
+  <header class="cover bg-top" style="background-image: url('https://blog.6equj5.dev/posts/gpg_gcf/images/encrypt.png');">
     <div class="pb3-m pb6-l bg-black-60">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
-    <a href="https://salrashid123.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+    <a href="https://blog.6equj5.dev/" class="f3 fw2 hover-white no-underline white-90 dib">
       6equj5.dev
     </a>
     <div class="flex-l items-center">
@@ -536,7 +536,7 @@ gcloud beta run deploy --image gcr.io/&lt;projectID&gt;/gpgtest --region=us-cent
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
-  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://salrashid123.github.io/" >
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.6equj5.dev/" >
     &copy; 2019 6equj5.dev
   </a>
     <div>

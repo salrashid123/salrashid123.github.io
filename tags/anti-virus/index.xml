@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Anti Virus on 6equj5.dev</title>
-    <link>https://salrashid123.github.io/tags/anti-virus/</link>
+    <link>https://blog.6equj5.dev/tags/anti-virus/</link>
     <description>Recent content in Anti Virus on 6equj5.dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 27 May 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://salrashid123.github.io/tags/anti-virus/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.6equj5.dev/tags/anti-virus/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Anti Virus file scanning on Google Cloud Storage using ClamAV</title>
-      <link>https://salrashid123.github.io/posts/clam_av/</link>
+      <link>https://blog.6equj5.dev/posts/clam_av/</link>
       <pubDate>Mon, 27 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/clam_av/</guid>
+      <guid>https://blog.6equj5.dev/posts/clam_av/</guid>
       <description>Tutorial on how to use ClamAV to scan files uploaded to Google Cloud Storage (GCS).
 GCS does not have any built in capability to scan or do any other type of preprocessing on its files and relies on other services to perform these steps. In this tutorial, we will process a file that gets uploaded to GCS for viruses, malware, etc using ClamAV.
 Architecture The basic flow outlined here is:</description>
