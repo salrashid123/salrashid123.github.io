@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sso on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/sso/</link>
+    <description>Recent content in Sso on blog.salrashid.me</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 29 Dec 2016 14:34:01 -0800</lastBuildDate>
+    
+	<atom:link href="https://blog.salrashid.me/tags/sso/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Google Cloud Directory Sync with OpenLDAP</title>
+      <link>https://blog.salrashid.me/posts/google_cloud_directory_sync/</link>
+      <pubDate>Thu, 29 Dec 2016 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/google_cloud_directory_sync/</guid>
+      <description>This is a tutorial on how to provision users and groups from a local LDAP server (OpenLDAP) into your G Suite domain. Any users and groups present in your local LDAP server will get created in G Suite. Once your users are present in your G Suite domain, you can authorize these users and groups access to Google Cloud Resources and other G Suite features.
+This article is simply a tutorial on the simplified steps you would take for your on-prem directory server (ActiveDirectory, OpenLDAP).</description>
+    </item>
+    
+    <item>
+      <title>Simple SAML SSO server for Google Cloud and Apps</title>
+      <link>https://blog.salrashid.me/posts/googlapps-sso/</link>
+      <pubDate>Thu, 28 Jul 2016 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/googlapps-sso/</guid>
+      <description>Sample app for SSO between google apps domains.
+This demonstrates SAML SSO with google properties and is is intended for testing/POC only.
+The script basically runs a SAML IDP within a docker container and will allow you to login to google apps/gsuites to test out your configuration.
+  You can find the source here:
+  Configure Google Apps SAML/SSO  Login to your google apps admin console (admin.</description>
+    </item>
+    
+  </channel>
+</rss>

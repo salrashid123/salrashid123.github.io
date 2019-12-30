@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Serviceaccount on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/serviceaccount/</link>
+    <description>Recent content in Serviceaccount on blog.salrashid.me</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Jan 2017 14:34:01 -0800</lastBuildDate>
+    
+	<atom:link href="https://blog.salrashid.me/tags/serviceaccount/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Using serviceAccountActor IAM role for account impersonation on Google Cloud Platform</title>
+      <link>https://blog.salrashid.me/posts/svc_impersonation/</link>
+      <pubDate>Thu, 19 Jan 2017 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/svc_impersonation/</guid>
+      <description>The serviceAccountActor IAM role on Google Cloud has some very useful and powerful capabilities. It is an IAM role that allows you to grant another user or serviceAccount the ability to impersonate a service Account. In this way, you can have service account A impersonate B and acquire the access_tokens or id_tokens for B.
+This article covers how you can acquire id and access tokens for service account B by service account A.</description>
+    </item>
+    
+  </channel>
+</rss>

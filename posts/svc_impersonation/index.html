@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>blog.salrashid.me  | Using serviceAccountActor IAM role for account impersonation on Google Cloud Platform</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Using serviceAccountActor IAM role for account impersonation on Google Cloud Platform" />
+<meta property="og:description" content="The serviceAccountActor IAM role on Google Cloud has some very useful and powerful capabilities. It is an IAM role that allows you to grant another user or serviceAccount the ability to impersonate a service Account. In this way, you can have service account A impersonate B and acquire the access_tokens or id_tokens for B.
+This article covers how you can acquire id and access tokens for service account B by service account A." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.salrashid.me/posts/svc_impersonation/" />
+<meta property="article:published_time" content="2017-01-19T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2017-01-19T14:34:01-08:00"/>
+
+<meta itemprop="name" content="Using serviceAccountActor IAM role for account impersonation on Google Cloud Platform">
+<meta itemprop="description" content="The serviceAccountActor IAM role on Google Cloud has some very useful and powerful capabilities. It is an IAM role that allows you to grant another user or serviceAccount the ability to impersonate a service Account. In this way, you can have service account A impersonate B and acquire the access_tokens or id_tokens for B.
+This article covers how you can acquire id and access tokens for service account B by service account A.">
+
+
+<meta itemprop="datePublished" content="2017-01-19T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2017-01-19T14:34:01-08:00" />
+<meta itemprop="wordCount" content="1594">
+
+
+
+<meta itemprop="keywords" content="serviceaccount,iam,oauth2,oidc," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Using serviceAccountActor IAM role for account impersonation on Google Cloud Platform"/>
+<meta name="twitter:description" content="The serviceAccountActor IAM role on Google Cloud has some very useful and powerful capabilities. It is an IAM role that allows you to grant another user or serviceAccount the ability to impersonate a service Account. In this way, you can have service account A impersonate B and acquire the access_tokens or id_tokens for B.
+This article covers how you can acquire id and access tokens for service account B by service account A."/>
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-155117088-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://blog.salrashid.me/posts/svc_impersonation/images/id_token2.png');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog.salrashid.me/" class="f3 fw2 hover-white no-underline white-90 dib">
+      blog.salrashid.me
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">Using serviceAccountActor IAM role for account impersonation on Google Cloud Platform</h1>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Using serviceAccountActor IAM role for account impersonation on Google Cloud Platform</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2017-01-19T14:34:01-08:00">January 19, 2017</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>The <a href="https://cloud.google.com/iam/docs/service-accounts#service_accounts_as_a_resource">serviceAccountActor</a> IAM role on Google Cloud has some very useful and powerful capabilities.  It is an IAM role that allows you to grant another user or serviceAccount the ability to impersonate a service Account.  In this way, you can have service account A impersonate B and acquire the access_tokens or id_tokens for B.</p>
+
+<p>This article covers how you can acquire id and access tokens for service account B <strong>by</strong> service account A.  You can also have a end-user assigned the serviceAccountActor role too.
+For clarity, I&rsquo;ve separated out the id and access token steps below.</p>
+
+<p>Note:
+* access_tokens are used to gain access to a Google API <strong>as</strong> B.
+* id_tokens are used to identify the the service Account B to some other system.  The ID token contains digitally signed information that can be validated to assert who the token was issued to.
+  * Google issued id_token:  these id_tokens are signed directly by Google&rsquo;s Certificates and simply assert the callers identity.</p>
+
+<p>One final mechanism described here is creating an arbitrary JWT using Service Account&rsquo;s private key.  These JWTs are signed by one of the keys associated with a given service account and can convey additional verifiable
+information within the claim such as the intended target (audience) and custom scopes.</p>
+
+<p>For more information see
+* <a href="https://cloud.google.com/iam/docs/understanding-service-accounts#acting_as_a_service_account">Acting as a service account</a>
+* <a href="https://tools.ietf.org/html/rfc7519">RFC 7519</a>
+* <a href="https://jwt.io/introduction/">JSON Web Debugger</a>
+* <a href="https://github.com/salrashid123/jwt-samples">Raw JWT implementations</a></p>
+
+<blockquote>
+<p>You can find the script referenced here on my <a href="https://github.com/salrashid123/gcpsamples/blob/master/auth/tokens/gcs_auth.py">github page</a></p>
+</blockquote>
+
+<h2 id="assign-serviceaccountactor-role">Assign serviceAccountActor role</h2>
+
+<p>The first step is to assign the serviceAccountActor role <strong>on</strong> B <strong>to</strong> A.  That is, you are allowing A the permission to act as B.  This configuration is done on the
+IAM Permissions page by selecting B as shown below.</p>
+
+<p><img src="images/svc.png" alt="images/svc.png" /></p>
+
+<p>In the example screenshot,
+* serviceAccountA_ID is: svc-2-429@mineral-minutia-820.iam.gserviceaccount.com
+* serviceAccountB_ID is: service-account-b@mineral-minutia-820.iam.gserviceaccount.com</p>
+
+<p><strong>Note:</strong> serviceAccountB_ID does not even have any valid certificate keys.  This means there are no valid physical, distributed certificate key files.</p>
+
+<blockquote>
+<p>As mentioned, you do NOT have to use a service account to impersonate another one; you can easily assign the serviceAccountActor role to an end user (e.g. user@domain.com).</p>
+</blockquote>
+
+<h2 id="initialize-an-iam-client-for-service-account-a">Initialize an IAM client for service Account A</h2>
+
+<p>Since we are doing operations as service Account A, we need to create a client for access to IAM using <a href="https://developers.google.com/identity/protocols/application-default-credentials">Application Default Credentials</a>:</p>
+
+<pre><code class="language-python">import httplib2
+from apiclient.discovery import build
+from oauth2client.client import GoogleCredentials
+scope = 'https://www.googleapis.com/auth/iam https://www.googleapis.com/auth/cloud-platform'
+os.environ[&quot;GOOGLE_APPLICATION_CREDENTIALS&quot;] = &quot;ServiceAccountA_keyFile.json&quot;
+credentials = GoogleCredentials.get_application_default()
+if credentials.create_scoped_required():
+   credentials = credentials.create_scoped(scope)
+http = credentials.authorize(httplib2.Http())
+
+service = build(serviceName='iam', version= 'v1',http=http)
+resource = service.projects()
+</code></pre>
+
+<h2 id="create-access-token">Create access_token</h2>
+
+<p>After we assigned the role, download the certificate for A (the service you will use to impersonate B).  You may also impersonate B as a user and to do that, you will
+need to initialize a client as an end user.  For more information on, see <a href="https://github.com/salrashid123/gcpsamples">Google Cloud Authentication Samples</a>.</p>
+
+<h3 id="create-an-unsigned-jwt">Create an unsigned JWT</h3>
+
+<p>Now that we have an initialized, authenticated client for A, we need to generate a JWT with some specific claims.  Since we are creating an access_token request,
+the JWT needs to be in the form:</p>
+
+<pre><code class="language-json">{
+    &quot;iss&quot;: &quot;serviceAccountB_ID&quot;,
+    &quot;scope&quot;: &quot;scope1 scope2&quot;,
+    &quot;aud&quot;: &quot;https://accounts.google.com/o/oauth2/token&quot;,
+    &quot;exp&quot;:  expiration_time,
+    &quot;iat&quot;:  issue_time
+}    
+</code></pre>
+
+<p>Set the scopes to limit the capabilities of a given token.  A list of scopes can be found <a href="https://developers.google.com/identity/protocols/googlescopes">here</a>.</p>
+
+<h3 id="acquire-the-jwt-using-service-account-a-credentials">Acquire the JWT using Service Account A credentials</h3>
+
+<p>Now that we have an unsigned JWT claim set, we need to sign it using A&rsquo;s credentials but instruct <strong>.signBlob()</strong> to sign it for B:</p>
+
+<pre><code class="language-python">client_id= 'serviceAccountB_ID'
+slist = resource.serviceAccounts().signJwt(name='projects/mineral-minutia-820/serviceAccounts/' + client_id, 
+                                                 body={'payload': claim })
+resp = slist.execute()
+
+signed_jwt = resp['signedJwt']
+</code></pre>
+
+<h3 id="transmit-the-singed-jwt-to-google-to-get-an-access-token">Transmit the singed JWT to Google to get an access_token</h3>
+
+<pre><code class="language-python">url = 'https://accounts.google.com/o/oauth2/token'
+data = {'grant_type' : 'assertion',
+        'assertion_type' : 'http://oauth.net/grant_type/jwt/1.0/bearer',
+        'assertion' : signed_jwt }
+headers = {&quot;Content-type&quot;: &quot;application/x-www-form-urlencoded&quot;}
+data = urllib.urlencode(data)
+req = urllib2.Request(url, data, headers)
+resp = urllib2.urlopen(req).read()
+parsed = json.loads(resp)
+access_token = parsed.get('access_token')
+</code></pre>
+
+<p>Now you have an access token.  With this, you can access any GoogleAPI that is scoped correctly and to which B has access.</p>
+
+<p>One way to initialize a Google API client given a raw access_token is to use <a href="http://oauth2client.readthedocs.io/en/latest/source/oauth2client.client.html#oauth2client.client.AccessTokenCredentials">oauth2client.client.AccessTokenCredentials</a>.
+Other languages have similar bindings.</p>
+
+<p>You can also verify the access_token by interrogating the <strong>tokeninfo</strong> endpoint as shown here:</p>
+
+<pre><code>curl https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=ya29.ElnUAws0MfV3om_tqQ0ZS3g7-BZ2ZS_uaJUNdPk8TI7hHkPnFb8Kesg67WQwJswTfD1nYTk-tD0MDUf6X3-pKklpicBDZszq16Q7smBZoDemnYcWaYvJ8gjqnw
+
+{
+ &quot;azp&quot;: &quot;104943293997971332223&quot;,
+ &quot;aud&quot;: &quot;104943293997971332223&quot;,
+ &quot;scope&quot;: &quot;https://www.googleapis.com/auth/userinfo.email&quot;,
+ &quot;exp&quot;: &quot;1484452560&quot;,
+ &quot;expires_in&quot;: &quot;3543&quot;,
+ &quot;email&quot;: &quot;service-account-b@mineral-minutia-820.iam.gserviceaccount.com&quot;,
+ &quot;email_verified&quot;: &quot;true&quot;,
+ &quot;access_type&quot;: &quot;offline&quot;
+}
+</code></pre>
+
+<p><img src="images/access_token.png" alt="images/access_token.png" /></p>
+
+<h2 id="google-issued-id-token">Google issued id_token</h2>
+
+<p>Though id_tokens and access_tokens have similar flows, they are used for very different things:  as the name implies, access_tokens are used to grant access
+to google resources (eg. GCS, PubSub, etc) while id_tokens simply assert the bearers identity.</p>
+
+<p>These id_tokens are digitally signed by google so given an id_token, a system can verify its authenticity by verifying its signature against Google&rsquo;s public certificate.
+The id_tokens are simply convey who the caller is (not what it can do).</p>
+
+<p>If you need two system to communicate securely, you can pass (via SSL), an id_token.  The receiving system can locally validate the token using a cached copy of Google&rsquo;s certificate.
+However, Google-issued ID tokens simply identify the caller and cannot assert if the receipient of the token is the intended target.  For that, you can mint a Service Account id_token
+as described below.</p>
+
+<p>See:
+* <a href="https://developers.google.com/identity/sign-in/web/backend-auth">id_tokens</a></p>
+
+<p><img src="images/id_token.png" alt="images/id_token.png" /></p>
+
+<h3 id="create-an-unsigned-jwt-1">Create an unsigned JWT</h3>
+
+<p>The first step is to create an unsigned JWT but have the scope to the service Account B&rsquo;s ID:</p>
+
+<pre><code class="language-json">{
+    &quot;iss&quot;: &quot;serviceAccountB_ID&quot;,
+    &quot;scope&quot;: &quot;serviceAccountB_ID&quot;,
+    &quot;aud&quot;: &quot;https://www.googleapis.com/oauth2/v4/token&quot;,
+    &quot;exp&quot;:  expiration_time,
+    &quot;iat&quot;:  issue_time
+}
+</code></pre>
+
+<p>Note the audience is different than for an access_token.</p>
+
+<h3 id="acquire-the-jwt-using-service-account-a-credentials-1">Acquire the JWT using Service Account A credentials</h3>
+
+<p>Now that we have an  JWT claim set, we need to get a jwt  using A&rsquo;s credentials but instruct <strong>.signJwt()</strong></p>
+
+<pre><code class="language-python">client_id= 'serviceAccountB_ID'
+slist = resource.serviceAccounts().signJwt(name='projects/mineral-minutia-820/serviceAccounts/' + client_id, 
+                                                  body={'payload': id_token_claim })
+resp = slist.execute()     
+signed_jwt = resp['signedJwt']
+</code></pre>
+
+<h3 id="transmit-the-signed-jwt-to-google-to-get-an-id-token">Transmit the signed JWT to Google to get an id_token</h3>
+
+<pre><code class="language-python">url = 'https://www.googleapis.com/oauth2/v4/token'
+data = {'grant_type' : 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+        'assertion' : signed_jwt }
+headers = {&quot;Content-type&quot;: &quot;application/x-www-form-urlencoded&quot;}
+     
+data = urllib.urlencode(data)
+req = urllib2.Request(url, data, headers)
+resp = urllib2.urlopen(req).read()
+parsed = json.loads(resp)
+id_token = parsed.get('id_token')
+</code></pre>
+
+<p>Now that we have the id_token, we can transmit it to another system.</p>
+
+<h3 id="id-token-validation">id_token validation</h3>
+
+<p>The recieving system that gets the id_token <strong>must</strong> validate its authenticity.</p>
+
+<ul>
+<li><a href="https://developers.google.com/identity/protocols/OpenIDConnect#validatinganidtoken">Validating ID tokens</a></li>
+<li><a href="https://developers.google.com/identity/protocols/OAuth2UserAgent#tokeninfo-validation">Oauth2 Validation</a></li>
+</ul>
+
+<p>You can validate it using some standard libraries too:</p>
+
+<pre><code class="language-python">from oauth2client.client import verify_id_token
+from oauth2client.crypt import AppIdentityError
+try:
+  jwt = verify_id_token(id_token, client_id)     
+  self.log('\n ID_TOKEN Validation: \n ' + json.dumps(jwt,sort_keys = False, indent = 4)  +' \n', logging.INFO)
+except AppIdentityError, e:
+  self.log('Payload: ' + str(e.read), logging.ERROR) 
+</code></pre>
+
+<p>The public certificate used by Google to sign can be found at:
+* <a href="https://www.googleapis.com/oauth2/v1/certs">https://www.googleapis.com/oauth2/v1/certs</a></p>
+
+<h2 id="service-account-signed-jwt">Service Account signed JWT</h2>
+
+<p>Users can also generate a JWT that is signed by a given Service Account.  The steps here are very simple:  create a claim and use .signJWT() to sign.  The signedJWTs
+can be used to verify caller identity as well as see if the recipient is the intended target.  Finally, you can customize the scopes fields to convey capability for the token.</p>
+
+<p>You can specify the intended target for the JWT using the <strong>aud</strong> field.  In this case, the audience is &lsquo;System C&rsquo;.  The scopes field is arbitrary and user-defined.</p>
+
+<pre><code class="language-python">audience = 'SystemC'
+id_scope='scope1 scope2'
+now = int(time.time())
+exptime = now + 3600
+id_token_claim =('{&quot;iss&quot;:&quot;%s&quot;,&quot;scope&quot;:&quot;%s&quot;, &quot;aud&quot;:&quot;%s&quot;,&quot;exp&quot;:%s,&quot;iat&quot;:%s}') %(client_id,id_scope,audience,exptime,now)    
+
+slist = resource.serviceAccounts().signJwt(name='projects/mineral-minutia-820/serviceAccounts/' + client_id, 
+                                                  body={'payload': id_token_claim })
+resp = slist.execute()
+signed_jwt = resp['signedJwt']
+</code></pre>
+
+<p><img src="images/id_token2.png" alt="images/id_token.png" /></p>
+
+<p>The JWT issued may look like the following:</p>
+
+<pre><code class="language-json">{
+  &quot;alg&quot;: &quot;RS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+}.
+{
+  &quot;iss&quot;: &quot;service-account-b@mineral-minutia-820.iam.gserviceaccount.com&quot;,
+  &quot;scope&quot;: &quot;scope1 scope2&quot;,
+  &quot;aud&quot;: &quot;SystemC&quot;,
+  &quot;exp&quot;: 1484508490,
+  &quot;iat&quot;: 1484504890
+}
+</code></pre>
+
+<p>A GCP service account has multiple keys that are rotated.  Unless the current keyID is specified in the JWT header, you need to iterate the keys in the keystore URL (shown below) to verify the correct one.</p>
+
+<p>If the key used to sign is: &lsquo;cc1080d1a4c61e8cb821331a5a2652dee2c901a1&rsquo;, you may add on the &lsquo;kid&rsquo; header value to the JWT.</p>
+
+<pre><code>{
+  &quot;alg&quot;: &quot;RS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;,
+  &quot;kid&quot;: &quot;cc1080d1a4c61e8cb821331a5a2652dee2c901a1&quot;
+}
+</code></pre>
+
+<p>Once you have the JWT, you must verify the authenticity of the JWT by verifying against the public certificate.
+The public certs for any Google Service account is visible at URLs similar to:
+For serviceAccount B:
+* JWK Format: <a href="https://www.googleapis.com/service_accounts/v1/jwk/service-account-b@mineral-minutia-820.iam.gserviceaccount.com">https://www.googleapis.com/service_accounts/v1/jwk/service-account-b@mineral-minutia-820.iam.gserviceaccount.com</a>
+* X509 Format: <a href="https://www.googleapis.com/service_accounts/v1/metadata/x509/service-account-b@mineral-minutia-820.iam.gserviceaccount.com">https://www.googleapis.com/service_accounts/v1/metadata/x509/service-account-b@mineral-minutia-820.iam.gserviceaccount.com</a></p>
+
+<p>The following node sample verfies a self-signed JWT:</p>
+
+<pre><code class="language-javascript">var jwt = require('jsonwebtoken');
+var jose = require('node-jose');
+var request = require(&quot;request&quot;)
+
+var jwk_url = 'https://www.googleapis.com/service_accounts/v1/jwk/service-account-b@mineral-minutia-820.iam.gserviceaccount.com';
+skeyid = 'cc1080d1a4c61e8cb821331a5a2652dee2c901a1';
+// A GCP service account has multiple keys that are rotated.  Unless the current keyID is specified in the JWT header, you need to iterate 
+// the keys in the keystore to verify the correct one.
+//skeyid = '5e0918577a1a33e87bfc8621c5914d4f035b91a5';
+var sjwt ='eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzZXJ2aWNlLWFjY291bnQtYkBtaW5lcmFsLW1pbnV0aWEtODIwLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic2NvcGUiOiJzY29wZTEgc2NvcGUyIiwgImF1ZCI6IlN5c3RlbUMiLCJleHAiOjE0ODQ1MTIxNTIsImlhdCI6MTQ4NDUwODU1Mn0.Ishj6r8-cdOA8kI8aslaKAF23Q8cct3HARUe-TB2YU2cK59_5SoIt7s_MMCG9Ea-PG0LfdGweMBep39d8c-aQS6KE_H2ls1dff990W0lodU_QUrHOZJksSzLMHfjFDRgs3LgF83O4F0VZ50rTrYN0mmwjw1d7EHv7LqHA4TAOQs3bhKte9K3csiYETR3HLqbAvdiO3jog0vWUGU57Mu4DkjWWSvPXnHQv-YWWzeHm5fAIsLiRW1LB9a7gdLZPwbSLlCRs6WrbWtGMuGax6ouBcqE24YzL0YbdH7E6mkM5qE8LeHnUL2e8ZNFBZdDc6y6Q4wq2-S9xEIN7hbk0uYrEQ';
+var decoded = jwt.decode(sjwt,{complete: true});
+var payload = decoded.payload;
+// need to verify the token expiration date (todo)
+var edate = new Date(payload.exp*1000);
+// also verify the audience (intended target) (todo)
+// https://www.npmjs.com/package/node-jose#verifying-a-jws
+// for now go get the public cert to atleast verify the signature.
+var request = require(&quot;request&quot;)
+request({
+    url: jwk_url,
+    json: true
+}, function (error, response, body) {
+    if (!error &amp;&amp; response.statusCode === 200) {
+      jose.JWK.asKeyStore(body).
+        then(function(result) {
+          keystore = result;
+          key = keystore.get(skeyid);
+          jose.JWS.createVerify(keystore).verify(sjwt)
+               .then(function(result) { 
+                    console.log('Signature Verification Suceeded')
+                    console.log(result);
+                  }, function(error) {
+                    console.log('Signature Verification Failed');
+                  }
+               );
+          });
+    }
+})
+</code></pre>
+
+<h2 id="access-token-id-token-script">access_token/id_token script</h2>
+
+<p>You can find the script referenced here on my <a href="https://github.com/salrashid123/gcpsamples/blob/master/auth/tokens/gcs_auth.py">github page</a>.  To use it, you need to download a certificate for service Account A, assign the serviceAccountActor role to it
+for B, then install the libraries and invoke it with service account B&rsquo;s ID value</p>
+
+<pre><code class="language-bash">virtualenv env 
+source env/bin/activate
+pip install requests google-api-python-client httplib2 oauth2client
+</code></pre>
+
+<pre><code class="language-bash">$python gcs_auth.py --client_id=service-account-b@mineral-minutia-820.iam.gserviceaccount.com
+[2017-01-15 11:29:12.072293] access_token: ya29.ElnUA-HwLE2hVH-y0iz5CgGTywcJNP63eTAI216i7e6cC66vXUQd-X87MvVheZ4ZQlwE31Uv_fOJTZ62hiK8pWFt_rN5xc54ZHCzGB4_8pvrZAJGrolLDYEvPw
+
+[2017-01-15 11:29:12.450104] id_token: eyJhbGciOiJSUzI1NiIsImtpZCI6IjAxYTEwMmYyOGNmOGYzNzk3MTVlZDU5ZWU5ODAzY2VkNTViMDMxOTYifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJpYXQiOjE0ODQ1MDg1NTIsImV4cCI6MTQ4NDUxMjE1MiwiYXVkIjoic2VydmljZS1hY2NvdW50LWJAbWluZXJhbC1taW51dGlhLTgyMC5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6IjEwNDk0MzI5Mzk5Nzk3MTMzMjIyMyIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhenAiOiJzZXJ2aWNlLWFjY291bnQtYkBtaW5lcmFsLW1pbnV0aWEtODIwLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiZW1haWwiOiJzZXJ2aWNlLWFjY291bnQtYkBtaW5lcmFsLW1pbnV0aWEtODIwLmlhbS5nc2VydmljZWFjY291bnQuY29tIn0.P0juBBi-GGkGnpKR5FaKKXBWxrFsxk25TRqP5fbXklPpMgn5QmAidwt6NG2qK-sE5ebVIj-1EEA7gTub83PK-CCUN4KGDjwhY7Egoodyppdz2TAW0Q5ObKsVUHtwgFNUf_9xSaxorCS202yLcontWjYpRihFFYGrfdvLFOdyeJZ3Iz4NAQdfU_Ouk1bjFt7M-gfvJgIaAQrxNfyhnwsdEDLRd-Dn53V3P73IRAneLuAl2wzQLPYKb2uRCe0u9kjQEjTRQu19tWjLBx59no9nxjXwKEQpFhZm4KqSSIR6xOJYvf3_m0oOwrC8mDGeOLoV8sis1ravtBCp3e9oESl1-g
+
+[2017-01-15 11:29:12.595477]  ID_TOKEN Validation: 
+ {
+    &quot;aud&quot;: &quot;service-account-b@mineral-minutia-820.iam.gserviceaccount.com&quot;, 
+    &quot;iss&quot;: &quot;https://accounts.google.com&quot;, 
+    &quot;email_verified&quot;: true, 
+    &quot;exp&quot;: 1484512152, 
+    &quot;azp&quot;: &quot;service-account-b@mineral-minutia-820.iam.gserviceaccount.com&quot;, 
+    &quot;iat&quot;: 1484508552, 
+    &quot;email&quot;: &quot;service-account-b@mineral-minutia-820.iam.gserviceaccount.com&quot;, 
+    &quot;sub&quot;: &quot;104943293997971332223&quot;
+} 
+
+[2017-01-15 11:29:12.693403] Self-signed id_token:: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzZXJ2aWNlLWFjY291bnQtYkBtaW5lcmFsLW1pbnV0aWEtODIwLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic2NvcGUiOiJzY29wZTEgc2NvcGUyIiwgImF1ZCI6IlN5c3RlbUMiLCJleHAiOjE0ODQ1MTIxNTIsImlhdCI6MTQ4NDUwODU1Mn0.Ishj6r8-cdOA8kI8aslaKAF23Q8cct3HARUe-TB2YU2cK59_5SoIt7s_MMCG9Ea-PG0LfdGweMBep39d8c-aQS6KE_H2ls1dff990W0lodU_QUrHOZJksSzLMHfjFDRgs3LgF83O4F0VZ50rTrYN0mmwjw1d7EHv7LqHA4TAOQs3bhKte9K3csiYETR3HLqbAvdiO3jog0vWUGU57Mu4DkjWWSvPXnHQv-YWWzeHm5fAIsLiRW1LB9a7gdLZPwbSLlCRs6WrbWtGMuGax6ouBcqE24YzL0YbdH7E6mkM5qE8LeHnUL2e8ZNFBZdDc6y6Q4wq2-S9xEIN7hbk0uYrEQ
+
+</code></pre>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/serviceaccount" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">serviceaccount</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/iam" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">iam</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/oauth2" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">oauth2</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/oidc" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">oidc</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-salrashid-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/gcpsamples/">Google Cloud Platform API hello world samples</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.salrashid.me/" >
+    &copy; 2019 blog.salrashid.me
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

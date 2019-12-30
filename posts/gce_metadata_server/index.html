@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>blog.salrashid.me  | GCE Metadata Server Emulator</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="GCE Metadata Server Emulator" />
+<meta property="og:description" content="This script acts as a GCE&rsquo;s internal metadata server for local testing/emulation.
+It returns a live access_token that can be used directly by Application Default Credentials transparently.
+This is useful to test any script or code locally that my need to contact GCE&rsquo;s metadata server for custom, user-defined variables or access_tokens.
+Another usecase for this is to verify how Application Defaults will behave while running a local docker container. A local running docker container will not have access to GCE&rsquo;s metadata server but by bridging your container to the emulator, you are basically allowing GCP API access directly from within a container on your local workstation (vs." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.salrashid.me/posts/gce_metadata_server/" />
+<meta property="article:published_time" content="2016-08-17T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2016-08-17T14:34:01-08:00"/>
+
+<meta itemprop="name" content="GCE Metadata Server Emulator">
+<meta itemprop="description" content="This script acts as a GCE&rsquo;s internal metadata server for local testing/emulation.
+It returns a live access_token that can be used directly by Application Default Credentials transparently.
+This is useful to test any script or code locally that my need to contact GCE&rsquo;s metadata server for custom, user-defined variables or access_tokens.
+Another usecase for this is to verify how Application Defaults will behave while running a local docker container. A local running docker container will not have access to GCE&rsquo;s metadata server but by bridging your container to the emulator, you are basically allowing GCP API access directly from within a container on your local workstation (vs.">
+
+
+<meta itemprop="datePublished" content="2016-08-17T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2016-08-17T14:34:01-08:00" />
+<meta itemprop="wordCount" content="1636">
+
+
+
+<meta itemprop="keywords" content="metadata,computeengine," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="GCE Metadata Server Emulator"/>
+<meta name="twitter:description" content="This script acts as a GCE&rsquo;s internal metadata server for local testing/emulation.
+It returns a live access_token that can be used directly by Application Default Credentials transparently.
+This is useful to test any script or code locally that my need to contact GCE&rsquo;s metadata server for custom, user-defined variables or access_tokens.
+Another usecase for this is to verify how Application Defaults will behave while running a local docker container. A local running docker container will not have access to GCE&rsquo;s metadata server but by bridging your container to the emulator, you are basically allowing GCP API access directly from within a container on your local workstation (vs."/>
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-155117088-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://blog.salrashid.me/posts/gce_metadata_server/images/metadata_proxy.png');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog.salrashid.me/" class="f3 fw2 hover-white no-underline white-90 dib">
+      blog.salrashid.me
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">GCE Metadata Server Emulator</h1>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">GCE Metadata Server Emulator</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2016-08-17T14:34:01-08:00">August 17, 2016</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>This script acts as a GCE&rsquo;s internal metadata server for local testing/emulation.</p>
+
+<p>It returns a live access_token that can be used directly by <a href="https://developers.google.com/identity/protocols/application-default-credentials">Application Default Credentials</a> transparently.</p>
+
+<p>This is useful to test any script or code locally that my need to contact GCE&rsquo;s metadata server for custom, user-defined variables or access_tokens.</p>
+
+<p>Another usecase for this is to verify how Application Defaults will behave while running a local docker container. A local running docker container will not have access to GCE&rsquo;s metadata server but by bridging your container to the emulator, you are basically allowing GCP API access directly from within a container on your local workstation (vs. running the code comprising the container directly on the workstation and relying on gcloud credentials (not metadata)).</p>
+
+<p>For example, you can use <code>ComputeCredentials</code> on your laptop:</p>
+
+<pre><code class="language-python">#!/usr/bin/python
+
+import google.auth.compute_engine
+import google.auth.transport.requests
+
+creds = google.auth.compute_engine.Credentials()
+request = google.auth.transport.requests.Request()
+creds.refresh(request)
+
+session = google.auth.transport.requests.AuthorizedSession(creds)
+r = session.get('https://www.googleapis.com/userinfo/v2/me').json()
+print str(r)
+</code></pre>
+
+<p>For more inforamtion on the request-response characteristics:
+* <a href="https://cloud.google.com/compute/docs/storing-retrieving-metadata">GCE Metadata Server</a></p>
+
+<p>The script performs the following:
+ * returns the <code>access_token</code> provided by the serviceAccount JSON file you speify.
+ * returns Google issued OpendID token (<code>id_token</code>) for the Service Account using the audience you specify
+ * return custom key-value attributes
+ * Identity Token document</p>
+
+<p>The endpoints that are exposed are:</p>
+
+<pre><code class="language-golang">r.Handle(&quot;/computeMetadata/v1/project/project-id&quot;)
+r.Handle(&quot;/computeMetadata/v1/project/numeric-project-id&quot;)
+r.Handle(&quot;/computeMetadata/v1/project/attributes/{key}&quot;)
+r.Handle(&quot;/computeMetadata/v1/instance/service-accounts/&quot;)
+r.Handle(&quot;/computeMetadata/v1/instance/service-accounts/{acct}/&quot;)
+r.Handle(&quot;/computeMetadata/v1/instance/service-accounts/{acct}/{key}&quot;)
+r.Handle(&quot;/&quot;)
+</code></pre>
+
+<p>You are free to expand on the endpoints surfaced here..pls feel free to file a PR!</p>
+
+<p>Overall, the proxy works to emulate the link-local address <code>169.254.169.254</code> that is used by the metadata server.  Once a route to that is established (via <code>iptables</code> or <code>socat</code>), you can run a simple http webserver that responds back with the request details.</p>
+
+<ul>
+<li><img src="images/metadata_proxy.png" alt="images/metadata_proxy.png" /></li>
+</ul>
+
+<h2 id="usage">Usage</h2>
+
+<p>This script runs a basic webserver and responds back as the Google Compute Engine&rsquo;s metadata server.  A local webserver
+runs on a non-privleged port (default: 8080) and uses a <code>serviceAccountFile</code> file or environment variables return an <code>access_token</code>
+and optional live project user-defined metadata.</p>
+
+<p>You can run the emulator either:</p>
+
+<ol>
+<li>directly on your laptop</li>
+<li>within a docker container running locally.</li>
+</ol>
+
+<h3 id="running-the-metadata-server-directly">Running the metadata server directly</h3>
+
+<p>The following steps details how you can run the emulator on your laptop.</p>
+
+<ul>
+<li><p><strong>1. Reconfigure the /etc/hosts to resolve the metadata server</strong></p>
+
+<pre><code># /etc/hosts
+127.0.0.1       metadata metadata.google.internal
+</code></pre></li>
+
+<li><p><strong>2. Create metadata IP alias</strong></p></li>
+</ul>
+
+<p>GCE&rsquo;s metadata server&rsquo;s IP address on GCE is a special link-local address: <code>169.254.169.254</code>.  Certain application default credential libraries for google cloud references the metadata server by IP address so we&rsquo;re adding this in.   The following steps creates an IP address alias for the local system.</p>
+
+<pre><code class="language-bash">sudo ifconfig lo:0 169.254.169.254 up
+</code></pre>
+
+<p>You can veirify the alias was created by checking <em>ifconfig</em></p>
+
+<pre><code>/sbin/ifconfig -a
+lo:0      Link encap:Local Loopback  
+          inet addr:169.254.169.254  Mask:255.255.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+</code></pre>
+
+<p>(on windows)</p>
+
+<pre><code>netsh interface ipv4 add address &quot;Loopback Pseudo-Interface 1&quot; 169.254.169.254 255.255.0.0
+</code></pre>
+
+<ul>
+<li><strong>3. Run socat</strong></li>
+</ul>
+
+<p>You need to install a utility to map port :80 traffic since REST calls to the metadata server are HTTP.  The following usees <code>socat</code>:</p>
+
+<pre><code>sudo apt-get install socat
+
+sudo socat TCP4-LISTEN:80,fork TCP4:127.0.0.1:8080
+</code></pre>
+
+<ul>
+<li><img src="images/setup_1.png" alt="images/setup_1.png" /></li>
+</ul>
+
+<p>Alternatively, you can create an OUTPUT <code>iptables</code> rule to intercept and redirect the metadata traffic.</p>
+
+<pre><code>iptables -t nat -A OUTPUT -p tcp -d 169.254.169.254 --dport 80 -j REDIRECT --to-port 8080
+</code></pre>
+
+<ul>
+<li><strong>4. Downlaod JSON ServiceAccount file</strong></li>
+</ul>
+
+<p>Create a GCP Service Account JSON file</p>
+
+<pre><code class="language-bash">export GOOGLE_PROJECT_ID=`gcloud config get-value core/project`
+export GOOGLE_NUMERIC_PROJECT_ID=`gcloud projects describe $GOOGLE_PROJECT_ID --format=&quot;value(projectNumber)&quot;`
+gcloud iam service-accounts create metadata-sa
+gcloud iam service-accounts keys create metdata-sa.json --iam-account=metadata-sa-@$GOOGLE_PROJECT_ID.iam.gserviceaccount.com
+</code></pre>
+
+<p>You can assign IAM permissions now to the service accunt for whatever resources it may need to access</p>
+
+<ul>
+<li><strong>5. Run the metadata server</strong></li>
+</ul>
+
+<pre><code class="language-bash">go run main.go -logtostderr \ 
+  -alsologtostderr -v 5 \ 
+  -port :8080 \ 
+  --serviceAccountFile /path/to/metadta-sa.json \ 
+  --numericProjectId $PROJECT_NUMBER \ 
+  --tokenScopes https://www.googleapis.com/auth/userinfo.email,https://www.googleapis.com/auth/cloud-platform
+</code></pre>
+
+<p>or via docker</p>
+
+<pre><code>
+```bash
+mkdir certs/
+cp metadata-sa.json certs
+
+docker run  \
+  -v `pwd`/certs/:/certs/ \ 
+  -p 8080:8080 \ 
+  -t salrashid123/gcemetadataserver  \
+  -serviceAccountFile /certs/svc_account.json \ 
+  -logtostderr -alsologtostderr -v 5 \ 
+  -port :8080  \ 
+  -numericProjectId $PROJECT_NUMBER  \
+  -tokenScopes https://www.googleapis.com/auth/userinfo.email,https://www.googleapis.com/auth/cloud-platform
+</code></pre>
+
+<p>Statup</p>
+
+<ul>
+<li><p><img src="images/setup_2.png" alt="images/setup_2.png" /></p></li>
+
+<li><p><strong>6. Test access to the metadata server</strong>
+In a new window, run</p></li>
+</ul>
+
+<pre><code class="language-bash">curl -v -H 'Metadata-Flavor: Google' http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token
+
+&gt; 
+&lt; HTTP/1.1 200 OK
+&lt; Content-Type: application/json
+&lt; Metadata-Flavor: Google
+&lt; Server: Metadata Server for VM
+&lt; X-Frame-Options: 0
+&lt; X-Xss-Protection: 0
+&lt; Date: Mon, 26 Aug 2019 21:50:09 GMT
+&lt; Content-Length: 190
+&lt; 
+{&quot;access_token&quot;:&quot;ya29.c.EltxByD8vfv2ACageADlorFHWd2ZUIgGdU-redacted&quot;,&quot;expires_in&quot;:3600,&quot;token_type&quot;:&quot;Bearer&quot;}
+</code></pre>
+
+<pre><code class="language-bash">curl -v -H 'Metadata-Flavor: Google' http://169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token
+
+&lt; HTTP/1.1 200 OK
+&lt; Content-Type: application/json
+&lt; Metadata-Flavor: Google
+&lt; Server: Metadata Server for VM
+&lt; X-Frame-Options: 0
+&lt; X-Xss-Protection: 0
+&lt; Date: Mon, 26 Aug 2019 21:51:28 GMT
+&lt; Content-Length: 190
+&lt; 
+{&quot;access_token&quot;:&quot;ya29.c.EltxByD8vfv2ACageADlorFHWd2ZUIgGdU-redacted&quot;,&quot;expires_in&quot;:3521,&quot;token_type&quot;:&quot;Bearer&quot;}srashid@srashid1:~$ 
+</code></pre>
+
+<ul>
+<li><img src="images/setup_5.png" alt="images/setup_5.png" /></li>
+</ul>
+
+<p>You can also use the python snippet using <code>Application Default Credentials</code> to test.</p>
+
+<h3 id="run-the-metadata-server-with-containers">Run the metadata server with containers</h3>
+
+<h4 id="access-the-local-emulator-from-containers">Access the local emulator <em>from</em> containers</h4>
+
+<p>If you run an app inside a docker container that needs to access the metadata server, there are two options:</p>
+
+<ol>
+<li>use bridge networking</li>
+<li>use host networking</li>
+<li>create a custom network and run the metadata server in a container ((preferred).</li>
+</ol>
+
+<h5 id="add-bridge-networking-to-the-running-container-net-bridge">Add bridge networking to the running Container (&ndash;net=bridge)</h5>
+
+<p>To use bridge networking, you need to first</p>
+
+<ol>
+<li>create the interface alias for 169.254.169.254 &ndash;&gt; lo:0</li>
+<li>make sure ip_forward is enabled  <em>sudo sysctl -w net.ipv4.ip_forward=1</em></li>
+<li>run socat to forward 80&ndash;&gt;18080</li>
+
+<li><p>start the container and pass in the host files pointing to the local emulator&rsquo;s ip address:</p>
+
+<pre><code>docker run -t --net=bridge --add-host metadata.google.internal:169.254.169.254 --add-host metadata:169.254.169.254 _your-image_
+</code></pre></li>
+</ol>
+
+<p>You may need to drop existing firewall rules and then restart the docker daemon to prevent conflicts or overrides.</p>
+
+<h5 id="add-host-networking-to-the-running-container-net-host">Add host networking to the running Container (&ndash;net=host)</h5>
+
+<p>This will allow the container to &lsquo;see&rsquo; the local interface on the laptop.  The disadvantage is the host&rsquo;s interface is the containers as well</p>
+
+<pre><code>docker run --net=host -t _your-image_ 
+</code></pre>
+
+<blockquote>
+<p><em>NOTE:</em>   using &ndash;net=host is only recommended for testing; For more information see:</p>
+</blockquote>
+
+<ul>
+<li><a href="https://docs.docker.com/v1.8/articles/networking/#container-networking">Docker Networking</a></li>
+<li><a href="https://docs.docker.com/engine/userguide/networking/configure-dns/#/embedded-dns-server-in-user-defined-networks">Embedded DNS server in user-defined networks</a></li>
+</ul>
+
+<h4 id="running-as-kubernetes-serivce">Running as Kubernetes Serivce</h4>
+
+<p>You can run the emulator as a kubernetes service but you cannot bind the link local address <code>169.254.169.254</code> with a k8s service. see <a href="https://kubernetes.io/docs/concepts/services-networking/service/#services-without-selectors">Kubernetes Services</a>:</p>
+
+<p><em>&ldquo;The endpoint IPs must not be: loopback (127.0.0.0/8 for IPv4, ::<sup>1</sup>&frasl;<sub>128</sub> for IPv6), or link-local (169.254.0.0/16 and 224.0.0.0/24 for IPv4, fe80::/64 for IPv6).&rdquo;</em></p>
+
+<p>While you can connect via k8s service name, certain google cloud libraries look for the metadata server by IP address or allow overrides (eg, <a href="https://github.com/googleapis/google-auth-library-python/blob/master/google/auth/compute_engine/_metadata.py#L40">google-auth-python</a>)</p>
+
+<p><a href="https://kubernetes.io/docs/concepts/services-networking/service/#services-without-selectors">https://kubernetes.io/docs/concepts/services-networking/service/#services-without-selectors</a></p>
+
+<h3 id="using-static-environment-variables">Using static environment variables</h3>
+
+<p>If you do not have access to certificate file or would like to specify <strong>static</strong> token values via env-var, the metadata server supports the following environment variables as substitutions.  Once you set these environment variables, the service will not look for anything using the service Account JSON file (even if specified)</p>
+
+<pre><code>GOOGLE_PROJECT_ID = 'GOOGLE_PROJECT_ID'
+GOOGLE_NUMERIC_PROJECT_ID = 'GOOGLE_NUMERIC_PROJECT_ID'
+GOOGLE_ACCESS_TOKEN = 'GOOGLE_ACCESS_TOKEN'
+GOOGLE_ACCOUNT_EMAIL = `GOOGLE_ACCOUNT_EMAIL`
+</code></pre>
+
+<p>for example,</p>
+
+<pre><code>docker run  \
+  -p 8080:8080 \ 
+  -t salrashid123/gcemetadataserver  \
+  -logtostderr -alsologtostderr -v 5 \ 
+  -e GOOGLE_ACCESS_TOKEN=some_static_token \
+  -e GOOGLE_NUMERIC_PROJECT_ID=12345 \ 
+  -e GOOGLE_PROJECT_ID=my_project \
+  -e GOOGLE_ACCOUNT_EMAIL=metadata-sa-@$GOOGLE_PROJECT_ID.iam.gserviceaccount.com gcemetadataserver \
+  -port :8080  \ 
+  -tokenScopes https://www.googleapis.com/auth/userinfo.email,https://www.googleapis.com/auth/cloud-platform
+
+</code></pre>
+
+<pre><code>curl -v -H 'Metadata-Flavor: Google' http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token
+
+some_static_token
+</code></pre>
+
+<h3 id="allowing-all-firewall-policies">Allowing all firewall policies</h3>
+
+<p>The following set of command resets all firewall policies to allow all.  This is sometimes needed to allow clean socat or iptables.  Only do this if you know iptable rules are blocking traffic..</p>
+
+<pre><code class="language-bash">#!/bin/sh
+echo &quot;Stopping firewall and allowing everyone...&quot;
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+</code></pre>
+
+<h3 id="port-mapping-80-8080">Port mapping :80 &ndash;&gt; :8080</h3>
+
+<p>Since GCE&rsquo;s metadata server listens on http for :80, this script relies on utilities like &lsquo;socat&rsquo; to redirect port traffic.  <em>socat</em> has pretty
+basic connection handling so you&rsquo;d be better with iptables, gunicorn.
+You are free to either run the script on port :80 directly (as root), or use a utilitity like iptables, HAProxy, nginx, etc to do this mapping.</p>
+
+<p>The following example of an iptables route 80 -&gt; 8080 on the local interface</p>
+
+<pre><code>sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 8080
+</code></pre>
+
+<h4 id="extending-the-sample">Extending the sample</h4>
+
+<p>You can extend this sample for any arbitrary metadta you are interested in emulating (eg, disks, hostname, etc).
+Simply add the routes to the webserver and handle the responses accordingly.  It is recomended to view the request-response format directly on the metadata server to compare against.</p>
+
+<h3 id="todo">TODO</h3>
+
+<ol>
+<li>Directory Browsing</li>
+</ol>
+
+<p>Instead of explictly setting routes, use the local filesystem to return the strucure for non-dynamic content or attributes.  In this way, the metadata server just returns the directory and files that mimics the metadata server structure.</p>
+
+<p>eg: create a directory structure similar to:</p>
+
+<pre><code>./static/
+    0.1/
+    computeMetadata/
+      v1beta1/    
+      v1/
+        instance/
+        oslogin/
+        project/         
+</code></pre>
+
+<pre><code class="language-golang">r.Handle(&quot;/&quot;, checkMetadataHeaders(http.FileServer(http.Dir(&quot;./static&quot;))))
+</code></pre>
+
+<p>Which currently returns HTML content as well as<code>Content-Type: text/html; charset=utf-8</code>, the metadata server new-line text  as <code>Content-Type: application/text</code></p>
+
+<p>TODO: figure out how to return text payload similar to the metadata server</p>
+
+<pre><code>$ curl -H &quot;Metadata-Flavor: Google&quot; -v http://metadata.google.internal/
+*   Trying 169.254.169.254...
+* TCP_NODELAY set
+* Connected to metadata.google.internal (169.254.169.254) port 80 (#0)
+&gt; GET / HTTP/1.1
+&gt; Host: metadata.google.internal
+&gt; User-Agent: curl/7.52.1
+&gt; Accept: */*
+&gt; Metadata-Flavor: Google
+&gt; 
+&lt; HTTP/1.1 200 OK
+&lt; Metadata-Flavor: Google
+&lt; Content-Type: application/text
+&lt; Date: Mon, 26 Aug 2019 17:08:17 GMT
+&lt; Server: Metadata Server for VM
+&lt; Content-Length: 22
+&lt; X-XSS-Protection: 0
+&lt; X-Frame-Options: SAMEORIGIN
+&lt; 
+0.1/
+computeMetadata/
+</code></pre>
+
+<pre><code>$ curl -H &quot;Metadata-Flavor: Google&quot; -s http://metadata.google.internal/computeMetadata/v1/instance
+/computeMetadata/v1/instance/
+
+$ curl -H &quot;Metadata-Flavor: Google&quot; -s http://metadata.google.internal/computeMetadata/v1/instance/
+attributes/
+cpu-platform
+description
+disks/
+guest-attributes/
+hostname
+id
+image
+licenses/
+machine-type
+maintenance-event
+name
+network-interfaces/
+preempted
+remaining-cpu-time
+scheduling/
+service-accounts/
+tags
+virtual-clock/
+zone
+</code></pre>
+
+<ol>
+<li>Redirects</li>
+</ol>
+
+<p>Metadata server currently redirects path from root to one with a <code>/</code>.</p>
+
+<p>TODO: account for the redirect.</p>
+
+<pre><code class="language-bash">$ curl -H &quot;Metadata-Flavor: Google&quot; -v http://metadata.google.internal/computeMetadata/v1/instance
+*   Trying 169.254.169.254...
+* TCP_NODELAY set
+* Connected to metadata.google.internal (169.254.169.254) port 80 (#0)
+&gt; GET /computeMetadata/v1/instance HTTP/1.1
+&gt; Host: metadata.google.internal
+&gt; User-Agent: curl/7.52.1
+&gt; Accept: */*
+&gt; Metadata-Flavor: Google
+&gt; 
+&lt; HTTP/1.1 301 Moved Permanently
+&lt; Metadata-Flavor: Google
+&lt; Location: http://metadata.google.internal/computeMetadata/v1/instance/
+&lt; Date: Mon, 26 Aug 2019 17:40:25 GMT
+&lt; Content-Type: text/html
+&lt; Server: Metadata Server for VM
+&lt; Content-Length: 30
+&lt; X-XSS-Protection: 0
+&lt; X-Frame-Options: SAMEORIGIN
+&lt; 
+/computeMetadata/v1/instance/
+</code></pre>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/metadata" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">metadata</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/computeengine" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">computeengine</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-salrashid-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.salrashid.me/" >
+    &copy; 2019 blog.salrashid.me
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
