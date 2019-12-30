@@ -35,7 +35,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.6equj5.dev/tags/oauth2/" />
 
-<meta property="og:updated_time" content="2019-05-20T13:34:01-08:00"/>
+<meta property="og:updated_time" content="2019-11-28T14:34:01-08:00"/>
 
 <meta itemprop="name" content="Oauth2">
 <meta itemprop="description" content="wow...its full of 6equj5">
@@ -164,6 +164,24 @@ if (!doNotTrack) {
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/" class="link black dim">
+        TPM2-TSS-Engine hello world and Google Cloud Authentication 
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Basic application that uses a the tpm2-tss-engine to perform RSA encryption and signatures.
+This is intended to run on a system with a TPM as well as the the openssl engine library installed. The TPM-based private key is generated directly using tpm2tss-genkey and from that, the openssl engine to surface the public part. The tpm2-tss-engine surfaces the OpenSSL constructs like EVP_PKEY_RSA so you can directly use that against the TPM
+    </div>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100  mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="https://blog.6equj5.dev/posts/automatic_oauth2/" class="link black dim">
         Automatic oauth2:  Using Cloud Scheduler and Tasks to call Google APIs
       </a>
@@ -188,6 +206,24 @@ When a Scheduled task fires and calls an HTTP endpoint, it can optionally automa
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       About two months ago, someone asked me to help them setup Terraform to automatically provision GCP projects. It was the first time I actually used it and found it capabilities pretty powerful: it&rsquo;s easy to manage complex resources and maintain a picture of the state change. However, one aspect of its capabilities that struck me was its need to directly have permissions on all GCP resources it provisioned or manage.
+    </div>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100  mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/gcpsamples/" class="link black dim">
+        Google Cloud Platform API hello world samples
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
+This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples.
     </div>
   </div>
 </div>

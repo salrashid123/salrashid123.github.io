@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>6equj5.dev  | Google Cloud Platform API hello world samples</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Google Cloud Platform API hello world samples" />
+<meta property="og:description" content="This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
+This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.6equj5.dev/posts/gcpsamples/" />
+<meta property="article:published_time" content="2016-07-25T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2016-07-25T14:34:01-08:00"/>
+
+<meta itemprop="name" content="Google Cloud Platform API hello world samples">
+<meta itemprop="description" content="This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
+This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples.">
+
+
+<meta itemprop="datePublished" content="2016-07-25T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2016-07-25T14:34:01-08:00" />
+<meta itemprop="wordCount" content="4052">
+
+
+
+<meta itemprop="keywords" content="oidc,oauth2," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Google Cloud Platform API hello world samples"/>
+<meta name="twitter:description" content="This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
+This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples."/>
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-155117088-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://blog.6equj5.dev/images/notebook.jpg');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog.6equj5.dev/" class="f3 fw2 hover-white no-underline white-90 dib">
+      6equj5.dev
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">Google Cloud Platform API hello world samples</h1>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Google Cloud Platform API hello world samples</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2016-07-25T14:34:01-08:00">July 25, 2016</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.</p>
+
+<p>This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples. What i’ll describe is the following:
+Differences between the Google Cloud Client Library and Google Cloud Libraries</p>
+
+<ul>
+<li><p>How to access GCP service using Java, .NET, Python, NodeJS and Golang</p></li>
+
+<li><p>For each language, the various auth modes would be: Service Accounts Credentials, Compute Engine Credentials, Application Default Credentials, User flow , AppEngine Credentials</p></li>
+
+<li><p>How to access GCP services over a proxy</p></li>
+
+<li><p>How to enable verbose/transport logging.</p></li>
+
+<li><p>How to mint id_tokens and access_tokens</p></li>
+
+<li><p>Service Account Impersonation</p></li>
+
+<li><p>How to access a GCP service for libraries that prefer HTTP (GCS/BQ) over gRPC (pubsub)..atleast as of 7/7/18</p></li>
+
+<li><p>Revisions:</p></li>
+
+<li><p>(1/28/17) Edited to add Google Cloud Library</p></li>
+
+<li><p>(10/16/17) Edited to add link to proxy usage</p></li>
+
+<li><p>(1/6/18) Add link to github</p></li>
+
+<li><p>(7/7/18) Reverify all samples; Change format to provide link to gitRepo; change title</p></li>
+</ul>
+
+<p>Please refer to official documentation for usage and additional samples/usage.</p>
+
+<p><a href="https://cloud.google.com/docs/authentication">Google Authentication Samples</a></p>
+
+<hr />
+
+<h3 id="application-default-credentials">Application Default Credentials</h3>
+
+<p>The samples use <a href="https://developers.google.com/identity/protocols/application-default-credentials">Application Default Credentials</a> which uses credentials in the following order as described in the link.  Set the environment variable to override.</p>
+
+<p>You can always specify the target source to acquire credentials by using intent specific targets such as:  ComputeCredentials, UserCredentials or ServiceAccountCredential.</p>
+
+<p>There are two types of client libraries you can use to connect to Google APIs:<br />
+* Google Cloud Client Libraries
+* Gooogle API Client Libraries</p>
+
+<p>The basic differences is the Cloud Client libraries are idomatic, has <a href="https://cloud.google.com/sdk/gcloud/reference/beta/emulators/">gcloud-based emulators</a> and much eaiser to use.</p>
+
+<p>It is recommended to use Cloud Client Libraries whereever possible. Although this article primarily describes the API Client libraries, the python code section describes uses of Cloud Client libraries with Google Cloud Storage.</p>
+
+<p>For more information, see</p>
+
+<ul>
+<li><a href="https://cloud.google.com/apis/docs/client-libraries-explained">Client Libraries Explained</a>.</li>
+<li><a href="https://cloud.google.com/docs/authentication">Google Cloud Platform Authenticatio Guide</a></li>
+</ul>
+
+<p>This article also describes how to use IAM&rsquo;s serviceAccountActor role to issue access_tokens, id_tokens and JWT.  For more information on that, see <a href="auth/tokens">auth/tokens/</a>.</p>
+
+<p>The following examples use the Oauth2 <em>service</em> to demonstrate the initialized client using Google API Client Libraries.  The first section is about the different client libraries you can use.</p>
+
+<ul>
+<li><a href="#googlelibraries">Cloud Client Libraries and API Client Libraries</a>
+
+<ul>
+<li>Cloud Client Libraries</li>
+<li>API Client Libraries</li>
+</ul></li>
+<li>Cloud Client Libraries
+
+<ul>
+<li><a href="#cloud-python">Python</a></li>
+<li><a href="#cloud-java">Java</a></li>
+<li><a href="#cloud-go">Go</a></li>
+<li><a href="#cloud-node">Node</a></li>
+<li><a href="#cloud-c">c#</a></li>
+<li><a href="#grpc-environment-variables">gRPC Environment Variables</a></li>
+<li><a href="gcs_csek_signedurl">GCS SignedURL with Customer Supplied Encryption Keys</a></li>
+<li><a href="#jwt-access-token">JWT Access Token</a></li>
+</ul></li>
+<li>API Client Library
+
+<ul>
+<li><a href="#google-api-python">Python</a></li>
+<li><a href="#google-api-java">Java</a></li>
+<li><a href="#google-api-go">Go</a></li>
+<li><a href="#google-api-nodejs">Node</a></li>
+<li><a href="#google-api-C&amp;#35">C#</a></li>
+</ul></li>
+<li><a href="auth/tokens">serviceAccountActor role for impersonation</a>
+
+<ul>
+<li>access_token</li>
+<li>id_token</li>
+<li>JWT</li>
+</ul></li>
+<li><a href="impersonated_credentials/">Impersonated Credentials</a></li>
+<li><a href="proxy/">Accessing Google APIs through proxies</a></li>
+<li><a href="id_token/">Issue and Verify id_tokens</a></li>
+<li><a href="gcs_hmac_signedurl">GCS SignedURL with HMAC</a></li>
+<li><a href="gcs_keyless_signedurl">GCS keyless SignedURL</a></li>
+<li><a href="proxy/">Accessing Google APIs through proxies</a></li>
+</ul>
+
+<p>For more inforamtion, see:
+* <a href="https://developers.google.com/identity/protocols/OAuth2">oauth2 protocol</a>
+* <a href="https://developers.google.com/apis-explorer/#p/oauth2/v2/">oauth2 service</a>
+* <a href="https://developers.google.com/identity/protocols/OAuth2ServiceAccount#overview">Service Accounts</a></p>
+
+<h3 id="googlelibraries">GoogleLibraries</h3>
+
+<p>As described in the introduciton, this section details the two types of libraries you can use to access Google Services:</p>
+
+<h4 id="google-cloud-client-libraries">Google Cloud Client Libraries</h4>
+
+<p>These libraries are idomatic, easy to use and even support the <a href="https://cloud.google.com/sdk/gcloud/reference/beta/emulators/">gcloud-based emulator framework</a>.  This is the
+recommended library set to use to access Google Cloud APIs.</p>
+
+<p>For more information, see:</p>
+
+<ul>
+<li><a href="https://developers.google.com/identity/protocols/application-default-credentials">Application DefaultCredentials</a></li>
+<li><a href="https://googlecloudplatform.github.io/google-cloud-python/">google-cloud</a></li>
+<li><a href="https://google-auth.readthedocs.io/en/latest/">google-auth package</a></li>
+<li><a href="https://google-auth.readthedocs.io/en/latest/user-guide.html">google-auth Users Guide</a></li>
+</ul>
+
+<p>The following example describes various ways to initialize a service account to list the Google Cloud Storage buckets the account has access to.  It also shows listing the buckets
+using the default account currently initialized by gcloud.</p>
+
+<p>To use the mechanisms here, you need to initialize gcloud&rsquo;s application defaults:</p>
+
+<pre><code class="language-bash">gcloud auth application-default login
+
+</code></pre>
+
+<h4 id="cloud-python">Cloud Python</h4>
+
+<p>The following uses the google-storage client described here: <a href="http://gcloud-python.readthedocs.io/en/latest/storage-client.html">Storage Client</a></p>
+
+<pre><code>virtualenv env
+source env/bin/activate
+pip install google-cloud-storage
+</code></pre>
+
+<p>The following lists some of the various mechanisms to acquire credentials:</p>
+
+<p>List buckets using the default account on the current gcloud cli (preferred)</p>
+
+<pre><code class="language-python">from google.cloud import storage
+
+client = storage.Client()
+buckets = client.list_buckets()
+for bkt in buckets:
+  print bkt
+</code></pre>
+
+<p>List buckts using gcloud cli explicit credential and project</p>
+
+<pre><code class="language-python">from google.cloud import storage
+import google.auth
+
+credentials, project = google.auth.default()    
+client = storage.Client(credentials=credentials)
+buckets = client.list_buckets()
+for bkt in buckets:
+  print bkt
+</code></pre>
+
+<p>List buckets using an environment variable and then google.auth.default() credentials.</p>
+
+<pre><code class="language-python">from google.cloud import storage
+import google.auth
+impot os
+
+os.environ[&quot;GOOGLE_APPLICATION_CREDENTIALS&quot;] = &quot;YOUR_JSON_CERT.json&quot;
+credentials, project = google.auth.default()
+if credentials.requires_scopes:
+  credentials = credentials.with_scopes(['https://www.googleapis.com/auth/devstorage.read_write'])
+client = storage.Client(credentials=credentials)
+buckets = client.list_buckets()
+for bkt in buckets:
+  print bkt
+</code></pre>
+
+<p>List buckets using a service_account oauth2 object directly</p>
+
+<pre><code class="language-python">from google.cloud import storage
+import google.auth
+from google.oauth2 import service_account
+
+credentials = service_account.Credentials.from_service_account_file('YOUR_JSON_CERT.json')
+if credentials.requires_scopes:
+  credentials = credentials.with_scopes(['https://www.googleapis.com/auth/devstorage.read_write'])
+
+client = storage.Client(credentials=credentials)
+buckets = client.list_buckets()
+for bkt in buckets:
+  print bkt
+</code></pre>
+
+<p>List buckets using the storage client directly loading the certificate:</p>
+
+<pre><code class="language-python">from google.cloud import storage
+
+client = storage.Client.from_service_account_json(&quot;YOUR_JSON_CERT.json&quot;)
+buckets = client.list_buckets()
+for bkt in buckets:
+  print bkt
+</code></pre>
+
+<h5 id="iterators">Iterators</h5>
+
+<p>see
+ - <a href="https://gcloud-python.readthedocs.io/en/stable/core/iterators.html">google cloud python iterators</a>
+ - <a href="https://googlecloudplatform.github.io/google-cloud-python/latest/core/page_iterator.html">page iterators</a></p>
+
+<ul>
+<li>Logging:</li>
+</ul>
+
+<pre><code class="language-python">import os
+import pprint
+from google.cloud import logging
+
+from google.cloud.logging import ASCENDING
+from google.cloud.logging import DESCENDING
+
+pp = pprint.PrettyPrinter(indent=1)
+
+FILTER = 'resource.type=&quot;gae_app&quot; AND logName=&quot;projects/mineral-minutia-820/logs/appengine.googleapis.com%2Frequest_log&quot; AND protoPayload.resource=&quot;/&quot;'
+
+client = logging.Client()
+
+iterator = client.list_entries(filter_=FILTER, order_by=DESCENDING)
+for page in iterator.pages:
+  print('    Page number: %d' % (iterator.page_number,))
+  print('  Items in page: %d' % (page.num_items,))
+  print('Items remaining: %d' % (page.remaining,))
+  print('Next page token: %s' % (iterator.next_page_token,))  
+  print('----------------------------')
+  for entry in page:
+      print(entry.timestamp)
+</code></pre>
+
+<ul>
+<li>Monitoring:</li>
+</ul>
+
+<pre><code class="language-python">
+# virtualenv env
+# source env/bin/activate
+# pip install google-cloud-monitoring==0.30.0
+
+import datetime, time
+import pprint
+from google.cloud import monitoring_v3
+from google.cloud.monitoring_v3.query import Query
+
+client = monitoring_v3.MetricServiceClient()
+
+metric_type = 'serviceruntime.googleapis.com/api/request_count'
+resource_type = 'consumed_api'
+service = 'logging.googleapis.com'
+
+now = datetime.datetime.utcnow()
+fifteen_mins_ago =  now - datetime.timedelta(minutes=15)
+
+q = Query(client, project='YOUR_PROJECT', metric_type=metric_type, minutes=10)
+q.select_interval(end_time=now,start_time=fifteen_mins_ago)
+q.select_resources(resource_type=resource_type, service=service)
+
+for timeseries in q.iter():
+  print '========== Metric: '
+  #pprint.pprint(timeseries)
+  print '========== Points: '
+  for p in timeseries.points:
+   print repr(p)
+   print str(p.start_time) + ' --&gt; ' + str(p.end_time) + '  : [' +  str(p.value.get('bucketCounts')) + ']'
+  print('-----------------')
+
+</code></pre>
+
+<h5 id="using-google-auth-for-googleapis">Using google.auth for GoogleAPIs</h5>
+
+<p>The following shows transport authorization for the original Google APIs</p>
+
+<pre><code class="language-python">import oauth2client
+from oauth2client.client import GoogleCredentials
+import httplib2
+
+http = httplib2.Http()
+credentials = GoogleCredentials.get_application_default()
+if credentials.create_scoped_required():
+  credentials = credentials.create_scoped(scopes)
+http = credentials.authorize(http)
+</code></pre>
+
+<p>If you need to use the more recent Google Cloud Auth library, you need to cast the transport:</p>
+
+<ul>
+<li><a href="http://google-auth.readthedocs.io/en/latest/reference/google.auth.html">http://google-auth.readthedocs.io/en/latest/reference/google.auth.html</a></li>
+<li><a href="https://github.com/GoogleCloudPlatform/google-auth-library-python-httplib2"> https://github.com/GoogleCloudPlatform/google-auth-library-python-httplib2</a></li>
+</ul>
+
+<pre><code class="language-python">import google.auth
+import google_auth_httplib2
+
+scopes = ['https://www.googleapis.com/auth/devstorage.read_write']
+credentials, project = google.auth.default(scopes=scopes)
+http =  google_auth_httplib2.AuthorizedHttp(credentials)
+</code></pre>
+
+<p>or preferably init a cloud API:</p>
+
+<pre><code class="language-python">from google.cloud import storage
+import google.auth
+from google.oauth2 import service_account
+import os
+
+#credentials = service_account.Credentials.from_service_account_file('YOUR_JSON_CERT.json')
+#if credentials.requires_scopes:
+#  credentials = credentials.with_scopes(['https://www.googleapis.com/auth/devstorage.read_write'])
+#client = storage.Client(credentials=credentials)
+
+os.environ[&quot;GOOGLE_APPLICATION_CREDENTIALS&quot;] = &quot;/home/srashid/gcp_misc/certs/mineral-minutia-820-83b3ce7dcddb.json&quot;
+credentials, project = google.auth.default()    
+client = storage.Client(credentials=credentials)
+buckets = client.list_buckets()
+for bkt in buckets:
+  print bkt
+</code></pre>
+
+<h5 id="logging-cloud-python">Logging_Cloud_python</h5>
+
+<p>If you want to enable trace logging with <code>google-cloud-python*</code> library set,</p>
+
+<pre><code class="language-python">#!/usr/bin/python
+
+from google.cloud import bigquery
+from six.moves import http_client
+
+http_client.HTTPConnection.debuglevel = 5
+
+client = bigquery.Client()
+query_job = client.query(&quot;&quot;&quot;
+        SELECT timestamp
+FROM
+ `mineral-minutia-820.gae_request_logs.appengine_googleapis_com_request_log_20161119`
+ORDER BY timestamp DESC
+LIMIT
+ 4;&quot;&quot;&quot;)
+
+results = query_job.result()
+for row in results:
+        print(row)
+</code></pre>
+
+<h4 id="cloud-java">Cloud Java</h4>
+
+<ul>
+<li><a href="http://googlecloudplatform.github.io/google-cloud-java/0.8.0/index.html">http://googlecloudplatform.github.io/google-cloud-java/0.8.0/index.html</a></li>
+<li><a href="https://github.com/GoogleCloudPlatform/google-cloud-java/blob/master/google-cloud-examples/src/main/java/com/google/cloud/examples/storage/StorageExample.java">StorageExample</a></li>
+<li><a href="https://github.com/GoogleCloudPlatform/java-docs-samples">Java Cloud Examples</a></li>
+<li><a href="http://googleapis.github.io/gax-java/">Google Extensions for Java (GAX)</a></li>
+</ul>
+
+<p>The following describes using java default credentials.  You can explictly <em>setCredentials()</em> while initializing a service but that is not recommended as the code is not portable</p>
+
+<p>The various credential types can be found here:
+* <a href="https://github.com/google/google-auth-library-java/tree/master/oauth2_http/java/com/google/auth/oauth2">com.google.auth.oauth2</a>
+* <a href="https://github.com/google/google-auth-library-java#google-auth-library-oauth2-http">Credential Types</a></p>
+
+<p>The samples conained within</p>
+
+<ul>
+<li><a href="auth/service/javaapp">auth/service/javaapp</a></li>
+<li><a href="auth/compute/javaapp">auth/compute/javaapp</a></li>
+</ul>
+
+<p>Shows one sample app that uses both library types.  At the time of writing (7/7/18), there is a conflict between the grpc dependencies and google apis.</p>
+
+<p>WHich means, if you use GoogleAPIs, comment out the sections for Cloud API in the pom and .java files:</p>
+
+<p>for Cloud APIs, use:
+- pom.xml</p>
+
+<pre><code class="language-xml">  &lt;dependency&gt;
+      &lt;groupId&gt;com.google.cloud&lt;/groupId&gt;
+      &lt;artifactId&gt;google-cloud-storage&lt;/artifactId&gt;
+      &lt;version&gt;1.35.0&lt;/version&gt;
+  &lt;/dependency&gt;
+
+  &lt;dependency&gt;
+    &lt;groupId&gt;com.google.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;google-cloud-pubsub&lt;/artifactId&gt;
+    &lt;version&gt;1.35.0&lt;/version&gt;
+  &lt;/dependency&gt;
+</code></pre>
+
+<pre><code class="language-java">import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.Blob.BlobSourceOption;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+
+import com.google.cloud.storage.Storage.SignUrlOption;
+import java.util.concurrent.TimeUnit;
+import java.net.URL;
+import java.util.Iterator;
+import java.io.FileInputStream;
+
+
+//import com.google.auth.oauth2.ServiceAccountCredentials;
+
+// Using Google Cloud APIs with service account file
+// You can also just export an export GOOGLE_APPLICATION_CREDENTIALS and use StorageOptions.defaultInstance().service()
+// see https://github.com/google/google-auth-library-java#google-auth-library-oauth2-http
+/*
+Storage storage_service = StorageOptions.newBuilder()
+			.setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(&quot;/path/to/your/certificate.json&quot;)))
+			.build()
+			.getService();			
+*/
+
+Storage storage_service = StorageOptions.newBuilder()
+	.build()
+	.getService();
+for (Bucket b : storage_service.list().iterateAll()){
+  System.out.println(b);
+}
+
+// You can also use the client to generate a signed URL:
+URL signedUrl = storage_service.signUrl(BlobInfo.newBuilder(&quot;your_project&quot;, &quot;a.txt&quot;).build(), 60,  TimeUnit.SECONDS);
+System.out.println(signedUrl);
+</code></pre>
+
+<h5 id="proxy-server-settings">Proxy Server Settings</h5>
+
+<p>see <a href="proxy/README.md">proxy/README.md</a></p>
+
+<pre><code>export  https_proxy=proxy_server:3128
+</code></pre>
+
+<h4 id="credential-channel-providers">Credential/Channel Providers</h4>
+
+<pre><code class="language-java">
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
+
+import com.google.api.gax.core.GoogleCredentialsProvider;
+import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.api.gax.grpc.GrpcTransportChannel;
+import com.google.api.gax.rpc.TransportChannelProvider;
+import com.google.api.gax.rpc.FixedTransportChannelProvider;
+
+import com.google.cloud.pubsub.v1.Publisher;
+import com.google.cloud.pubsub.v1.TopicAdminClient;
+import com.google.cloud.pubsub.v1.TopicAdminSettings;
+import com.google.cloud.pubsub.v1.TopicAdminClient.ListTopicSubscriptionsPagedResponse;
+import com.google.cloud.pubsub.v1.TopicAdminClient.ListTopicsPagedResponse;
+import com.google.pubsub.v1.ProjectTopicName;
+import com.google.pubsub.v1.ListTopicsRequest;
+import com.google.pubsub.v1.ProjectName;
+import com.google.pubsub.v1.ProjectTopicName;
+import com.google.pubsub.v1.Topic;
+
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+
+    // or set ADC
+    //export GOOGLE_APPLICATION_CREDENTIALS=&quot;/path/to/keyfile.json&quot;
+    String cred_env = System.getenv(&quot;GOOGLE_APPLICATION_CREDENTIALS&quot;);
+	GoogleCredentials creds = GoogleCredentials.getApplicationDefault();	  	  
+    //String cert_file = &quot;keyfile.json&quot;;    
+	//GoogleCredentials creds = GoogleCredentials.fromStream(new FileInputStream(cred_env));
+	FixedCredentialsProvider credentialsProvider = FixedCredentialsProvider.create(creds);
+
+	///ManagedChannel channel = ManagedChannelBuilder.forTarget(&quot;pubsub.googleapis.com:443&quot;).build();
+    //TransportChannelProvider channelProvider = FixedTransportChannelProvider.create(GrpcTransportChannel.create(channel));
+
+	TransportChannelProvider channelProvider = TopicAdminSettings.defaultTransportChannelProvider();
+
+	TopicAdminClient topicClient =
+	  TopicAdminClient.create(
+		  TopicAdminSettings.newBuilder()
+			  .setTransportChannelProvider(channelProvider)
+			  .setCredentialsProvider(credentialsProvider)
+			  .build());
+</code></pre>
+
+<h5 id="async-futures">Async Futures</h5>
+
+<p>see <a href="https://github.com/GoogleCloudPlatform/java-docs-samples/blob/master/pubsub/cloud-client/src/main/java/com/example/pubsub/PublisherExample.java#L40">Example</a></p>
+
+<pre><code class="language-java">
+import com.google.iam.v1.GetIamPolicyRequest;
+import com.google.iam.v1.Policy;
+import com.google.iam.v1.SetIamPolicyRequest;
+import com.google.iam.v1.Binding;
+import com.google.cloud.Role;
+
+    // setup topicadmin client using the bit above
+	TopicAdminClient topicClient =
+	  TopicAdminClient.create(
+		  TopicAdminSettings.newBuilder()
+			  .setTransportChannelProvider(channelProvider)
+			  .setCredentialsProvider(credentialsProvider)
+              .build());
+
+      String formattedResource = TopicName.create(&quot;mineral-minutia-820&quot;, &quot;saltopic2&quot;).toString();
+
+      GetIamPolicyRequest request = GetIamPolicyRequest.newBuilder()
+        .setResource(formattedResource)
+        .build();
+      ApiFuture&lt;Policy&gt; future = topicAdminClient.getIamPolicyCallable().futureCall(request);
+      Policy response = future.get();
+      System.out.println(response);
+
+</code></pre>
+
+<h4 id="cloud-go">Cloud Go</h4>
+
+<p>Package <a href="https://godoc.org/cloud.google.com/go/storage">cloud.google.com/go/storage</a></p>
+
+<ul>
+<li><a href="https://github.com/GoogleCloudPlatform/google-cloud-go">https://github.com/GoogleCloudPlatform/google-cloud-go</a></li>
+<li><a href="https://godoc.org/google.golang.org/api/storage/v1">https://godoc.org/google.golang.org/api/storage/v1</a></li>
+</ul>
+
+<p>The following shows google.DefaultTokenSource as well as gcloud&rsquo;s Application Default Credentials</p>
+
+<pre><code class="language-golang">import (
+        &quot;golang.org/x/net/context&quot;
+        &quot;cloud.google.com/go/storage&quot;
+        &quot;google.golang.org/api/iterator&quot;
+        &quot;google.golang.org/api/option&quot;
+        &quot;log&quot;  
+)
+
+	ctx := context.Background()
+	/*
+		tokenSource, err := google.DefaultTokenSource(oauth2.NoContext, storage.ScopeReadOnly)
+		if err != nil {
+			log.Fatalf(&quot;Unable to acquire token source: %v&quot;, err)
+		}
+		storeageClient, err := storage.NewClient(ctx, option.WithTokenSource(tokenSource))
+	*/
+
+	storeageClient, err := storage.NewClient(ctx)
+	if err != nil {
+		log.Fatalf(&quot;Unable to acquire storage Client: %v&quot;, err)
+	}
+
+	it := storeageClient.Buckets(ctx, &quot;your_project&quot;)
+	for {
+		bucketAttrs, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			log.Fatalf(&quot;Unable to acquire storage Client: %v&quot;, err)
+		}
+		log.Printf(bucketAttrs.Name)
+	}
+
+</code></pre>
+
+<h5 id="exponential-backoff">Exponential Backoff</h5>
+
+<p>Cloud libraries implement backoff automatically per service.</p>
+
+<ul>
+<li><p>GCS</p>
+
+<ul>
+<li><a href="https://github.com/GoogleCloudPlatform/google-cloud-go/blob/master/storage/invoke.go#L26">https://github.com/GoogleCloudPlatform/google-cloud-go/blob/master/storage/invoke.go#L26</a></li>
+</ul></li>
+
+<li><p>BQ</p>
+
+<ul>
+<li><a href="https://github.com/GoogleCloudPlatform/google-cloud-go/blob/master/bigquery/service.go#L705">https://github.com/GoogleCloudPlatform/google-cloud-go/blob/master/bigquery/service.go#L705</a></li>
+<li><a href="https://github.com/GoogleCloudPlatform/google-cloud-go/blob/master/bigquery/service.go#L529">https://github.com/GoogleCloudPlatform/google-cloud-go/blob/master/bigquery/service.go#L529</a></li>
+</ul></li>
+</ul>
+
+<h4 id="cloud-node">Cloud Node</h4>
+
+<p>The <em>google-cloud</em> node package initalizes the Cloud API library set:</p>
+
+<ul>
+<li><a href="https://github.com/GoogleCloudPlatform/google-cloud-node">https://github.com/GoogleCloudPlatform/google-cloud-node</a></li>
+<li><a href="https://googlecloudplatform.github.io/google-cloud-node/#/">https://googlecloudplatform.github.io/google-cloud-node/#/</a></li>
+</ul>
+
+<p>The sample under <a href="auth/compute/nodeapp">auth/compute/nodeapp</a> shows both Cloud APIs and Google APIs</p>
+
+<pre><code class="language-node">const Storage = require('@google-cloud/storage');
+const storage = new Storage({
+    projectId: 'your-project',
+  });
+
+storage.getBuckets(function(err, buckets) {
+  if (!err) {
+  	buckets.forEach(function(value){
+  			logger.info(value.id);
+	});
+  }
+});
+
+const Pubsub = require('@google-cloud/pubsub');
+const pubsub = Pubsub({
+    projectId: 'your-project'
+  });
+  pubsub.getTopics((err, topic) =&gt; {
+      if (err) {
+          logger.error(err);
+          return;
+      }
+      topic.forEach(function(entry) {
+      logger.info(entry.name);
+      });
+  });
+</code></pre>
+
+<h4 id="cloud-c">Cloud C</h4>
+
+<p>Use <a href="https://www.nuget.org/packages/Google.Cloud.Storage.V1/">Google.Cloud.Storage.V1</a> package for Google Cloud API access</p>
+
+<ul>
+<li><a href="https://github.com/GoogleCloudPlatform/google-cloud-dotnet">google-cloud-dotnet</a></li>
+<li><a href="http://googlecloudplatform.github.io/google-cloud-dotnet/docs/Google.Cloud.Storage.V1/">API Documentation</a></li>
+</ul>
+
+<p>See <a href="auth/service/dotnet">auth/service/dotnet</a> for sample for both Cloud APIs and Google APIs libraries.</p>
+
+<pre><code class="language-csharp">using Google.Cloud.Storage.V1;
+
+namespace CloudStorageAppGcloud
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var client = StorageClient.Create();
+
+            foreach (var obj in client.ListObjects(&quot;your_project&quot;, &quot;&quot;))
+            {
+                Console.WriteLine(obj.Name);
+            }
+            Console.ReadLine();
+        }
+    }
+}
+
+</code></pre>
+
+<h4 id="grpc-environment-variables">gRPC Environment Variables</h4>
+
+<ul>
+<li><a href="https://github.com/grpc/grpc/blob/master/doc/environment_variables.md">https://github.com/grpc/grpc/blob/master/doc/environment_variables.md</a></li>
+</ul>
+
+<h4 id="jwt-access-token">JWT Access Token</h4>
+
+<ul>
+<li>- <a href="auth/service/jwt_access_token">auth/service/jwt_access_token</a></li>
+</ul>
+
+<p>JWT access tokens are efficient way to access certain google apis without the extra round trip to get an <code>access_token</code>.  Unlike the normal Oauth service account flow where you
+1. use a local service account to sign a JWT,
+2. Exchange that JWT with google to get an <code>access_token</code>
+3. Use that <code>access_token</code> to make an API call to google</p>
+
+<p>with JWT Access Tokens, all you do is sign a JWT locally with a service account with the intended Service you want to access and then simply send it to the service.</p>
+
+<p>The following links describes this flow:
+- <a href="https://developers.google.com/identity/protocols/OAuth2ServiceAccount#jwt-auth">JWT Auth</a></p>
+
+<p>where these Google APIs will support this:
+- <a href="https://github.com/googleapis/googleapis/tree/master/google">https://github.com/googleapis/googleapis/tree/master/google</a></p>
+
+<p>eg. for PubSub</p>
+
+<pre><code class="language-golang">	// https://github.com/googleapis/googleapis/blob/master/google/pubsub/pubsub.yaml#L6
+
+	ctx := context.Background()
+	projectID := &quot;YOUR_PROJECT&quot;
+	keyfile := &quot;service_account.json&quot;
+
+	audience := &quot;https://pubsub.googleapis.com/google.pubsub.v1.Publisher&quot;
+
+	keyBytes, err := ioutil.ReadFile(keyfile)
+	if err != nil {
+		log.Fatalf(&quot;Unable to read service account key file  %v&quot;, err)
+	}
+	tokenSource, err := google.JWTAccessTokenSourceFromJSON(keyBytes, audience)
+	if err != nil {
+		log.Fatalf(&quot;Error building JWT access token source: %v&quot;, err)
+	}
+	jwt, err := tokenSource.Token()
+	if err != nil {
+		log.Fatalf(&quot;Unable to generate JWT token: %v&quot;, err)
+	}
+	fmt.Println(jwt.AccessToken)
+
+	pubsubClient, err := pubsub.NewClient(ctx, projectID, option.WithTokenSource(tokenSource))
+	if err != nil {
+		log.Fatalf(&quot;Could not create pubsub Client: %v&quot;, err)
+	}
+</code></pre>
+
+<h4 id="google-api-client-library-for-python">Google API Client Library for Python</h4>
+
+<p>The following describes the older, non-idomatic libraries.  As you can see, its much easier using the idomatic library set.
+* <a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/list">GCS JSON API</a></p>
+
+<pre><code>virtualenv env
+source env/bin/activate
+pip install --upgrade requests google-api-python-client httplib2 oauth2client
+
+</code></pre>
+
+<pre><code class="language-python">import os
+import httplib2
+from apiclient.discovery import build
+from oauth2client.service_account import ServiceAccountCredentials
+from oauth2client.client import GoogleCredentials
+
+scope='https://www.googleapis.com/auth/devstorage.read_only'
+
+#os.environ[&quot;GOOGLE_APPLICATION_CREDENTIALS&quot;] = &quot;YOUR_JSON_CERT.json&quot;
+credentials = GoogleCredentials.get_application_default()
+if credentials.create_scoped_required():
+  credentials = credentials.create_scoped(scope)
+http = httplib2.Http()
+credentials.authorize(http)
+
+service = build(serviceName='storage', version= 'v1',http=http)
+resp = service.buckets().list(project='YOUR_PROJECT').execute()
+for i in resp['items']:
+  print i['name']
+</code></pre>
+
+<p>You can also initialize an <code>AuthorizedHttp</code> artifact from <code>google-auth</code> library with discovery:</p>
+
+<pre><code class="language-python"># http://google-auth.readthedocs.io/en/latest/reference/google.auth.html
+# https://github.com/GoogleCloudPlatform/google-auth-library-python-httplib2
+import google.auth
+import google_auth_httplib2
+credentials, project = google.auth.default(scopes=scopes)
+http =  google_auth_httplib2.AuthorizedHttp(credentials)
+
+service = build(serviceName='cloudtasks',
+  discoveryServiceUrl='https://cloudtasks.googleapis.com/%24discovery/rest?version=v2beta2',
+  version= 'v2beta2',http=http)
+</code></pre>
+
+<h3 id="google-api-python">Google API Python</h3>
+
+<ul>
+<li><p><a href="https://developers.google.com/api-client-library/python/">Google API Client Library for Python</a></p>
+
+<pre><code>apt-get install curl python2.7 python-pip
+pip install requests google-api-python-client httplib2 oauth2client
+</code></pre></li>
+</ul>
+
+<h4 id="appengine">Appengine</h4>
+
+<p>Under <a href="auth/gae/pyapp/">auth/gae/pyapp/</a>  Deploys an application to appengine that uses <em>Application Default Credentials</em>.</p>
+
+<p><em>AppAssertionCredentials</em>  is also shown but commented.</p>
+
+<p>Remember to edit app.yaml file with your appID.</p>
+
+<p>If running on the dev_appserver, you will need to set the local service account id and certificate first:</p>
+
+<pre><code class="language-bash">cd auth/gae/pyapp
+
+virtualenv env
+source env/bin/activate
+pip install -t lib  -r requirements.txt
+deactvate &amp;&amp; rm -rf env
+
+# To run with your own gcloud credentials
+dev_appserver.py app.yaml
+
+# For service account credentials
+cat your_svc_account.p12 | openssl pkcs12 -nodes -nocerts -passin pass:notasecret | openssl rsa &gt; key.pem
+dev_appserver.py app.yaml --appidentity-email-address=YOUR_SERVICE_ACCOUNT_ID@developer.gserviceaccount.com --appidentity-private-key-path=key.pem
+
+</code></pre>
+
+<p>For info on <code>--appidentity-email-address</code> and <code>--appidentity-private-key-path</code>, see documentation on <a href="https://cloud.google.com/sdk/gcloud/reference/preview/app/run">gcloud dev_appserver</a>.</p>
+
+<h4 id="computeengine">ComputeEngine</h4>
+
+<p>Under <a href="auth/compute/pyapp">auth/compute/pyapp</a>  Runs a simple application on compute engine using <em>Application Default Credentials</em>.</p>
+
+<p><em>AppAssertionCredentials</em> is also shown but commented</p>
+
+<p>or</p>
+
+<pre><code>cd auth/compute/pyapp
+virtualenv env
+source env/bin/activate
+pip install -r requirements.txt
+
+python compute.py
+</code></pre>
+
+<h4 id="service-account-file">Service Account File</h4>
+
+<p>Under <a href="auth/service/pyapp/">auth/service/pyapp</a>  Runs a simple application that uses the service account credential from both a PKCS12 file and a JSON keyfile.  Application Default Credentials uses the JSON keyfile only if the <em>GOOGLE_APPLICATION_CREDENTIALS</em> variable isset</p>
+
+<p>For more details, goto <a href="https://developers.google.com/api-client-library/python/auth/service-accounts">Service Accounts</a></p>
+
+<h4 id="userflow">Userflow</h4>
+
+<p>Under <a href="auth/userflow/pyapp">auth/userflow/pyapp</a>  Runs a simple application that performs user-interactive webflow and propmpts the user for consent.  Download an <em>installed</em> app client_secrets.json and reference it for the &lsquo;flow_from_clientsecrets()&rsquo; method.</p>
+
+<p>For more deails, goto <a href="https://developers.google.com/api-client-library/python/guide/aaa_oauth#flow_from_clientsecrets">flow_from_clientsecrets</a></p>
+
+<p>The sample also shows the simplified flow with a browser listener (so that you dont&rsquo; have to type in the code manually):</p>
+
+<pre><code class="language-python">from google_auth_oauthlib.flow import InstalledAppFlow
+flow = InstalledAppFlow.from_client_secrets_file(
+    'client_secrets.json',
+    scopes=['profile', 'email'])
+
+flow.run_local_server()
+
+client = photos_v1.PhotoServiceClient(credentials=flow.credentials)
+</code></pre>
+
+<h4 id="misc">Misc</h4>
+
+<h5 id="setting-api-key">Setting API Key</h5>
+
+<p>Example showing how to set the <a href="https://developers.google.com/api-client-library/python/guide/aaa_apikeys">API_KEY</a>.</p>
+
+<pre><code class="language-python">service = build(serviceName='oauth2', version= 'v2',http=http, developerKey='YOUR_API_KEY')
+</code></pre>
+
+<h5 id="logging">Logging</h5>
+
+<p>Enable verbose wire tracing.</p>
+
+<pre><code class="language-python">import logging
+import httplib2
+import sys
+
+logFormatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
+root = logging.getLogger()
+root.setLevel(logging.INFO)           
+ch = logging.StreamHandler(sys.stdout)
+ch.setLevel(logging.INFO)    
+ch.setFormatter(logFormatter)
+root.addHandler(ch)
+logging.getLogger('oauth2client.client').setLevel(logging.DEBUG)
+logging.getLogger('apiclient.discovery').setLevel(logging.DEBUG)
+
+httplib2.debuglevel=3
+</code></pre>
+
+<h5 id="appengine-cloud-endpoints-framework">Appengine Cloud Endpoints Framework</h5>
+
+<p>Sample discovery for Appengine Cloud Enpoints.</p>
+
+<blockquote>
+<blockquote>
+<p>Note: this is for use with Endpoints Framework running on GAE python27 and java7 (not OpenAPI)</p>
+</blockquote>
+</blockquote>
+
+<pre><code class="language-python">service = build(serviceName='myendpoint', discoveryServiceUrl='https://yourappid.appspot.com/_ah/api/discovery/v1/apis/yourendpoint/v1/rest',version= 'v1',http=http)
+resource = service.yourAPI()
+resp = resource.get(parameter='value').execute()
+</code></pre>
+
+<h5 id="credential-store">Credential store</h5>
+
+<p>See <a href="https://developers.google.com/api-client-library/python/guide/aaa_oauth#storage">credential store</a> documentation.</p>
+
+<h5 id="id-token-from-service-account-json-signed-by-google">ID Token from Service Account JSON Signed by Google</h5>
+
+<p>If you need an id_token issued by Google using your JSON certificate:</p>
+
+<p>THe old way was to run through the full flow <em>manually</em>:</p>
+
+<pre><code class="language-python">from oauth2client.service_account import ServiceAccountCredentials
+credentials = ServiceAccountCredentials.from_json_keyfile_name('YOUR_SERVICE_AcCOUNT.json')
+now = int(time.time())
+payload = {
+        'iat': now,
+        'exp': now + credentials.MAX_TOKEN_LIFETIME_SECS,
+        'aud': 'https://www.googleapis.com/oauth2/v4/token',
+        'iss': 'svc1-001@YOUR_PROJECT.iam.gserviceaccount.com',
+        'scope': 'svc1-001@YOUR_PROJECT.iam.gserviceaccount.com'
+}
+signed_jwt = oauth2client.crypt.make_signed_jwt(credentials._signer, payload, key_id=credentials._private_key_id)
+params = urllib.urlencode({
+      'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      'assertion': signed_jwt })
+headers = {&quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;}
+conn = httplib.HTTPSConnection(&quot;www.googleapis.com&quot;)
+conn.request(&quot;POST&quot;, &quot;/oauth2/v4/token&quot;, params, headers)
+res = json.loads(conn.getresponse().read())
+print res
+</code></pre>
+
+<p>The new (preferred) way is to use the new `<code>iamcredentials</code> API directly.  See <a href="id_tokens/README.md">id_tokens/README.md</a></p>
+
+<ul>
+<li><a href="id_tokens/iam_svc_tokens/main.py">id_tokens/iam_svc_tokens/main.py</a>.<br /></li>
+</ul>
+
+<p>both which Returns JSON with a JWT signed by Google:</p>
+
+<pre><code class="language-json">{&quot;id_token&quot;: &quot;YOUR_ID_TOKEN_SIGNED_BY_GOOGLE&quot;}
+
+</code></pre>
+
+<p>Decoded JWT id_token:</p>
+
+<pre><code class="language-json">{
+  &quot;iss&quot;: &quot;https://accounts.google.com&quot;,
+  &quot;aud&quot;: &quot;svc1-001@YOUR_PROJECT.iam.gserviceaccount.com&quot;,
+  &quot;sub&quot;: &quot;111402810199779215722&quot;,
+  &quot;email_verified&quot;: true,
+  &quot;azp&quot;: &quot;svc1-001@YOUR_PROJECT.iam.gserviceaccount.com&quot;,
+  &quot;email&quot;: &quot;svc1-001@YOUR_PROJECT.iam.gserviceaccount.com&quot;,
+  &quot;iat&quot;: 1468897846,
+  &quot;exp&quot;: 1468901446
+}
+</code></pre>
+
+<p>If you are running the flow directly, if you used <em>&lsquo;scope&rsquo;: &lsquo;<a href="https://www.googleapis.com/auth/userinfo.email'">https://www.googleapis.com/auth/userinfo.email'</a></em>, the return fields would include an access_token scoped to userinfo.email for the service account.</p>
+
+<hr />
+
+<h3 id="google-api-java">Google API Java</h3>
+
+<p><a href="https://developers.google.com/api-client-library/java/">Java API Client Library</a>.  Most of the samples below uses gradle to build and deploy.</p>
+
+<h4 id="appengine-1">Appengine</h4>
+
+<p>Under <a href="auth/gae/javaapp">auth/gae/javaapp</a>.  Runs a simple application using both <em>Application DefaultCredentials</em> and <em>AppIdentityService</em>.  To deploy, edit the <em>build.gradle</em> file and enter the username of an administrator on the GAE application.</p>
+
+<p>Sample shows both Cloud Client and Google API library set</p>
+
+<pre><code class="language-bash">mvn appengine:run
+mvn appengine:deploy
+</code></pre>
+
+<h4 id="computeengine-1">ComputeEngine</h4>
+
+<p>Under <a href="auth/compute/javaapp">auth/compute/javaapp</a>.  Runs a simple application using both <em>Application DefaultCredentials</em> and <em>ComputeCredential</em>.</p>
+
+<pre><code class="language-bash">mvn exec:java
+</code></pre>
+
+<h4 id="service-account-file-1">Service Account File</h4>
+
+<p>Under <a href="auth/service/javaapp">auth/service/javaapp</a>.  Runs a simple application using both <em>Application DefaultCredentials</em> and by directly reading in the JSON certificate file.  If the <em>GOOGLE_APPLICATION_CREDENTIALS</em> variable is set to point to the JSON file, the applicationDefault profile will also read the JSON file (otherwise, it will attempt to pick up the gcloud credentials)</p>
+
+<pre><code class="language-bash">mvn exec:java
+</code></pre>
+
+<h4 id="userflow-1">UserFlow</h4>
+
+<p>Under <a href="auth/userflow/javaapp">auth/userflow/javaapp</a>.  Runs a simple webflow application to acquire user consent for GoogleAPIs.  This particular userflow launches a browser and listener.</p>
+
+<pre><code class="language-bash">mvn exec:java
+</code></pre>
+
+<h4 id="misc-1">Misc</h4>
+
+<h5 id="logging-1">Logging</h5>
+
+<pre><code class="language-java">import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+ConsoleHandler consoleHandler = new ConsoleHandler();
+consoleHandler.setLevel(Level.ALL);
+consoleHandler.setFormatter(new SimpleFormatter());
+
+Logger logger = Logger.getLogger(&quot;com.google.api.client&quot;);
+logger.setLevel(Level.ALL);
+logger.addHandler(consoleHandler);  
+
+Logger lh = Logger.getLogger(&quot;httpclient.wire.header&quot;);
+lh.setLevel(Level.ALL);
+lh.addHandler(consoleHandler);
+
+Logger lc = Logger.getLogger(&quot;httpclient.wire.content&quot;);
+lc.setLevel(Level.ALL);
+lc.addHandler(consoleHandler);
+
+Logger gl = Logger.getLogger(&quot;io.grpc&quot;);
+gl.setLevel(Level.FINE);
+gl.addHandler(consoleHandler);
+</code></pre>
+
+<h5 id="setting-api-key-1">Setting API Key</h5>
+
+<pre><code class="language-java">String API_KEY = &quot;...&quot;;
+Oauth2 service = new Oauth2.Builder(httpTransport, jsonFactory, credential)
+    .setApplicationName(&quot;oauth client&quot;)
+    .setOauth2RequestInitializer(new Oauth2RequestInitializer(API_KEY))    
+    .build();
+</code></pre>
+
+<h5 id="setting-request-parameter">Setting Request Parameter</h5>
+
+<pre><code class="language-java">Oauth2 service = new Oauth2.Builder(httpTransport, jsonFactory, credential)
+    .setApplicationName(&quot;oauth client&quot;)
+    .setOauth2RequestInitializer(new Oauth2RequestInitializer(){
+        @Override
+        public void initializeOauth2Request(Oauth2Request&lt;?&gt; request) {
+            request.setPrettyPrint(true);
+        }
+    })      
+    .build();
+</code></pre>
+
+<h5 id="credential-store-1">Credential store</h5>
+
+<p>See documentatin on <a href="https://developers.google.com/drive/web/credentials?hl=en">Drive</a></p>
+
+<h5 id="exponential-backoff-1">Exponential Backoff</h5>
+
+<p>See <a href="https://developers.google.com/api-client-library/java/google-http-java-client/backoff">ExponentialBackOff</a></p>
+
+<p>Usign GoogleAPIs:</p>
+
+<pre><code class="language-java">import com.google.api.client.util.ExponentialBackOff;
+
+final GoogleCredential credential = GoogleCredential.getApplicationDefault(httpTransport,jsonFactory).createScoped(Arrays.asList(Oauth2Scopes.USERINFO_EMAIL));
+
+Oauth2 service = new Oauth2.Builder(httpTransport, jsonFactory, new HttpRequestInitializer() {
+                public void initialize(HttpRequest request) throws IOException {
+                    request.setContentLoggingLimit(0);
+                    request.setCurlLoggingEnabled(false);
+                    credential.initialize(request);
+                    ExponentialBackOff backoff = new ExponentialBackOff.Builder()
+                    .setInitialIntervalMillis(500)
+                    .setMaxElapsedTimeMillis(900000)
+                    .setMaxIntervalMillis(6000)
+                    .setMultiplier(1.5)
+                    .setRandomizationFactor(0.5)
+                    .build();
+                  request.setUnsuccessfulResponseHandler(new HttpBackOffUnsuccessfulResponseHandler(backoff));
+                }
+            })                  
+            .setApplicationName(&quot;oauth client&quot;)
+            .build();
+</code></pre>
+
+<p>or using Cloud Libraries</p>
+
+<pre><code class="language-java">import com.google.api.gax.retrying.RetrySettings;
+
+        Storage storage = StorageOptions.newBuilder()
+            .setCredentials(myprovider.getCredentials())
+            .setRetrySettings(ServiceOptions.getDefaultRetrySettings())
+            .build()
+            .getService();
+</code></pre>
+
+<hr />
+
+<h3 id="google-api-go">Google API Go</h3>
+
+<p><a href="https://godoc.org/golang.org/x/oauth2/google#DefaultTokenSource">DefaultTokenSource</a></p>
+
+<h4 id="appengine-2">Appengine</h4>
+
+<p>Under <a href="auth/gae/goapp">auth/gae/goapp</a>.  Runs a simple GAE application using both <em>Application DefaultCredentials</em> and <em>AppEngineTokenSource</em>.  To deploy:</p>
+
+<blockquote>
+<p>Note: for use with Appengine Standard:</p>
+</blockquote>
+
+<pre><code class="language-bash">mkdir extra
+export GOPATH=`pwd`/extra
+
+go get golang.org/x/oauth2
+go get google.golang.org/appengine/...
+go get google.golang.org/cloud/compute/...
+go get google.golang.org/api/oauth2/v2
+go get cloud.google.com/go/compute/metadata
+
+
+run locally:
+  dev_appserver.py src/app.yaml
+
+deploy:
+  gcloud app deploy deploy src/app.yaml
+
+</code></pre>
+
+<h4 id="computeengine-2">ComputeEngine</h4>
+
+<p>Under <a href="auth/compute/goapp">auth/compute/goapp</a>.  Runs a simple application using both <em>Application DefaultCredentials</em> and <em>ComputeTokenSource</em>.  To deploy:</p>
+
+<blockquote>
+<p>Make sure you create a GCE instance with the <code>userinfo.email</code> scope.  That will allow the token to be used against the oauth2 endpoint</p>
+
+<pre><code class="language-bash">export GOPATH=`pwd`
+
+go get golang.org/x/oauth2
+go get google.golang.org/cloud/compute/...
+go get google.golang.org/api/oauth2/v2
+go get cloud.google.com/go/compute/metadata
+
+
+go run src/main.go
+</code></pre>
+</blockquote>
+
+<h4 id="service-account-json-file">Service Account JSON File</h4>
+
+<p>Under <a href="auth/service/goapp">auth/service/goapp</a>.  Runs a simple application using both <em>Application DefaultCredentials</em> and directly reading <em>JWTConfigFromJSON</em>.</p>
+
+<p>The sample also demonstrates <em>both</em> google api clients and google cloud client libraries.</p>
+
+<p>To use:</p>
+
+<p>edit</p>
+
+<pre><code class="language-serviceAccountJSONFile">After that, you can either explictly use the credential type for service account (```JWTConfigFromJSON```, or set the environment variable ause ADC)
+
+THis sample also uses the service account to iterate over the Cloud Storage buckets.  Make sure the service account has that permissoin
+
+```bash
+export GOPATH=`pwd`
+
+go get golang.org/x/oauth2
+go get google.golang.org/cloud/compute/...
+go get google.golang.org/api/oauth2/v2
+go get cloud.google.com/go/compute/metadata
+go get github.com/googleapis/gax-go
+go get o.opencensus.io/trace
+go get go.opencensus.io/plugin/ochttp
+go get go.opencensus.io/exporter/stackdriver/propagation
+go get google.golang.org/grpc
+
+go run src/main.go
+</code></pre>
+
+<h4 id="userflow-2">UserFlow</h4>
+
+<p>Under <a href="auth/userflow/goapp">auth/userflow/goapp</a>.   Runs a simple webflow application to acquire user consent for GoogleAPIs.  This particular userflow launches a link URL and expects the authorization token to get entered (installed application).</p>
+
+<p>To use, go to the cloud console, &ldquo;API &amp; Credentials &gt; Credentials&rdquo;, then &ldquo;Create Credentials &gt; Oauth2 Credentials &gt; Other&rdquo;.  Copy the clientID and secret into main.go:</p>
+
+<pre><code>        ClientID:     &quot;YOUR_CLIENT_ID&quot;,
+        ClientSecret: &quot;YOUR_CLIENT_SECRET&quot;,
+</code></pre>
+
+<pre><code class="language-bash">go get golang.org/x/net/context
+go get golang.org/x/oauth2/google
+go get google.golang.org/cloud/compute/...
+go get google.golang.org/api/oauth2/v2
+
+go run src/main.go
+</code></pre>
+
+<p>You will see a URL.  Copy that URL to a browser, login and then enter the code.  This sample runs the &ldquo;installed application&rdquo; flow</p>
+
+<h4 id="misc-2">Misc</h4>
+
+<h5 id="setting-api-key-2">Setting API Key</h5>
+
+<pre><code class="language-go">import &quot;google.golang.org/api/googleapi/transport&quot;
+apiKey :=&quot;YOUR_API_KEY&quot;
+client.Transport = &amp;transport.APIKey{
+    Key: apiKey,
+}
+</code></pre>
+
+<h5 id="id-token-signed-by-google">ID Token Signed by Google</h5>
+
+<p>The following only works with your local (user) gcloud credentials.</p>
+
+<p>Also see</p>
+
+<ul>
+<li><a href="id_token/README.md">id_token/README.md</a></li>
+</ul>
+
+<pre><code class="language-golang">import (
+	&quot;log&quot;
+
+	&quot;golang.org/x/net/context&quot;
+	&quot;golang.org/x/oauth2&quot;
+	&quot;golang.org/x/oauth2/google&quot;
+	oauthsvc &quot;google.golang.org/api/oauth2/v2&quot;
+
+	&quot;google.golang.org/grpc/credentials/oauth&quot;
+)
+
+func main() {
+
+	src, err := google.DefaultTokenSource(oauth2.NoContext, oauthsvc.UserinfoEmailScope)
+	if err != nil {
+		log.Fatalf(&quot;Unable to acquire token source: %v&quot;, err)
+	}
+
+	creds := oauth.TokenSource{src}
+	tok, err := creds.Token()
+	if err != nil {
+		log.Fatalf(&quot;Unable to acquire token source: %v&quot;, err)
+	}
+	if (tok.Extra(&quot;id_token&quot;) != nil){
+		log.Printf(&quot;id_token: &quot; , tok.Extra(&quot;id_token&quot;).(string))
+	}
+}
+</code></pre>
+
+<p><a href="https://developers.google.com/identity/protocols/OpenIDConnect?hl=en#validatinganidtoken">Validating id_token</a></p>
+
+<pre><code class="language-go">src, err := google.DefaultTokenSource(oauth2.NoContext, oauthsvc.UserinfoEmailScope)
+if err != nil {
+    log.Fatalf(&quot;Unable to acquire token source: %v&quot;, err)
+}
+tok, err := src.Token()
+if err != nil {
+    log.Fatalf(&quot;Unable to acquire token: %v&quot;, err)
+}
+log.Printf(&quot;id_token: &quot; , tok.Extra(&quot;id_token&quot;).(string))
+</code></pre>
+
+<p>Also see<br />
+* <a href="http://stackoverflow.com/questions/26159658/golang-token-validation-error/26287613#26287613">Golang Token verificaiton</a>
+* <a href="http://jwt.io/">JWT debugger</a></p>
+
+<h5 id="credential-store-2">Credential store</h5>
+
+<p>See <a href="https://www.godoc.org/golang.org/x/oauth2#ReuseTokenSource">oauth2.ReuseTokenSource</a></p>
+
+<pre><code class="language-go">
+src, err := google.DefaultTokenSource(oauth2.NoContext, oauthsvc.UserinfoEmailScope)
+if err != nil {
+   log.Fatalf(&quot;Unable to acquire token source: %v&quot;, err)
+}
+
+tok, err := tokenFromFile(&quot;credential.token&quot;)
+src = oauth2.ReuseTokenSource(tok,src)
+tokenval, err := src2.Token()
+if err != nil {
+    log.Fatalf(&quot;Token can't be read&quot;)
+} else {
+    log.Printf(&quot;token %v\n&quot;, tokenval.AccessToken)
+}
+
+client := oauth2.NewClient(context.Background(), src)
+svc, err := oauthsvc.New(client)
+if err != nil {
+    log.Fatalf(&quot;ERROR: &quot;, err)
+}
+...
+...
+func saveToken(file string, token *oauth2.Token) {
+    f, err := os.Create(file)
+    if err != nil {
+        log.Printf(&quot;Warning: failed to cache oauth token: %v&quot;, err)
+        return
+    }
+    defer f.Close()
+    json.NewEncoder(f).Encode(token)
+}
+
+func tokenFromFile(file string) (*oauth2.Token, error) {
+    f, err := os.Open(file)
+    if err != nil {
+        return nil, err
+    }
+    defer f.Close()
+    t := new(oauth2.Token)
+    err = json.NewDecoder(f).Decode(t)
+    return t, err
+}
+</code></pre>
+
+<h5 id="logging-2">Logging</h5>
+
+<p>The follwoing example of trace http logging wraps the Transport around a logging version:
+<a href="https://code.google.com/p/google-api-go-client/source/browse/examples/debug.go">LogTransport</a>.</p>
+
+<p>This example also shows how the <em>API_KEY</em> could get constructed although this particular API (oauth2/v2) does not need or expect an api_key.</p>
+
+<pre><code class="language-go">package main
+import (
+    &quot;golang.org/x/oauth2&quot;
+    &quot;golang.org/x/oauth2/google&quot;    
+    &quot;log&quot;   
+    oauthsvc &quot;google.golang.org/api/oauth2/v2&quot;
+    &quot;google.golang.org/api/googleapi/transport&quot;
+    &quot;net/http&quot;
+)
+const (
+    api_key   = &quot;YOUR_API_KEY&quot;
+)
+func Auth() {
+    src, err := google.DefaultTokenSource(oauth2.NoContext, oauthsvc.UserinfoEmailScope)
+    if err != nil {
+        log.Fatalf(&quot;Unable to acquire token source: %v&quot;, err)
+    }
+    transport := &amp;transport.APIKey{
+    //  Key:       api_key,
+        Transport: &amp;logTransport{http.DefaultTransport},
+    }
+    client := &amp;http.Client{
+        Transport: &amp;oauth2.Transport{
+            Source: src,
+            Base:   transport,
+        },
+    }           
+    service, err := oauthsvc.New(client)
+    if err != nil {
+        log.Fatalf(&quot;Unable to create oauth2 service client: %v&quot;, err)
+    }
+    ui, err := service.Userinfo.Get().Do()
+    if err != nil {
+        log.Fatalf(&quot;ERROR: &quot;, err)
+    }   
+    log.Printf(&quot;UserInfo: %v&quot;, ui.Email)
+}
+</code></pre>
+
+<hr />
+
+<h3 id="google-api-nodejs">Google API NodeJS</h3>
+
+<p><a href="https://developers.google.com/identity/protocols/application-default-credentials#callingnode">google.auth.getApplicationDefault</a></p>
+
+<h4 id="appengine-3">Appengine</h4>
+
+<p>Under <a href="auth/gae/nodeapp">auth/gae/nodeapp</a>.  Runs a simple GAE application using <em>Application DefaultCredentials</em>.  To deploy:</p>
+
+<pre><code>gcloud app deploy app.yaml
+</code></pre>
+
+<h4 id="computeengine-3">ComputeEngine</h4>
+
+<p>Runs sample on ComputeEngine.  Requires the userinfo scope enabled on the compute engine instance.</p>
+
+<pre><code class="language-bash">npm install
+npm start
+</code></pre>
+
+<h4 id="service-account-json-file-1">Service Account JSON File</h4>
+
+<p>Under <a href="auth/service/nodeapp">auth/service/nodeapp</a>.  Runs a simple application using both <em>Application DefaultCredentials</em> and directly reading <em>JSON KEY file</em>.</p>
+
+<h4 id="userflow-3">UserFlow</h4>
+
+<p>Under <a href="auth/userflow/nodeapp">auth/userflow/nodeapp</a>.   Runs a simple webflow application to acquire user consent for GoogleAPIs.  This particular userflow provides a link URL and expects the authorization token to get entered (installed application).</p>
+
+<h4 id="misc-3">Misc</h4>
+
+<h5 id="setting-api-key-3">Setting API Key</h5>
+
+<pre><code class="language-node">var service = google.oauth2({
+      version: 'v2',
+      auth: authClient,
+      params: { key: 'YOUR_API_KEY'}
+});
+</code></pre>
+
+<h5 id="logging-3">Logging</h5>
+
+<pre><code class="language-bash">export NODE_DEBUG=request
+</code></pre>
+
+<hr />
+
+<h3 id="google-api-c-35">Google API C&#35;</h3>
+
+<p>.NET packages downloadable from <a href="https://www.nuget.org/packages/Google.Apis/">NuGet</a>.  Full end-to-end example of all the auth modes available here for CloudStorage</p>
+
+<ul>
+<li><a href="https://developers.google.com/api-client-library/dotnet/get_started">Google API .NET Library</a></li>
+</ul>
+
+<p>The following code snippet demonstrates <em>both</em> google apis and google cloud libraries all in one <a href="auth/compute/dotnet">auth/compute/dotnet</a>:</p>
+
+<pre><code>cd auth/compute/dotnet
+dotnet restore
+dotnet run
+</code></pre>
+
+<h4 id="appengine-4">Appengine</h4>
+
+<p>GAE Standard does not support .NET as a runtime.  However, you can deploy your application to GAE Flex if you run .NET Core on Linux.  See the following sample that runs a .NET
+webapp in Flex:  <a href="https://github.com/salrashid123/gcpdotnet">.NET on GCP</a>.
+Note: Google APIs do not support .NET Core (coreCLR) yet.  At the time of writing, they only supports upto <a href="https://www.nuget.org/packages/Google.Apis/">.NET Framework 4.5.1</a>.  This
+means you cannot use Google APIs from within a Container.   There are some <a href="https://www.nuget.org/packages/GoogleApis.Core.vNext/">ports</a> to coreCLR but they are not officially supported.</p>
+
+<h4 id="computeengine-4">ComputeEngine</h4>
+
+<p>Under <a href="auth/compute/dotnet">auth/compute/dotnet</a>.  Runs a simple application using both <em>Application DefaultCredentials</em> and <em>ComputeCredential</em>.</p>
+
+<pre><code>dotnet restore
+dotnet run
+</code></pre>
+
+<h4 id="service-account-json-file-2">Service Account JSON File</h4>
+
+<p>Under <a href="auth/service/dotnet">auth/service/dotnet</a>.  Runs a simple application using both <em>Application DefaultCredentials</em> using a <strong>JSON Certificate</strong> and by directly reading in the <strong>PKCS12 Certificate</strong> file.  If the <em>GOOGLE_APPLICATION_CREDENTIALS</em> variable is set to point to the <strong>JSON file</strong>, the applicationDefault profile will also read the JSON file (otherwise, it will attempt to pick up the gcloud credentials).</p>
+
+<p>Edit <a href="service/dotnet/ServiceAuth.cs">service/dotnet/ServiceAuth.cs</a> file and set the path to the service account key file.  Then,</p>
+
+<pre><code>dotnet restore
+dotnet run
+</code></pre>
+
+<h4 id="userflow-4">UserFlow</h4>
+
+<p>Under <a href="auth/userflow/dotnet">auth/userflow/dotnet</a>.   Runs a simple webflow application to acquire user consent for GoogleAPIs.  This particular userflow launches provides a link URL and expects user consent on the browser.</p>
+
+<h5 id="credential-store-3">Credential store</h5>
+
+<p>Credentials from the GoogleAPIs userflow is usually stored at</p>
+
+<pre><code>Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+or c:\Users\%USER%\AppData\Roaming\Google.Apis.Auth
+</code></pre>
+
+<h4 id="using-api-through-proxy">Using API through Proxy</h4>
+
+<p>gRPC clients support http_proxy parameter:
+- <a href="https://github.com/grpc/grpc/blob/master/doc/environment_variables.md">https://github.com/grpc/grpc/blob/master/doc/environment_variables.md</a></p>
+
+<ul>
+<li>The following is curated from:
+<a href="https://kzhendev.wordpress.com/2015/04/28/accessing-google-apis-through-a-proxy-with-net/">https://kzhendev.wordpress.com/2015/04/28/accessing-google-apis-through-a-proxy-with-net/</a></li>
+</ul>
+
+<p>See <a href="proxy">proxy</a> folder for detailed usage.</p>
+
+<p>to use:</p>
+
+<pre><code>docker run  -p 3128:3128 -ti docker.io/salrashid123/squidproxy /bin/bash
+
+then when inside the container:
+/apps/squid/sbin/squid -NsY -f /apps/squid.conf.transparent &amp;
+
+tail -f /apps/squid/var/logs/access.log
+</code></pre>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/oidc" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">oidc</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/oauth2" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">oauth2</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-6equj5-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.6equj5.dev/" >
+    &copy; 2019 6equj5.dev
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

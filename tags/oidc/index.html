@@ -35,7 +35,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.6equj5.dev/tags/oidc/" />
 
-<meta property="og:updated_time" content="2019-05-30T14:34:01-08:00"/>
+<meta property="og:updated_time" content="2019-11-28T14:34:01-08:00"/>
 
 <meta itemprop="name" content="Oidc">
 <meta itemprop="description" content="wow...its full of 6equj5">
@@ -164,6 +164,24 @@ if (!doNotTrack) {
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/" class="link black dim">
+        TPM2-TSS-Engine hello world and Google Cloud Authentication 
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Basic application that uses a the tpm2-tss-engine to perform RSA encryption and signatures.
+This is intended to run on a system with a TPM as well as the the openssl engine library installed. The TPM-based private key is generated directly using tpm2tss-genkey and from that, the openssl engine to surface the public part. The tpm2-tss-engine surfaces the OpenSSL constructs like EVP_PKEY_RSA so you can directly use that against the TPM
+    </div>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100  mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="https://blog.6equj5.dev/posts/composer_gcf/" class="link black dim">
         Calling Cloud Composer &gt; GCF &gt; Composer securely
       </a>
@@ -189,6 +207,24 @@ Anyway, the following will setup cloud composer, then we will trigger composer t
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       This is a second in a series related to a versatile feature in Cloud Scheduler and Cloud Tasks and Cloud PubSub that automatically emits google OpenIDConnect and oauth2 access_token to outbound webhook calls. When a Scheduled task fires and calls an HTTP endpoint, it can automatically carry credentials to authenticate itself. The id_token credential can then get validated at the HTTP web-hook target using well known techniques (i.,e validate the signature and aud: fields in the token).
+    </div>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100  mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/gcpsamples/" class="link black dim">
+        Google Cloud Platform API hello world samples
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
+This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples.
     </div>
   </div>
 </div>

@@ -1,0 +1,14 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /.*
+  script: default.application
+  secure: always
+
+libraries:
+- name: webapp2
+  version: latest
+- name: django
+  version: latest

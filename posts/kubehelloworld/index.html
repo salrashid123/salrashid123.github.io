@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>6equj5.dev  | Kubernetes Services HelloWorld</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Kubernetes Services HelloWorld" />
+<meta property="og:description" content="NOTE: 12/20/19: While this demo will work, its quite dated (i wrote is this &lsquo;16..there are much more comprehensive articles that cover this..)
+ Anyway&hellip;
+Sample application that deploys a trivial Kubernetes service to connect a frontend system (fe) with a backend (be).
+This is merely to demonstrate Kubernetes service discovery in Google Container Engine (GKE), nothing more and is based off the guestbook service example.
+Parts of this sample code is from the default kubernetes &lsquo;environment-guide&rsquo; example." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.6equj5.dev/posts/kubehelloworld/" />
+<meta property="article:published_time" content="2016-07-19T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2016-07-19T14:34:01-08:00"/>
+
+<meta itemprop="name" content="Kubernetes Services HelloWorld">
+<meta itemprop="description" content="NOTE: 12/20/19: While this demo will work, its quite dated (i wrote is this &lsquo;16..there are much more comprehensive articles that cover this..)
+ Anyway&hellip;
+Sample application that deploys a trivial Kubernetes service to connect a frontend system (fe) with a backend (be).
+This is merely to demonstrate Kubernetes service discovery in Google Container Engine (GKE), nothing more and is based off the guestbook service example.
+Parts of this sample code is from the default kubernetes &lsquo;environment-guide&rsquo; example.">
+
+
+<meta itemprop="datePublished" content="2016-07-19T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2016-07-19T14:34:01-08:00" />
+<meta itemprop="wordCount" content="930">
+
+
+
+<meta itemprop="keywords" content="kubernetes," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kubernetes Services HelloWorld"/>
+<meta name="twitter:description" content="NOTE: 12/20/19: While this demo will work, its quite dated (i wrote is this &lsquo;16..there are much more comprehensive articles that cover this..)
+ Anyway&hellip;
+Sample application that deploys a trivial Kubernetes service to connect a frontend system (fe) with a backend (be).
+This is merely to demonstrate Kubernetes service discovery in Google Container Engine (GKE), nothing more and is based off the guestbook service example.
+Parts of this sample code is from the default kubernetes &lsquo;environment-guide&rsquo; example."/>
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-155117088-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://blog.6equj5.dev/posts/kubehelloworld/images/kube_flow.png');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog.6equj5.dev/" class="f3 fw2 hover-white no-underline white-90 dib">
+      6equj5.dev
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">Kubernetes Services HelloWorld</h1>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Kubernetes Services HelloWorld</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2016-07-19T14:34:01-08:00">July 19, 2016</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<blockquote>
+<p><strong>NOTE:</strong> 12/20/19:  While this demo will work, its quite dated (i wrote is this &lsquo;16..there are much more comprehensive articles that cover this..)</p>
+</blockquote>
+
+<p>Anyway&hellip;</p>
+
+<p>Sample application that deploys a trivial <a href="https://github.com/kubernetes/kubernetes/blob/release-1.0/docs/user-guide/services.md">Kubernetes service</a> to connect a frontend system (fe) with a backend (be).</p>
+
+<p>This is merely to demonstrate Kubernetes service discovery in <a href="https://cloud.google.com/container-engine/docs/services/">Google Container Engine (GKE)</a>, nothing more and is based off the guestbook service example.</p>
+
+<p>Parts of this sample code is from the default kubernetes &lsquo;environment-guide&rsquo; example.</p>
+
+<p><strong>From kubernetes <a href="https://github.com/kubernetes/kubernetes/tree/v1.0.1/examples/environment-guide">environment guide</a> Example</strong></p>
+
+<p>HTTP requests to the frontend handler causes a service lookup for the backend and retrieves some data from the backend.</p>
+
+<p>user &ndash;&gt; loadbalancer &ndash;&gt; frontend &ndash;&gt; lookup backend service &ndash;&gt; make backend API call &ndash;&gt; return data to fronend &ndash;&gt; return web page to user showing some data from the backend.</p>
+
+<p>####Frontend/backend Services</p>
+
+<p>The frontend consists of a golang program that listens for http requests on port :8080.  It is wrapped in the container</p>
+
+<p><a href="https://hub.docker.com/r/salrashid123/fe/">salrashid123/fe</a></p>
+
+<p>The frontend service is configured to startup 2 replicas inside a Loaldbalanced Kubernetes service:</p>
+
+<p><strong>Frontend</strong>
+#####Replication Controller</p>
+
+<pre><code class="language-yaml">apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: fe-rc
+  labels:
+    type: fe-type
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        type: fe-type
+    spec:
+      containers:
+      - name: fe-container
+        image: salrashid123/fe
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        env:
+        - name: USER_VAR
+          value: important information
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+
+</code></pre>
+
+<p>#####Frontend Service Definition</p>
+
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: fe-srv
+  labels:
+    type: fe-type
+spec:
+  type: LoadBalancer
+  ports:
+  - name: fe
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    type: fe-type
+</code></pre>
+
+<p>####Backend</p>
+
+<p>The backend consists of another golang program which for http requests on port :5000.  It is wrapped in the container</p>
+
+<p><a href="https://hub.docker.com/r/salrashid123/be/">salrashid123/be</a></p>
+
+<p>Backend uses the advertises the label <em>be-type</em></p>
+
+<p>#####Replication Controller</p>
+
+<pre><code class="language-yaml">---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: be-rc
+  labels:
+    type: be-type
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        type: be-type
+    spec:
+      containers:
+      - name: be-container
+        image: salrashid123/be
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+          protocol: TCP
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+
+</code></pre>
+
+<p>#####Backend Servce Definition</p>
+
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: be-srv
+  labels:
+    type: be-type
+spec:
+  ports:
+  - name: be
+    port: 5000
+    protocol: TCP
+  selector:
+    type: be-type
+
+</code></pre>
+
+<h3 id="discovery">Discovery</h3>
+
+<p>Once a request hits any pod running the frontend service, the front end attempts to discover how to connect to the backend service.  This is done in two ways:  using environment variables or (preferably), by DNS SRV lookups.<br />
+Each node in the cluster runs a local <a href="https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/dns">DNS</a> server.</p>
+
+<p>Also see <a href="https://github.com/kubernetes/kubernetes/blob/release-1.0/docs/design/networking.md">Kubernetes networking</a></p>
+
+<p><strong>Environment Variables</strong></p>
+
+<pre><code class="language-go">    backendHost := os.Getenv(&quot;BE_SRV_SERVICE_HOST&quot;)
+    backendPort := os.Getenv(&quot;BE_SRV_SERVICE_PORT&quot;)
+    backendRsp, backendErr := http.Get(fmt.Sprintf(
+        &quot;http://%v:%v/&quot;,
+        backendHost,
+        backendPort))
+    if backendErr == nil {
+        defer backendRsp.Body.Close()
+    }
+</code></pre>
+
+<p><strong>DNS SRV</strong></p>
+
+<pre><code class="language-go">    cname, rec, err := net.LookupSRV(&quot;be&quot;, &quot;tcp&quot;, &quot;be-srv.default.svc.cluster.local&quot;)
+    if err != nil {
+        http.Error(resp, err.Error(), http.StatusInternalServerError)
+    }
+    fmt.Fprintf(resp, &quot;SRV CNAME: %v\n&quot;, cname)
+    for i := range rec {
+        fmt.Fprintf(resp, &quot;SRV Records: %v \n&quot;, rec[i])
+        DNSbackendHost = rec[i].Target
+        DNSbackendPort = strconv.Itoa(int(rec[i].Port))
+    }
+</code></pre>
+
+<p>###Create Test Cluster
+Create the cluster with two nodes in us-central1-a using either gcloud or the Cloud Console</p>
+
+<pre><code>gcloud config set compute/zone us-central1-a
+gcloud beta container clusters create cluster-1 --num-nodes 2
+
+gcloud compute instances list
+NAME                              INTERNAL_IP    EXTERNAL_IP     STATUS
+gke-cluster-1-ba189197-node-j9kt  10.240.241.211 173.255.113.167 RUNNING
+gke-cluster-1-ba189197-node-ywdf  10.240.171.249 104.197.63.144  RUNNING
+</code></pre>
+
+<p>###Create Replication Controllers and Services</p>
+
+<p>Run thefollowing to create the frontend/backend replication controllers and services.</p>
+
+<pre><code>kubectl create -f be-rc.yaml
+kubectl create -f be-srv.yaml
+kubectl create -f fe-rc.yaml
+kubectl create -f fe-srv.yaml
+</code></pre>
+
+<p>####List the nodes</p>
+
+<pre><code>kubectl get no
+NAME        LABELS                           STATUS
+gke-cluster-1-ba189197-node-j9kt   kubernetes.io/hostname=gke-cluster-1-ba189197-node-j9kt   Ready
+gke-cluster-1-ba189197-node-ywdf   kubernetes.io/hostname=gke-cluster-1-ba189197-node-ywdf   Ready
+</code></pre>
+
+<p>####List the pods</p>
+
+<pre><code>kubectl get po
+NAME          READY     STATUS    RESTARTS   AGE
+be-rc-ekpb7   1/1       Running   0          2m
+be-rc-mud4n   1/1       Running   0          2m
+be-rc-qo453   1/1       Running   0          2m
+fe-rc-0yv6u   1/1       Running   0          2m
+fe-rc-2plu0   1/1       Running   0          2m
+</code></pre>
+
+<p>####List the replication controllers</p>
+
+<pre><code>kubectl get rc
+CONTROLLER   CONTAINER(S)   IMAGE(S)          SELECTOR       REPLICAS
+be-rc        be-container   salrashid123/be   type=be-type   3
+fe-rc        fe-container   salrashid123/fe   type=fe-type   2
+</code></pre>
+
+<p>####List the services</p>
+
+<pre><code>kubectl get svc
+NAME         LABELS           SELECTOR       IP(S)            PORT(S)
+be-srv       type=be-type     type=be-type   10.167.252.252   5000/TCP
+fe-srv       type=fe-type     type=fe-type   10.167.249.76    80/TCP
+                                             104.197.44.11   
+kubernetes   component=apiserver,provider=kubernetes 10.167.240.1     443/TCP
+</code></pre>
+
+<p>The above shows the service IP addresses.  Since we&rsquo;re running this on GKE, it will also create a provider-specific commands to generate a public IP, loadbalancer, filewall rules.</p>
+
+<p>The public IP assigned to our Frontend Loadblancer is:  <strong>104.197.44.11</strong></p>
+
+<p>###Test the GKE cluster
+The frontend service is available <strong>104.197.44.11:80</strong> so an invocation shows:</p>
+
+<pre><code>curl http://104.197.44.11/
+SRV CNAME: _be._tcp.be-srv.default.svc.cluster.local.
+SRV Records: &amp;{be-srv.default.svc.cluster.local. 5000 10 100} 
+Pod Name: fe-rc-0yv6u 
+Pod Namespace: default 
+USER_VAR: important information 
+
+Kubenertes environment variables
+BE_SRV_SERVICE_HOST = 10.167.252.252 
+BE_SRV_SERVICE_PORT = 5000 
+KUBERNETES_SERVICE_HOST = 10.167.240.1 
+KUBERNETES_SERVICE_PORT = 443 
+
+Found ENV lookup backend ip: 10.167.252.252 port: 5000
+ENV Lookup Response from backend
+BACKEND Response
+Found DNS lookup backend ip: be-srv.default.svc.cluster.local. port: 5000
+DNS Lookup Response from backend
+BACKEND Response
+</code></pre>
+
+<p>The above output is from the frontend and shows the backend discovery by both environment variables and DNS SRV.   The response from the backend is just the part <strong>BACKEND Response</strong>.</p>
+
+<p>The output shows the frontend discovered the backend using envionment variables  IP address/port values:   <strong>10.167.252.252:5000</strong></p>
+
+<p>The output also shows the DNS SRV request contained the host and port to connect to from the frontend:  <strong>be-srv.default.svc.cluster.local. port: 5000</strong></p>
+
+<p>###Call Flow
+The following shows the call flow between the the frontend and backend.</p>
+
+<p>For a detailed description of the proxy and VIPs, see <a href="http://kubernetes.io/v1.0/docs/user-guide/services.html#ips-and-vips">Kubernetes Services</a></p>
+
+<p><img src="images/kube_flow.png" alt="Call Flow" /></p>
+
+<p>###Automatic configuration on GKE
+The firwall, network configuration created for this example are:</p>
+
+<p><img src="images/cluster-1.png" alt="Kubernetes Cluster" /></p>
+
+<p><img src="images/vms.png" alt="Node VMs" /></p>
+
+<p><img src="images/firewall_rule.png" alt="Firewall Rule" /></p>
+
+<p><img src="images/forwarding.png" alt="Forwarding Rule" /></p>
+
+<p><img src="images/targetpool.png" alt="Target Pool" /></p>
+
+<p><img src="images/routes.png" alt="Network Routes" /></p>
+
+<p><img src="images/route1.png" alt="Network Node1" /></p>
+
+<p><img src="images/route2.png" alt="Network Node2" /></p>
+
+<p>###Extending the sample
+If you want to extend the sample, the easiest way is to build the sample an push it to your public dockerhub area where kubernetes can download it.</p>
+
+<p>Remember to rename the image section to whatever you taged to it.</p>
+
+<p>You can, ofcourse use <a href="https://cloud.google.com/container-registry/">Google Container Registry</a></p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/kubernetes" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">kubernetes</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-6equj5-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/gcpdotnet/">.NET on GCP</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.6equj5.dev/" >
+    &copy; 2019 6equj5.dev
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

@@ -35,7 +35,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.6equj5.dev/posts/" />
 
-<meta property="og:updated_time" content="2019-04-28T14:34:01-08:00"/>
+<meta property="og:updated_time" content="2019-05-20T13:34:01-08:00"/>
 
 <meta itemprop="name" content="Articles">
 <meta itemprop="description" content="wow...its full of 6equj5">
@@ -160,6 +160,38 @@ if (!doNotTrack) {
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/automatic_oauth2/" class="link black dim">
+        Automatic oauth2:  Using Cloud Scheduler and Tasks to call Google APIs
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      A month ago or so I tried out a pretty versatile feature in Cloud Scheduler and Cloud Tasks and Cloud Tasks that emits OpenIDConnect or oauth2 access_token to outbound webhook calls.
+When a Scheduled task fires and calls an HTTP endpoint, it can optionally automatically carry credentials for use with a GCP REST Endpoint. What does that mean? Well, you can automatically trigger most Google APIs directly do to any number of things on schedule or as a task instead of creating and running a cron elsewhere.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/binary_auth_demo/" class="link black dim">
+        GCP Binary Authorization and Vulnerability Scanning Demo
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Sample application for GCP Binary Authorization + Vulernability Scanner.
+ Creates GKE cluster with Binary Authorization Enables Binary Authoriztion policy on cluster Cloud Builder workflow checks checked in code to Cloud Source repository  Builds container image and pushes to Cloud Container Registry Binary Auhorization step waits for Vulernability Scan to complete If Vulernability Scanner Fails, Deployment Fails If Succeeds, the imae is authorized for deployment to GKE    Note: this sample uses one cloud builder configuration to both build the image and do attestation.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="https://blog.6equj5.dev/posts/gpg_gcf/" class="link black dim">
         GPG stream encryption and decryption on Google Cloud Functions and Cloud Run
       </a>
@@ -196,6 +228,75 @@ if (!doNotTrack) {
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Small javascript application showing how to upload/download files with GCS Signed URLs and Signed Policy Documents. This article will not cover in detail what those two mechanisms are but rather demonstrate a basic application that exercises both on the browser. This is a simple client-server app that uploads files using these two mechanisms from a user&rsquo;s browser. SignedURLs w/ javascript has been done many times before (see references); this article describes SignedURLs and Policy document differences and implementations.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/gcpemulator/" class="link black dim">
+        Proxy container for Google Cloud Platofrm pubsub and datastore emulators.
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      NOTE: 12/30/19 : This article is very old; while it probably does run to some extent, i&rsquo;m not sure if the tooling is still needed. I&rsquo;ve removed this from GCP Blog to reduce some noise; i&rsquo;m keeping it in my archive here&hellip;.
+  Proxy server and container for GCP Cloud PubSub and Cloud Datastore emulators. In addition, the container runs an nginx HTTPS proxy infront of the PubSub|Datastore emulators so that even direct references to pubsub.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/gcpsamples/" class="link black dim">
+        Google Cloud Platform API hello world samples
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
+This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/kubehelloworld/" class="link black dim">
+        Kubernetes Services HelloWorld
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      NOTE: 12/20/19: While this demo will work, its quite dated (i wrote is this &lsquo;16..there are much more comprehensive articles that cover this..)
+ Anyway&hellip;
+Sample application that deploys a trivial Kubernetes service to connect a frontend system (fe) with a backend (be).
+This is merely to demonstrate Kubernetes service discovery in Google Container Engine (GKE), nothing more and is based off the guestbook service example.
+Parts of this sample code is from the default kubernetes &lsquo;environment-guide&rsquo; example.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/gcpdotnet/" class="link black dim">
+        .NET on GCP
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
+ Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
+The example here uses Microsofts&rsquo;s .NET Core 1.
     </div>
   </div>
 </div>

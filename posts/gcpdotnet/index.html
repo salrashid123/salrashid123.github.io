@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>6equj5.dev  | .NET on GCP</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content=".NET on GCP" />
+<meta property="og:description" content="12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
+ Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
+The example here uses Microsofts&rsquo;s .NET Core 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.6equj5.dev/posts/gcpdotnet/" />
+<meta property="article:published_time" content="2016-04-24T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2016-04-24T14:34:01-08:00"/>
+
+<meta itemprop="name" content=".NET on GCP">
+<meta itemprop="description" content="12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
+ Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
+The example here uses Microsofts&rsquo;s .NET Core 1.">
+
+
+<meta itemprop="datePublished" content="2016-04-24T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2016-04-24T14:34:01-08:00" />
+<meta itemprop="wordCount" content="1463">
+
+
+
+<meta itemprop="keywords" content="dotnet,kubernetes," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=".NET on GCP"/>
+<meta name="twitter:description" content="12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
+ Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
+The example here uses Microsofts&rsquo;s .NET Core 1."/>
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-155117088-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://blog.6equj5.dev/posts/gcpdotnet/images/webapplication1.png');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog.6equj5.dev/" class="f3 fw2 hover-white no-underline white-90 dib">
+      6equj5.dev
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">.NET on GCP</h1>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">.NET on GCP</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2016-04-24T14:34:01-08:00">April 24, 2016</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<blockquote>
+<p><strong>12/30/19</strong>: NOTE: as you can clearly tell, this article is dated.  DO NOT use this (i&rsquo;m leavig it up as a matter of record)</p>
+</blockquote>
+
+<p>Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.<br />
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.</p>
+
+<p>The example here uses Microsofts&rsquo;s <a href="https://www.microsoft.com/net/core">.NET Core 1.0.0</a> RC/preview (dotnet-dev-1.0.0-preview2-003121).</p>
+
+<p><strong><a href="https://hub.docker.com/r/microsoft/dotnet/">microsoft/dotnet:1.1.0-sdk-projectjson</a></strong></p>
+
+<p>If you&rsquo;re still interested, you can find the source <a href="https://github.com/salrashid123/gcpdotnet">here</a></p>
+
+<pre><code>FROM microsoft/dotnet:1.1.0-sdk-projectjson
+
+ADD . /app
+WORKDIR /app
+RUN [&quot;dotnet&quot;, &quot;restore&quot;]
+
+EXPOSE 8080
+WORKDIR /app/src/WebApplication1/
+ENTRYPOINT [&quot;dotnet&quot;, &quot;run&quot;, &quot;-p&quot;, &quot;project.json&quot;]
+
+</code></pre>
+
+<p>in project.json:</p>
+
+<pre><code>&quot;Microsoft.NETCore.App&quot;: {
+   &quot;type&quot;: &quot;platform&quot;,
+   &quot;version&quot;: &quot;1.1.0&quot;
+}
+</code></pre>
+
+<p>You can use Visutal Studio 2015 to create and extend the sample from scratch.  VS2015
+* <strong>WebApplication1</strong>
+    Default webapplication generated by Visual Studio 2015:
+    &ldquo;New Project
+     * C#
+       * Web
+         * ASP.NET Core Web Application (.NET Core) ;  (Change Authenticaiton &ndash;&gt; No Authentication)</p>
+
+<blockquote>
+<p>(optionally, if you want to try out Google APIs, see <a href="#using-google-api-libraries">Using Google API Libraries</a>)</p>
+</blockquote>
+
+<p>The platforms that are demonstrated here are:</p>
+
+<ul>
+<li><a href="#appengine">Appengine</a></li>
+<li><a href="#containerengine">ContainerEngine</a></li>
+<li><a href="#containervm">Container-Optimized OS</a></li>
+</ul>
+
+<hr />
+
+<h3 id="basic-configuration">Basic Configuration</h3>
+
+<p>Sample application simply spins up inside a Docker container an runs Kestrel to host the application.  The sample is modified from the baseline in the following way to run with healthchecks in GCP:</p>
+
+<ul>
+<li>port:  8080</li>
+<li>GET requests to endpoint <em>/_ah/health</em> must return a <em>200</em> OK HTTP response</li>
+<li>Use <a href="https://github.com/aspnet/KestrelHttpServer">Kestrel Webserver</a></li>
+</ul>
+
+<hr />
+
+<h5 id="webapplication1">WebApplication1</h5>
+
+<p>To run the code directly from the source dockerhub image:</p>
+
+<pre><code class="language-bash">docker run -p 8080:8080 docker.io/salrashid123/mvc
+</code></pre>
+
+<p>The only endpoint you cant access is <em>/gcs</em> as that requires access to your hosts applicaton default credentials though you can work around that using
+<a href="https://github.com/salrashid123/gce_metadata_server">GCE Metadata Server Emulator</a>.</p>
+
+<p>If you prefer using <a href="https://github.com/coreos/rkt">rkt</a>,</p>
+
+<pre><code class="language-bash">sudo rkt run --insecure-options=image docker://salrashid123/mvc
+</code></pre>
+
+<pre><code>rkt list
+
+UUID		APP	IMAGE NAME					STATE	CREATED		STARTED		NETWORKS
+36a7ac5b	mvc	registry-1.docker.io/salrashid123/mvc:latest	running	4 seconds ago	4 seconds ago	default:ip4=172.16.28.19
+
+curl http://172.16.28.19:8080
+
+</code></pre>
+
+<p>To build from the git repo</p>
+
+<pre><code>cd WebApplicaton1
+docker build -t mvc .
+docker run -t -p 8080:8080 mvc
+</code></pre>
+
+<p>As reference, the following files were modified to listen on :8080 and for healthchecks on <code>/_ah/health</code>:</p>
+
+<ul>
+<li><a href="WebApplication1/src/WebApplication1/Startup.cs">Startup.cs</a></li>
+<li><a href="WebApplication1/src/WebApplication1/Program.cs">Program.cs</a></li>
+<li><a href="WebApplication1/src/WebApplication1/Controllers/HomeController.cs">Controllers/HomeController.cs</a></li>
+<li><a href="WebApplication1/src/WebApplication1/Views/Home/Health.cshtml">Views/Health.cshtml</a></li>
+<li><a href="WebApplication1/src/WebApplication1/Views/Home/GCS.cshtml">Views/GCS.cshtml</a></li>
+<li><a href="WebApplication1/src/WebApplication1/project.json">project.json</a></li>
+<li><a href="WebApplication1/Dockerfile">Dockerfile</a></li>
+<li><a href="WebApplication1/global.json">global.json</a></li>
+<li><a href="WebApplication1/src/WebApplication1/hosting.json">hosting.json</a></li>
+</ul>
+
+<hr />
+
+<p>To run localy without Docker, install dotnet-dev-1.0.0-preview2-1-003177 as shown in the <a href="WebApplication1/Dockerfile">Dockerfile</a> and off of the microsoft .net <a href="https://www.microsoft.com/net/core#ubuntu">install guides</a>.
+  Once installed, then,</p>
+
+<pre><code>  cd src\WebApplication1\
+  dotnet restore
+  dotnet run
+</code></pre>
+
+<h4 id="using-google-cloud-libraries">Using Google Cloud Libraries</h4>
+
+<p>You can even use Google Cloud APIs on docker now.  Just reference <a href="https://googlecloudplatform.github.io/google-cloud-dotnet/">Google.Cloud.Storage.V1</a> version of .net libraires.</p>
+
+<p>After you reference it, you call GCP apis direclty under path <em>/gcs</em>.  For example, see:
+* <a href="WebApplication1/src/WebApplication1/project.json">project.json</a>
+* <a href="WebApplication1/src/WebApplication1/Controllers/HomeController.cs">HomeController.cs</a>
+* <a href="WebApplication1/src/WebApplication1/Views/Home/GCS.cshtml">Views/GCS.cshtml</a></p>
+
+<p>in project.json, specify</p>
+
+<pre><code>&quot;Google.Cloud.Storage.V1&quot;: &quot;1.0.0-beta07&quot;
+</code></pre>
+
+<p>The following list out some objects in the public <a href="https://cloud.google.com/storage/docs/access-public-data">USPTO GCS bucket</a>.
+If you want to list the objects in your on project, please change <em>uspto-pair</em> while deploying the sample (you&rsquo;ll need to rebuild the docker image).</p>
+
+<pre><code class="language-csharp">
+using Google.Cloud.Storage.V1;
+
+var ret = &quot;&quot;;
+var client = StorageClient.Create();
+
+foreach (var obj in client.ListObjects(&quot;uspto-pair&quot;, &quot;&quot;).Take(100))
+{
+   ret = ret + &quot;  &quot; + obj.Name + &quot;  &quot;;
+}
+</code></pre>
+
+<p><strong>NOTE</strong>
+&gt; If you want to build and run the docker container with GCP API code, you will need to provide the container some way to acquire an access_token for GCP.
+&gt; There are serveral ways to do that:</p>
+
+<ul>
+<li>Run the <a href="https://github.com/salrashid123/gce_metadata_server">GCE Metadata Server Emulator</a>.<br /></li>
+<li>Pass in json certificate file to the container: <a href="https://github.com/salrashid123/gce_metadata_server#alternatives-to-metadata-tokens-for-containers">Alternatives to Metadata tokens for containers</a></li>
+</ul>
+
+<h4 id="pack-publish-steps">Pack/Publish steps</h4>
+
+<p>If you want to pack the deployment to a .dll using <a href="https://docs.microsoft.com/en-us/dotnet/articles/core/tools/dotnet-publish">dotnet publish</a></p>
+
+<p>in project.json, if the following artifiact from Visual Studio exists, remove</p>
+
+<pre><code>  &quot;scripts&quot;: {
+    &quot;prepublish&quot;: [ &quot;bower install&quot;, &quot;dotnet bundle&quot; ],
+    &quot;postpublish&quot;: [ &quot;dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%&quot; ]
+  }
+</code></pre>
+
+<p>Then make the build/release .dll</p>
+
+<pre><code>cd WebApplication1/src/WebApplication1
+dotnet restore
+dotnet publish  -c Release
+</code></pre>
+
+<p>To run the local pack directly:</p>
+
+<pre><code>dotnet bin/Release/netcoreapp1.0/publish/WebApplication1.dll
+</code></pre>
+
+<p>Finally, edit the Dockerfile</p>
+
+<pre><code>FROM microsoft/dotnet:1.1.0-sdk-projectjson
+
+ADD . /app
+WORKDIR /app
+
+EXPOSE 8080
+WORKDIR /app/src/WebApplication1/
+ENTRYPOINT [&quot;dotnet&quot;, &quot;bin/Release/netcoreapp1.0/publish/WebApplication1.dll&quot;]
+</code></pre>
+
+<p><em>Note:</em>  As of <sup>8</sup>&frasl;<sub>16</sub>, dotnet is currently not supported on <a href="https://github.com/dotnet/coreclr/issues/917">Alpine Linux</a>.</p>
+
+<h4 id="deploying">Deploying</h4>
+
+<p>Deploying to GCP requires your gcloud environment to get setup:</p>
+
+<pre><code class="language-bash">gcloud auth login
+gcloud config set project &lt;your_project&gt;
+</code></pre>
+
+<h5 id="appengine">AppEngine</h5>
+
+<p>Deploying to GAE is pretty simple:</p>
+
+<pre><code class="language-bash">gcloud app deploy app.yaml
+</code></pre>
+
+<p>Then,
+<code>http://your_project.appspot.com</code></p>
+
+<h5 id="containerengine">ContainerEngine</h5>
+
+<p>To deploy on GKE, you need to setup the replication controllers and frontend loadbalancer services as well as a small cluster.</p>
+
+<p><strong>Note</strong>
+&gt; In the example below, the configuration ponts to a public image for the above two examples.
+&gt; You can configure your own private repository or use <a href="https://cloud.google.com/container-registry/">Google Container Registry</a>.</p>
+
+<p>The prebuilt image is on docker.io registry under:</p>
+
+<ul>
+<li><strong>WebApplication1</strong>:  <a href="https://hub.docker.com/r/salrashid123/mvc/">docker.io/salrashid123/mvc</a></li>
+</ul>
+
+<h6 id="replication-controllers">Replication Controllers</h6>
+
+<p><strong>web-rc.yaml</strong>
+(edit the <em>image</em> section in the yaml below to use a different referenced image)</p>
+
+<pre><code class="language-yaml">apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: web-rc
+  labels:
+    type: web-type
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        type: web-type
+    spec:
+      containers:
+      - name: web-container
+        image: salrashid123/mvc
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+</code></pre>
+
+<h5 id="services">Services</h5>
+
+<p><strong>web-svc.yaml</strong></p>
+
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: web-srv
+  labels:
+    type: web-type
+spec:
+  type: LoadBalancer
+  ports:
+  - name: web
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    type: web-type
+</code></pre>
+
+<h6 id="set-the-runnng-zone">Set the Runnng zone</h6>
+
+<pre><code class="language-bash">gcloud config set compute/zone us-central1-a
+</code></pre>
+
+<h6 id="create-a-firewall-rule">Create a Firewall rule</h6>
+
+<pre><code>gcloud compute firewall-rules create allow-http --allow tcp:80
+
+NAME       NETWORK SRC_RANGES RULES  SRC_TAGS TARGET_TAGS
+allow-http default 0.0.0.0/0  tcp:80
+</code></pre>
+
+<p><em>Note</em>  The above service maps port 80 &ndash;&gt; 8080 in the container and sets the firewall rules apprpriately.  If you want to directly use 8080 throughout, modify the services file and firewall rule.</p>
+
+<h6 id="create-a-gke-cluster">Create a GKE Cluster</h6>
+
+<pre><code>gcloud beta container clusters create cluster-1 --num-nodes 2
+
+NAME       ZONE           MASTER_VERSION  MASTER_IP      MACHINE_TYPE   STATUS
+cluster-1  us-central1-a  1.0.6           104.197.76.93  n1-standard-1  RUNNING
+</code></pre>
+
+<h6 id="list-instances-in-the-cluster">List instances in the Cluster</h6>
+
+<pre><code>gcloud compute instances list
+</code></pre>
+
+<h6 id="create-replicationcontroller-and-services">Create ReplicationController and Services</h6>
+
+<pre><code>kubectl create -f web-rc.yaml
+kubectl create -f web-srv.yaml
+</code></pre>
+
+<h6 id="list-nodes-pods-replication-controllers-and-services">List nodes, pods, replication controllers and services</h6>
+
+<pre><code>kubectl get no
+NAME            LABELS           STATUS
+gke-cluster-1-e997c6b4-node-38so   kubernetes.io/hostname=gke-cluster-1-e997c6b4-node-38so   Ready
+gke-cluster-1-e997c6b4-node-knp6   kubernetes.io/hostname=gke-cluster-1-e997c6b4-node-knp6   Ready
+
+kubectl get po
+NAME           READY     STATUS    RESTARTS   AGE
+web-rc-lfvky   1/1       Running   0          2m
+web-rc-mcrg3   1/1       Running   0          2m
+
+kubectl get rc
+CONTROLLER   CONTAINER(S)    IMAGE(S)           SELECTOR        REPLICAS
+web-rc       web-container   salrashid123/mvc   type=web-type   2
+
+kubectl get svc
+NAME         LABELS        SELECTOR        IP(S)                   PORT(S)
+kubernetes   component=apiserver,provider=kubernetes 10.167.240.1  443/TCP
+web-srv      type=web-type type=web-type   10.167.251.162          80/TCP
+                                           104.197.194.190 &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+
+</code></pre>
+
+<p><strong>Note:</strong>  The service lists the public IP address of the LoadBalancer (it may take a couple of minutes to provision it).</p>
+
+<p>Now that we have a public ip, the service is available</p>
+
+<p><code>http://104.197.194.190</code></p>
+
+<h5 id="container-optimized-os">Container-Optimized OS</h5>
+
+<p>Container VMs simply spin up one container per GCE instance with docker already installed and the instructions to strartup the image thats specified.</p>
+
+<p>The following insruction set setups a managed instance group, healthcheck and loadbalancer.  You can use the managed instance group to later auto (or manually) scale the number of VMs up or down</p>
+
+<p>For more information, see: <a href="https://cloud.google.com/container-optimized-os/docs/">Conatiner Optimized OS</a></p>
+
+<p>The Container VM is defined by the following yaml file:</p>
+
+<p><strong>containers.yaml</strong></p>
+
+<pre><code class="language-yaml">#cloud-configs
+users:
+- name: cloudservice
+  uid: 2000
+
+write_files:
+- path: /etc/systemd/system/cloudservice.service
+  permissions: 0644
+  owner: root
+  content: |
+    [Unit]
+    Description=Start a simple docker container
+
+    [Service]
+    Environment=&quot;HOME=/home/cloudservice&quot;
+    ExecStartPre=/usr/share/google/dockercfg_update.sh
+    ExecStart=/usr/bin/docker run -t -p 8080:8080 --name=dotnetservice docker.io/salrashid123/mvc:latest
+    ExecStop=/usr/bin/docker stop dotnetservice
+    ExecStopPost=/usr/bin/docker rm dotnetservice
+
+runcmd:
+- systemctl daemon-reload
+- systemctl start cloudservice.service
+</code></pre>
+
+<p>Create the firewall rule, instance template, helthcheck and target pool</p>
+
+<pre><code class="language-bash">gcloud compute firewall-rules create allow-http --allow tcp:80
+
+gcloud compute instance-templates create dotnet \
+    --image-family container-vm \
+    --image-project=google-containers \
+    --tags dotnetserver \
+    --metadata-from-file google-container-manifest=containers.yaml \
+    --machine-type f1-micro
+
+gcloud compute http-health-checks create httpcheck \
+    --port 80 --request-path &quot;/_ah/health&quot; 
+
+gcloud compute  target-pools create tphttp \
+    --health-check httpcheck --region us-central1
+</code></pre>
+
+<p><em>Note</em><br />
+&gt; The above service maps port 80 &ndash;&gt; 8080 in the container and sets the firewall rules apprpriately.<br />
+&gt; If you want to directly use 8080 throughout, modify containers.yaml file, the firewall rule and the healthcheck port.</p>
+
+<p>Then setup the actual forwarding rule.  Note he IP address</p>
+
+<pre><code>gcloud compute forwarding-rules create fwddotnet \
+    --region us-central1 --ip-protocol TCP \
+    --ports=80 --target-pool tphttp
+
+NAME      REGION      IP_ADDRESS     IP_PROTOCOL TARGET
+fwddotnet us-central1 104.197.85.206 TCP         us-central1/targetPools/tphttp
+</code></pre>
+
+<p><strong>Note</strong> the IP address for the forwarding rule <strong>104.197.85.206</strong></p>
+
+<p>The example above uses a GCP <a href="https://cloud.google.com/compute/docs/load-balancing/network/">Network LoadBalancer</a>.  Since we are using HTTP only, the alternative could be to stup an <a href="https://cloud.google.com/compute/docs/load-balancing/http/">HTTP LoadBalancer</a>.</p>
+
+<pre><code>gcloud compute instance-groups managed create dotnetgroup \
+    --zone us-central1-a --base-instance-name coreclr \
+    --size 2 --template dotnet \
+    --target-pool tphttp
+
+NAME ZONE  BASE_INSTANCE_NAME SIZE TARGET_SIZE GROUP       INSTANCE_TEMPLATE AUTOSCALED
+dotnetgroup us-central1-a coreclr                 2           dotnetgroup dotnet
+
+</code></pre>
+
+<p>You should see the instance group up, running and available for traffic:</p>
+
+<p><img src="images/fwrule.png" alt="Forwarding Rule" /></p>
+
+<p><img src="images/tphttp.png" alt="Target Pool" /></p>
+
+<p>Finally, the service should be available at the port for the forwarding rule:</p>
+
+<p><code>http://104.197.85.206</code></p>
+
+<p><img src="images/siteup.png" alt="Services Frontend" /></p>
+
+<h4 id="building-locally">Building Locally</h4>
+
+<p>The easiest way to extend these samples is to generate the docker images and test the images themselves.</p>
+
+<p>Optionally, if you want to extend and deploy these images locally, you will need docker.  Running the images directly inside docker mimics the deployment runtime on GCP (linux images) as opposed to directly running on windows or in Visual Studio.</p>
+
+<p>However, if you want to run dotnet directly on your machine, make sure you atleast have (on linux):</p>
+
+<pre><code class="language-bash">dotnet --version
+1.0.0-preview2-1-003177
+</code></pre>
+
+<pre><code class="language-bash">dotnet restore
+cd src/WebApplication1/
+dotnet run -p project.json
+</code></pre>
+
+<p>on Windows</p>
+
+<p><img src="images/dotnet_win.png" alt="Visual Studio" /></p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/dotnet" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">dotnet</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/kubernetes" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">kubernetes</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-6equj5-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.6equj5.dev/" >
+    &copy; 2019 6equj5.dev
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

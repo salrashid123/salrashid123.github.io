@@ -23,6 +23,16 @@ What step 5 below shows is an inbound request to one microservice (/frontend) wh
     </item>
     
     <item>
+      <title>TPM2-TSS-Engine hello world and Google Cloud Authentication </title>
+      <link>https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/</link>
+      <pubDate>Thu, 28 Nov 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/</guid>
+      <description>Basic application that uses a the tpm2-tss-engine to perform RSA encryption and signatures.
+This is intended to run on a system with a TPM as well as the the openssl engine library installed. The TPM-based private key is generated directly using tpm2tss-genkey and from that, the openssl engine to surface the public part. The tpm2-tss-engine surfaces the OpenSSL constructs like EVP_PKEY_RSA so you can directly use that against the TPM</description>
+    </item>
+    
+    <item>
       <title>Google Cloud SSH with OS-Login with YubiKey OpenSC-PKCS11 and Trusted Platform Module (TPM) based keys</title>
       <link>https://blog.6equj5.dev/posts/gpg_tpm_ssh/</link>
       <pubDate>Mon, 04 Nov 2019 14:34:01 -0800</pubDate>
@@ -30,6 +40,16 @@ What step 5 below shows is an inbound request to one microservice (/frontend) wh
       <guid>https://blog.6equj5.dev/posts/gpg_tpm_ssh/</guid>
       <description>or &amp;ldquo;How to embed SSH private keys into a Yubikey or TPM&amp;rdquo;. First off, this is nothing new; its a rehash of decade old tech that i decided to try out since i happens to have a YubiKey Neo and familiarity with Trusted Platform Module on a GCP Shielded VM.
 Both the Yubikey Neo and TPM have one common capability here which this tutorial covers: embedding an RSA private key inextricably into a hardware device and provide an interface to sign arbitrary data using that key.</description>
+    </item>
+    
+    <item>
+      <title>Envoy Global rate limiting helloworld</title>
+      <link>https://blog.6equj5.dev/posts/envoy_ratelimit/</link>
+      <pubDate>Tue, 22 Oct 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.6equj5.dev/posts/envoy_ratelimit/</guid>
+      <description>Sample &amp;ldquo;hello world&amp;rdquo; application demonstrating basic aspects fo Envoy&amp;rsquo;s Global Rate Limiting capability. This app configures a local envoy instance for an HTTP level rate limit filter and then uses Lyft&amp;rsquo;s RateLimit Service as the backend.
+Envoy&amp;rsquo;s rate limit functions checks each request to see if it should go through or not either using a local instance specific criteria or globally. By local, the rate limit counter runs within the context of the single envoy proxy that handles the request.</description>
     </item>
     
     <item>
@@ -136,6 +156,51 @@ When a Scheduled task fires and calls an HTTP endpoint, it can optionally automa
       
       <guid>https://blog.6equj5.dev/posts/gcs_post_signedurl_js/</guid>
       <description>Small javascript application showing how to upload/download files with GCS Signed URLs and Signed Policy Documents. This article will not cover in detail what those two mechanisms are but rather demonstrate a basic application that exercises both on the browser. This is a simple client-server app that uploads files using these two mechanisms from a user&amp;rsquo;s browser. SignedURLs w/ javascript has been done many times before (see references); this article describes SignedURLs and Policy document differences and implementations.</description>
+    </item>
+    
+    <item>
+      <title>Proxy container for Google Cloud Platofrm pubsub and datastore emulators.</title>
+      <link>https://blog.6equj5.dev/posts/gcpemulator/</link>
+      <pubDate>Sun, 11 Sep 2016 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.6equj5.dev/posts/gcpemulator/</guid>
+      <description>NOTE: 12/30/19 : This article is very old; while it probably does run to some extent, i&amp;rsquo;m not sure if the tooling is still needed. I&amp;rsquo;ve removed this from GCP Blog to reduce some noise; i&amp;rsquo;m keeping it in my archive here&amp;hellip;.
+  Proxy server and container for GCP Cloud PubSub and Cloud Datastore emulators. In addition, the container runs an nginx HTTPS proxy infront of the PubSub|Datastore emulators so that even direct references to pubsub.</description>
+    </item>
+    
+    <item>
+      <title>Google Cloud Platform API hello world samples</title>
+      <link>https://blog.6equj5.dev/posts/gcpsamples/</link>
+      <pubDate>Mon, 25 Jul 2016 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.6equj5.dev/posts/gcpsamples/</guid>
+      <description>This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
+This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Services HelloWorld</title>
+      <link>https://blog.6equj5.dev/posts/kubehelloworld/</link>
+      <pubDate>Tue, 19 Jul 2016 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.6equj5.dev/posts/kubehelloworld/</guid>
+      <description>NOTE: 12/20/19: While this demo will work, its quite dated (i wrote is this &amp;lsquo;16..there are much more comprehensive articles that cover this..)
+ Anyway&amp;hellip;
+Sample application that deploys a trivial Kubernetes service to connect a frontend system (fe) with a backend (be).
+This is merely to demonstrate Kubernetes service discovery in Google Container Engine (GKE), nothing more and is based off the guestbook service example.
+Parts of this sample code is from the default kubernetes &amp;lsquo;environment-guide&amp;rsquo; example.</description>
+    </item>
+    
+    <item>
+      <title>.NET on GCP</title>
+      <link>https://blog.6equj5.dev/posts/gcpdotnet/</link>
+      <pubDate>Sun, 24 Apr 2016 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.6equj5.dev/posts/gcpdotnet/</guid>
+      <description>12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&amp;rsquo;m leavig it up as a matter of record)
+ Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
+The example here uses Microsofts&amp;rsquo;s .NET Core 1.</description>
     </item>
     
   </channel>

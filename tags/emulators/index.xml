@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Emulators on 6equj5.dev</title>
+    <link>https://blog.6equj5.dev/tags/emulators/</link>
+    <description>Recent content in Emulators on 6equj5.dev</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 11 Sep 2016 14:34:01 -0800</lastBuildDate>
+    
+	<atom:link href="https://blog.6equj5.dev/tags/emulators/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Proxy container for Google Cloud Platofrm pubsub and datastore emulators.</title>
+      <link>https://blog.6equj5.dev/posts/gcpemulator/</link>
+      <pubDate>Sun, 11 Sep 2016 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.6equj5.dev/posts/gcpemulator/</guid>
+      <description>NOTE: 12/30/19 : This article is very old; while it probably does run to some extent, i&amp;rsquo;m not sure if the tooling is still needed. I&amp;rsquo;ve removed this from GCP Blog to reduce some noise; i&amp;rsquo;m keeping it in my archive here&amp;hellip;.
+  Proxy server and container for GCP Cloud PubSub and Cloud Datastore emulators. In addition, the container runs an nginx HTTPS proxy infront of the PubSub|Datastore emulators so that even direct references to pubsub.</description>
+    </item>
+    
+  </channel>
+</rss>

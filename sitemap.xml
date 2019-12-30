@@ -17,8 +17,22 @@
   </url>
   
   <url>
+    <loc>https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/</loc>
+    <lastmod>2019-11-28T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.6equj5.dev/posts/gpg_tpm_ssh/</loc>
     <lastmod>2019-11-04T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.6equj5.dev/posts/envoy_ratelimit/</loc>
+    <lastmod>2019-10-22T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -101,6 +115,34 @@
   </url>
   
   <url>
+    <loc>https://blog.6equj5.dev/posts/gcpemulator/</loc>
+    <lastmod>2016-09-11T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.6equj5.dev/posts/gcpsamples/</loc>
+    <lastmod>2016-07-25T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.6equj5.dev/posts/kubehelloworld/</loc>
+    <lastmod>2016-07-19T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.6equj5.dev/posts/gcpdotnet/</loc>
+    <lastmod>2016-04-24T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.6equj5.dev/tags/anti-virus/</loc>
     <lastmod>2019-05-27T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -163,14 +205,42 @@
   </url>
   
   <url>
+    <loc>https://blog.6equj5.dev/tags/dotnet/</loc>
+    <lastmod>2016-04-24T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.6equj5.dev/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
+    <loc>https://blog.6equj5.dev/tags/emulators/</loc>
+    <lastmod>2016-09-11T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.6equj5.dev/tags/envoy/</loc>
+    <lastmod>2019-10-22T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.6equj5.dev/tags/fluentd/</loc>
     <lastmod>2019-07-01T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.6equj5.dev/tags/gcloud/</loc>
+    <lastmod>2016-09-11T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
@@ -212,14 +282,14 @@
   
   <url>
     <loc>https://blog.6equj5.dev/tags/oauth2/</loc>
-    <lastmod>2019-05-20T13:34:01-08:00</lastmod>
+    <lastmod>2019-11-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.6equj5.dev/tags/oidc/</loc>
-    <lastmod>2019-05-30T14:34:01-08:00</lastmod>
+    <lastmod>2019-11-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>

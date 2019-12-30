@@ -6,10 +6,20 @@
     <description>Recent content in Oauth2 on 6equj5.dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 May 2019 13:34:01 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 28 Nov 2019 14:34:01 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.6equj5.dev/tags/oauth2/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>TPM2-TSS-Engine hello world and Google Cloud Authentication </title>
+      <link>https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/</link>
+      <pubDate>Thu, 28 Nov 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/</guid>
+      <description>Basic application that uses a the tpm2-tss-engine to perform RSA encryption and signatures.
+This is intended to run on a system with a TPM as well as the the openssl engine library installed. The TPM-based private key is generated directly using tpm2tss-genkey and from that, the openssl engine to surface the public part. The tpm2-tss-engine surfaces the OpenSSL constructs like EVP_PKEY_RSA so you can directly use that against the TPM</description>
+    </item>
     
     <item>
       <title>Automatic oauth2:  Using Cloud Scheduler and Tasks to call Google APIs</title>
@@ -28,6 +38,16 @@ When a Scheduled task fires and calls an HTTP endpoint, it can optionally automa
       
       <guid>https://blog.6equj5.dev/posts/terraform_gcp_impersonation/</guid>
       <description>About two months ago, someone asked me to help them setup Terraform to automatically provision GCP projects. It was the first time I actually used it and found it capabilities pretty powerful: it&amp;rsquo;s easy to manage complex resources and maintain a picture of the state change. However, one aspect of its capabilities that struck me was its need to directly have permissions on all GCP resources it provisioned or manage.</description>
+    </item>
+    
+    <item>
+      <title>Google Cloud Platform API hello world samples</title>
+      <link>https://blog.6equj5.dev/posts/gcpsamples/</link>
+      <pubDate>Mon, 25 Jul 2016 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.6equj5.dev/posts/gcpsamples/</guid>
+      <description>This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
+This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples.</description>
     </item>
     
   </channel>

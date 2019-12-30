@@ -229,6 +229,39 @@ What step 5 below shows is an inbound request to one microservice (/frontend) wh
           
         
         <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
+          <a href="https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/" class="db grow">
+            <img src="https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/images/tpm2.jpg" class="img" alt="image from TPM2-TSS-Engine hello world and Google Cloud Authentication ">
+          </a>
+        </div>
+      
+      <div class="blah w-100 w-60-ns pl3-ns">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/" class="color-inherit dim link">
+            TPM2-TSS-Engine hello world and Google Cloud Authentication 
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Basic application that uses a the tpm2-tss-engine to perform RSA encryption and signatures.
+This is intended to run on a system with a TPM as well as the the openssl engine library installed. The TPM-based private key is generated directly using tpm2tss-genkey and from that, the openssl engine to surface the public part. The tpm2-tss-engine surfaces the OpenSSL constructs like EVP_PKEY_RSA so you can directly use that against the TPM
+        </div>
+          <a href="https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+          
+        
+        <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
           <a href="https://blog.6equj5.dev/posts/gpg_tpm_ssh/" class="db grow">
             <img src="https://blog.6equj5.dev/posts/gpg_tpm_ssh/images/ykman-gui-cert.png" class="img" alt="image from Google Cloud SSH with OS-Login with YubiKey OpenSC-PKCS11 and Trusted Platform Module (TPM) based keys">
           </a>
@@ -245,6 +278,39 @@ What step 5 below shows is an inbound request to one microservice (/frontend) wh
 Both the Yubikey Neo and TPM have one common capability here which this tutorial covers: embedding an RSA private key inextricably into a hardware device and provide an interface to sign arbitrary data using that key.
         </div>
           <a href="https://blog.6equj5.dev/posts/gpg_tpm_ssh/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+          
+        
+        <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
+          <a href="https://blog.6equj5.dev/posts/envoy_ratelimit/" class="db grow">
+            <img src="https://blog.6equj5.dev/posts/envoy_ratelimit/images/envoy.png" class="img" alt="image from Envoy Global rate limiting helloworld">
+          </a>
+        </div>
+      
+      <div class="blah w-100 w-60-ns pl3-ns">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="https://blog.6equj5.dev/posts/envoy_ratelimit/" class="color-inherit dim link">
+            Envoy Global rate limiting helloworld
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Sample &ldquo;hello world&rdquo; application demonstrating basic aspects fo Envoy&rsquo;s Global Rate Limiting capability. This app configures a local envoy instance for an HTTP level rate limit filter and then uses Lyft&rsquo;s RateLimit Service as the backend.
+Envoy&rsquo;s rate limit functions checks each request to see if it should go through or not either using a local instance specific criteria or globally. By local, the rate limit counter runs within the context of the single envoy proxy that handles the request.
+        </div>
+          <a href="https://blog.6equj5.dev/posts/envoy_ratelimit/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
         
       </div>
     </div>
@@ -604,6 +670,143 @@ When a Scheduled task fires and calls an HTTP endpoint, it can optionally automa
           Small javascript application showing how to upload/download files with GCS Signed URLs and Signed Policy Documents. This article will not cover in detail what those two mechanisms are but rather demonstrate a basic application that exercises both on the browser. This is a simple client-server app that uploads files using these two mechanisms from a user&rsquo;s browser. SignedURLs w/ javascript has been done many times before (see references); this article describes SignedURLs and Policy document differences and implementations.
         </div>
           <a href="https://blog.6equj5.dev/posts/gcs_post_signedurl_js/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+          
+        
+        <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
+          <a href="https://blog.6equj5.dev/posts/gcpemulator/" class="db grow">
+            <img src="https://blog.6equj5.dev/posts/gcpemulator/images/dia1.png" class="img" alt="image from Proxy container for Google Cloud Platofrm pubsub and datastore emulators.">
+          </a>
+        </div>
+      
+      <div class="blah w-100 w-60-ns pl3-ns">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="https://blog.6equj5.dev/posts/gcpemulator/" class="color-inherit dim link">
+            Proxy container for Google Cloud Platofrm pubsub and datastore emulators.
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          NOTE: 12/30/19 : This article is very old; while it probably does run to some extent, i&rsquo;m not sure if the tooling is still needed. I&rsquo;ve removed this from GCP Blog to reduce some noise; i&rsquo;m keeping it in my archive here&hellip;.
+  Proxy server and container for GCP Cloud PubSub and Cloud Datastore emulators. In addition, the container runs an nginx HTTPS proxy infront of the PubSub|Datastore emulators so that even direct references to pubsub.
+        </div>
+          <a href="https://blog.6equj5.dev/posts/gcpemulator/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+          
+        
+        <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
+          <a href="https://blog.6equj5.dev/posts/gcpsamples/" class="db grow">
+            <img src="https://blog.6equj5.dev/images/notebook.jpg" class="img" alt="image from Google Cloud Platform API hello world samples">
+          </a>
+        </div>
+      
+      <div class="blah w-100 w-60-ns pl3-ns">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="https://blog.6equj5.dev/posts/gcpsamples/" class="color-inherit dim link">
+            Google Cloud Platform API hello world samples
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
+This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples.
+        </div>
+          <a href="https://blog.6equj5.dev/posts/gcpsamples/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+          
+        
+        <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
+          <a href="https://blog.6equj5.dev/posts/kubehelloworld/" class="db grow">
+            <img src="https://blog.6equj5.dev/posts/kubehelloworld/images/kube_flow.png" class="img" alt="image from Kubernetes Services HelloWorld">
+          </a>
+        </div>
+      
+      <div class="blah w-100 w-60-ns pl3-ns">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="https://blog.6equj5.dev/posts/kubehelloworld/" class="color-inherit dim link">
+            Kubernetes Services HelloWorld
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          NOTE: 12/20/19: While this demo will work, its quite dated (i wrote is this &lsquo;16..there are much more comprehensive articles that cover this..)
+ Anyway&hellip;
+Sample application that deploys a trivial Kubernetes service to connect a frontend system (fe) with a backend (be).
+This is merely to demonstrate Kubernetes service discovery in Google Container Engine (GKE), nothing more and is based off the guestbook service example.
+Parts of this sample code is from the default kubernetes &lsquo;environment-guide&rsquo; example.
+        </div>
+          <a href="https://blog.6equj5.dev/posts/kubehelloworld/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+          
+        
+        <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
+          <a href="https://blog.6equj5.dev/posts/gcpdotnet/" class="db grow">
+            <img src="https://blog.6equj5.dev/posts/gcpdotnet/images/webapplication1.png" class="img" alt="image from .NET on GCP">
+          </a>
+        </div>
+      
+      <div class="blah w-100 w-60-ns pl3-ns">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="https://blog.6equj5.dev/posts/gcpdotnet/" class="color-inherit dim link">
+            .NET on GCP
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
+ Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
+The example here uses Microsofts&rsquo;s .NET Core 1.
+        </div>
+          <a href="https://blog.6equj5.dev/posts/gcpdotnet/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
         
       </div>
     </div>

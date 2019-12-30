@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dotnet on 6equj5.dev</title>
+    <link>https://blog.6equj5.dev/tags/dotnet/</link>
+    <description>Recent content in Dotnet on 6equj5.dev</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 24 Apr 2016 14:34:01 -0800</lastBuildDate>
+    
+	<atom:link href="https://blog.6equj5.dev/tags/dotnet/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>.NET on GCP</title>
+      <link>https://blog.6equj5.dev/posts/gcpdotnet/</link>
+      <pubDate>Sun, 24 Apr 2016 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.6equj5.dev/posts/gcpdotnet/</guid>
+      <description>12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&amp;rsquo;m leavig it up as a matter of record)
+ Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
+The example here uses Microsofts&amp;rsquo;s .NET Core 1.</description>
+    </item>
+    
+  </channel>
+</rss>

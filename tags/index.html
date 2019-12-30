@@ -456,6 +456,77 @@ There are several step sto getting the following pipeline to work but in is basi
         
       
         <h2 class="f1">
+          <a href="/tags/dotnet" class="link blue hover-black">
+            Tag: dotnet
+          </a>
+        </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/gcpdotnet/" class="link black dim">
+        .NET on GCP
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
+ Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
+The example here uses Microsofts&rsquo;s .NET Core 1.
+    </div>
+  </div>
+</div>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/emulators" class="link blue hover-black">
+            Tag: emulators
+          </a>
+        </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/gcpemulator/" class="link black dim">
+        Proxy container for Google Cloud Platofrm pubsub and datastore emulators.
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      NOTE: 12/30/19 : This article is very old; while it probably does run to some extent, i&rsquo;m not sure if the tooling is still needed. I&rsquo;ve removed this from GCP Blog to reduce some noise; i&rsquo;m keeping it in my archive here&hellip;.
+  Proxy server and container for GCP Cloud PubSub and Cloud Datastore emulators. In addition, the container runs an nginx HTTPS proxy infront of the PubSub|Datastore emulators so that even direct references to pubsub.
+    </div>
+  </div>
+</div>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/envoy" class="link blue hover-black">
+            Tag: envoy
+          </a>
+        </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/envoy_ratelimit/" class="link black dim">
+        Envoy Global rate limiting helloworld
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Sample &ldquo;hello world&rdquo; application demonstrating basic aspects fo Envoy&rsquo;s Global Rate Limiting capability. This app configures a local envoy instance for an HTTP level rate limit filter and then uses Lyft&rsquo;s RateLimit Service as the backend.
+Envoy&rsquo;s rate limit functions checks each request to see if it should go through or not either using a local instance specific criteria or globally. By local, the rate limit counter runs within the context of the single envoy proxy that handles the request.
+    </div>
+  </div>
+</div>
+
+        
+      
+        <h2 class="f1">
           <a href="/tags/fluentd" class="link blue hover-black">
             Tag: fluentd
           </a>
@@ -471,6 +542,29 @@ There are several step sto getting the following pipeline to work but in is basi
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Several months ago Google Cloud Logging introduced two new monitored resource types geared towards allowing developers to emit cloud logging messages for their own application centric logs. Pereviously, application logs generally had to be tied to existing predefined monitored_resources such as GCE, GKE, AppEngine, Dataflow and so on. Under those monitoried resources sources, multiple log entries were attributed to specific logNames describing the subsystem like syslog, apache2, nginx, mysql, etc.
+    </div>
+  </div>
+</div>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/gcloud" class="link blue hover-black">
+            Tag: gcloud
+          </a>
+        </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/gcpemulator/" class="link black dim">
+        Proxy container for Google Cloud Platofrm pubsub and datastore emulators.
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      NOTE: 12/30/19 : This article is very old; while it probably does run to some extent, i&rsquo;m not sure if the tooling is still needed. I&rsquo;ve removed this from GCP Blog to reduce some noise; i&rsquo;m keeping it in my archive here&hellip;.
+  Proxy server and container for GCP Cloud PubSub and Cloud Datastore emulators. In addition, the container runs an nginx HTTPS proxy infront of the PubSub|Datastore emulators so that even direct references to pubsub.
     </div>
   </div>
 </div>
@@ -544,6 +638,43 @@ There are several step sto getting the following pipeline to work but in is basi
 </div>
 
         
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/kubehelloworld/" class="link black dim">
+        Kubernetes Services HelloWorld
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      NOTE: 12/20/19: While this demo will work, its quite dated (i wrote is this &lsquo;16..there are much more comprehensive articles that cover this..)
+ Anyway&hellip;
+Sample application that deploys a trivial Kubernetes service to connect a frontend system (fe) with a backend (be).
+This is merely to demonstrate Kubernetes service discovery in Google Container Engine (GKE), nothing more and is based off the guestbook service example.
+Parts of this sample code is from the default kubernetes &lsquo;environment-guide&rsquo; example.
+    </div>
+  </div>
+</div>
+
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/gcpdotnet/" class="link black dim">
+        .NET on GCP
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
+ Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
+The example here uses Microsofts&rsquo;s .NET Core 1.
+    </div>
+  </div>
+</div>
+
+        
       
         <h2 class="f1">
           <a href="/tags/logging" class="link blue hover-black">
@@ -601,6 +732,22 @@ What step 5 below shows is an inbound request to one microservice (/frontend) wh
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/" class="link black dim">
+        TPM2-TSS-Engine hello world and Google Cloud Authentication 
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Basic application that uses a the tpm2-tss-engine to perform RSA encryption and signatures.
+This is intended to run on a system with a TPM as well as the the openssl engine library installed. The TPM-based private key is generated directly using tpm2tss-genkey and from that, the openssl engine to surface the public part. The tpm2-tss-engine surfaces the OpenSSL constructs like EVP_PKEY_RSA so you can directly use that against the TPM
+    </div>
+  </div>
+</div>
+
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="https://blog.6equj5.dev/posts/automatic_oauth2/" class="link black dim">
         Automatic oauth2:  Using Cloud Scheduler and Tasks to call Google APIs
       </a>
@@ -628,12 +775,44 @@ When a Scheduled task fires and calls an HTTP endpoint, it can optionally automa
 </div>
 
         
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/gcpsamples/" class="link black dim">
+        Google Cloud Platform API hello world samples
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
+This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples.
+    </div>
+  </div>
+</div>
+
+        
       
         <h2 class="f1">
           <a href="/tags/oidc" class="link blue hover-black">
             Tag: oidc
           </a>
         </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/tpm2_evp_sign_decrypt/" class="link black dim">
+        TPM2-TSS-Engine hello world and Google Cloud Authentication 
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Basic application that uses a the tpm2-tss-engine to perform RSA encryption and signatures.
+This is intended to run on a system with a TPM as well as the the openssl engine library installed. The TPM-based private key is generated directly using tpm2tss-genkey and from that, the openssl engine to surface the public part. The tpm2-tss-engine surfaces the OpenSSL constructs like EVP_PKEY_RSA so you can directly use that against the TPM
+    </div>
+  </div>
+</div>
+
         
           <div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -662,6 +841,22 @@ Anyway, the following will setup cloud composer, then we will trigger composer t
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       This is a second in a series related to a versatile feature in Cloud Scheduler and Cloud Tasks and Cloud PubSub that automatically emits google OpenIDConnect and oauth2 access_token to outbound webhook calls. When a Scheduled task fires and calls an HTTP endpoint, it can automatically carry credentials to authenticate itself. The id_token credential can then get validated at the HTTP web-hook target using well known techniques (i.,e validate the signature and aud: fields in the token).
+    </div>
+  </div>
+</div>
+
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://blog.6equj5.dev/posts/gcpsamples/" class="link black dim">
+        Google Cloud Platform API hello world samples
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
+This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples.
     </div>
   </div>
 </div>
