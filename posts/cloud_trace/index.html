@@ -9,7 +9,7 @@
     <meta name="generator" content="Hugo 0.54.0" />
     
     
-      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
     
 
     
@@ -47,9 +47,22 @@
 <meta name="twitter:title" content="Google Cloud Trace context propagation and metrics graphs with Grafana&#43;Prometheus and Stackdriver"/>
 <meta name="twitter:description" content="I wanted to understand how to setup a standalone golang app that integrated Opencensus specifically for Tracing and Metrics. The type of tracing i was after was both automatic and between web requests. By automatic i mean if you initialize opencensus and then directly use a supporting library to access a resrouce (eg. Google Cloud Storage client), tracing information about specific actions within the GCS call is rendered (eg, time taken for each individual get/put operation)."/>
 
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-155117088-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
   </head>
 
-  <body class="ma0 avenir bg-near-white">
+  <body class="ma0 avenir bg-near-white production">
 
     
    
