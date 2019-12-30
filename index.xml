@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sal&#39;s random walk.. on 6equj5.dev</title>
+    <link>https://salrashid123.github.io/</link>
+    <description>Recent content in sal&#39;s random walk.. on 6equj5.dev</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 24 Dec 2019 14:34:01 -0800</lastBuildDate>
+    
+	<atom:link href="https://salrashid123.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Simple distributed tracing with OpenTracing and Stackdriver</title>
+      <link>https://salrashid123.github.io/posts/opentelemetry_stackdriver/</link>
+      <pubDate>Tue, 24 Dec 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/opentelemetry_stackdriver/</guid>
+      <description>Nothing much, just my variation/helloworld for opentelemetry in golang..its my variation of Opentelemetry-Distributed Tracing sample
+This is a simple frontend-backend application you can run on your laptop which demonstrates distributed tracing between microservices.
+What step 5 below shows is an inbound request to one microservice (/frontend) which emits some subspans, then makes an http call to a backend app (/backend) which also emits some spans. The final trace you see is a combined end-to-end trace between microservices.</description>
+    </item>
+    
+    <item>
+      <title>Google Cloud SSH with OS-Login with YubiKey OpenSC-PKCS11 and Trusted Platform Module (TPM) based keys</title>
+      <link>https://salrashid123.github.io/posts/gpg_tpm_ssh/</link>
+      <pubDate>Mon, 04 Nov 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/gpg_tpm_ssh/</guid>
+      <description>or &amp;ldquo;How to embed SSH private keys into a Yubikey or TPM&amp;rdquo;. First off, this is nothing new; its a rehash of decade old tech that i decided to try out since i happens to have a YubiKey Neo and familiarity with Trusted Platform Module on a GCP Shielded VM.
+Both the Yubikey Neo and TPM have one common capability here which this tutorial covers: embedding an RSA private key inextricably into a hardware device and provide an interface to sign arbitrary data using that key.</description>
+    </item>
+    
+    <item>
+      <title>Writing Developer logs with Google Cloud Logging</title>
+      <link>https://salrashid123.github.io/posts/writing_developer_logs_gcp/</link>
+      <pubDate>Mon, 01 Jul 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/writing_developer_logs_gcp/</guid>
+      <description>Several months ago Google Cloud Logging introduced two new monitored resource types geared towards allowing developers to emit cloud logging messages for their own application centric logs. Pereviously, application logs generally had to be tied to existing predefined monitored_resources such as GCE, GKE, AppEngine, Dataflow and so on. Under those monitoried resources sources, multiple log entries were attributed to specific logNames describing the subsystem like syslog, apache2, nginx, mysql, etc.</description>
+    </item>
+    
+    <item>
+      <title>Calling Cloud Composer &gt; GCF &gt; Composer securely</title>
+      <link>https://salrashid123.github.io/posts/composer_gcf/</link>
+      <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/composer_gcf/</guid>
+      <description>Sample Cloud Composer (Apache Airflow) configuration to securely invoke Cloud Functions or Cloud Run.
+In addition this sample shows inverse: how Cloud Functions can invoke a Composer DAG securely. While GCF-&amp;gt;Composer is documented here, the configuration detailed here is minimal and (to me), easier to read.
+Anyway, the following will setup cloud composer, then we will trigger composer to invoke a cloud function&amp;hellip;the cloud function will just trigger a different cloud composer endpoint&amp;hellip;.</description>
+    </item>
+    
+    <item>
+      <title>Google Cloud Trace context propagation and metrics graphs with Grafana&#43;Prometheus and Stackdriver</title>
+      <link>https://salrashid123.github.io/posts/cloud_trace/</link>
+      <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/cloud_trace/</guid>
+      <description>I wanted to understand how to setup a standalone golang app that integrated Opencensus specifically for Tracing and Metrics. The type of tracing i was after was both automatic and between web requests. By automatic i mean if you initialize opencensus and then directly use a supporting library to access a resrouce (eg. Google Cloud Storage client), tracing information about specific actions within the GCS call is rendered (eg, time taken for each individual get/put operation).</description>
+    </item>
+    
+    <item>
+      <title>Anti Virus file scanning on Google Cloud Storage using ClamAV</title>
+      <link>https://salrashid123.github.io/posts/clam_av/</link>
+      <pubDate>Mon, 27 May 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/clam_av/</guid>
+      <description>Tutorial on how to use ClamAV to scan files uploaded to Google Cloud Storage (GCS).
+GCS does not have any built in capability to scan or do any other type of preprocessing on its files and relies on other services to perform these steps. In this tutorial, we will process a file that gets uploaded to GCS for viruses, malware, etc using ClamAV.
+Architecture The basic flow outlined here is:</description>
+    </item>
+    
+    <item>
+      <title>Automatic OIDC:  Using Cloud Scheduler, Tasks, and PubSub to make authenticated calls to Cloud Run, Cloud Functions or your Server</title>
+      <link>https://salrashid123.github.io/posts/automatic_oidc/</link>
+      <pubDate>Mon, 20 May 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/automatic_oidc/</guid>
+      <description>This is a second in a series related to a versatile feature in Cloud Scheduler and Cloud Tasks and Cloud PubSub that automatically emits google OpenIDConnect and oauth2 access_token to outbound webhook calls. When a Scheduled task fires and calls an HTTP endpoint, it can automatically carry credentials to authenticate itself. The id_token credential can then get validated at the HTTP web-hook target using well known techniques (i.,e validate the signature and aud: fields in the token).</description>
+    </item>
+    
+    <item>
+      <title>Google Container Registry statistics from GCS access_logs</title>
+      <link>https://salrashid123.github.io/posts/gcr_stats/</link>
+      <pubDate>Mon, 20 May 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/gcr_stats/</guid>
+      <description>Sample flow to extract Google Container Registry usage statistics (image push/pull counts, analytics, etc). GCR images are hosted on Google Cloud Storage which does have the ability to export usage which means we can indirectly acquire GCR&amp;rsquo;s usage.
+There are several step sto getting the following pipeline to work but in is basic form, we setup GCS bucket used by GCR to export its usage stats to another GCS bucket.</description>
+    </item>
+    
+    <item>
+      <title>Automatic oauth2:  Using Cloud Scheduler and Tasks to call Google APIs</title>
+      <link>https://salrashid123.github.io/posts/automatic_oauth2/</link>
+      <pubDate>Mon, 20 May 2019 13:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/automatic_oauth2/</guid>
+      <description>A month ago or so I tried out a pretty versatile feature in Cloud Scheduler and Cloud Tasks and Cloud Tasks that emits OpenIDConnect or oauth2 access_token to outbound webhook calls.
+When a Scheduled task fires and calls an HTTP endpoint, it can optionally automatically carry credentials for use with a GCP REST Endpoint. What does that mean? Well, you can automatically trigger most Google APIs directly do to any number of things on schedule or as a task instead of creating and running a cron elsewhere.</description>
+    </item>
+    
+    <item>
+      <title>GCP Binary Authorization and Vulnerability Scanning Demo</title>
+      <link>https://salrashid123.github.io/posts/binary_auth_demo/</link>
+      <pubDate>Wed, 01 May 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/binary_auth_demo/</guid>
+      <description>Sample application for GCP Binary Authorization + Vulernability Scanner.
+ Creates GKE cluster with Binary Authorization Enables Binary Authoriztion policy on cluster Cloud Builder workflow checks checked in code to Cloud Source repository  Builds container image and pushes to Cloud Container Registry Binary Auhorization step waits for Vulernability Scan to complete If Vulernability Scanner Fails, Deployment Fails If Succeeds, the imae is authorized for deployment to GKE    Note: this sample uses one cloud builder configuration to both build the image and do attestation.</description>
+    </item>
+    
+    <item>
+      <title>GPG stream encryption and decryption on Google Cloud Functions and Cloud Run</title>
+      <link>https://salrashid123.github.io/posts/gpg_gcf/</link>
+      <pubDate>Sun, 28 Apr 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/gpg_gcf/</guid>
+      <description>About a year+ ago a colleague of mine (Daz Wilkin) asked me how best to decompress/unzip a file using Google Cloud Functions. The suggestion ended as a sample he provided demonstrating the stream-read-&amp;gt;stream-write pattern with the pertinent input-outputs (input: unziped file; output zipped file). The distinct advantage of stream processing the unzip function is that the data is never held in memory: as the unzipped content gets processed by GCF, its promptly written as a zip file to GCS.</description>
+    </item>
+    
+    <item>
+      <title>Terraform &#39;Assume Role&#39; and service Account impersonation on Google Cloud</title>
+      <link>https://salrashid123.github.io/posts/terraform_gcp_impersonation/</link>
+      <pubDate>Sun, 28 Apr 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/terraform_gcp_impersonation/</guid>
+      <description>About two months ago, someone asked me to help them setup Terraform to automatically provision GCP projects. It was the first time I actually used it and found it capabilities pretty powerful: it&amp;rsquo;s easy to manage complex resources and maintain a picture of the state change. However, one aspect of its capabilities that struck me was its need to directly have permissions on all GCP resources it provisioned or manage.</description>
+    </item>
+    
+    <item>
+      <title>Upload/Download files from a browser with GCS Signed URLs and Signed Policy Documents</title>
+      <link>https://salrashid123.github.io/posts/gcs_post_signedurl_js/</link>
+      <pubDate>Sun, 28 Apr 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/gcs_post_signedurl_js/</guid>
+      <description>Small javascript application showing how to upload/download files with GCS Signed URLs and Signed Policy Documents. This article will not cover in detail what those two mechanisms are but rather demonstrate a basic application that exercises both on the browser. This is a simple client-server app that uploads files using these two mechanisms from a user&amp;rsquo;s browser. SignedURLs w/ javascript has been done many times before (see references); this article describes SignedURLs and Policy document differences and implementations.</description>
+    </item>
+    
+  </channel>
+</rss>

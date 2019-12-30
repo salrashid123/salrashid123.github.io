@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>6equj5.dev  | GCP Binary Authorization and Vulnerability Scanning Demo</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="GCP Binary Authorization and Vulnerability Scanning Demo" />
+<meta property="og:description" content="Sample application for GCP Binary Authorization &#43; Vulernability Scanner.
+ Creates GKE cluster with Binary Authorization Enables Binary Authoriztion policy on cluster Cloud Builder workflow checks checked in code to Cloud Source repository  Builds container image and pushes to Cloud Container Registry Binary Auhorization step waits for Vulernability Scan to complete If Vulernability Scanner Fails, Deployment Fails If Succeeds, the imae is authorized for deployment to GKE    Note: this sample uses one cloud builder configuration to both build the image and do attestation." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://salrashid123.github.io/posts/binary_auth_demo/" />
+<meta property="article:published_time" content="2019-05-01T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2019-05-01T14:34:01-08:00"/>
+
+<meta itemprop="name" content="GCP Binary Authorization and Vulnerability Scanning Demo">
+<meta itemprop="description" content="Sample application for GCP Binary Authorization &#43; Vulernability Scanner.
+ Creates GKE cluster with Binary Authorization Enables Binary Authoriztion policy on cluster Cloud Builder workflow checks checked in code to Cloud Source repository  Builds container image and pushes to Cloud Container Registry Binary Auhorization step waits for Vulernability Scan to complete If Vulernability Scanner Fails, Deployment Fails If Succeeds, the imae is authorized for deployment to GKE    Note: this sample uses one cloud builder configuration to both build the image and do attestation.">
+
+
+<meta itemprop="datePublished" content="2019-05-01T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2019-05-01T14:34:01-08:00" />
+<meta itemprop="wordCount" content="1451">
+
+
+
+<meta itemprop="keywords" content="gke,kubernetes," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="GCP Binary Authorization and Vulnerability Scanning Demo"/>
+<meta name="twitter:description" content="Sample application for GCP Binary Authorization &#43; Vulernability Scanner.
+ Creates GKE cluster with Binary Authorization Enables Binary Authoriztion policy on cluster Cloud Builder workflow checks checked in code to Cloud Source repository  Builds container image and pushes to Cloud Container Registry Binary Auhorization step waits for Vulernability Scan to complete If Vulernability Scanner Fails, Deployment Fails If Succeeds, the imae is authorized for deployment to GKE    Note: this sample uses one cloud builder configuration to both build the image and do attestation."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://salrashid123.github.io/posts/binary_auth_demo/images/attestor_config.png');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://salrashid123.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      6equj5.dev
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">GCP Binary Authorization and Vulnerability Scanning Demo</h1>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">GCP Binary Authorization and Vulnerability Scanning Demo</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-05-01T14:34:01-08:00">May 1, 2019</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Sample application for GCP Binary Authorization + Vulernability Scanner.</p>
+
+<ul>
+<li>Creates GKE cluster with Binary Authorization</li>
+<li>Enables Binary Authoriztion policy on cluster</li>
+<li>Cloud Builder workflow checks checked in code to Cloud Source repository
+
+<ul>
+<li>Builds container image and pushes to Cloud Container Registry</li>
+<li>Binary Auhorization step waits for Vulernability Scan to complete</li>
+<li>If Vulernability Scanner Fails, Deployment Fails</li>
+<li>If Succeeds, the imae is authorized for deployment to GKE</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>Note: this sample uses <em>one</em> cloud builder configuration to both build the image <em>and</em> do attestation.  Normally, these functions are on separate but dependent workflows to prevent users that write and submit cloudbuild configrations from accessing attestors secrets (eg. use spinnaker).  You can also setup external attestation which would address this issue.</p>
+</blockquote>
+
+<h2 id="setup">Setup</h2>
+
+<h3 id="create-project">Create Project</h3>
+
+<pre><code class="language-bash">export PROJECT=binauthdemo-$USER
+export ZONE=us-central1-a
+
+gcloud config set compute/zone $ZONE
+gcloud projects create $PROJECT --name $PROJECT
+
+PROJECT_NUMBER=&quot;$(gcloud projects describe $PROJECT --format='get(projectNumber)')&quot;
+
+
+gcloud auth application-default login
+
+(associate project to billing account)
+</code></pre>
+
+<h3 id="enable-apis">Enable APIs</h3>
+
+<pre><code class="language-bash">gcloud services enable binaryauthorization.googleapis.com  cloudbuild.googleapis.com   cloudkms.googleapis.com  compute.googleapis.com   container.googleapis.com  containeranalysis.googleapis.com  containerregistry.googleapis.com   sourcerepo.googleapis.com
+
+$ gcloud services list
+NAME                                TITLE
+bigquery-json.googleapis.com        BigQuery API
+binaryauthorization.googleapis.com  Binary Authorization API
+cloudapis.googleapis.com            Google Cloud APIs
+cloudbuild.googleapis.com           Cloud Build API
+clouddebugger.googleapis.com        Stackdriver Debugger API
+cloudkms.googleapis.com             Cloud Key Management Service (KMS) API
+cloudtrace.googleapis.com           Stackdriver Trace API
+compute.googleapis.com              Compute Engine API
+container.googleapis.com            Kubernetes Engine API
+containeranalysis.googleapis.com    Container Analysis API
+containerregistry.googleapis.com    Container Registry API
+datastore.googleapis.com            Cloud Datastore API
+iam.googleapis.com                  Identity and Access Management (IAM) API
+iamcredentials.googleapis.com       IAM Service Account Credentials API
+logging.googleapis.com              Stackdriver Logging API
+monitoring.googleapis.com           Stackdriver Monitoring API
+oslogin.googleapis.com              Cloud OS Login API
+pubsub.googleapis.com               Cloud Pub/Sub API
+servicemanagement.googleapis.com    Service Management API
+serviceusage.googleapis.com         Service Usage API
+sourcerepo.googleapis.com           Cloud Source Repositories API
+sql-component.googleapis.com        Cloud SQL
+storage-api.googleapis.com          Google Cloud Storage JSON API
+storage-component.googleapis.com    Cloud Storage
+</code></pre>
+
+<h3 id="export-serviceaccount-names">Export ServiceAccount names</h3>
+
+<pre><code class="language-bash">export CLOUD_BUILD_SERVICE_ACCOUNT=$PROJECT_NUMBER@cloudbuild.gserviceaccount.com 
+</code></pre>
+
+<p><img src="images/service_accounts.png" alt="images/service_accounts.png" /></p>
+
+<h3 id="create-gke-cluster">Create GKE Cluster</h3>
+
+<pre><code class="language-bash">export GKE_CLUSTER=cluster-1
+
+gcloud beta container  clusters create $GKE_CLUSTER --machine-type &quot;n1-standard-1&quot; --zone $ZONE  --num-nodes 2  --enable-binauthz
+</code></pre>
+
+<ul>
+<li>Allow CloudBuilder Access to Deploy to GKE</li>
+</ul>
+
+<pre><code class="language-bash">gcloud projects add-iam-policy-binding ${PROJECT} \
+    --member=serviceAccount:${CLOUD_BUILD_SERVICE_ACCOUNT} \
+    --role=roles/container.developer
+</code></pre>
+
+<h3 id="create-gcs-bucket-for-secrets">Create GCS Bucket for Secrets</h3>
+
+<pre><code class="language-bash">export GCS_BUCKET=binauthdemo-$USER
+
+gsutil mb gs://$GCS_BUCKET
+</code></pre>
+
+<h3 id="create-gpg-keypair">Create GPG keypair</h3>
+
+<pre><code class="language-bash">export ATTESTOR_NAME=myattestor
+</code></pre>
+
+<ul>
+<li><p>Create keypair</p>
+
+<pre><code>$ gpg --full-generate-key
+</code></pre>
+
+<ul>
+<li>RSA and RSA; 4096bits; keys do not expire</li>
+<li>name: GCP_Attestor</li>
+<li>email: gcpattestor@domain.com</li>
+<li>password: password</li>
+</ul></li>
+
+<li><p>Export Public/Private Keys</p></li>
+</ul>
+
+<pre><code class="language-bash">gpg --armor --export gcpattestor@domain.com &gt; certs/$ATTESTOR_NAME.asc
+gpg --export-secret-keys gcpattestor@domain.com &gt; certs/$ATTESTOR_NAME.gpg
+echo &quot;password&quot; &gt; certs/$ATTESTOR_NAME.pass
+</code></pre>
+
+<ul>
+<li>Export Fingerprint</li>
+</ul>
+
+<p>For example</p>
+
+<pre><code class="language-bash">gpg --list-secret-keys
+    sec   rsa4096 2019-03-28 [SC]
+        62851DE231E5D7519E58BAE3F6B283180B15EBB7
+    uid           [ultimate] GCP_Attestor &lt;gcpattestor@domain.com&gt;
+    ssb   rsa4096 2019-03-28 [E]
+
+
+echo &quot;62851DE231E5D7519E58BAE3F6B283180B15EBB7&quot; &gt; certs/$ATTESTOR_NAME.fpr
+</code></pre>
+
+<h3 id="copy-keys-to-gcs-and-change-permissions">Copy Keys to GCS and change Permissions</h3>
+
+<pre><code class="language-bash">gsutil iam ch serviceAccount:$CLOUD_BUILD_SERVICE_ACCOUNT:objectViewer gs://$GCS_BUCKET
+</code></pre>
+
+<h3 id="create-kms-key-and-assign-permissions">Create KMS key and assign Permissions</h3>
+
+<pre><code class="language-bash">export KMS_KEYRING=binauthkeyring
+export KMS_KEY=binauthkey
+
+gcloud kms keyrings create $KMS_KEYRING  --location global
+gcloud kms keys create $KMS_KEY --location=global --purpose=encryption --keyring=$KMS_KEYRING
+</code></pre>
+
+<ul>
+<li>Allow Cloud Builder access to decrypt</li>
+</ul>
+
+<pre><code class="language-bash">gcloud kms keys add-iam-policy-binding $KMS_KEY --keyring $KMS_KEYRING --location global --member=serviceAccount:$CLOUD_BUILD_SERVICE_ACCOUNT --role='roles/cloudkms.cryptoKeyDecrypter'
+</code></pre>
+
+<ul>
+<li>Allow current user to initially encrypt secrets</li>
+</ul>
+
+<pre><code class="language-bash">gcloud kms keys add-iam-policy-binding $KMS_KEY --keyring $KMS_KEYRING --location global --member=user:$(gcloud config get-value core/account) --role='roles/cloudkms.cryptoKeyEncrypter'
+</code></pre>
+
+<p><img src="images/key_permissions.png" alt="images/key_permissions.png" /></p>
+
+<h3 id="encrypt-attestation-private-key-and-passphrase">Encrypt Attestation Private Key and Passphrase</h3>
+
+<pre><code class="language-bash">gcloud kms encrypt --plaintext-file=certs/$ATTESTOR_NAME.gpg --ciphertext-file=certs/$ATTESTOR_NAME.gpg.enc  --key=$KMS_KEY --keyring=$KMS_KEYRING --location=global
+gcloud kms encrypt --plaintext-file=certs/$ATTESTOR_NAME.pass --ciphertext-file=certs/$ATTESTOR_NAME.pass.enc  --key=$KMS_KEY --keyring=$KMS_KEYRING --location=global
+</code></pre>
+
+<h3 id="upload-encrypted-key-passphrase-and-fingerprint">Upload Encrypted Key, Passphrase and Fingerprint</h3>
+
+<pre><code class="language-bash">gsutil cp certs/$ATTESTOR_NAME.gpg.enc gs://$GCS_BUCKET/
+gsutil cp certs/$ATTESTOR_NAME.pass.enc gs://$GCS_BUCKET/
+gsutil cp certs/$ATTESTOR_NAME.fpr gs://$GCS_BUCKET/
+gsutil cp certs/$ATTESTOR_NAME.asc gs://$GCS_BUCKET/
+</code></pre>
+
+<h2 id="configure-attestation">Configure Attestation</h2>
+
+<h3 id="create-note">Create Note</h3>
+
+<pre><code class="language-bash">export NOTE_ID=myattestor
+
+cat &gt; /tmp/note_payload.json &lt;&lt; EOM
+{
+  &quot;name&quot;: &quot;projects/${PROJECT}/notes/${NOTE_ID}&quot;,
+  &quot;attestation_authority&quot;: {
+    &quot;hint&quot;: {
+      &quot;human_readable_name&quot;: &quot;${PROJECT}-${NOTE_ID}&quot;
+    }
+  }
+}
+EOM
+</code></pre>
+
+<pre><code class="language-bash">curl -X POST \
+    -H &quot;Content-Type: application/json&quot; \
+    -H &quot;Authorization: Bearer $(gcloud auth print-access-token)&quot;  \
+    --data-binary @/tmp/note_payload.json  \
+    &quot;https://containeranalysis.googleapis.com/v1beta1/projects/${PROJECT}/notes/?noteId=${NOTE_ID}&quot;
+</code></pre>
+
+<p>Verify:</p>
+
+<pre><code class="language-bash">curl \
+    -H &quot;Authorization: Bearer $(gcloud auth print-access-token)&quot;  \
+    &quot;https://containeranalysis.googleapis.com/v1beta1/projects/${PROJECT}/notes/&quot;
+</code></pre>
+
+<h3 id="set-iam-permissions">Set IAM Permissions</h3>
+
+<ul>
+<li><code>roles/containeranalysis.notes.occurrences.viewer</code></li>
+<li><code>roles/containeranalysis.notes.attacher</code></li>
+</ul>
+
+<pre><code class="language-bash">export NOTE_ID=myattestor
+
+cat &gt; /tmp/iam_request.json &lt;&lt; EOM
+{
+  'resource': 'projects/${PROJECT}/notes/${NOTE_ID}',
+  'policy': {
+    'bindings': [
+      {
+        'role': 'roles/containeranalysis.notes.occurrences.viewer',
+        'members': [
+          'serviceAccount:${CLOUD_BUILD_SERVICE_ACCOUNT}'
+        ]
+      },
+      {
+        'role': 'roles/containeranalysis.notes.attacher',
+        'members': [
+          'serviceAccount:${CLOUD_BUILD_SERVICE_ACCOUNT}'
+        ]
+      }      
+    ]
+  }
+}
+EOM
+</code></pre>
+
+<pre><code class="language-bash">curl -X POST  \
+    -H &quot;Content-Type: application/json&quot; \
+    -H &quot;Authorization: Bearer $(gcloud auth print-access-token)&quot; \
+    --data-binary @/tmp/iam_request.json \
+    &quot;https://containeranalysis.googleapis.com/v1beta1/projects/${PROJECT}/notes/${NOTE_ID}:setIamPolicy&quot;
+</code></pre>
+
+<h3 id="create-attestation">Create Attestation</h3>
+
+<pre><code class="language-bash">gcloud --project=&quot;${PROJECT}&quot; \
+    beta container binauthz attestors create &quot;${ATTESTOR_NAME}&quot; \
+    --attestation-authority-note=&quot;${NOTE_ID}&quot; \
+    --attestation-authority-note-project=&quot;${PROJECT}&quot;
+
+
+gcloud beta container binauthz attestors add-iam-policy-binding \
+  &quot;projects/${PROJECT}/attestors/${ATTESTOR_NAME}&quot; \
+  --member=&quot;serviceAccount:${CLOUD_BUILD_SERVICE_ACCOUNT}&quot; \
+  --role=roles/binaryauthorization.attestorsVerifier
+
+gcloud --project=&quot;${PROJECT}&quot; \
+    beta container binauthz attestors public-keys add \
+    --attestor=&quot;${ATTESTOR_NAME}&quot; \
+    --public-key-file=certs/${ATTESTOR_NAME}.asc
+</code></pre>
+
+<p><img src="images/attestor_iam.png" alt="images/attestor_iam.png" /></p>
+
+<h2 id="deploy-vulnerability-scanner-image">Deploy Vulnerability Scanner Image</h2>
+
+<pre><code class="language-bash">docker build gcr.io/${PROJECT}/cloudbuild-attestor src/attestor/
+
+gcloud docker -- push gcr.io/${PROJECT}/cloudbuild-attestor
+</code></pre>
+
+<p>Acquire the image Hash</p>
+
+<pre><code class="language-bash">gcloud docker -- inspect  gcr.io/${PROJECT}/cloudbuild-attestor  --format='{{.Id}}'
+   eg: sha256:b904e0c37b57e310a16a63662f2b9480aba35599883a498ca184aa6aa25b9ccd
+</code></pre>
+
+<h2 id="create-application">Create Application</h2>
+
+<h3 id="create-source-repo">Create Source Repo</h3>
+
+<pre><code class="language-bash">export REPO_NAME=hello-attestor
+
+mkdir deployer/
+gcloud source repos create $REPO_NAME
+gcloud source repos clone $REPO_NAME .
+
+git remote add google https://source.developers.google.com/p/$PROJECT/r/$REPO_NAME
+</code></pre>
+
+<h3 id="copy-application-source-and-configure">Copy Application Source and Configure</h3>
+
+<pre><code class="language-bash">cp -R ../src/app/* .
+</code></pre>
+
+<ul>
+<li>Edit <code>cloudbuild.yaml</code></li>
+</ul>
+
+<p>Change the <code>NOTE_ID</code>, <code>ZONE</code>, <code>KMS_KEYRING</code>, <code>KMS_KEY</code> and <code>CLUTER_NAME</code>:  Change these values with the ones in current env:</p>
+
+<pre><code>echo $NOTE_ID
+echo $ZONE
+echo $KMS_KEYRING
+echo $KMS_KEY
+echo $CLUSTER_NAME
+</code></pre>
+
+<pre><code class="language-yaml">
+   /scripts/create_attestation.sh -n NOTE_ID -p $PROJECT_ID -i $$FULLY_QUALIFIED_IMAGE -b BUCKET_NAME -r KMS_KEYRING  -k KMS_KEY
+...
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=ZONE'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=CLUSTER_NAME'
+</code></pre>
+
+<p>If using defaults:</p>
+
+<pre><code class="language-yaml">
+   /scripts/create_attestation.sh -n myattestor -p $PROJECT_ID -i $$FULLY_QUALIFIED_IMAGE -b binauthdemo-`whoami` -r binauthkeyring  -k binauthkey 
+...
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+</code></pre>
+
+<h3 id="create-build-trigger">Create Build Trigger</h3>
+
+<ul>
+<li><p>Cloud Console &gt;&gt; Container Builder</p>
+
+<ul>
+<li>Create Trigger:<br /></li>
+<li>&lsquo;Cloud Source Repository&rsquo;</li>
+<li>select set value for $REPO_NAME</li>
+<li>Name: &ldquo;Build, Verify,Push&rdquo;</li>
+<li>Trigger Type: Branch (regex: master)</li>
+<li>Cloud Build Configuration File <code>cloudbuild.yaml</code></li>
+</ul>
+
+<p><img src="images/build_trigger.png" alt="images/build_trigger.png" /></p></li>
+</ul>
+
+<h2 id="push-application">Push Application</h2>
+
+<p>The following will build an push an application with the imageName:  <code>gcr.io/${PROJECT}/hello-app</code></p>
+
+<pre><code class="language-bash">
+git add -A &amp;&amp; git commit -m &quot;commit (`date`)&quot; &amp;&amp; git push google master
+</code></pre>
+
+<ul>
+<li>View Build Progress</li>
+</ul>
+
+<p><img src="images/builder_deploy.png" alt="images/builder_deploy.png." /></p>
+
+<h2 id="verify-service">Verify Service</h2>
+
+<pre><code class="language-bash">$ kubectl get po,svc,deployment
+NAME                         READY     STATUS    RESTARTS   AGE
+pod/myapp-6fb976d8cc-zrctx   1/1       Running   0          3m
+
+NAME                        TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)        AGE
+service/hello-app-service   LoadBalancer   10.11.249.32   35.222.0.110   80:30909/TCP   10m
+service/kubernetes          ClusterIP      10.11.240.1    &lt;none&gt;         443/TCP        4h
+
+NAME                          DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deployment.extensions/myapp   1         1         1            1           3m
+
+$ curl http://35.222.0.110/
+Hello World!
+</code></pre>
+
+<h1 id="verify-deployment-failure-for-vuleranable-images">Verify Deployment Failure for vuleranable images</h1>
+
+<p>Change the base image from <code>gcr.io/distroless/static</code> to <code>debain</code>.  This will cause the pipeline to fail since the number of CVE findings will exceed
+the allocated threshold in <code>check_vulnerabilities.sh -p $PROJECT_ID -i gcr.io/$PROJECT_ID/hello-app:$SHORT_SHA -t 5</code>
+(default level: <code>5</code>)</p>
+
+<ul>
+<li><p>edit `deployment/Docker</p>
+
+<pre><code>#FROM gcr.io/distroless/static
+FROM debian
+</code></pre></li>
+</ul>
+
+<p>Push</p>
+
+<pre><code>git add -A &amp;&amp; git commit -m &quot;commit (`date`)&quot; &amp;&amp; git push google master
+</code></pre>
+
+<p>Check Failure:</p>
+
+<pre><code>Scan returned CRITICAL Vulnerabilities for gcr.io/binauthdemo-srashid/hello-app:0b0b054
+Vulnerabilities found above threshold 5.0
+CVE-2018-1000858	6.8	cpe:/o:debian:debian_linux:9	gnupg2	{2.1.18 8~deb9u4}
+CVE-2017-7245	6.8	cpe:/o:debian:debian_linux:9	pcre3	{8.39 3}
+CVE-2017-7246	6.8	cpe:/o:debian:debian_linux:9	pcre3	{8.39 3}
+CVE-2016-2779	7.2	cpe:/o:debian:debian_linux:9	util-linux	{2.29.2 1+deb9u1}
+CVE-2018-16402	7.5	cpe:/o:debian:debian_linux:9	elfutils	{0.168 1}
+CVE-2017-11164	7.8	cpe:/o:debian:debian_linux:9	pcre3	{8.39 3}
+</code></pre>
+
+<p><img src="images/vulernable_image.png" alt="images/vulernable_image.png" /></p>
+
+<h2 id="enable-binary-authorization">Enable Binary Authorization</h2>
+
+<p>Enable Binary Authorization on this cluster by setting a <a href="https://cloud.google.com/binary-authorization/docs/configuring-policy-cli#overview">Policy</a></p>
+
+<pre><code>gcloud beta container binauthz policy export  &gt; /tmp/policy.yaml
+</code></pre>
+
+<ul>
+<li>edit <code>/tmp/policy</code></li>
+</ul>
+
+<p>and replace with the default config to enforce as shown in the link above</p>
+
+<p>eg:</p>
+
+<pre><code>echo $PROJECT
+echo $ATTESTOR_NAME
+</code></pre>
+
+<pre><code class="language-yaml">...
+defaultAdmissionRule:
+  evaluationMode: REQUIRE_ATTESTATION
+  enforcementMode: ENFORCED_BLOCK_AND_AUDIT_LOG
+  requireAttestationsBy:
+  - projects/PROJECT/attestors/ATTESTOR_NAME
+...
+</code></pre>
+
+<pre><code class="language-bash">$ gcloud beta container binauthz policy import /tmp/policy.yaml
+</code></pre>
+
+<h2 id="attempt-to-deploy-arbitrary-container">Attempt to deploy arbitrary container</h2>
+
+<pre><code>$ kubectl run --image=nginx mynginxapp
+deployment.apps/mynginxapp created
+</code></pre>
+
+<p>Deployment is created but the Workload shows:</p>
+
+<pre><code>pods &quot;mynginxapp-555fddcc9d-4x7kf&quot; is forbidden: image policy webhook backend denied one or more images: Denied by default admission rule. Denied by Attestor. Image nginx denied by projects/binauthdemo-srashid/attestors/myattestor: Attestor cannot attest to an image deployed by tag 
+</code></pre>
+
+<p><img src="images/deployment_block.png" alt="images/deployment_block.png" /></p>
+
+<h2 id="deploy-attested-container">Deploy Attested Container</h2>
+
+<ul>
+<li><p>edit <code>deploy/src/main.go</code> and upate <code>Hello World</code> &ndash;&gt; <code>Hello World!!!!</code></p></li>
+
+<li><p>Redploy</p></li>
+</ul>
+
+<pre><code class="language-bash">git add -A &amp;&amp; git commit -m &quot;commit (`date`)&quot; &amp;&amp; git push google master
+$ git add -A &amp;&amp; git commit -m &quot;commit (`date`)&quot; &amp;&amp; git push google master
+[master de438e4] commit (Thu Mar 28 17:40:30 PDT 2019)
+To https://source.developers.google.com/p/binauthdemo-srashid/r/hello-attestor
+   82e5817..de438e4  master -&gt; master
+</code></pre>
+
+<ul>
+<li><p>Output</p>
+
+<pre><code>DONE
+PUSH
+Finished Step #5 - &quot;Deploy to GKE&quot;
+Step #5 - &quot;Deploy to GKE&quot;: service/hello-app-service unchanged
+Step #5 - &quot;Deploy to GKE&quot;: deployment.apps/myapp configured
+Step #5 - &quot;Deploy to GKE&quot;: Running: kubectl apply -f kubernetes.yaml
+Step #5 - &quot;Deploy to GKE&quot;: kubeconfig entry generated for cluster-1.
+Step #5 - &quot;Deploy to GKE&quot;: Fetching cluster endpoint and auth data.
+Step #5 - &quot;Deploy to GKE&quot;: Running: gcloud container clusters get-credentials --project=&quot;binauthdemo-srashid&quot; --zone=&quot;us-central1-a&quot; &quot;cluster-1&quot;
+Step #5 - &quot;Deploy to GKE&quot;: Already have image (with digest): gcr.io/cloud-builders/kubectl
+Starting Step #5 - &quot;Deploy to GKE&quot;
+Finished Step #4 - &quot;Generate k8s manifest&quot;
+Step #4 - &quot;Generate k8s manifest&quot;: Already have image (with digest): gcr.io/cloud-builders/gcloud
+Starting Step #4 - &quot;Generate k8s manifest&quot;
+Finished Step #3 - &quot;Attest&quot;
+Step #3 - &quot;Attest&quot;: + gcloud beta container binauthz attestations create --artifact-url=gcr.io/binauthdemo-srashid/hello-app@sha256:da9eda4adcd09b5ef9ae99369c13b06ba77247f8f4ab5bf4b47889a58c5e87d8 --attestor=projects/binauthdemo-srashid/attestors/myattestor --signature-file=generated_signature.pgp --pgp-key-fingerprint=62851DE231E5D7519E58BAE3F6B283180B15EBB7
+Step #3 - &quot;Attest&quot;: ++ cat myattestor.fpr
+Step #3 - &quot;Attest&quot;: + gpg2 --no-tty --pinentry-mode loopback --passphrase-file myattestor.pass --output generated_signature.pgp --armor --sign generated_payload.json
+Step #3 - &quot;Attest&quot;: gpg:   secret keys imported: 2
+Step #3 - &quot;Attest&quot;: gpg:       secret keys read: 3
+</code></pre></li>
+
+<li><p>Verify Attestion for Image:</p>
+
+<pre><code>gcr.io/binauthdemo-srashid/hello-app@sha256:da9eda4adcd09b5ef9ae99369c13b06ba77247f8f4ab5bf4b47889a58c5e87d8
+</code></pre>
+
+<pre><code>gcloud beta container binauthz attestations list --artifact-url=gcr.io/binauthdemo-srashid/hello-app@sha256:da9eda4adcd09b5ef9ae99369c13b06ba77247f8f4ab5bf4b47889a58c5e87d8 --attestor=projects/binauthdemo-srashid/attestors/myattestor
+PGP_KEY_ID                                ARTIFACT_URL
+62851DE231E5D7519E58BAE3F6B283180B15EBB7  https://gcr.io/binauthdemo-srashid/hello-app@sha256:da9eda4adcd09b5ef9ae99369c13b06ba77247f8f4ab5bf4b47889a58c5e87d8
+</code></pre></li>
+</ul>
+
+<h2 id="verify-attested-container">Verify Attested Container</h2>
+
+<pre><code class="language-bash">$ kubectl get po,svc,deployment
+NAME                         READY     STATUS    RESTARTS   AGE
+pod/myapp-56f85dc886-fg6sw   1/1       Running   0          2m &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+ 
+NAME                        TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)        AGE
+service/hello-app-service   LoadBalancer   10.11.249.32   35.222.0.110   80:30909/TCP   43m
+service/kubernetes          ClusterIP      10.11.240.1    &lt;none&gt;         443/TCP        4h
+
+NAME                               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deployment.extensions/myapp        1         1         1            1           36m
+deployment.extensions/mynginxapp   1         0         0            0           15m
+
+
+$curl http://35.222.0.110/
+Hello World!!!!
+</code></pre>
+
+<h2 id="cleanup">Cleanup</h2>
+
+<p>Delete project</p>
+
+<pre><code class="language-bash">gcloud projects delete $PROJECT
+</code></pre>
+
+<h1 id="references">References</h1>
+
+<ul>
+<li><a href="https://cloud.google.com/binary-authorization/docs/quickstart">https://cloud.google.com/binary-authorization/docs/quickstart</a></li>
+<li><a href="https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values">https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values</a></li>
+<li><a href="https://cloud.google.com/solutions/secure-software-supply-chains-on-google-kubernetes-engine">https://cloud.google.com/solutions/secure-software-supply-chains-on-google-kubernetes-engine</a></li>
+<li><a href="https://www.youtube.com/watch?v=O2YRS9i8O60&amp;feature=youtu.be&amp;t=902">https://www.youtube.com/watch?v=O2YRS9i8O60&amp;feature=youtu.be&amp;t=902</a<br /></li>
+<li><a href="https://cloud.google.com/binary-authorization/docs/creating-attestors">https://cloud.google.com/binary-authorization/docs/creating-attestors</a></li>
+</ul>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/gke" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">gke</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/kubernetes" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">kubernetes</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "salrashid" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://salrashid123.github.io/" >
+    &copy; 2019 6equj5.dev
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

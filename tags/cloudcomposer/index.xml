@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cloudcomposer on 6equj5.dev</title>
+    <link>https://salrashid123.github.io/tags/cloudcomposer/</link>
+    <description>Recent content in Cloudcomposer on 6equj5.dev</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 30 May 2019 14:34:01 -0800</lastBuildDate>
+    
+	<atom:link href="https://salrashid123.github.io/tags/cloudcomposer/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Calling Cloud Composer &gt; GCF &gt; Composer securely</title>
+      <link>https://salrashid123.github.io/posts/composer_gcf/</link>
+      <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://salrashid123.github.io/posts/composer_gcf/</guid>
+      <description>Sample Cloud Composer (Apache Airflow) configuration to securely invoke Cloud Functions or Cloud Run.
+In addition this sample shows inverse: how Cloud Functions can invoke a Composer DAG securely. While GCF-&amp;gt;Composer is documented here, the configuration detailed here is minimal and (to me), easier to read.
+Anyway, the following will setup cloud composer, then we will trigger composer to invoke a cloud function&amp;hellip;the cloud function will just trigger a different cloud composer endpoint&amp;hellip;.</description>
+    </item>
+    
+  </channel>
+</rss>

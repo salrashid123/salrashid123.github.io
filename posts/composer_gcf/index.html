@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>6equj5.dev  | Calling Cloud Composer &gt; GCF &gt; Composer securely</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Calling Cloud Composer &gt; GCF &gt; Composer securely" />
+<meta property="og:description" content="Sample Cloud Composer (Apache Airflow) configuration to securely invoke Cloud Functions or Cloud Run.
+In addition this sample shows inverse: how Cloud Functions can invoke a Composer DAG securely. While GCF-&gt;Composer is documented here, the configuration detailed here is minimal and (to me), easier to read.
+Anyway, the following will setup cloud composer, then we will trigger composer to invoke a cloud function&hellip;the cloud function will just trigger a different cloud composer endpoint&hellip;." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://salrashid123.github.io/posts/composer_gcf/" />
+<meta property="article:published_time" content="2019-05-30T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2019-05-30T14:34:01-08:00"/>
+
+<meta itemprop="name" content="Calling Cloud Composer &gt; GCF &gt; Composer securely">
+<meta itemprop="description" content="Sample Cloud Composer (Apache Airflow) configuration to securely invoke Cloud Functions or Cloud Run.
+In addition this sample shows inverse: how Cloud Functions can invoke a Composer DAG securely. While GCF-&gt;Composer is documented here, the configuration detailed here is minimal and (to me), easier to read.
+Anyway, the following will setup cloud composer, then we will trigger composer to invoke a cloud function&hellip;the cloud function will just trigger a different cloud composer endpoint&hellip;.">
+
+
+<meta itemprop="datePublished" content="2019-05-30T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2019-05-30T14:34:01-08:00" />
+<meta itemprop="wordCount" content="837">
+
+
+
+<meta itemprop="keywords" content="oidc,cloudcomposer,cloudfunctions," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Calling Cloud Composer &gt; GCF &gt; Composer securely"/>
+<meta name="twitter:description" content="Sample Cloud Composer (Apache Airflow) configuration to securely invoke Cloud Functions or Cloud Run.
+In addition this sample shows inverse: how Cloud Functions can invoke a Composer DAG securely. While GCF-&gt;Composer is documented here, the configuration detailed here is minimal and (to me), easier to read.
+Anyway, the following will setup cloud composer, then we will trigger composer to invoke a cloud function&hellip;the cloud function will just trigger a different cloud composer endpoint&hellip;."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://salrashid123.github.io/posts/composer_gcf/images/composer_gcf.png');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://salrashid123.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      6equj5.dev
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">Calling Cloud Composer &gt; GCF &gt; Composer securely</h1>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Calling Cloud Composer &gt; GCF &gt; Composer securely</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-05-30T14:34:01-08:00">May 30, 2019</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Sample <a href="https://cloud.google.com/composer/docs/">Cloud Composer</a> (Apache Airflow) configuration to securely invoke <a href="https://cloud.google.com/functions/docs/">Cloud Functions</a> or <a href="https://cloud.google.com/run/docs/">Cloud Run</a>.</p>
+
+<p>In addition this sample shows inverse:  how Cloud Functions can invoke a Composer DAG securely.  While <code>GCF-&gt;Composer</code> is documented <a href="https://cloud.google.com/composer/docs/how-to/using/triggering-with-gcf">here</a>, the configuration detailed here is minimal and (to me), easier to read.</p>
+
+<p><img src="images/composer_gcf.png" alt="images/composer_gcf.png" /></p>
+
+<p>Anyway, the following will setup cloud composer, then we will trigger composer to invoke a cloud function&hellip;the cloud function will just trigger a different cloud composer endpoint&hellip;.you can make it cycle back and eat its tail&hellip;</p>
+
+<h3 id="1-create-composer-environment">1. Create Composer Environment</h3>
+
+<pre><code class="language-bash">export GOOGLE_PROJECT_ID=`gcloud config get-value core/project`
+export PROJECT_NUMBER=`gcloud projects describe $GOOGLE_PROJECT_ID --format='value(projectNumber)'`
+
+gcloud composer environments create composer1  --location us-central1 
+
+gcloud composer environments  list --locations us-central1
+</code></pre>
+
+<h3 id="2-add-python-packages-and-gcf-connection-url">2. Add Python Packages and GCF Connection URL</h3>
+
+<p>The following steps sets up Airflow connections we will use internally.  The commands below describes a URL to a GCF function we will enable later.</p>
+
+<ul>
+<li><p>Configure <code>requirements.txt</code></p>
+
+<pre><code>gcloud composer environments update composer1  \
+--update-pypi-packages-from-file requirements.txt --location us-central1
+</code></pre></li>
+
+<li><p>Configure connection</p>
+
+<pre><code>gcloud composer environments update composer1  \
+--update-env-variables=AIRFLOW_CONN_MY_GCF_CONN=https://us-central1-$GOOGLE_PROJECT_ID.cloudfunctions.net --location us-central1
+</code></pre></li>
+</ul>
+
+<blockquote>
+<p>Note: each of these commands takes ~10mins; go grab a coffee.</p>
+</blockquote>
+
+<ul>
+<li><p>Verify configurations via cli and on the Cloud Console for Composer</p>
+
+<pre><code>gcloud composer environments describe composer1 --location us-central1
+</code></pre></li>
+</ul>
+
+<p>The following will list the default GCS bucket used for its configurations and DAG storage</p>
+
+<pre><code>gcloud composer environments describe composer1 --location us-central1 --format=&quot;get(config.dagGcsPrefix)&quot;
+</code></pre>
+
+<ul>
+<li>You can now open up the <a href="https://cloud.google.com/composer/docs/how-to/accessing/airflow-web-interface">Airflow GUI</a></li>
+</ul>
+
+<p>and also see the GCP Console:</p>
+
+<ul>
+<li><p>Config:
+<img src="images/composer_config.png" alt="images/composer_config.png" /></p></li>
+
+<li><p>Env
+<img src="images/composer_env.png" alt="images/composer_env.png" /></p></li>
+
+<li><p>Python Packages
+<img src="images/composer_python_packages.png" alt="images/composer_python_packages.png" /></p></li>
+</ul>
+
+<h3 id="3-identify-the-client-id-used-by-iap">3.  Identify the client_id used by IAP</h3>
+
+<p>Cloud Composer is shielded by Cloud Identity Aware proxy.  The following command will identify the oauth2 <code>client_id</code> it uses which we will later need to trigger DAGs externally from GCF.  For refrerence, see <a href="https://cloud.google.com/composer/docs/how-to/using/triggering-with-gcf">triggering with gcf</a></p>
+
+<ul>
+<li>Get ariflow URL:</li>
+</ul>
+
+<p>If you are an Editor on the project running Airflow, you should have <code>Editor</code> rights to invoke the endpoint:</p>
+
+<p>(the follwing command uses <code>jq</code> cli to parse JSON)</p>
+
+<pre><code class="language-bash">$ curl -s  -H &quot;Authorization: Bearer `gcloud auth print-access-token`&quot; https://composer.googleapis.com/v1beta1/projects/$GOOGLE_PROJECT_ID/locations/us-central1/environments/composer1 | jq [.config.airflowUri]
+</code></pre>
+
+<p>In my case, the URL for Airflow is:</p>
+
+<pre><code class="language-json">[
+  &quot;https://r1d366b885bb81b73-tp.appspot.com&quot;
+]
+</code></pre>
+
+<ul>
+<li>Use the URL to extract the client ID</li>
+</ul>
+
+<p>Attempt to make an unauthenticated call to the URL.  You should see an error but within the curl output you will find the elusive <code>client_id</code>:</p>
+
+<pre><code class="language-bash">curl -v https://r1d366b885bb81b73-tp.appspot.com
+</code></pre>
+
+<p>eg, in my case the command above showed</p>
+
+<pre><code>location: https://accounts.google.com/o/oauth2/v2/auth?client_id=491562778408-sj8hb4035bp7ui918ra0i9qbhbqnejk1.apps.googleusercontent.com&amp;response_type=code&amp;scope=openid+email&amp;redirect_uri=https://r1d366b885bb81b73-tp.appspot.com/_gcp_gatekeeper/authenticate&amp;cred_ref=true&amp;state=CilodHRwczovL3IxZDM2NmI4ODViYjgxYjczLXRwLmFwcHNwb3QuY29tLxIwQU91REJvbndMSlJlOEJ3aTBkaDBZeXdlbktYSTBxNVpxdzoxNTU4NTE0MzgyMzc4
+</code></pre>
+
+<p>which means the <code>client_id</code> is <code>491562778408-sj8hb4035bp7ui918ra0i9qbhbqnejk1.apps.googleusercontent.com</code></p>
+
+<p>Note the client_id and composer_url:</p>
+
+<pre><code class="language-bash">target_audience = `491562778408-sj8hb4035bp7ui918ra0i9qbhbqnejk1.apps.googleusercontent.com`
+url = `https://r1d366b885bb81b73-tp.appspot.com`
+</code></pre>
+
+<h3 id="4-deploy-dags">4. Deploy DAGs</h3>
+
+<ul>
+<li>Deploy the DAG that <em>sends</em> authenticated calls to GCF:</li>
+</ul>
+
+<p>Edit <code>to_gcf.py</code> and replace the following line with your projectID</p>
+
+<pre><code>target_audience = 'https://us-central1-$GOOGLE_PROJECT_ID.cloudfunctions.net/echo_app_python'
+</code></pre>
+
+<p>then</p>
+
+<pre><code>gcloud composer environments storage dags import --environment composer1  --location us-central1   --source to_gcf.py
+</code></pre>
+
+<ul>
+<li><p>Deploy the DAG that <em>receives</em> authenticated calls from GCF:</p>
+
+<pre><code>gcloud composer environments storage dags import --environment composer1  --location us-central1   --source from_gcf.py
+</code></pre></li>
+</ul>
+
+<p><img src="images/dags.png" alt="images/dags.png" /></p>
+
+<h3 id="5-deploy-gcf">5. Deploy GCF</h3>
+
+<p>Edit <code>main.py</code> and update  <code>target_url</code> and <code>url</code> with the values from <strong>step 3</strong>:</p>
+
+<p>in my case:</p>
+
+<pre><code class="language-python">    target_audience = '491562778408-sj8hb4035bp7ui918ra0i9qbhbqnejk1.apps.googleusercontent.com'
+    url = 'https://r1d366b885bb81b73-tp.appspot.com'
+</code></pre>
+
+<p>then deploy</p>
+
+<pre><code>gcloud functions deploy  echo_app_python --region=us-central1
+</code></pre>
+
+<h3 id="6-set-iam-permissions">6. Set IAM Permissions</h3>
+
+<p>Now set IAM permissions to</p>
+
+<h3 id="allow-composer-to-call-gcf">Allow Composer to call GCF</h3>
+
+<p>When we setup composer, we did not specify the serivce account it should run as.  By default, it will use the compute engine service account which is in the form:</p>
+
+<pre><code>$PROJECT_NUMBER-@developer.gserviceaccount.com
+</code></pre>
+
+<p>the apply:</p>
+
+<pre><code>gcloud alpha functions add-iam-policy-binding echo_app_python  \
+    --member serviceAccount:$PROJECT_NUMBER-compute@developer.gserviceaccount.com   --role roles/cloudfunctions.invoker
+</code></pre>
+
+<h3 id="allow-gcf-to-call-composer">Allow GCF to call Composer</h3>
+
+<p>During our setup of Cloud Functions, we did not specify a service account.  By default GCF will use an account in the form:</p>
+
+<pre><code>$GOOGLE_PROJECT_ID@appspot.gserviceaccount.com
+</code></pre>
+
+<p>so using that, go to the Cloud Consoles IAM page and for that account, add the <code>Composer User</code> IAM role</p>
+
+<p><img src="images/gcf_to_composer_iam.png" alt="images/gcf_to_composer_iam.png" /></p>
+
+<p>GCF invokes a DAG directly using the  <a href="https://airflow.apache.org/api.html#experimental-rest-api">Experimental Rest Endpoint</a></p>
+
+<h3 id="7-invoke-dag-directly">7. Invoke DAG directly</h3>
+
+<p>The default DAG <code>callgcf</code> DAG is set to run every 30minutes.  However, you can invoke it directly if you want via the UI or CLI:</p>
+
+<ul>
+<li><a href="https://cloud.google.com/composer/docs/how-to/accessing/airflow-cli#running_airflow_cli_commands">CLI</a></li>
+</ul>
+
+<p>On the console, you should see invocation back and forth:</p>
+
+<ul>
+<li><p><code>callgcf</code>:
+<img src="images/call_gcf.png" alt="images/call_gcf.png" /></p></li>
+
+<li><p><code>fromgcf</code>:
+<img src="images/from_gcf.png" alt="images/from_gcf.png" /></p></li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="https://medium.com/google-cloud/automatic-oauth2-using-cloud-scheduler-and-tasks-to-call-google-apis-55f0a8905baf">Automatic oauth2: Using Cloud Scheduler and Tasks to call Google APIs</a></li>
+
+<li><p><a href="https://medium.com/google-cloud/automatic-oidc-using-cloud-scheduler-tasks-and-pubsub-to-make-authenticated-calls-to-cloud-run-de9e7e9cec3f">Automatic OIDC: Using Cloud Scheduler, Tasks, and PubSub to make authenticated calls to Cloud Run, Cloud Functions or your Server</a></p></li>
+
+<li><p><a href="https://cloud.google.com/composer/docs/how-to/managing/connections#default-connections">Composer Default Connections</a></p></li>
+
+<li><p><a href="https://airflow.apache.org/howto/connection/gcp.html#authenticating-to-gcp">Airflow: Authenticating to GCP APIs</a>
+Note: the tokens provided by <code>google_cloud_default</code> are <code>access_tokens</code> intended to <em>invoke</em> GCP API; they cannot be used to access Cloud Run or GCF endpoints</p></li>
+
+<li><p><a href="https://github.com/apache/airflow/blob/master/airflow/contrib/hooks/gcp_api_base_hook.py">Airflow: gcp_api_base_hook.py</a></p></li>
+</ul>
+
+<hr />
+
+<h3 id="appendix">Appendix</h3>
+
+<p>The following snippets details how to invoke the DAG directly using a service_account json file.</p>
+
+<p>Note:  you must first allow that service accout IAM permissions the  <code>Composer User</code> first</p>
+
+<ul>
+<li>service_account_dag.py</li>
+</ul>
+
+<pre><code class="language-python">from google.oauth2 import id_token
+from google.oauth2 import service_account
+import google.auth
+import google.auth.transport.requests
+from google.auth.transport.requests import AuthorizedSession
+
+target_audience = '491562778408-sj8hb4035bp7ui918ra0i9qbhbqnejk1.apps.googleusercontent.com'
+
+url = 'https://r1d366b885bb81b73-tp.appspot.com/api/experimental/dags/callgcf/dag_runs'
+certs_url='https://www.googleapis.com/oauth2/v1/certs'
+
+additional_claims = { }
+
+creds = service_account.IDTokenCredentials.from_service_account_file(
+        '/path/to/svc.json',
+        target_audience= target_audience, additional_claims=additional_claims)
+
+authed_session = AuthorizedSession(creds)
+
+# make authenticated request
+headers = {
+   &quot;conf&quot;: &quot;&quot;
+}
+r = authed_session.post(url, headers=headers)
+
+print r.status_code
+print r.text
+
+
+# verify
+request = google.auth.transport.requests.Request()
+idt = creds.token
+print idt
+print id_token.verify_token(idt,request,certs_url=certs_url)
+</code></pre>
+
+<ul>
+<li><p>curl</p>
+
+<pre><code>$ curl -X POST -d '{&quot;conf&quot;:&quot;&quot;}' -H &quot;content-type: application/json&quot; -H &quot;Authorization: Bearer $ID_TOKEN&quot;  
+{
+&quot;message&quot;: &quot;Created &lt;DagRun callgcf @ 2019-05-22 09:11:46: manual__2019-05-22T09:11:46, externally triggered: True&gt;&quot;
+}
+</code></pre></li>
+</ul>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/oidc" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">oidc</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/cloudcomposer" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">cloudcomposer</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/cloudfunctions" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">cloudfunctions</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "salrashid" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/automatic_oidc/">Automatic OIDC:  Using Cloud Scheduler, Tasks, and PubSub to make authenticated calls to Cloud Run, Cloud Functions or your Server</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/clam_av/">Anti Virus file scanning on Google Cloud Storage using ClamAV</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/gcr_stats/">Google Container Registry statistics from GCS access_logs</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/gpg_gcf/">GPG stream encryption and decryption on Google Cloud Functions and Cloud Run</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://salrashid123.github.io/" >
+    &copy; 2019 6equj5.dev
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

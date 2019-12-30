@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>6equj5.dev  | Terraform &#39;Assume Role&#39; and service Account impersonation on Google Cloud</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Terraform &#39;Assume Role&#39; and service Account impersonation on Google Cloud" />
+<meta property="og:description" content="About two months ago, someone asked me to help them setup Terraform to automatically provision GCP projects. It was the first time I actually used it and found it capabilities pretty powerful: it&rsquo;s easy to manage complex resources and maintain a picture of the state change. However, one aspect of its capabilities that struck me was its need to directly have permissions on all GCP resources it provisioned or manage." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://salrashid123.github.io/posts/terraform_gcp_impersonation/" />
+<meta property="article:published_time" content="2019-04-28T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2019-04-28T14:34:01-08:00"/>
+
+<meta itemprop="name" content="Terraform &#39;Assume Role&#39; and service Account impersonation on Google Cloud">
+<meta itemprop="description" content="About two months ago, someone asked me to help them setup Terraform to automatically provision GCP projects. It was the first time I actually used it and found it capabilities pretty powerful: it&rsquo;s easy to manage complex resources and maintain a picture of the state change. However, one aspect of its capabilities that struck me was its need to directly have permissions on all GCP resources it provisioned or manage.">
+
+
+<meta itemprop="datePublished" content="2019-04-28T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2019-04-28T14:34:01-08:00" />
+<meta itemprop="wordCount" content="1380">
+
+
+
+<meta itemprop="keywords" content="terraform,oauth2," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Terraform &#39;Assume Role&#39; and service Account impersonation on Google Cloud"/>
+<meta name="twitter:description" content="About two months ago, someone asked me to help them setup Terraform to automatically provision GCP projects. It was the first time I actually used it and found it capabilities pretty powerful: it&rsquo;s easy to manage complex resources and maintain a picture of the state change. However, one aspect of its capabilities that struck me was its need to directly have permissions on all GCP resources it provisioned or manage."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://salrashid123.github.io/posts/terraform_gcp_impersonation/images/audit_log.png');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://salrashid123.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      6equj5.dev
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">Terraform &#39;Assume Role&#39; and service Account impersonation on Google Cloud</h1>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Terraform &#39;Assume Role&#39; and service Account impersonation on Google Cloud</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-04-28T14:34:01-08:00">April 28, 2019</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>About two months ago, someone asked me to help them setup <a href="https://www.terraform.io/">Terraform</a> to automatically <a href="https://cloud.google.com/community/tutorials/managing-gcp-projects-with-terraform">provision GCP projects</a>. It was the first time I actually used it and found it capabilities pretty powerful: it&rsquo;s easy to manage complex resources and maintain a picture of the state change. However, one aspect of its capabilities that struck me was its need to directly have permissions on all GCP resources it provisioned or manage. At first glance this may seem pretty obvious (&ldquo;how can I create a Pub/Sub topic on project B if I don&rsquo;t have access to it?&rdquo;), but the issue I had with it is a bit more subtle: How can I selectively control that access in a way which I can define the conditions on the access and easily manage Terraform&rsquo;s permissions as a group.</p>
+
+<p>Put it another way, traditionally, if Terraform runs as <code>service_account_A</code> from <code>project_A</code> and it needs to create a GCS bucket in <code>project_B</code> that I own, I&rsquo;d have to either give it excessive privileges by setting its service account as <code>OWNER</code> or directly assign a <a href="https://cloud.google.com/iam/docs/understanding-roles#storage-roles">role</a> to <code>serivce_account_A</code> on my project as <code>roles/storage.admin</code>. What if I needed to also allow it to create a Pub/Sub topic in the same script or some role with Compute Engine? Now I have to assign additional roles to service_account_A and remember to roll them back after Terraform does its provisioning. As you can see, it can get out of hand if you have to manage it all manually.</p>
+
+<p>Well, what if I can create service account in the project I own and with those roles aggregated already set and then allow Terraform&rsquo;s <code>service_account_A</code> to impersonate it? That way, I&rsquo;ve collapsed and specified the permissions I needed to one identity (the service account I created), and then allowed Terraform access to it under any <a href="https://cloud.google.com/iam/docs/conditions-overview">IAM conditions</a> I wish.</p>
+
+<p>If you&rsquo;re familiar with AWS, another way to think about what we&rsquo;re trying to do with this is to have <a href="https://www.terraform.io/docs/providers/aws/index.html#assume-role">AWS Assume Role</a> where Terraform assumes a specific role capable of access to resources I control.</p>
+
+<p>Given that objective I decided place a pull request (<a href="https://github.com/terraform-providers/terraform-provider-google/pull/3211">#3211</a>) against the GCP provider to implement the account impersonation flows I previously added to the <a href="https://google-auth.readthedocs.io/en/latest/reference/google.auth.impersonated_credentials.html">google-auth-library-python</a> and <a href="https://github.com/googleapis/google-auth-library-java/blob/master/oauth2_http/java/com/google/auth/oauth2/ImpersonatedCredentials.java">google-auth-library-java</a> library sets.  For more info see <a href="https://medium.com/google-cloud/using-impersonatedcredentials-for-google-cloud-apis-14581ca990d8">Using ImpersonatedCredentials for Google Cloud APIs</a></p>
+
+<p>The net result is the <a href="https://www.terraform.io/docs/providers/google/d/datasource_google_service_account_access_token.html">Google Access Token</a> datasource in Terraform&hellip;and as you guessed, this article describes is usage.</p>
+
+<h1 id="prerequisites">Prerequisites</h1>
+
+<p>This article assumes you&rsquo;re already familiar with Terraform and use it to manage resource provisioning. The steps below will show how to setup the IAM permission sets and a sample template that will display the original and assumed identity that was bootstrapped.</p>
+
+<h2 id="add-iam-permission">Add IAM Permission</h2>
+
+<p>First let&rsquo;s setup the IAM permissions that allows impersonation. In the sample below, <code>source-service-account</code> designates the service account Terraform runs as, and <code>impersonated-account</code> is the service account on the target project where Terraform should conditionally assume access to.</p>
+
+<p>This involves assigning the <code>Service Account Token Creator</code> Role:</p>
+
+<ul>
+<li><p><code>service_policy.json</code></p>
+
+<pre><code>{
+&quot;bindings&quot;: [
+    {
+      &quot;members&quot;: [
+        &quot;source-service-account@projectA.iam.gserviceaccount.com&quot;
+      ],
+      &quot;role&quot;: &quot;roles/iam.serviceAccountTokenCreator&quot;,
+    }
+  ]
+}
+</code></pre></li>
+</ul>
+
+<p>then run</p>
+
+<pre><code class="language-bash">$ gcloud iam service-accounts set-iam-policy  impersonated-account@projectB.iam.gserviceaccount.com  service_policy.json
+</code></pre>
+
+<p><img src="images/impersonated_iam.png" alt="images/impersonated_iam.png" /></p>
+
+<h2 id="test">Test</h2>
+
+<p>To test, I configure Terraform to use the source-service-account:</p>
+
+<pre><code>export GOOGLE_CLOUD_KEYFILE_JSON=/local/path/to/source-service-account.json
+</code></pre>
+
+<p>Then, I specify a configuration which uses the source-service-account email to assume the identity of the impersonated-account with an aliased provider. Any Terraform resources which reference that aliased provider will use the impersonated-account.</p>
+
+<pre><code class="language-terraform">provider &quot;google&quot; {
+    scopes = [
+    &quot;https://www.googleapis.com/auth/cloud-platform&quot;,
+    &quot;https://www.googleapis.com/auth/userinfo.email&quot;,
+  ]
+}
+
+data &quot;google_service_account_access_token&quot; &quot;default&quot; {
+ provider = &quot;google&quot;
+ target_service_account = &quot;impersonated-account@projectB.iam.gserviceaccount.com&quot;
+ scopes = [&quot;userinfo-email&quot;, &quot;cloud-platform&quot;]
+ lifetime = &quot;300s&quot;
+}
+
+data &quot;google_client_openid_userinfo&quot; &quot;me&quot; { }
+
+output &quot;source-email&quot; {
+  value = &quot;${data.google_client_openid_userinfo.me.email}&quot;
+}
+
+provider &quot;google&quot; {
+   alias  = &quot;impersonated&quot;
+   access_token = &quot;${data.google_service_account_access_token.default.access_token}&quot;
+}
+
+data &quot;google_client_openid_userinfo&quot; &quot;thenewme&quot; {
+  provider = &quot;google.impersonated&quot;
+}
+
+output &quot;target-email&quot; {
+  value = &quot;${data.google_client_openid_userinfo.thenewme.email}&quot;
+}
+</code></pre>
+
+<p>The sample output for the above would show</p>
+
+<pre><code class="language-bash">terraform apply
+data.google_client_openid_userinfo.me: Refreshing state...
+data.google_service_account_access_token.default: Refreshing state...
+data.google_client_openid_userinfo.thenewme: Refreshing state...
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+source-email = source-service-account@projectA.iam.gserviceaccount.com
+target-email = impersonated-account@projectB.iam.gserviceaccount.com
+</code></pre>
+
+<p>The example above doesn&rsquo;t really do anything to alter actual state as the impersonated credentials but you can easily use other Terraform resources to do so (just remember to specify <code>provider = &quot;google.impersonated&quot;</code> in each resource). In real usage, you control the specific resources the impersonated service account has access to. For example, if all Terraform should do is create GCS buckets in your project, assign the appropriate role to the service account that will be impersonated (i.,e. assign <code>roles/storage.admin</code> to <code>impersonated-account@projectB.iam.gserviceaccount.com</code> )</p>
+
+<h2 id="notes">Notes:</h2>
+
+<ul>
+<li><p>GCP IAM conditions are eventually consistent in that once you make an IAM change (eg, to allow impersonation), it may take up to <code>60 seconds</code> for the changes to propagate.</p></li>
+
+<li><p>If you grant access to Terraform to initially create resources in your project and the access gets revoked, Terraform can&rsquo;t make any further changes; this is as intended but may lead to drift in the state that Terraform sees as resources to manage versus what it can actually alter.</p></li>
+
+<li><p>Impersonated tokens are <em>NOT</em> refreshable: Once an impersonate token is issued, it is not refreshed once it expires. If you set the <code>duration</code> argument for <code>30s</code> in the example above, Terraform will not be able to impersonate the target account after 30 seconds or so</p></li>
+</ul>
+
+<h2 id="usage-arguments">Usage arguments</h2>
+
+<p>The following list describes the arguments the resource accepts:
+* <code>lifetime</code>: how long the temporary access will be valid for. Service token is <strong>not</strong> refreshed once it expires.
+* <code>scopes</code>: list of scopes the impersonation identity <code>access_token</code> can enlist.
+* <code>target_service_account</code>: the account to impersonate
+* <code>delegates</code>:  list of service accounts in sequence that need to successively have token creator roles on the successor.</p>
+
+<h2 id="iam-conditions">IAM Conditions</h2>
+
+<p>Up until now, the capability describe simply shows how to grant indefinite access to impersonate. That&rsquo;s useful but in conjunction with <a href="https://cloud.google.com/iam/docs/conditions-overview">IAM Conditions</a>, it&rsquo;s even more compelling.</p>
+
+<p>IAM Conditions allows you to declare the specific criteria under which an IAM permission on a resource is allowed: you can say, &ldquo;only allow Terraform to impersonate my service account during 1-&gt;2am on April 10th&rdquo;. With these high level policies, you can define a type of &ldquo;just in time&rdquo; access controls through workflow systems: define when the Terraform script will run to provision or alter resources you control!</p>
+
+<p>As of <code>2019-04-20</code>, you can only setup IAM conditions that are time based for the <code>IAMCredentials</code> API. This means the service account impersonation capability with IAM conditions is restricted only by time. Later on, GCP will add on support for the other condition types such as restricting via VPC network or based on IP origin.</p>
+
+<p>For example, future support will involve policies covering:</p>
+
+<ul>
+<li><a href="https://cloud.google.com/vpc-service-controls/docs/create-service-perimeters">VPC Service Controls</a></li>
+<li><code>AccessContext/AccessLevels</code>
+The following condition will allow Terraform to only impersonate your service account before 2019-04-20 and only if the request to impersonate originates from IP address <code>73.162.112.208/32</code></li>
+</ul>
+
+<pre><code class="language-bash">$ gcloud beta access-context-manager levels describe  Medium_Trusted  --policy 157300459203
+basic:
+  conditions:
+  - ipSubnetworks:
+    - 73.162.112.208/32
+  - members:
+    - serviceAccount:source-service-account@projectA.iam.gserviceaccount.com
+name: accessPolicies/157300459203/accessLevels/Medium_Trusted
+title: corporate network
+
+
+$ gcloud iam service-accounts get-iam-policy  impersonated-account@projectB.iam.gserviceaccount.com
+bindings:
+- condition:
+    expression: |
+      &quot;accessPolicies/157300459203/accessLevels/Medium_Trusted&quot; in request.auth.access_levels
+      &amp;&amp;
+      request.time &lt; timestamp(&quot;2019-04-20T00:00:00Z&quot;)
+    title: network_and_time_restricted
+  members:
+  - serviceAccount:source-service-account@projectA.iam.gserviceaccount.com
+  role: roles/iam.serviceAccountTokenCreator
+</code></pre>
+
+<p><img src="images/impersonated_conditions.png" alt="images/impersonated_conditions.png" /></p>
+
+<p>Note: you can actually apply IAM conditions against downstream resources the impersonated account manges itself (i.e. IAM conditions on the access <code>impersonated-account@projectB.iam.gserviceaccount.com</code> has against resources). If you do this, it may make debugging why Terraform isn&rsquo;t able to manage resources a bit more difficult to troubleshoot: you&rsquo;re now dealing with levels of conditional access.</p>
+
+<h2 id="audit-log">Audit Log</h2>
+
+<p>You can also enable GCP Audit logging that will track the initial impersonation call. For example, if you enable Audit Logging for IAM APis:</p>
+
+<p><img src="images/iam_data_access.png" alt="images/iam_data_access.png" /></p>
+
+<p>an impersonation request will appear in the logs as such:</p>
+
+<p><img src="images/audit_log.png" alt="images/audit_log.png" /></p>
+
+<p>Note, you can also enable audit logging on the target resources such as GCS or Compute Engine as well but those logs will currently not display what the source service account was that was being impersonated (eg, the resource was mutated on behalf of <code>source-service-account</code>)</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>While this capability is relatively easy to use and setup (just grant Terraform IAM permission to <code>act-as</code>), the implications of acutely controlling remote resources is pretty compelling: a terraform installation can manage resources in remote projects or organizations without persistent and explicit grants&hellip;an administrator of another organization can also control and scope limit the access it grants to Terraform you manage!.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="https://www.terraform.io/docs/providers/google/index.html">Google Cloud Platfrom Provider</a></li>
+<li><a href="https://www.terraform.io/docs/providers/aws/index.html#assume-role">AWS Assume Role</a></li>
+</ul>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/terraform" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">terraform</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/oauth2" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">oauth2</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "salrashid" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://salrashid123.github.io/" >
+    &copy; 2019 6equj5.dev
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

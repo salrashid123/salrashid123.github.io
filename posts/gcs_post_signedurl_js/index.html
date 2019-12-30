@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>6equj5.dev  | Upload/Download files from a browser with GCS Signed URLs and Signed Policy Documents</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Upload/Download files from a browser with GCS Signed URLs and Signed Policy Documents" />
+<meta property="og:description" content="Small javascript application showing how to upload/download files with GCS Signed URLs and Signed Policy Documents. This article will not cover in detail what those two mechanisms are but rather demonstrate a basic application that exercises both on the browser. This is a simple client-server app that uploads files using these two mechanisms from a user&rsquo;s browser. SignedURLs w/ javascript has been done many times before (see references); this article describes SignedURLs and Policy document differences and implementations." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://salrashid123.github.io/posts/gcs_post_signedurl_js/" />
+<meta property="article:published_time" content="2019-04-28T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2019-04-28T14:34:01-08:00"/>
+
+<meta itemprop="name" content="Upload/Download files from a browser with GCS Signed URLs and Signed Policy Documents">
+<meta itemprop="description" content="Small javascript application showing how to upload/download files with GCS Signed URLs and Signed Policy Documents. This article will not cover in detail what those two mechanisms are but rather demonstrate a basic application that exercises both on the browser. This is a simple client-server app that uploads files using these two mechanisms from a user&rsquo;s browser. SignedURLs w/ javascript has been done many times before (see references); this article describes SignedURLs and Policy document differences and implementations.">
+
+
+<meta itemprop="datePublished" content="2019-04-28T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2019-04-28T14:34:01-08:00" />
+<meta itemprop="wordCount" content="822">
+
+
+
+<meta itemprop="keywords" content="cloudstorage," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Upload/Download files from a browser with GCS Signed URLs and Signed Policy Documents"/>
+<meta name="twitter:description" content="Small javascript application showing how to upload/download files with GCS Signed URLs and Signed Policy Documents. This article will not cover in detail what those two mechanisms are but rather demonstrate a basic application that exercises both on the browser. This is a simple client-server app that uploads files using these two mechanisms from a user&rsquo;s browser. SignedURLs w/ javascript has been done many times before (see references); this article describes SignedURLs and Policy document differences and implementations."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://salrashid123.github.io/posts/gcs_post_signedurl_js/images/policy_upload.png');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://salrashid123.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      6equj5.dev
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">Upload/Download files from a browser with GCS Signed URLs and Signed Policy Documents</h1>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Upload/Download files from a browser with GCS Signed URLs and Signed Policy Documents</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-04-28T14:34:01-08:00">April 28, 2019</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Small javascript application showing how to upload/download files with <a href="https://cloud.google.com/storage/docs/access-control/signed-urls">GCS Signed URLs</a> and <a href="https://cloud.google.com/storage/docs/xml-api/post-object#policydocument">Signed Policy Documents</a>.  This article will not cover in detail what those two mechanisms are but rather demonstrate a basic application that exercises both on the browser.  This is a simple client-server app that uploads files using these two mechanisms from a user&rsquo;s browser.  SignedURLs w/ javascript has been done many times before (see references); this article describes SignedURLs and Policy document differences and implementations.</p>
+
+<p>Briefly, SignedURLs and Policy Document based operations are similar: a URL with a signature that an unauthenticated user can perform certain GCS operations.  There are a couple of differences to note:</p>
+
+<ul>
+<li>GCS SignedURLs do not support multiple file uploads with one URL.</li>
+<li>A single Policy document can be used for multiple uploads and also define a prefix/path for all uploads.</li>
+<li>Policy document currently support <em>uploads</em> only. GCS Signed URLS can perform both uploads and downloads.</li>
+<li>Policy documents offer several additional conditions and constraints over SignedURLs (see usage and examples section of the Policy Document)</li>
+</ul>
+
+<p>The code snippet provided here is Flask application that provides signedURLS and Policy documents to a javascript browser.  Snippet also shows how
+to configure CORS access for SignedURLs</p>
+
+<blockquote>
+<p>Note: this is just a basic sample with some awkward javascript, nothing more.  The sample here allows you to generate URLs to upload+download any file in the bucket by specifying its name.</p>
+</blockquote>
+
+<h2 id="setup">Setup</h2>
+
+<h3 id="create-service-account">Create Service Account</h3>
+
+<pre><code>PROJECT_NAME=$(gcloud config list --format=&quot;value(core.project)&quot;)
+
+$ gcloud iam service-accounts create urlsigner --display-name=&quot;GCS URL Signer&quot; --project=${PROJECT_NAME}
+
+$ gcloud iam service-accounts keys  create service_account.json --iam-account=urlsigner@${PROJECT_NAME}.iam.gserviceaccount.com
+</code></pre>
+
+<h3 id="create-gcs-bucket">Create GCS Bucket</h3>
+
+<pre><code> gsutil mb gs://$PROJECT_NAME-urlsigner
+</code></pre>
+
+<h3 id="assign-iam-permissions-on-bucket-to-service-account">Assign IAM permissions on bucket to Service Account</h3>
+
+<pre><code>gsutil iam ch  serviceAccount:urlsigner@${PROJECT_NAME}.iam.gserviceaccount.com:roles/storage.admin gs://$PROJECT_NAME-urlsigner
+</code></pre>
+
+<h2 id="gcs-signedurl">GCS SignedURL</h2>
+
+<h3 id="set-etc-hosts-override">Set /etc/hosts override</h3>
+
+<p>Add to <code>/etc/hosts</code>.</p>
+
+<pre><code>127.0.0.1 gcs.somedomain.com
+</code></pre>
+
+<h3 id="set-cors-policy">Set CORS Policy</h3>
+
+<p>Set CORS policy to allow request from a test domain:
+- <code>https://gcs.somedomain.com:8081</code></p>
+
+<ul>
+<li>define <code>cors.txt</code>:</li>
+</ul>
+
+<pre><code class="language-json">[
+    {
+      &quot;origin&quot;: [&quot;https://gcs.somedomain.com:8081&quot;],
+      &quot;responseHeader&quot;: [&quot;Content-Type&quot;, &quot;Authorization&quot;,  &quot;Content-Length&quot;, &quot;User-Agent&quot;, &quot;x-goog-resumable&quot;],
+      &quot;method&quot;: [&quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;, &quot;OPTIONS&quot;],
+      &quot;maxAgeSeconds&quot;: 3600
+    }
+]
+</code></pre>
+
+<ul>
+<li>set cors policy on the bucket</li>
+</ul>
+
+<pre><code class="language-bash">gsutil cors set cors.txt gs://$PROJECT_NAME-urlsigner
+</code></pre>
+
+<ul>
+<li><p>Verify:</p>
+
+<pre><code>curl -v -X OPTIONS -H &quot;Host: storage.googleapis.com&quot; -H &quot;Access-Control-Request-Method: PUT&quot;  -H &quot;Origin: https://gcs.somedomain.com:8081&quot; &quot;https://storage.googleapis.com/$PROJECT_NAME-urlsigner/cors.txt&quot;
+
+
+&lt; HTTP/2 200 
+&lt; access-control-allow-origin: https://gcs.somedomain.com:8081
+&lt; access-control-max-age: 3600
+&lt; access-control-allow-methods: GET,POST,PUT,DELETE,OPTIONS
+&lt; access-control-allow-headers: Content-Type,Authorization,Content-Length,User-Agent,x-goog-resumable
+&lt; vary: Origin
+</code></pre></li>
+</ul>
+
+<h3 id="set-bucket-name-to-sign-for">Set bucket name to sign for</h3>
+
+<ul>
+<li><p>Edit <code>main.py</code>, set</p>
+
+<pre><code>bucketName = '$PROJECT_NAME-urlsigner'
+</code></pre></li>
+</ul>
+
+<p>(ofcourse use the value, not literal)</p>
+
+<h3 id="start-server">Start Server</h3>
+
+<pre><code>virtualenv env
+source env/bin/activate
+pip install -r requirements.txt
+
+python main.py
+</code></pre>
+
+<h3 id="access-ui-to-upload-download">Access UI to upload/download:</h3>
+
+<ul>
+<li><code>https://gcs.somedomain.com:8081/signedurl</code></li>
+</ul>
+
+<p>(you may want to enable <code>Developer Mode</code> in Chrome; that will show you the CORS requests too)</p>
+
+<ul>
+<li>Upload
+1) Select the <code>upload</code> radio button.</li>
+</ul>
+
+<p>2) Define a filename to generate the URL for (default: <code>README.md</code>)</p>
+
+<p>3) Click <code>Generate Signed URL</code>.  This will make a request to <code>/getSignedURL</code> endpoint which inturn returns a signedURL for the filename specified.</p>
+
+<p>4) Click &ldquo;Choose File&rdquo; to select a file to upload.</p>
+
+<p>5) Select &ldquo;Upload SignedURL&rdquo;</p>
+
+<p>6) Verify</p>
+
+<pre><code>$ gsutil ls gs://$PROJECT_NAME-urlsigner/
+gs://$PROJECT_NAME-urlsigner/README.md
+</code></pre>
+
+<p><img src="images/upload.png" alt="images/uplaod.png" /></p>
+
+<ul>
+<li>Download</li>
+</ul>
+
+<p>1) Select the <code>download</code> radio button.</p>
+
+<p>2) Click <code>Generate Signed URL</code>.  This will make a request to <code>/getSignedURL</code> endpoint which inturn returns a signedURL for the filename specified.</p>
+
+<p>3) Click the link provided on the browser.  The link will download the file requested</p>
+
+<ul>
+<li>Download
+<img src="images/download.png" alt="images/download.png" /></li>
+</ul>
+
+<h3 id="using-gsutil">Using gsutil</h3>
+
+<p>You can also genereate upload/download urls with gsutil or any <code>google-cloud-storage</code> library</p>
+
+<pre><code class="language-bash">gsutil signurl -m GET service_account.json gs://$PROJECT_NAME-urlsigner/README.md
+gsutil signurl -m PUT service_account.json gs://$PROJECT_NAME-urlsigner/README.md
+</code></pre>
+
+<hr />
+
+<h2 id="policy-document">Policy Document</h2>
+
+<p><a href="https://cloud.google.com/storage/docs/xml-api/post-object#policydocument">Policy Document</a> allows for <em>uploads only</em> but also provides several configurations and conditions canonical SignedURLs do not:  you can define a prefix/path with which a user can upload multiple files with one URL.  In the example below, one URL can upload N files to the bucket and each file must have the prefix <code>/myfolder/</code> and be of <code>Content-Type: text/plain</code></p>
+
+<ul>
+<li>Upload</li>
+</ul>
+
+<p>1) Access <code>https://gcs.somedomain.com:8081/policydocument</code></p>
+
+<p>2) Define a filename to generate the URL for (default: <code>README.md</code>)</p>
+
+<p>3) Click <code>Generate Policy Document Signed URL</code>.  This will make a request to <code>/getSignedPolicyDocument</code> endpoint which inturn returns a signed policy document for the filename specified.  The code snippet on the server which generates this is from the <code>google-cloud-storage</code> python library <a href="https://github.com/googleapis/google-cloud-python/blob/master/storage/google/cloud/storage/bucket.py#L1882">bucket.generate_upload_policy()</a></p>
+
+<p>4) Click &ldquo;Choose File&rdquo; to select a file to upload.</p>
+
+<p>5) Select &ldquo;Upload SignedURL&rdquo;</p>
+
+<p>6) Verify</p>
+
+<pre><code>$ gsutil ls gs://$PROJECT_NAME-urlsigner/myfolder/
+gs://$PROJECT_NAME-urlsigner/myfolder/README.md
+</code></pre>
+
+<p><img src="images/policy_upload.png" alt="images/policy_upload.png" /></p>
+
+<p>Policy documents can also get embedded into a form as described in the links above and in the snippet below</p>
+
+<p>As an HTML form, you can post the same generated signature, file and policy document.  For example:</p>
+
+<pre><code class="language-html">&lt;html&gt;
+&lt;form action=&quot;http://storage.googleapis.com/$PROJECT_NAME-urlsigner&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;key&quot; value=&quot;myfolder/myfile.txt&quot;&gt;   
+    &lt;input type=&quot;hidden&quot; name=&quot;bucket&quot; value=&quot;$PROJECT_NAME-urlsigner&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;Content-Type&quot; value=&quot;text/plain&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;GoogleAccessId&quot; value=&quot;urlsigner@${PROJECT_NAME}.iam.gserviceaccount.com&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;acl&quot; value=&quot;bucket-owner-read&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;policy&quot; value=&quot;b64encodedPolicy&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;signature&quot; value=&quot;b64encodedSignature&quot;&gt;    
+    &lt;input name=&quot;file&quot; type=&quot;file&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Upload&quot;&gt;
+    &lt;/form&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="https://medium.com/google-cloud/gcs-signed-url-with-customer-supplied-encryption-key-c89740f31855">CSK headers with SignedURLs</a></li>
+<li><a href="https://medium.com/google-cloud/gcs-hmac-signedurl-3166b995f237">GCS HMAC Signatures</a></li>
+<li><a href="https://medium.com/google-cloud/google-cloud-storage-signedurl-resumable-upload-with-curl-74f99e41f0a2">Google Cloud Storage SignedURL + Resumable upload with cURL</a></li>
+
+<li><p><a href="https://medium.com/google-cloud/how-to-signurl-on-gcp-without-a-key-locally-that-is-56d3f99f8760">How to SignURL on GCE|GKE|anywhere without a key (local key, that is)</a></p></li>
+
+<li><p>Javascript with GCS SignedURLs:</p>
+
+<ul>
+<li><p><a href="https://medium.com/imersotechblog/upload-files-to-google-cloud-storage-gcs-from-the-browser-159810bb11e3">Upload Files to Google Cloud Storage (GCS) From the Browser</a></p></li>
+
+<li><p><a href="https://andrewvos.com/uploading-files-directly-to-google-cloud-storage-from-client-side-javascript/">Uploading files directly to Google Cloud Storage from client-side JavaScript</a></p></li>
+</ul></li>
+</ul>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/cloudstorage" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">cloudstorage</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "salrashid" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://salrashid123.github.io/" >
+    &copy; 2019 6equj5.dev
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
