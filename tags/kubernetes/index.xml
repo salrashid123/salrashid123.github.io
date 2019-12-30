@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Kubernetes on 6equj5.dev</title>
-    <link>https://blog.6equj5.dev/tags/kubernetes/</link>
-    <description>Recent content in Kubernetes on 6equj5.dev</description>
+    <title>Kubernetes on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/kubernetes/</link>
+    <description>Recent content in Kubernetes on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 May 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://blog.6equj5.dev/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>GCP Binary Authorization and Vulnerability Scanning Demo</title>
-      <link>https://blog.6equj5.dev/posts/binary_auth_demo/</link>
+      <link>https://blog.salrashid.me/posts/binary_auth_demo/</link>
       <pubDate>Wed, 01 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.6equj5.dev/posts/binary_auth_demo/</guid>
+      <guid>https://blog.salrashid.me/posts/binary_auth_demo/</guid>
       <description>Sample application for GCP Binary Authorization + Vulernability Scanner.
  Creates GKE cluster with Binary Authorization Enables Binary Authoriztion policy on cluster Cloud Builder workflow checks checked in code to Cloud Source repository  Builds container image and pushes to Cloud Container Registry Binary Auhorization step waits for Vulernability Scan to complete If Vulernability Scanner Fails, Deployment Fails If Succeeds, the imae is authorized for deployment to GKE    Note: this sample uses one cloud builder configuration to both build the image and do attestation.</description>
     </item>
     
     <item>
       <title>Kubernetes Services HelloWorld</title>
-      <link>https://blog.6equj5.dev/posts/kubehelloworld/</link>
+      <link>https://blog.salrashid.me/posts/kubehelloworld/</link>
       <pubDate>Tue, 19 Jul 2016 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.6equj5.dev/posts/kubehelloworld/</guid>
+      <guid>https://blog.salrashid.me/posts/kubehelloworld/</guid>
       <description>NOTE: 12/20/19: While this demo will work, its quite dated (i wrote is this &amp;lsquo;16..there are much more comprehensive articles that cover this..)
  Anyway&amp;hellip;
 Sample application that deploys a trivial Kubernetes service to connect a frontend system (fe) with a backend (be).
@@ -36,10 +36,10 @@ Parts of this sample code is from the default kubernetes &amp;lsquo;environment-
     
     <item>
       <title>.NET on GCP</title>
-      <link>https://blog.6equj5.dev/posts/gcpdotnet/</link>
+      <link>https://blog.salrashid.me/posts/gcpdotnet/</link>
       <pubDate>Sun, 24 Apr 2016 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.6equj5.dev/posts/gcpdotnet/</guid>
+      <guid>https://blog.salrashid.me/posts/gcpdotnet/</guid>
       <description>12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&amp;rsquo;m leavig it up as a matter of record)
  Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
 These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.

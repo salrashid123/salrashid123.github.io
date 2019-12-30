@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Containerregistry on 6equj5.dev</title>
-    <link>https://blog.6equj5.dev/tags/containerregistry/</link>
-    <description>Recent content in Containerregistry on 6equj5.dev</description>
+    <title>Containerregistry on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/containerregistry/</link>
+    <description>Recent content in Containerregistry on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 20 May 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://blog.6equj5.dev/tags/containerregistry/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/containerregistry/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Google Container Registry statistics from GCS access_logs</title>
-      <link>https://blog.6equj5.dev/posts/gcr_stats/</link>
+      <link>https://blog.salrashid.me/posts/gcr_stats/</link>
       <pubDate>Mon, 20 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.6equj5.dev/posts/gcr_stats/</guid>
+      <guid>https://blog.salrashid.me/posts/gcr_stats/</guid>
       <description>Sample flow to extract Google Container Registry usage statistics (image push/pull counts, analytics, etc). GCR images are hosted on Google Cloud Storage which does have the ability to export usage which means we can indirectly acquire GCR&amp;rsquo;s usage.
 There are several step sto getting the following pipeline to work but in is basic form, we setup GCS bucket used by GCR to export its usage stats to another GCS bucket.</description>
     </item>

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Yubikey on 6equj5.dev</title>
-    <link>https://blog.6equj5.dev/tags/yubikey/</link>
-    <description>Recent content in Yubikey on 6equj5.dev</description>
+    <title>Yubikey on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/yubikey/</link>
+    <description>Recent content in Yubikey on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 04 Nov 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://blog.6equj5.dev/tags/yubikey/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/yubikey/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Google Cloud SSH with OS-Login with YubiKey OpenSC-PKCS11 and Trusted Platform Module (TPM) based keys</title>
-      <link>https://blog.6equj5.dev/posts/gpg_tpm_ssh/</link>
+      <link>https://blog.salrashid.me/posts/gpg_tpm_ssh/</link>
       <pubDate>Mon, 04 Nov 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.6equj5.dev/posts/gpg_tpm_ssh/</guid>
+      <guid>https://blog.salrashid.me/posts/gpg_tpm_ssh/</guid>
       <description>or &amp;ldquo;How to embed SSH private keys into a Yubikey or TPM&amp;rdquo;. First off, this is nothing new; its a rehash of decade old tech that i decided to try out since i happens to have a YubiKey Neo and familiarity with Trusted Platform Module on a GCP Shielded VM.
 Both the Yubikey Neo and TPM have one common capability here which this tutorial covers: embedding an RSA private key inextricably into a hardware device and provide an interface to sign arbitrary data using that key.</description>
     </item>

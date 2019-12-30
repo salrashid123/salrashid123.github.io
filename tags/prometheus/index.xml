@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Prometheus on 6equj5.dev</title>
-    <link>https://blog.6equj5.dev/tags/prometheus/</link>
-    <description>Recent content in Prometheus on 6equj5.dev</description>
+    <title>Prometheus on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/prometheus/</link>
+    <description>Recent content in Prometheus on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 30 May 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://blog.6equj5.dev/tags/prometheus/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/prometheus/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Google Cloud Trace context propagation and metrics graphs with Grafana&#43;Prometheus and Stackdriver</title>
-      <link>https://blog.6equj5.dev/posts/cloud_trace/</link>
+      <link>https://blog.salrashid.me/posts/cloud_trace/</link>
       <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.6equj5.dev/posts/cloud_trace/</guid>
+      <guid>https://blog.salrashid.me/posts/cloud_trace/</guid>
       <description>I wanted to understand how to setup a standalone golang app that integrated Opencensus specifically for Tracing and Metrics. The type of tracing i was after was both automatic and between web requests. By automatic i mean if you initialize opencensus and then directly use a supporting library to access a resrouce (eg. Google Cloud Storage client), tracing information about specific actions within the GCS call is rendered (eg, time taken for each individual get/put operation).</description>
     </item>
     
