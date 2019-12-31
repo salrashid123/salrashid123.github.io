@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Saml on blog.salrashid.me</title>
-    <link>https://blog.salrashid.me/tags/saml/</link>
-    <description>Recent content in Saml on blog.salrashid.me</description>
+    <title>Saml on 6equj5.dev</title>
+    <link>https://salrashid123.github.io/tags/saml/</link>
+    <description>Recent content in Saml on 6equj5.dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 28 Jul 2016 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://blog.salrashid.me/tags/saml/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://salrashid123.github.io/tags/saml/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Simple SAML SSO server for Google Cloud and Apps</title>
-      <link>https://blog.salrashid.me/posts/googlapps-sso/</link>
+      <link>https://salrashid123.github.io/posts/googlapps-sso/</link>
       <pubDate>Thu, 28 Jul 2016 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/posts/googlapps-sso/</guid>
+      <guid>https://salrashid123.github.io/posts/googlapps-sso/</guid>
       <description>Sample app for SSO between google apps domains.
 This demonstrates SAML SSO with google properties and is is intended for testing/POC only.
 The script basically runs a SAML IDP within a docker container and will allow you to login to google apps/gsuites to test out your configuration.

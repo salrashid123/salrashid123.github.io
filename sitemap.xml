@@ -3,491 +3,491 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.salrashid.me/posts/</loc>
+    <loc>https://salrashid123.github.io/posts/</loc>
     <lastmod>2019-12-30T12:00:00-05:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/opentelemetry_stackdriver/</loc>
+    <loc>https://salrashid123.github.io/posts/opentelemetry_stackdriver/</loc>
     <lastmod>2019-12-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/tpm2_evp_sign_decrypt/</loc>
+    <loc>https://salrashid123.github.io/posts/tpm2_evp_sign_decrypt/</loc>
     <lastmod>2019-11-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/gpg_tpm_ssh/</loc>
+    <loc>https://salrashid123.github.io/posts/gpg_tpm_ssh/</loc>
     <lastmod>2019-11-04T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/envoy_ratelimit/</loc>
+    <loc>https://salrashid123.github.io/posts/envoy_ratelimit/</loc>
     <lastmod>2019-10-22T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/writing_developer_logs_gcp/</loc>
+    <loc>https://salrashid123.github.io/posts/writing_developer_logs_gcp/</loc>
     <lastmod>2019-07-01T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/composer_gcf/</loc>
+    <loc>https://salrashid123.github.io/posts/composer_gcf/</loc>
     <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/cloud_trace/</loc>
+    <loc>https://salrashid123.github.io/posts/cloud_trace/</loc>
     <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/clam_av/</loc>
+    <loc>https://salrashid123.github.io/posts/clam_av/</loc>
     <lastmod>2019-05-27T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/automatic_oidc/</loc>
+    <loc>https://salrashid123.github.io/posts/automatic_oidc/</loc>
     <lastmod>2019-05-20T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/gcr_stats/</loc>
+    <loc>https://salrashid123.github.io/posts/gcr_stats/</loc>
     <lastmod>2019-05-20T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/automatic_oauth2/</loc>
+    <loc>https://salrashid123.github.io/posts/automatic_oauth2/</loc>
     <lastmod>2019-05-20T13:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/binary_auth_demo/</loc>
+    <loc>https://salrashid123.github.io/posts/binary_auth_demo/</loc>
     <lastmod>2019-05-01T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/gpg_gcf/</loc>
+    <loc>https://salrashid123.github.io/posts/gpg_gcf/</loc>
     <lastmod>2019-04-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/terraform_gcp_impersonation/</loc>
+    <loc>https://salrashid123.github.io/posts/terraform_gcp_impersonation/</loc>
     <lastmod>2019-04-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/gcs_post_signedurl_js/</loc>
+    <loc>https://salrashid123.github.io/posts/gcs_post_signedurl_js/</loc>
     <lastmod>2019-04-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/grpc_curl/</loc>
+    <loc>https://salrashid123.github.io/posts/grpc_curl/</loc>
     <lastmod>2017-08-26T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/cloud-functions-dotnet/</loc>
+    <loc>https://salrashid123.github.io/posts/cloud-functions-dotnet/</loc>
     <lastmod>2017-07-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/multi_stage_dotnet/</loc>
+    <loc>https://salrashid123.github.io/posts/multi_stage_dotnet/</loc>
     <lastmod>2017-05-01T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/svc_impersonation/</loc>
+    <loc>https://salrashid123.github.io/posts/svc_impersonation/</loc>
     <lastmod>2017-01-19T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/google_cloud_directory_sync/</loc>
+    <loc>https://salrashid123.github.io/posts/google_cloud_directory_sync/</loc>
     <lastmod>2016-12-29T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/gcpemulator/</loc>
+    <loc>https://salrashid123.github.io/posts/gcpemulator/</loc>
     <lastmod>2016-09-11T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/gce_metadata_server/</loc>
+    <loc>https://salrashid123.github.io/posts/gce_metadata_server/</loc>
     <lastmod>2016-08-17T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/googlapps-sso/</loc>
+    <loc>https://salrashid123.github.io/posts/googlapps-sso/</loc>
     <lastmod>2016-07-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/gcpsamples/</loc>
+    <loc>https://salrashid123.github.io/posts/gcpsamples/</loc>
     <lastmod>2016-07-25T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/kubehelloworld/</loc>
+    <loc>https://salrashid123.github.io/posts/kubehelloworld/</loc>
     <lastmod>2016-07-19T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/gcpdotnet/</loc>
+    <loc>https://salrashid123.github.io/posts/gcpdotnet/</loc>
     <lastmod>2016-04-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/anti-virus/</loc>
+    <loc>https://salrashid123.github.io/tags/anti-virus/</loc>
     <lastmod>2019-05-27T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/categories/</loc>
+    <loc>https://salrashid123.github.io/categories/</loc>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/cloudcomposer/</loc>
+    <loc>https://salrashid123.github.io/tags/cloudcomposer/</loc>
     <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/cloudfunctions/</loc>
+    <loc>https://salrashid123.github.io/tags/cloudfunctions/</loc>
     <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/cloudrun/</loc>
+    <loc>https://salrashid123.github.io/tags/cloudrun/</loc>
     <lastmod>2019-05-20T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/cloudstorage/</loc>
+    <loc>https://salrashid123.github.io/tags/cloudstorage/</loc>
     <lastmod>2019-05-27T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/cloudtrace/</loc>
+    <loc>https://salrashid123.github.io/tags/cloudtrace/</loc>
     <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/computeengine/</loc>
+    <loc>https://salrashid123.github.io/tags/computeengine/</loc>
     <lastmod>2016-08-17T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/computengine/</loc>
+    <loc>https://salrashid123.github.io/tags/computengine/</loc>
     <lastmod>2019-11-04T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/containerregistry/</loc>
+    <loc>https://salrashid123.github.io/tags/containerregistry/</loc>
     <lastmod>2019-05-20T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/docker/</loc>
+    <loc>https://salrashid123.github.io/tags/docker/</loc>
     <lastmod>2017-05-01T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/dotnet/</loc>
+    <loc>https://salrashid123.github.io/tags/dotnet/</loc>
     <lastmod>2017-07-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/about/</loc>
+    <loc>https://salrashid123.github.io/about/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/emulators/</loc>
+    <loc>https://salrashid123.github.io/tags/emulators/</loc>
     <lastmod>2016-09-11T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/envoy/</loc>
+    <loc>https://salrashid123.github.io/tags/envoy/</loc>
     <lastmod>2019-10-22T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/fluentd/</loc>
+    <loc>https://salrashid123.github.io/tags/fluentd/</loc>
     <lastmod>2019-07-01T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/gcds/</loc>
+    <loc>https://salrashid123.github.io/tags/gcds/</loc>
     <lastmod>2016-12-29T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/gcloud/</loc>
+    <loc>https://salrashid123.github.io/tags/gcloud/</loc>
     <lastmod>2016-09-11T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/gke/</loc>
+    <loc>https://salrashid123.github.io/tags/gke/</loc>
     <lastmod>2019-05-01T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/gpg/</loc>
+    <loc>https://salrashid123.github.io/tags/gpg/</loc>
     <lastmod>2019-04-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/grpc/</loc>
+    <loc>https://salrashid123.github.io/tags/grpc/</loc>
     <lastmod>2017-08-26T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/gsuites/</loc>
+    <loc>https://salrashid123.github.io/tags/gsuites/</loc>
     <lastmod>2016-12-29T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/iam/</loc>
+    <loc>https://salrashid123.github.io/tags/iam/</loc>
     <lastmod>2017-01-19T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/identityplatform/</loc>
+    <loc>https://salrashid123.github.io/tags/identityplatform/</loc>
     <lastmod>2016-12-29T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/kubernetes/</loc>
+    <loc>https://salrashid123.github.io/tags/kubernetes/</loc>
     <lastmod>2019-05-01T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/ldap/</loc>
+    <loc>https://salrashid123.github.io/tags/ldap/</loc>
     <lastmod>2016-12-29T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/logging/</loc>
+    <loc>https://salrashid123.github.io/tags/logging/</loc>
     <lastmod>2019-07-01T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/metadata/</loc>
+    <loc>https://salrashid123.github.io/tags/metadata/</loc>
     <lastmod>2016-08-17T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/monitoring/</loc>
+    <loc>https://salrashid123.github.io/tags/monitoring/</loc>
     <lastmod>2019-12-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/oauth2/</loc>
+    <loc>https://salrashid123.github.io/tags/oauth2/</loc>
     <lastmod>2019-11-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/oidc/</loc>
+    <loc>https://salrashid123.github.io/tags/oidc/</loc>
     <lastmod>2019-11-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/opentelemetry/</loc>
+    <loc>https://salrashid123.github.io/tags/opentelemetry/</loc>
     <lastmod>2019-12-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/prometheus/</loc>
+    <loc>https://salrashid123.github.io/tags/prometheus/</loc>
     <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/pubsub/</loc>
+    <loc>https://salrashid123.github.io/tags/pubsub/</loc>
     <lastmod>2019-05-20T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/saml/</loc>
+    <loc>https://salrashid123.github.io/tags/saml/</loc>
     <lastmod>2016-07-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/serviceaccount/</loc>
+    <loc>https://salrashid123.github.io/tags/serviceaccount/</loc>
     <lastmod>2017-01-19T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/sso/</loc>
+    <loc>https://salrashid123.github.io/tags/sso/</loc>
     <lastmod>2016-12-29T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/stackdriver/</loc>
+    <loc>https://salrashid123.github.io/tags/stackdriver/</loc>
     <lastmod>2019-12-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/</loc>
+    <loc>https://salrashid123.github.io/tags/</loc>
     <lastmod>2019-05-27T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/terraform/</loc>
+    <loc>https://salrashid123.github.io/tags/terraform/</loc>
     <lastmod>2019-04-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/tpm/</loc>
+    <loc>https://salrashid123.github.io/tags/tpm/</loc>
     <lastmod>2019-11-04T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/yubikey/</loc>
+    <loc>https://salrashid123.github.io/tags/yubikey/</loc>
     <lastmod>2019-11-04T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/</loc>
+    <loc>https://salrashid123.github.io/</loc>
     <lastmod>2019-12-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   
 </urlset>

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Computeengine on blog.salrashid.me</title>
-    <link>https://blog.salrashid.me/tags/computeengine/</link>
-    <description>Recent content in Computeengine on blog.salrashid.me</description>
+    <title>Computeengine on 6equj5.dev</title>
+    <link>https://salrashid123.github.io/tags/computeengine/</link>
+    <description>Recent content in Computeengine on 6equj5.dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 17 Aug 2016 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://blog.salrashid.me/tags/computeengine/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://salrashid123.github.io/tags/computeengine/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>GCE Metadata Server Emulator</title>
-      <link>https://blog.salrashid.me/posts/gce_metadata_server/</link>
+      <link>https://salrashid123.github.io/posts/gce_metadata_server/</link>
       <pubDate>Wed, 17 Aug 2016 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/posts/gce_metadata_server/</guid>
+      <guid>https://salrashid123.github.io/posts/gce_metadata_server/</guid>
       <description>This script acts as a GCE&amp;rsquo;s internal metadata server for local testing/emulation.
 It returns a live access_token that can be used directly by Application Default Credentials transparently.
 This is useful to test any script or code locally that my need to contact GCE&amp;rsquo;s metadata server for custom, user-defined variables or access_tokens.

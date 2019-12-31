@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Gke on blog.salrashid.me</title>
-    <link>https://blog.salrashid.me/tags/gke/</link>
-    <description>Recent content in Gke on blog.salrashid.me</description>
+    <title>Gke on 6equj5.dev</title>
+    <link>https://salrashid123.github.io/tags/gke/</link>
+    <description>Recent content in Gke on 6equj5.dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 May 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://blog.salrashid.me/tags/gke/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://salrashid123.github.io/tags/gke/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>GCP Binary Authorization and Vulnerability Scanning Demo</title>
-      <link>https://blog.salrashid.me/posts/binary_auth_demo/</link>
+      <link>https://salrashid123.github.io/posts/binary_auth_demo/</link>
       <pubDate>Wed, 01 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/posts/binary_auth_demo/</guid>
+      <guid>https://salrashid123.github.io/posts/binary_auth_demo/</guid>
       <description>Sample application for GCP Binary Authorization + Vulernability Scanner.
  Creates GKE cluster with Binary Authorization Enables Binary Authoriztion policy on cluster Cloud Builder workflow checks checked in code to Cloud Source repository  Builds container image and pushes to Cloud Container Registry Binary Auhorization step waits for Vulernability Scan to complete If Vulernability Scanner Fails, Deployment Fails If Succeeds, the imae is authorized for deployment to GKE    Note: this sample uses one cloud builder configuration to both build the image and do attestation.</description>
     </item>

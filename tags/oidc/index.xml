@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Oidc on blog.salrashid.me</title>
-    <link>https://blog.salrashid.me/tags/oidc/</link>
-    <description>Recent content in Oidc on blog.salrashid.me</description>
+    <title>Oidc on 6equj5.dev</title>
+    <link>https://salrashid123.github.io/tags/oidc/</link>
+    <description>Recent content in Oidc on 6equj5.dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 28 Nov 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://blog.salrashid.me/tags/oidc/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://salrashid123.github.io/tags/oidc/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>TPM2-TSS-Engine hello world and Google Cloud Authentication </title>
-      <link>https://blog.salrashid.me/posts/tpm2_evp_sign_decrypt/</link>
+      <link>https://salrashid123.github.io/posts/tpm2_evp_sign_decrypt/</link>
       <pubDate>Thu, 28 Nov 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/posts/tpm2_evp_sign_decrypt/</guid>
+      <guid>https://salrashid123.github.io/posts/tpm2_evp_sign_decrypt/</guid>
       <description>Basic application that uses a the tpm2-tss-engine to perform RSA encryption and signatures.
 This is intended to run on a system with a TPM as well as the the openssl engine library installed. The TPM-based private key is generated directly using tpm2tss-genkey and from that, the openssl engine to surface the public part. The tpm2-tss-engine surfaces the OpenSSL constructs like EVP_PKEY_RSA so you can directly use that against the TPM</description>
     </item>
     
     <item>
       <title>Calling Cloud Composer &gt; GCF &gt; Composer securely</title>
-      <link>https://blog.salrashid.me/posts/composer_gcf/</link>
+      <link>https://salrashid123.github.io/posts/composer_gcf/</link>
       <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/posts/composer_gcf/</guid>
+      <guid>https://salrashid123.github.io/posts/composer_gcf/</guid>
       <description>Sample Cloud Composer (Apache Airflow) configuration to securely invoke Cloud Functions or Cloud Run.
 In addition this sample shows inverse: how Cloud Functions can invoke a Composer DAG securely. While GCF-&amp;gt;Composer is documented here, the configuration detailed here is minimal and (to me), easier to read.
 Anyway, the following will setup cloud composer, then we will trigger composer to invoke a cloud function&amp;hellip;the cloud function will just trigger a different cloud composer endpoint&amp;hellip;.</description>
@@ -34,29 +34,29 @@ Anyway, the following will setup cloud composer, then we will trigger composer t
     
     <item>
       <title>Automatic OIDC:  Using Cloud Scheduler, Tasks, and PubSub to make authenticated calls to Cloud Run, Cloud Functions or your Server</title>
-      <link>https://blog.salrashid.me/posts/automatic_oidc/</link>
+      <link>https://salrashid123.github.io/posts/automatic_oidc/</link>
       <pubDate>Mon, 20 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/posts/automatic_oidc/</guid>
+      <guid>https://salrashid123.github.io/posts/automatic_oidc/</guid>
       <description>This is a second in a series related to a versatile feature in Cloud Scheduler and Cloud Tasks and Cloud PubSub that automatically emits google OpenIDConnect and oauth2 access_token to outbound webhook calls. When a Scheduled task fires and calls an HTTP endpoint, it can automatically carry credentials to authenticate itself. The id_token credential can then get validated at the HTTP web-hook target using well known techniques (i.,e validate the signature and aud: fields in the token).</description>
     </item>
     
     <item>
       <title>Using serviceAccountActor IAM role for account impersonation on Google Cloud Platform</title>
-      <link>https://blog.salrashid.me/posts/svc_impersonation/</link>
+      <link>https://salrashid123.github.io/posts/svc_impersonation/</link>
       <pubDate>Thu, 19 Jan 2017 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/posts/svc_impersonation/</guid>
+      <guid>https://salrashid123.github.io/posts/svc_impersonation/</guid>
       <description>The serviceAccountActor IAM role on Google Cloud has some very useful and powerful capabilities. It is an IAM role that allows you to grant another user or serviceAccount the ability to impersonate a service Account. In this way, you can have service account A impersonate B and acquire the access_tokens or id_tokens for B.
 This article covers how you can acquire id and access tokens for service account B by service account A.</description>
     </item>
     
     <item>
       <title>Google Cloud Platform API hello world samples</title>
-      <link>https://blog.salrashid.me/posts/gcpsamples/</link>
+      <link>https://salrashid123.github.io/posts/gcpsamples/</link>
       <pubDate>Mon, 25 Jul 2016 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/posts/gcpsamples/</guid>
+      <guid>https://salrashid123.github.io/posts/gcpsamples/</guid>
       <description>This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
 This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples.</description>
     </item>

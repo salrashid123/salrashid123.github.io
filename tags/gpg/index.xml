@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Gpg on blog.salrashid.me</title>
-    <link>https://blog.salrashid.me/tags/gpg/</link>
-    <description>Recent content in Gpg on blog.salrashid.me</description>
+    <title>Gpg on 6equj5.dev</title>
+    <link>https://salrashid123.github.io/tags/gpg/</link>
+    <description>Recent content in Gpg on 6equj5.dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 28 Apr 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://blog.salrashid.me/tags/gpg/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://salrashid123.github.io/tags/gpg/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>GPG stream encryption and decryption on Google Cloud Functions and Cloud Run</title>
-      <link>https://blog.salrashid.me/posts/gpg_gcf/</link>
+      <link>https://salrashid123.github.io/posts/gpg_gcf/</link>
       <pubDate>Sun, 28 Apr 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/posts/gpg_gcf/</guid>
+      <guid>https://salrashid123.github.io/posts/gpg_gcf/</guid>
       <description>About a year+ ago a colleague of mine (Daz Wilkin) asked me how best to decompress/unzip a file using Google Cloud Functions. The suggestion ended as a sample he provided demonstrating the stream-read-&amp;gt;stream-write pattern with the pertinent input-outputs (input: unziped file; output zipped file). The distinct advantage of stream processing the unzip function is that the data is never held in memory: as the unzipped content gets processed by GCF, its promptly written as a zip file to GCS.</description>
     </item>
     
