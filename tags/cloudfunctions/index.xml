@@ -61,5 +61,15 @@ There are several step sto getting the following pipeline to work but in is basi
       <description>About a year+ ago a colleague of mine (Daz Wilkin) asked me how best to decompress/unzip a file using Google Cloud Functions. The suggestion ended as a sample he provided demonstrating the stream-read-&amp;gt;stream-write pattern with the pertinent input-outputs (input: unziped file; output zipped file). The distinct advantage of stream processing the unzip function is that the data is never held in memory: as the unzipped content gets processed by GCF, its promptly written as a zip file to GCS.</description>
     </item>
     
+    <item>
+      <title>.NET on Google Cloud Functions</title>
+      <link>https://blog.salrashid.me/posts/cloud-functions-dotnet/</link>
+      <pubDate>Fri, 28 Jul 2017 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/cloud-functions-dotnet/</guid>
+      <description>Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way.
+This is a sample application running a .NET Cloud Function as an HTTP Trigger. While GCF (Google Cloud Functions) currently only supports NodeJS, there are some techniques you can use to launch different language runtimes and delegate control of the socket to that runtime.</description>
+    </item>
+    
   </channel>
 </rss>

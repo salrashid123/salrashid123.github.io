@@ -115,6 +115,27 @@
   </url>
   
   <url>
+    <loc>https://blog.salrashid.me/posts/grpc_curl/</loc>
+    <lastmod>2017-08-26T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/posts/cloud-functions-dotnet/</loc>
+    <lastmod>2017-07-28T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/posts/multi_stage_dotnet/</loc>
+    <lastmod>2017-05-01T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.salrashid.me/posts/svc_impersonation/</loc>
     <lastmod>2017-01-19T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -240,8 +261,15 @@
   </url>
   
   <url>
+    <loc>https://blog.salrashid.me/tags/docker/</loc>
+    <lastmod>2017-05-01T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.salrashid.me/tags/dotnet/</loc>
-    <lastmod>2016-04-24T14:34:01-08:00</lastmod>
+    <lastmod>2017-07-28T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
@@ -297,6 +325,13 @@
   <url>
     <loc>https://blog.salrashid.me/tags/gpg/</loc>
     <lastmod>2019-04-28T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/tags/grpc/</loc>
+    <lastmod>2017-08-26T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>

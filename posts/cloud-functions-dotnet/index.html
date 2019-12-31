@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>blog.salrashid.me  | Google Container Registry statistics from GCS access_logs</title>
+    <title>blog.salrashid.me  | .NET on Google Cloud Functions</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="generator" content="Hugo 0.54.0" />
     
@@ -25,30 +25,30 @@
 
     
     
-    <meta property="og:title" content="Google Container Registry statistics from GCS access_logs" />
-<meta property="og:description" content="Sample flow to extract Google Container Registry usage statistics (image push/pull counts, analytics, etc). GCR images are hosted on Google Cloud Storage which does have the ability to export usage which means we can indirectly acquire GCR&rsquo;s usage.
-There are several step sto getting the following pipeline to work but in is basic form, we setup GCS bucket used by GCR to export its usage stats to another GCS bucket." />
+    <meta property="og:title" content=".NET on Google Cloud Functions" />
+<meta property="og:description" content="Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way.
+This is a sample application running a .NET Cloud Function as an HTTP Trigger. While GCF (Google Cloud Functions) currently only supports NodeJS, there are some techniques you can use to launch different language runtimes and delegate control of the socket to that runtime." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.salrashid.me/posts/gcr_stats/" />
-<meta property="article:published_time" content="2019-05-20T14:34:01-08:00"/>
-<meta property="article:modified_time" content="2019-05-20T14:34:01-08:00"/>
+<meta property="og:url" content="https://blog.salrashid.me/posts/cloud-functions-dotnet/" />
+<meta property="article:published_time" content="2017-07-28T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2017-07-28T14:34:01-08:00"/>
 
-<meta itemprop="name" content="Google Container Registry statistics from GCS access_logs">
-<meta itemprop="description" content="Sample flow to extract Google Container Registry usage statistics (image push/pull counts, analytics, etc). GCR images are hosted on Google Cloud Storage which does have the ability to export usage which means we can indirectly acquire GCR&rsquo;s usage.
-There are several step sto getting the following pipeline to work but in is basic form, we setup GCS bucket used by GCR to export its usage stats to another GCS bucket.">
-
-
-<meta itemprop="datePublished" content="2019-05-20T14:34:01-08:00" />
-<meta itemprop="dateModified" content="2019-05-20T14:34:01-08:00" />
-<meta itemprop="wordCount" content="725">
+<meta itemprop="name" content=".NET on Google Cloud Functions">
+<meta itemprop="description" content="Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way.
+This is a sample application running a .NET Cloud Function as an HTTP Trigger. While GCF (Google Cloud Functions) currently only supports NodeJS, there are some techniques you can use to launch different language runtimes and delegate control of the socket to that runtime.">
 
 
+<meta itemprop="datePublished" content="2017-07-28T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2017-07-28T14:34:01-08:00" />
+<meta itemprop="wordCount" content="1006">
 
-<meta itemprop="keywords" content="containerregistry,cloudstorage,cloudfunctions," />
+
+
+<meta itemprop="keywords" content="dotnet,cloudfunctions," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Google Container Registry statistics from GCS access_logs"/>
-<meta name="twitter:description" content="Sample flow to extract Google Container Registry usage statistics (image push/pull counts, analytics, etc). GCR images are hosted on Google Cloud Storage which does have the ability to export usage which means we can indirectly acquire GCR&rsquo;s usage.
-There are several step sto getting the following pipeline to work but in is basic form, we setup GCS bucket used by GCR to export its usage stats to another GCS bucket."/>
+<meta name="twitter:title" content=".NET on Google Cloud Functions"/>
+<meta name="twitter:description" content="Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way.
+This is a sample application running a .NET Cloud Function as an HTTP Trigger. While GCF (Google Cloud Functions) currently only supports NodeJS, there are some techniques you can use to launch different language runtimes and delegate control of the socket to that runtime."/>
 
       
 <script type="application/javascript">
@@ -73,7 +73,7 @@ if (!doNotTrack) {
 
   
   
-  <header class="cover bg-top" style="background-image: url('https://blog.salrashid.me/posts/gcr_stats/images/flow.png');">
+  <header class="cover bg-top" style="background-image: url('https://blog.salrashid.me/posts/cloud-functions-dotnet/images/directory.png');">
     <div class="pb3-m pb6-l bg-black-60">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
@@ -149,7 +149,7 @@ if (!doNotTrack) {
 
       <div class="tc-l pv6 ph3 ph4-ns">
         
-          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">Google Container Registry statistics from GCS access_logs</h1>
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">.NET on Google Cloud Functions</h1>
           
         
       </div>
@@ -168,245 +168,268 @@ if (!doNotTrack) {
           
         ARTICLES
       </p>
-      <h1 class="f1 athelas mb1">Google Container Registry statistics from GCS access_logs</h1>
+      <h1 class="f1 athelas mb1">.NET on Google Cloud Functions</h1>
       
       
-      <time class="f6 mv4 dib tracked" datetime="2019-05-20T14:34:01-08:00">May 20, 2019</time>
+      <time class="f6 mv4 dib tracked" datetime="2017-07-28T14:34:01-08:00">July 28, 2017</time>
       
       
     </header>
 
     <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
 
-<p>Sample flow to extract <a href="https://cloud.google.com/container-registry/docs/">Google Container Registry</a> usage statistics (image push/pull counts,  analytics, etc).  GCR images are hosted on <a href="https://cloud.google.com/storage/">Google Cloud Storage</a> which does have the ability to export usage which means we can indirectly acquire GCR&rsquo;s usage.</p>
+<p><em>Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way.</em></p>
 
-<p>There are several step sto getting the following pipeline to work but in is basic form, we setup GCS bucket used by GCR to export its usage stats to another GCS bucket.  We then setup that target bucket to automatically trigger a <a href="https://cloud.google.com/functions/docs/">Cloud Function</a> everytime a new usage file is created..  The Cloud Function that is invoked will then instruct BigQuery to load the usage file directly usign its own internal GCS-&gt;BQ load functions. You will then have the GCR usage stats available in bigquery automatically.  The GCS usage statistics are exported hourly and since the pipeline is triggered automatically, your data lags by about an hour.</p>
+<p>This is a sample application running a .NET Cloud Function as an HTTP Trigger. While GCF (Google Cloud Functions) currently only supports NodeJS, there are some techniques you can use to launch different language runtimes and delegate control of the socket to that runtime. This article and code linked from it at the bottom describes one technique to run .NET on GCF.</p>
 
-<p><img src="images/flow.png" alt="images/flow.png" /></p>
+<p>This is a <strong>unofficial</strong> port to .NET of cloud-functions-go sample here:
+- <a href="https://github.com/GoogleCloudPlatform/cloud-functions-go">https://github.com/GoogleCloudPlatform/cloud-functions-go</a></p>
 
-<p>You can find the full source <a href="https://github.com/salrashid123/gcr_stats">here</a>.</p>
+<hr />
 
-<h3 id="gcs">GCS</h3>
+<p>The basic flow of this application initially starts GCF as node application, then delegates control of the listen socket to your target runtime (.NET in this case).</p>
 
-<p>First setup <a href="https://cloud.google.com/storage/docs/access-logs">GCS Access Logs</a> for the bucket used by GCR.</p>
-
-<p>The default Container Registry bucket URL will be listed as <code>gs://artifacts.[PROJECT-ID].appspot.com</code> or <code>gs://[REGION].artifacts.[PROJECT-ID].appspot.com</code>.</p>
-
-<pre><code>
-&quot;When you push an image to a registry with a new hostname, Container Registry creates a storage bucket in the specified multi-regional location. This bucket is the underlying storage for the registry. This location is not your location, but the location where the images is stored..&quot;
-</code></pre>
+<p>On application startup:</p>
 
 <ul>
-<li>First setup another bucket where you want to export the access logs on GCR&rsquo;s bucket:</li>
+<li>Initialize NodeJS GCF entrypoint (index.js on port :8080)</li>
+<li>NodeJS launches (gyp add-on cpp binary (execer.cc)</li>
+<li>execer binary scans NodeJS’s socket file descriptors</li>
+<li>execer binary launches .NET binary (bin/mainapp) and passes the listener socket to .NET</li>
+<li>.NET application “takes control” of the listening socket.</li>
+<li>.NET application now receives user-requests directly as a GCF function</li>
 </ul>
 
-<pre><code class="language-bash">export GOOGLE_PROJECT_ID=`gcloud config get-value core/project`
-gsutil mb gs://$GOOGLE_PROJECT_ID-gcr-logs/
-</code></pre>
+<blockquote>
+<blockquote>
+<p>Wait…so how are you able to run .NET on GCF without coreCLR installed?</p>
+</blockquote>
+</blockquote>
+
+<p>Well, while the full coreCLR isn’t installed, all that is needed to run a simple .NET binary <em>is</em> uploaded during the deployment.</p>
+
+<p>In this case, during build time, the default Dockerfile acquires all the shared_objects (.so) files for .NET, compiles the sample application into a binary for linux, then uploads it.</p>
+
+<p>So, when you stage the build files for deployment, the following folders get generated (all of this is done for you via make!!)</p>
+
+<hr />
+
+<p><img src="images/directory.png" alt="images/directory.png" /></p>
+
+<hr />
 
 <ul>
-<li>Allow GCP to write access logs to that bucket</li>
+<li>~/bin/ contains the the .NET binary to execute and supporting .dll</li>
+<li>~/lib contains all the .so files required to run coreCLR</li>
+<li>~/node_modules contains the NodeJS files to launch the intermediate execer.cc add-on module</li>
 </ul>
 
-<pre><code class="language-bash">gsutil acl ch -g cloud-storage-analytics@google.com:W gs://$GOOGLE_PROJECT_ID-gcr-logs/
-</code></pre>
+<p>You can find the full git repo <a href="https://github.com/salrashid123/cloud-functions-dotnet">here</a>:</p>
 
-<ul>
-<li>Setup access logs export</li>
-</ul>
+<h3 id="quickstart-build-run-with-cloud-shell">Quickstart:  Build+Run with Cloud Shell</h3>
 
-<pre><code class="language-bash">gsutil logging set on -b gs://$GOOGLE_PROJECT_ID-gcr-logs/ -o accessLog gs://artifacts.$GOOGLE_PROJECT_ID.appspot.com/
-gsutil logging get gs://artifacts.$GOOGLE_PROJECT_ID.appspot.com/ 
-</code></pre>
+<p>This is the easiest way to try this out is with Google Cloud Shell as it already has
+docker 17+, node and dotnet2.0+</p>
 
-<h3 id="bq">BQ</h3>
+<ol>
+<li><a href="https://cloud.google.com/functions/docs/quickstart">Enable Cloud Functions API</a> on your project.</li>
+<li>Open up <a href="https://cloud.google.com/shell/docs/starting-cloud-shell">Cloud Shell</a></li>
 
-<p>Now setup a bigquery dataset and table that holds the <a href="https://cloud.google.com/storage/docs/access-logs#format">AcessLog Schema</a></p>
+<li><p>Get the repo</p>
 
-<p>In the example below, the dataset is <code>storageanalysis</code> and table is <code>usage</code>:</p>
-
-<pre><code class="language-bash">wget http://storage.googleapis.com/pub/cloud_storage_usage_schema_v0.json
-
-bq mk --table storageanalysis.usage cloud_storage_usage_schema_v0.json
-</code></pre>
-
-<p>Finally, set IAM permissions for Cloud FUnctions searvice account to write to this dataset.  By default, the service account GCF runs as is in the format: <code>$GOOGLE_PROJECT_ID@appspot.gserviceaccount.com on dataset</code></p>
-
-<p><img src="images/bq-iam.png" alt="images/bq-iam.png" /></p>
-
-<h3 id="gcf">GCF</h3>
-
-<p>Setup a Cloud function that gets triggered whenever a new access log file is created.</p>
-
-<ul>
-<li><p>First setup ACLs to allow GCF&rsquo;s service account read access to the access log bucket:</p>
-
-<pre><code>gsutil acl ch -u $GOOGLE_PROJECT_ID@appspot.gserviceaccount.com:R gs://$GOOGLE_PROJECT_ID-gcr-logs/
+<pre><code> git clone https://github.com/salrashid123/cloud-functions-dotnet.git
 </code></pre></li>
 
-<li><p>Deploy the function:</p></li>
+<li><p>Build and stage the files:</p>
 
-<li><p>main.py
-```python
-import os
-import traceback</p></li>
-</ul>
+<pre><code> cd cloud-functions-dotnet
 
-<p>from google.api_core import retry
-from google.cloud import bigquery</p>
+ docker build -t docker_tmp .
 
-<p>PROJECT_ID = os.getenv(&lsquo;GCP_PROJECT&rsquo;)
-dataset_id = &lsquo;storageanalysis&rsquo;
-table_id = &lsquo;usage&rsquo;
-bigquery_client = bigquery.Client()</p>
-
-<p>def loader(data, context):
-    bucket_name = data[&lsquo;bucket&rsquo;]
-    file_name = data[&lsquo;name&rsquo;]</p>
-
-<pre><code>if 'usage' in file_name:
-    dataset_ref = bigquery_client.dataset(dataset_id)
-    job_config = bigquery.LoadJobConfig()
-    job_config.skip_leading_rows = 1
-    job_config.source_format = bigquery.SourceFormat.CSV
-    uri = &quot;gs://{}/{}&quot;.format(bucket_name,file_name) 
-    load_job = bigquery_client.load_table_from_uri(
-        uri, dataset_ref.table(table_id), job_config=job_config
-    )
-    print(&quot;Starting job {}&quot;.format(load_job.job_id))
-
-    load_job.result()
-    print(&quot;Job finished.&quot;)
-
-    destination_table = bigquery_client.get_table(dataset_ref.table(table_id))
-    print(&quot;Loaded {} rows.&quot;.format(destination_table.num_rows))
-return 
-</code></pre>
-
-<pre><code>
-- requirements.txt
-</code></pre>
-
-<p>google-cloud-storage
-google-cloud-bigquery
-google-cloud-core</p>
-
-<pre><code>
-
-```bash
-gcloud functions deploy loader --entry-point=loader --region=us-central1  --runtime=python37 \
- --trigger-resource=$GOOGLE_PROJECT_ID-gcr-logs --trigger-event=google.storage.object.finalize   --timeout=60s --memory=256MB
-</code></pre>
-
-<p>The setting above uses <code>60s</code> as the maximum duration for the load job to complete.  This should be enough for the simple <code>.csv</code> text files sent in for the hourly usage of gcr.</p>
-
-<h3 id="pull">Pull</h3>
-
-<p>Pull an existing image down from the registry:</p>
-
-<p>In my case:</p>
-
-<pre><code>$ docker pull gcr.io/$GOOGLE_PROJECT_ID/distroless:dotnet
-dotnet: Pulling from mineral-minutia-820/distroless
-ca1df8c2ad92: Pull complete 
-a79ed59a6f9f: Pull complete 
-80109b13f4ee: Pull complete 
-Digest: sha256:22718a20103ab874890eec2a864af227f2e273d83ac1c2b1d746ced9cd87efbc
-Status: Downloaded newer image for gcr.io/mineral-minutia-820/distroless:dotnet
-</code></pre>
-
-<p>THe image ID is:</p>
-
-<pre><code>$ docker inspect gcr.io/mineral-minutia-820/distroless:dotnet --format=&quot;{{.Id}}&quot; 
-sha256:7e19786cadab9f8ac0819c12ca0cc6abdf6fe5a75b876b130b77db0f42bdedd9
-</code></pre>
-
-<h3 id="verify">Verify</h3>
-
-<p>Wait ~1hour for the access logs to get generated:</p>
-
-<h4 id="gcs-1">GCS</h4>
-
-<p>Verify the access logs now exist on the bucket.</p>
-
-<pre><code>$ gsutil ls gs://$GOOGLE_PROJECT_ID-gcr-logs/
-</code></pre>
-
-<p>In my case:</p>
-
-<pre><code class="language-bash">$ gsutil ls gs://mineral-minutia-820-logs/
-gs://mineral-minutia-820-logs/accessLog_usage_2019_05_19_18_00_00_00cbe51e4b703105e9_v0
-gs://mineral-minutia-820-logs/accessLog_usage_2019_05_19_18_00_00_01cbe51e4b703105e9_v0
-gs://mineral-minutia-820-logs/accessLog_usage_2019_05_19_18_00_00_02cbe51e4b703105e9_v0
-</code></pre>
-
-<p>If you download any of these files, you should see a <code>.csv</code> delimited access logs.  Specifically see the columns that describe:</p>
-
-<ul>
-<li><p><code>cs_referer</code>:
-<code>https://gcr.io/v2/mineral-minutia-820/distroless/blobs/sha256:7e19786cadab9f8ac0819c12ca0cc6abdf6fe5a75b876b130b77db0f42bdedd9</code></p></li>
-
-<li><p><code>cs_url</code>:</p></li>
-</ul>
-
-<p><code>/artifacts.mineral-minutia-820.appspot.com/containers/images/sha256:7e19786cadab9f8ac0819c12ca0cc6abdf6fe5a75b876b130b77db0f42bdedd9</code></p>
-
-<ul>
-<li><code>cs_object</code>:
-<code>containers/images/sha256:7e19786cadab9f8ac0819c12ca0cc6abdf6fe5a75b876b130b77db0f42bdedd9</code></li>
-</ul>
-
-<h4 id="gcf-1">GCF</h4>
-
-<p>Verify GCF file was triggered properly:</p>
-
-<p><img src="images/gcf_run.png" alt="images/gcf_run.png" /></p>
-
-<h4 id="bq-1">BQ</h4>
-
-<p>Verify the access logs now populate in BQ:</p>
-
-<p><img src="images/bq_rows.png" alt="images/bq_rows.png" /></p>
-
-<h3 id="query">Query</h3>
-
-<p>Now run a query to extract usage statistics in BQ.  You can use ofcourse use any BQ native <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators">operator or function</a>.</p>
-
-<p>eg:</p>
-
-<ul>
-<li><p>All images:</p>
-
-<pre><code>SELECT time_micros, Regexp_extract(cs_referer,r'^https://gcr.io(?:[^/]*)/(?:[^/]*/){2}([^/]*)') as image_name FROM `mineral-minutia-820.storageanalysis.usage`
+ docker cp `docker create docker_tmp`:/user_code/lib .
+ docker cp `docker create docker_tmp`:/user_code/bin .
+ docker cp `docker create docker_tmp`:/user_code/node_modules .
 </code></pre></li>
 
-<li><p>Statistics by <code>image ID</code>:</p>
+<li><p>Deploy
+Remember to specify a staging GCS bucket (any bucket you have read-write permissions).</p>
 
-<pre><code>SELECT time_micros, Regexp_extract(cs_referer,r'^https://gcr.io(?:[^/]*)/(?:[^/]*/){2}([^/]*)') as image_name FROM `mineral-minutia-820.storageanalysis.usage`   where cs_object =&quot;containers/images/sha256:7e19786cadab9f8ac0819c12ca0cc6abdf6fe5a75b876b130b77db0f42bdedd9&quot; 
+<pre><code> gcloud beta functions deploy gcfdotnet --stage-bucket your_staging_bucket --trigger-http
 </code></pre></li>
+
+<li><p>Verify Deployment by invoking the endpoint URL (this may take sometime to initialize first time ~mins)</p>
+
+<pre><code> curl -v https://us-central1-your_project.cloudfunctions.net/gcfdotnet
+</code></pre></li>
+</ol>
+
+<p>Thats it!  The following section describes how this works and how to build if you have dotnet locally</p>
+
+<p>This sample uses Docker <a href="https://medium.com/@salmaan.rashid/multi-stage-docker-builds-with-net-ef66fc98b51d">multi-stage builds</a> compile nodeJS mdoules
+and dotnet, then finally acquire the requisite linux shared_objects to run on Linux.</p>
+
+<p>Once all those files are ready within the container,  the last set
+of steps &lsquo;copies&rsquo; them out of the container so you can deploy the function directly.</p>
+
+<p>Note, if you build the full Default dockerfile, you can execute the container since
+the build step includes this by default:</p>
+
+<pre><code>     docker run -p 8080:8080 -t docker_tmp
+</code></pre>
+
+<hr />
+
+<h2 id="writing-a-cloud-function">Writing a cloud function</h2>
+
+<p>You need to have dotnet 2.0 available:</p>
+
+<p>Edit Startup.cs file to add on your HTTP Trigger function here.:</p>
+
+<p>Startup.cs</p>
+
+<pre><code class="language-csharp">
+        private static void Execute(IApplicationBuilder app)
+        {
+            app.Run(async context =&gt;
+            {   
+                _logger.LogInformation(&quot;HTTP handler called..&quot;);  
+                await context.Response.WriteAsync(&quot;hello from .NET&quot;);
+            });
+        }  
+</code></pre>
+
+<p>At this point, you can build and deploy with docker as above.</p>
+
+<h2 id="building-dotnet-bin-folder-locally">Building dotnet bin/ folder locally</h2>
+
+<p>If you have dotnet2.0 installed locally, you can build and run it locally to to test</p>
+
+<pre><code>     dotnet restore -r ubuntu.14.04-x64
+     dotnet publish -c Release -r ubuntu.14.04-x64 -o bin/
+</code></pre>
+
+<p>then set the permissions before deploying and executing:</p>
+
+<pre><code>    chmod u+x bin/mainapp
+    bin/mainapp
+</code></pre>
+
+<p>The entrypoint for your cloud funtion must be &lsquo;/execute&rsquo;</p>
+
+<pre><code>    http://localhost:8080/execute
+</code></pre>
+
+<p>Note that if you wish to develop locally and have dotnet installed, you can modify the default
+Docker file to <em>not</em> build the dotnet binary:</p>
+
+<pre><code class="language-dockerfile">FROM node:8.9.1 AS build-env-node
+ADD . /user_code
+WORKDIR /user_code
+RUN npm install --save local_modules/execer
+
+FROM microsoft/dotnet:2.0.0-sdk AS build-env-dotnet
+ADD . /user_code
+WORKDIR /user_code
+RUN mkdir -p /user_code/lib &amp;&amp; \
+    for i in `dpkg -L libc6 libcurl3 libgcc1 libgssapi-krb5-2 libicu57 liblttng-ust0 libssl1.0.2 libstdc++6 libunwind8 libuuid1 zlib1g  | egrep &quot;^/usr/lib/x86_64-linux-gnu/.*\.so\.&quot;`; do cp $i /user_code/lib; done
+
+FROM gcr.io/distroless/dotnet
+WORKDIR /user_code
+ADD . /user_code
+COPY --from=build-env-node /user_code/node_modules /user_code/node_modules
+COPY --from=build-env-dotnet /user_code/lib /user_code/lib
+</code></pre>
+
+<p>but build the other components with docker:</p>
+
+<pre><code> docker build -t docker_tmp .
+
+ docker cp `docker create docker_tmp`:/user_code/lib .
+ docker cp `docker create docker_tmp`:/user_code/node_modules .
+</code></pre>
+
+<p>After that, build dotnet locally</p>
+
+<pre><code>dotnet restore -r ubuntu.14.04-x64
+dotnet publish -c Release -r ubuntu.14.04-x64 -o bin/
+chmod u+x bin/mainapp
+</code></pre>
+
+<p>Then just deploy as shown above</p>
+
+<h2 id="appendix">Appendix</h2>
+
+<h3 id="required-libraries-for-dotnet">Required libraries for dotnet</h3>
+
+<ul>
+<li>dotnet runtime requires the following libraries.  You can use this to install runtime support on debian without the full dotnet install <a href="https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/jessie/Dockerfile#L4">microsoft/dotnet:2.0.0-runtime-jessie</a></li>
 </ul>
 
-<p>Or directly via BQ cli:</p>
+<p>Essentially this is a copy of the required minimum set needed for dotnet to run on the OS wihtout extras.  For more information on this,
+see <a href="https://github.com/GoogleCloudPlatform/distroless">distroless builds</a></p>
 
-<pre><code>$ bq query --nouse_legacy_sql 'SELECT TIMESTAMP_MICROS(time_micros) as timestamp, cs_method FROM `mineral-minutia-820.storageanalysis.usage`   where cs_object =&quot;containers/images/sha256:7e19786cadab9f8ac0819c12ca0cc6abdf6fe5a75b876b130b77db0f42bdedd9&quot;'
- 
-+---------------------+-----------+
-|      timestamp      | cs_method |
-+---------------------+-----------+
-| 2019-05-19 18:49:26 | GET       |
-| 2019-05-19 20:07:13 | GET       |
-| 2019-05-19 18:49:26 | GET       |
-| 2019-05-20 03:46:24 | GET       |
-+---------------------+-----------+
+<h3 id="how-this-application-works">How this application works</h3>
+
+<p>The following snippets and links describes how control transfer for the socket file descriptors takes place from</p>
+
+<pre><code>node -&gt; cpp -&gt; .NET
+</code></pre>
+
+<p>Acquire the file descriptors here by modifying the following to pass in LD_LIBRARY_PATH environment variables:</p>
+
+<ul>
+<li><a href="https://github.com/GoogleCloudPlatform/cloud-functions-go/blob/master/local_modules/execer/execer.cc#L77">https://github.com/GoogleCloudPlatform/cloud-functions-go/blob/master/local_modules/execer/execer.cc#L77</a></li>
+</ul>
+
+<p>change to:</p>
+
+<pre><code class="language-cc">	const char bin[] = &quot;./bin/mainapp&quot;;
+	char *envp[] =
+	{
+			&quot;LD_LIBRARY_PATH=/user_code/lib:$LD_LIBRARY_PATH&quot;,
+			NULL
+	};
+
+	execve(bin, const_cast&lt;char* const*&gt;(&amp;args[0]), envp);    
+
+</code></pre>
+
+<p>Then in .NET, use the following <a href="https://github.com/aspnet/KestrelHttpServer/blob/dev/src/Microsoft.AspNetCore.Server.Kestrel.Core/KestrelServerOptions.cs">Kestrel Options</a> to listen on a handler.</p>
+
+<p>Program.cs</p>
+
+<pre><code class="language-csharp">
+            .UseKestrel(options =&gt;
+            {
+                try
+                {
+                    for (int i = 0; i &lt; args.Length; i++)
+                    {
+                        string value = args[i];
+                        if (value == &quot;--fds&quot;)
+                        {
+                            var fds = args[i+1].Split(&quot;,&quot;)[0];
+                            string env_var = Environment.GetEnvironmentVariable(&quot;LD_LIBRARY_PATH&quot;);
+                            logger.LogDebug(&quot;Using LD_LIBRARY_PATH: &quot; + env_var);
+                            logger.LogDebug(&quot;Setting kestrel ListenHandler to fd &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; &quot; + fds);
+                            ulong fd = Convert.ToUInt64(fds);
+                            options.ListenHandle(fd);
+                            break;                     
+                        }                      
+                    }       
+                }
+                catch (System.IndexOutOfRangeException e)
+                {
+                    logger.LogError(&quot;Provided filedescriptor argument but unable to parse descriptor list &quot; + e);
+                }
+                catch (Exception ex) {
+                    logger.LogCritical(ex.Message);                    
+                }
 </code></pre>
 <ul class="pa0">
   
    <li class="list">
-     <a href="/tags/containerregistry" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">containerregistry</a>
-   </li>
-  
-   <li class="list">
-     <a href="/tags/cloudstorage" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">cloudstorage</a>
+     <a href="/tags/dotnet" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">dotnet</a>
    </li>
   
    <li class="list">
@@ -451,19 +474,11 @@ gs://mineral-minutia-820-logs/accessLog_usage_2019_05_19_18_00_00_02cbe51e4b7031
     <ul class="pa0 list">
 	   
 	     <li  class="mb2">
-          <a href="/posts/automatic_oidc/">Automatic OIDC:  Using Cloud Scheduler, Tasks, and PubSub to make authenticated calls to Cloud Run, Cloud Functions or your Server</a>
+          <a href="/posts/multi_stage_dotnet/">Multi-stage Docker builds with .NET</a>
         </li>
 	    
 	     <li  class="mb2">
-          <a href="/posts/gcs_post_signedurl_js/">Upload/Download files from a browser with GCS Signed URLs and Signed Policy Documents</a>
-        </li>
-	    
-	     <li  class="mb2">
-          <a href="/posts/gpg_gcf/">GPG stream encryption and decryption on Google Cloud Functions and Cloud Run</a>
-        </li>
-	    
-	     <li  class="mb2">
-          <a href="/posts/cloud-functions-dotnet/">.NET on Google Cloud Functions</a>
+          <a href="/posts/gcpdotnet/">.NET on GCP</a>
         </li>
 	    
     </ul>
