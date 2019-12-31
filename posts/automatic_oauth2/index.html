@@ -40,7 +40,7 @@ When a Scheduled task fires and calls an HTTP endpoint, it can optionally automa
 
 <meta itemprop="datePublished" content="2019-05-20T13:34:01-08:00" />
 <meta itemprop="dateModified" content="2019-05-20T13:34:01-08:00" />
-<meta itemprop="wordCount" content="1590">
+<meta itemprop="wordCount" content="1596">
 
 
 
@@ -185,6 +185,8 @@ if (!doNotTrack) {
 <p>Essentially, the <code>access_token</code> furnished to Scheduler and Tasks can be used along with a constructed REST payload against GCP services and when you define the Schedule, you specify the REST payload it should send (eg. POST JSON payload for the specific API getting invoked.)</p>
 
 <p>Note: these <code>access_token</code> do not by themselves allow access to any GCP resource: you must explicitly allow the identity that the token belows to IAM permissions first.</p>
+
+<p>You can find the source <a href="https://github.com/salrashid123/automatic_gcp_oauth">here</a></p>
 
 <p>The two examples covered in this article are relatively trivial but demonstrates its capabilities:</p>
 
