@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Logging on 6equj5.dev</title>
-    <link>https://salrashid123.github.io/tags/logging/</link>
-    <description>Recent content in Logging on 6equj5.dev</description>
+    <title>Logging on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/logging/</link>
+    <description>Recent content in Logging on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 01 Jul 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://salrashid123.github.io/tags/logging/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/logging/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Writing Developer logs with Google Cloud Logging</title>
-      <link>https://salrashid123.github.io/posts/writing_developer_logs_gcp/</link>
+      <link>https://blog.salrashid.me/posts/writing_developer_logs_gcp/</link>
       <pubDate>Mon, 01 Jul 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/writing_developer_logs_gcp/</guid>
+      <guid>https://blog.salrashid.me/posts/writing_developer_logs_gcp/</guid>
       <description>Several months ago Google Cloud Logging introduced two new monitored resource types geared towards allowing developers to emit cloud logging messages for their own application centric logs. Pereviously, application logs generally had to be tied to existing predefined monitored_resources such as GCE, GKE, AppEngine, Dataflow and so on. Under those monitoried resources sources, multiple log entries were attributed to specific logNames describing the subsystem like syslog, apache2, nginx, mysql, etc.</description>
     </item>
     

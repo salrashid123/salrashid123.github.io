@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Terraform on 6equj5.dev</title>
-    <link>https://salrashid123.github.io/tags/terraform/</link>
-    <description>Recent content in Terraform on 6equj5.dev</description>
+    <title>Terraform on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/terraform/</link>
+    <description>Recent content in Terraform on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 28 Apr 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://salrashid123.github.io/tags/terraform/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/terraform/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Terraform &#39;Assume Role&#39; and service Account impersonation on Google Cloud</title>
-      <link>https://salrashid123.github.io/posts/terraform_gcp_impersonation/</link>
+      <link>https://blog.salrashid.me/posts/terraform_gcp_impersonation/</link>
       <pubDate>Sun, 28 Apr 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/terraform_gcp_impersonation/</guid>
+      <guid>https://blog.salrashid.me/posts/terraform_gcp_impersonation/</guid>
       <description>About two months ago, someone asked me to help them setup Terraform to automatically provision GCP projects. It was the first time I actually used it and found it capabilities pretty powerful: it&amp;rsquo;s easy to manage complex resources and maintain a picture of the state change. However, one aspect of its capabilities that struck me was its need to directly have permissions on all GCP resources it provisioned or manage.</description>
     </item>
     

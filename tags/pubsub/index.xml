@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Pubsub on 6equj5.dev</title>
-    <link>https://salrashid123.github.io/tags/pubsub/</link>
-    <description>Recent content in Pubsub on 6equj5.dev</description>
+    <title>Pubsub on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/pubsub/</link>
+    <description>Recent content in Pubsub on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 20 May 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://salrashid123.github.io/tags/pubsub/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/pubsub/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Automatic OIDC:  Using Cloud Scheduler, Tasks, and PubSub to make authenticated calls to Cloud Run, Cloud Functions or your Server</title>
-      <link>https://salrashid123.github.io/posts/automatic_oidc/</link>
+      <link>https://blog.salrashid.me/posts/automatic_oidc/</link>
       <pubDate>Mon, 20 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/automatic_oidc/</guid>
+      <guid>https://blog.salrashid.me/posts/automatic_oidc/</guid>
       <description>This is a second in a series related to a versatile feature in Cloud Scheduler and Cloud Tasks and Cloud PubSub that automatically emits google OpenIDConnect and oauth2 access_token to outbound webhook calls. When a Scheduled task fires and calls an HTTP endpoint, it can automatically carry credentials to authenticate itself. The id_token credential can then get validated at the HTTP web-hook target using well known techniques (i.,e validate the signature and aud: fields in the token).</description>
     </item>
     

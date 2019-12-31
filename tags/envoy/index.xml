@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Envoy on 6equj5.dev</title>
-    <link>https://salrashid123.github.io/tags/envoy/</link>
-    <description>Recent content in Envoy on 6equj5.dev</description>
+    <title>Envoy on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/envoy/</link>
+    <description>Recent content in Envoy on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 22 Oct 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://salrashid123.github.io/tags/envoy/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/envoy/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Envoy Global rate limiting helloworld</title>
-      <link>https://salrashid123.github.io/posts/envoy_ratelimit/</link>
+      <link>https://blog.salrashid.me/posts/envoy_ratelimit/</link>
       <pubDate>Tue, 22 Oct 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/envoy_ratelimit/</guid>
+      <guid>https://blog.salrashid.me/posts/envoy_ratelimit/</guid>
       <description>Sample &amp;ldquo;hello world&amp;rdquo; application demonstrating basic aspects fo Envoy&amp;rsquo;s Global Rate Limiting capability. This app configures a local envoy instance for an HTTP level rate limit filter and then uses Lyft&amp;rsquo;s RateLimit Service as the backend.
 Envoy&amp;rsquo;s rate limit functions checks each request to see if it should go through or not either using a local instance specific criteria or globally. By local, the rate limit counter runs within the context of the single envoy proxy that handles the request.</description>
     </item>

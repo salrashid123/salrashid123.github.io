@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Docker on 6equj5.dev</title>
-    <link>https://salrashid123.github.io/tags/docker/</link>
-    <description>Recent content in Docker on 6equj5.dev</description>
+    <title>Docker on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/docker/</link>
+    <description>Recent content in Docker on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 01 May 2017 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://salrashid123.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Multi-stage Docker builds with .NET</title>
-      <link>https://salrashid123.github.io/posts/multi_stage_dotnet/</link>
+      <link>https://blog.salrashid.me/posts/multi_stage_dotnet/</link>
       <pubDate>Mon, 01 May 2017 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/multi_stage_dotnet/</guid>
+      <guid>https://blog.salrashid.me/posts/multi_stage_dotnet/</guid>
       <description>A colleague of mine recently pointed out an article by Travis Reeder regarding the new multi-stage docker builds for Go images:
  Multi-Stage Docker Builds for Creating Tiny Go Images I’ve talked about how to make tiny Docker images a fair bit in the past, but now that Docker has multi-stage builds, it…  I didn’t even know about this upcoming feature so I decided to try it out on using a simple .</description>
     </item>

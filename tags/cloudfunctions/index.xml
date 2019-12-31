@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Cloudfunctions on 6equj5.dev</title>
-    <link>https://salrashid123.github.io/tags/cloudfunctions/</link>
-    <description>Recent content in Cloudfunctions on 6equj5.dev</description>
+    <title>Cloudfunctions on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/cloudfunctions/</link>
+    <description>Recent content in Cloudfunctions on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 30 May 2019 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://salrashid123.github.io/tags/cloudfunctions/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/cloudfunctions/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Calling Cloud Composer &gt; GCF &gt; Composer securely</title>
-      <link>https://salrashid123.github.io/posts/composer_gcf/</link>
+      <link>https://blog.salrashid.me/posts/composer_gcf/</link>
       <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/composer_gcf/</guid>
+      <guid>https://blog.salrashid.me/posts/composer_gcf/</guid>
       <description>Sample Cloud Composer (Apache Airflow) configuration to securely invoke Cloud Functions or Cloud Run.
 In addition this sample shows inverse: how Cloud Functions can invoke a Composer DAG securely. While GCF-&amp;gt;Composer is documented here, the configuration detailed here is minimal and (to me), easier to read.
 Anyway, the following will setup cloud composer, then we will trigger composer to invoke a cloud function&amp;hellip;the cloud function will just trigger a different cloud composer endpoint&amp;hellip;.</description>
@@ -24,10 +24,10 @@ Anyway, the following will setup cloud composer, then we will trigger composer t
     
     <item>
       <title>Anti Virus file scanning on Google Cloud Storage using ClamAV</title>
-      <link>https://salrashid123.github.io/posts/clam_av/</link>
+      <link>https://blog.salrashid.me/posts/clam_av/</link>
       <pubDate>Mon, 27 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/clam_av/</guid>
+      <guid>https://blog.salrashid.me/posts/clam_av/</guid>
       <description>Tutorial on how to use ClamAV to scan files uploaded to Google Cloud Storage (GCS).
 GCS does not have any built in capability to scan or do any other type of preprocessing on its files and relies on other services to perform these steps. In this tutorial, we will process a file that gets uploaded to GCS for viruses, malware, etc using ClamAV.
 Architecture The basic flow outlined here is:</description>
@@ -35,38 +35,38 @@ Architecture The basic flow outlined here is:</description>
     
     <item>
       <title>Automatic OIDC:  Using Cloud Scheduler, Tasks, and PubSub to make authenticated calls to Cloud Run, Cloud Functions or your Server</title>
-      <link>https://salrashid123.github.io/posts/automatic_oidc/</link>
+      <link>https://blog.salrashid.me/posts/automatic_oidc/</link>
       <pubDate>Mon, 20 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/automatic_oidc/</guid>
+      <guid>https://blog.salrashid.me/posts/automatic_oidc/</guid>
       <description>This is a second in a series related to a versatile feature in Cloud Scheduler and Cloud Tasks and Cloud PubSub that automatically emits google OpenIDConnect and oauth2 access_token to outbound webhook calls. When a Scheduled task fires and calls an HTTP endpoint, it can automatically carry credentials to authenticate itself. The id_token credential can then get validated at the HTTP web-hook target using well known techniques (i.,e validate the signature and aud: fields in the token).</description>
     </item>
     
     <item>
       <title>Google Container Registry statistics from GCS access_logs</title>
-      <link>https://salrashid123.github.io/posts/gcr_stats/</link>
+      <link>https://blog.salrashid.me/posts/gcr_stats/</link>
       <pubDate>Mon, 20 May 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/gcr_stats/</guid>
+      <guid>https://blog.salrashid.me/posts/gcr_stats/</guid>
       <description>Sample flow to extract Google Container Registry usage statistics (image push/pull counts, analytics, etc). GCR images are hosted on Google Cloud Storage which does have the ability to export usage which means we can indirectly acquire GCR&amp;rsquo;s usage.
 There are several step sto getting the following pipeline to work but in is basic form, we setup GCS bucket used by GCR to export its usage stats to another GCS bucket.</description>
     </item>
     
     <item>
       <title>GPG stream encryption and decryption on Google Cloud Functions and Cloud Run</title>
-      <link>https://salrashid123.github.io/posts/gpg_gcf/</link>
+      <link>https://blog.salrashid.me/posts/gpg_gcf/</link>
       <pubDate>Sun, 28 Apr 2019 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/gpg_gcf/</guid>
+      <guid>https://blog.salrashid.me/posts/gpg_gcf/</guid>
       <description>About a year+ ago a colleague of mine (Daz Wilkin) asked me how best to decompress/unzip a file using Google Cloud Functions. The suggestion ended as a sample he provided demonstrating the stream-read-&amp;gt;stream-write pattern with the pertinent input-outputs (input: unziped file; output zipped file). The distinct advantage of stream processing the unzip function is that the data is never held in memory: as the unzipped content gets processed by GCF, its promptly written as a zip file to GCS.</description>
     </item>
     
     <item>
       <title>.NET on Google Cloud Functions</title>
-      <link>https://salrashid123.github.io/posts/cloud-functions-dotnet/</link>
+      <link>https://blog.salrashid.me/posts/cloud-functions-dotnet/</link>
       <pubDate>Fri, 28 Jul 2017 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/cloud-functions-dotnet/</guid>
+      <guid>https://blog.salrashid.me/posts/cloud-functions-dotnet/</guid>
       <description>Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way.
 This is a sample application running a .NET Cloud Function as an HTTP Trigger. While GCF (Google Cloud Functions) currently only supports NodeJS, there are some techniques you can use to launch different language runtimes and delegate control of the socket to that runtime.</description>
     </item>

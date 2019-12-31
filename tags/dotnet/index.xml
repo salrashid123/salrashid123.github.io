@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Dotnet on 6equj5.dev</title>
-    <link>https://salrashid123.github.io/tags/dotnet/</link>
-    <description>Recent content in Dotnet on 6equj5.dev</description>
+    <title>Dotnet on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/dotnet/</link>
+    <description>Recent content in Dotnet on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 28 Jul 2017 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://salrashid123.github.io/tags/dotnet/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/dotnet/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>.NET on Google Cloud Functions</title>
-      <link>https://salrashid123.github.io/posts/cloud-functions-dotnet/</link>
+      <link>https://blog.salrashid.me/posts/cloud-functions-dotnet/</link>
       <pubDate>Fri, 28 Jul 2017 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/cloud-functions-dotnet/</guid>
+      <guid>https://blog.salrashid.me/posts/cloud-functions-dotnet/</guid>
       <description>Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way.
 This is a sample application running a .NET Cloud Function as an HTTP Trigger. While GCF (Google Cloud Functions) currently only supports NodeJS, there are some techniques you can use to launch different language runtimes and delegate control of the socket to that runtime.</description>
     </item>
     
     <item>
       <title>Multi-stage Docker builds with .NET</title>
-      <link>https://salrashid123.github.io/posts/multi_stage_dotnet/</link>
+      <link>https://blog.salrashid.me/posts/multi_stage_dotnet/</link>
       <pubDate>Mon, 01 May 2017 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/multi_stage_dotnet/</guid>
+      <guid>https://blog.salrashid.me/posts/multi_stage_dotnet/</guid>
       <description>A colleague of mine recently pointed out an article by Travis Reeder regarding the new multi-stage docker builds for Go images:
  Multi-Stage Docker Builds for Creating Tiny Go Images I’ve talked about how to make tiny Docker images a fair bit in the past, but now that Docker has multi-stage builds, it…  I didn’t even know about this upcoming feature so I decided to try it out on using a simple .</description>
     </item>
     
     <item>
       <title>.NET on GCP</title>
-      <link>https://salrashid123.github.io/posts/gcpdotnet/</link>
+      <link>https://blog.salrashid.me/posts/gcpdotnet/</link>
       <pubDate>Sun, 24 Apr 2016 14:34:01 -0800</pubDate>
       
-      <guid>https://salrashid123.github.io/posts/gcpdotnet/</guid>
+      <guid>https://blog.salrashid.me/posts/gcpdotnet/</guid>
       <description>12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&amp;rsquo;m leavig it up as a matter of record)
  Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
 These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
