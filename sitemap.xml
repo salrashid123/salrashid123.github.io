@@ -17,13 +17,6 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/composer_gcf/</loc>
-    <lastmod>2019-05-30T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/posts/cloud_trace/</loc>
     <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -46,20 +39,6 @@
   
   <url>
     <loc>https://blog.salrashid.me/categories/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/cloudcomposer/</loc>
-    <lastmod>2019-05-30T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/cloudfunctions/</loc>
-    <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
@@ -101,13 +80,6 @@
   <url>
     <loc>https://blog.salrashid.me/tags/monitoring/</loc>
     <lastmod>2019-12-24T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/oidc/</loc>
-    <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>

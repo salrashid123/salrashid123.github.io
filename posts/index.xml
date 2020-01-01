@@ -23,17 +23,6 @@ What step 5 below shows is an inbound request to one microservice (/frontend) wh
     </item>
     
     <item>
-      <title>Calling Cloud Composer &gt; GCF &gt; Composer securely</title>
-      <link>https://blog.salrashid.me/posts/composer_gcf/</link>
-      <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/posts/composer_gcf/</guid>
-      <description>Sample Cloud Composer (Apache Airflow) configuration to securely invoke Cloud Functions or Cloud Run.
-In addition this sample shows inverse: how Cloud Functions can invoke a Composer DAG securely. While GCF-&amp;gt;Composer is documented here, the configuration detailed here is minimal and (to me), easier to read.
-Anyway, the following will setup cloud composer, then we will trigger composer to invoke a cloud function&amp;hellip;the cloud function will just trigger a different cloud composer endpoint&amp;hellip;.</description>
-    </item>
-    
-    <item>
       <title>Google Cloud Trace context propagation and metrics graphs with Grafana&#43;Prometheus and Stackdriver</title>
       <link>https://blog.salrashid.me/posts/cloud_trace/</link>
       <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
