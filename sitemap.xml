@@ -17,13 +17,6 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/cloud_trace/</loc>
-    <lastmod>2019-05-30T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/posts/binary_auth_demo/</loc>
     <lastmod>2019-05-01T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -39,13 +32,6 @@
   
   <url>
     <loc>https://blog.salrashid.me/categories/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/cloudtrace/</loc>
-    <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
@@ -92,13 +78,6 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/prometheus/</loc>
-    <lastmod>2019-05-30T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/tags/stackdriver/</loc>
     <lastmod>2019-12-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -107,7 +86,7 @@
   
   <url>
     <loc>https://blog.salrashid.me/tags/</loc>
-    <lastmod>2019-05-30T14:34:01-08:00</lastmod>
+    <lastmod>2016-04-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>

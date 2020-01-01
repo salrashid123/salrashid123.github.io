@@ -6,19 +6,10 @@
     <description>Recent content in Tags on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 May 2019 14:34:01 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 24 Apr 2016 14:34:01 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.salrashid.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Cloudtrace</title>
-      <link>https://blog.salrashid.me/tags/cloudtrace/</link>
-      <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/cloudtrace/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Dotnet</title>
@@ -62,15 +53,6 @@
       <pubDate>Tue, 24 Dec 2019 14:34:01 -0800</pubDate>
       
       <guid>https://blog.salrashid.me/tags/opentelemetry/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Prometheus</title>
-      <link>https://blog.salrashid.me/tags/prometheus/</link>
-      <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/prometheus/</guid>
       <description></description>
     </item>
     

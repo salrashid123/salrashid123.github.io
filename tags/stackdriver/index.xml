@@ -22,14 +22,5 @@ This is a simple frontend-backend application you can run on your laptop which d
 What step 5 below shows is an inbound request to one microservice (/frontend) which emits some subspans, then makes an http call to a backend app (/backend) which also emits some spans. The final trace you see is a combined end-to-end trace between microservices.</description>
     </item>
     
-    <item>
-      <title>Google Cloud Trace context propagation and metrics graphs with Grafana&#43;Prometheus and Stackdriver</title>
-      <link>https://blog.salrashid.me/posts/cloud_trace/</link>
-      <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/posts/cloud_trace/</guid>
-      <description>I wanted to understand how to setup a standalone golang app that integrated Opencensus specifically for Tracing and Metrics. The type of tracing i was after was both automatic and between web requests. By automatic i mean if you initialize opencensus and then directly use a supporting library to access a resrouce (eg. Google Cloud Storage client), tracing information about specific actions within the GCS call is rendered (eg, time taken for each individual get/put operation).</description>
-    </item>
-    
   </channel>
 </rss>
