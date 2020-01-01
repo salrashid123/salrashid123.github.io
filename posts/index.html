@@ -177,69 +177,6 @@ What step 5 below shows is an inbound request to one microservice (/frontend) wh
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/tpm2_evp_sign_decrypt/" class="link black dim">
-        TPM2-TSS-Engine hello world and Google Cloud Authentication 
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Basic application that uses a the tpm2-tss-engine to perform RSA encryption and signatures.
-This is intended to run on a system with a TPM as well as the the openssl engine library installed. The TPM-based private key is generated directly using tpm2tss-genkey and from that, the openssl engine to surface the public part. The tpm2-tss-engine surfaces the OpenSSL constructs like EVP_PKEY_RSA so you can directly use that against the TPM
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gpg_tpm_ssh/" class="link black dim">
-        Google Cloud SSH with OS-Login with YubiKey OpenSC-PKCS11 and Trusted Platform Module (TPM) based keys
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      or &ldquo;How to embed SSH private keys into a Yubikey or TPM&rdquo;. First off, this is nothing new; its a rehash of decade old tech that i decided to try out since i happens to have a YubiKey Neo and familiarity with Trusted Platform Module on a GCP Shielded VM.
-Both the Yubikey Neo and TPM have one common capability here which this tutorial covers: embedding an RSA private key inextricably into a hardware device and provide an interface to sign arbitrary data using that key.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/envoy_ratelimit/" class="link black dim">
-        Envoy Global rate limiting helloworld
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sample &ldquo;hello world&rdquo; application demonstrating basic aspects fo Envoy&rsquo;s Global Rate Limiting capability. This app configures a local envoy instance for an HTTP level rate limit filter and then uses Lyft&rsquo;s RateLimit Service as the backend.
-Envoy&rsquo;s rate limit functions checks each request to see if it should go through or not either using a local instance specific criteria or globally. By local, the rate limit counter runs within the context of the single envoy proxy that handles the request.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/writing_developer_logs_gcp/" class="link black dim">
-        Writing Developer logs with Google Cloud Logging
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Several months ago Google Cloud Logging introduced two new monitored resource types geared towards allowing developers to emit cloud logging messages for their own application centric logs. Pereviously, application logs generally had to be tied to existing predefined monitored_resources such as GCE, GKE, AppEngine, Dataflow and so on. Under those monitoried resources sources, multiple log entries were attributed to specific logNames describing the subsystem like syslog, apache2, nginx, mysql, etc.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
       <a href="https://blog.salrashid.me/posts/composer_gcf/" class="link black dim">
         Calling Cloud Composer &gt; GCF &gt; Composer securely
       </a>
@@ -272,14 +209,13 @@ Anyway, the following will setup cloud composer, then we will trigger composer t
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/clam_av/" class="link black dim">
-        Anti Virus file scanning on Google Cloud Storage using ClamAV
+      <a href="https://blog.salrashid.me/posts/binary_auth_demo/" class="link black dim">
+        GCP Binary Authorization and Vulnerability Scanning Demo
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Tutorial on how to use ClamAV to scan files uploaded to Google Cloud Storage (GCS).
-GCS does not have any built in capability to scan or do any other type of preprocessing on its files and relies on other services to perform these steps. In this tutorial, we will process a file that gets uploaded to GCS for viruses, malware, etc using ClamAV.
-Architecture The basic flow outlined here is:
+      Sample application for GCP Binary Authorization + Vulernability Scanner.
+ Creates GKE cluster with Binary Authorization Enables Binary Authoriztion policy on cluster Cloud Builder workflow checks checked in code to Cloud Source repository  Builds container image and pushes to Cloud Container Registry Binary Auhorization step waits for Vulernability Scan to complete If Vulernability Scanner Fails, Deployment Fails If Succeeds, the imae is authorized for deployment to GKE    Note: this sample uses one cloud builder configuration to both build the image and do attestation.
     </div>
   </div>
 </div>
@@ -289,95 +225,28 @@ Architecture The basic flow outlined here is:
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/automatic_oidc/" class="link black dim">
-        Automatic OIDC:  Using Cloud Scheduler, Tasks, and PubSub to make authenticated calls to Cloud Run, Cloud Functions or your Server
+      <a href="https://blog.salrashid.me/posts/gcpdotnet/" class="link black dim">
+        .NET on GCP
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      This is a second in a series related to a versatile feature in Cloud Scheduler and Cloud Tasks and Cloud PubSub that automatically emits google OpenIDConnect and oauth2 access_token to outbound webhook calls. When a Scheduled task fires and calls an HTTP endpoint, it can automatically carry credentials to authenticate itself. The id_token credential can then get validated at the HTTP web-hook target using well known techniques (i.,e validate the signature and aud: fields in the token).
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gcr_stats/" class="link black dim">
-        Google Container Registry statistics from GCS access_logs
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sample flow to extract Google Container Registry usage statistics (image push/pull counts, analytics, etc). GCR images are hosted on Google Cloud Storage which does have the ability to export usage which means we can indirectly acquire GCR&rsquo;s usage.
-There are several step sto getting the following pipeline to work but in is basic form, we setup GCS bucket used by GCR to export its usage stats to another GCS bucket.
+      12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
+ Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
+The example here uses Microsofts&rsquo;s .NET Core 1.
     </div>
   </div>
 </div>
 </div>
       
     </section>
-
-<ul class="pagination">
-    
-    <li class="page-item">
-        <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-    </li>
-    
-    <li class="page-item disabled">
-    <a href="" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-    </li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item active"><a class="page-link" href="/posts/">1</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/2/">2</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/3/">3</a></li>
-    
-    
-    <li class="page-item">
-    <a href="/posts/page/2/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-    </li>
-    
-    <li class="page-item">
-        <a href="/posts/page/3/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-    </li>
-    
-</ul>
 </article>
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.salrashid.me/" >
-    &copy; 2019 blog.salrashid.me
+    &copy; 2020 blog.salrashid.me
   </a>
     <div>
 

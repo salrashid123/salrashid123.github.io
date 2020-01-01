@@ -178,95 +178,6 @@ Anyway, the following will setup cloud composer, then we will trigger composer t
 
         </div>
       
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/clam_av/" class="link black dim">
-        Anti Virus file scanning on Google Cloud Storage using ClamAV
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Tutorial on how to use ClamAV to scan files uploaded to Google Cloud Storage (GCS).
-GCS does not have any built in capability to scan or do any other type of preprocessing on its files and relies on other services to perform these steps. In this tutorial, we will process a file that gets uploaded to GCS for viruses, malware, etc using ClamAV.
-Architecture The basic flow outlined here is:
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/automatic_oidc/" class="link black dim">
-        Automatic OIDC:  Using Cloud Scheduler, Tasks, and PubSub to make authenticated calls to Cloud Run, Cloud Functions or your Server
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      This is a second in a series related to a versatile feature in Cloud Scheduler and Cloud Tasks and Cloud PubSub that automatically emits google OpenIDConnect and oauth2 access_token to outbound webhook calls. When a Scheduled task fires and calls an HTTP endpoint, it can automatically carry credentials to authenticate itself. The id_token credential can then get validated at the HTTP web-hook target using well known techniques (i.,e validate the signature and aud: fields in the token).
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gcr_stats/" class="link black dim">
-        Google Container Registry statistics from GCS access_logs
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sample flow to extract Google Container Registry usage statistics (image push/pull counts, analytics, etc). GCR images are hosted on Google Cloud Storage which does have the ability to export usage which means we can indirectly acquire GCR&rsquo;s usage.
-There are several step sto getting the following pipeline to work but in is basic form, we setup GCS bucket used by GCR to export its usage stats to another GCS bucket.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gpg_gcf/" class="link black dim">
-        GPG stream encryption and decryption on Google Cloud Functions and Cloud Run
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      About a year+ ago a colleague of mine (Daz Wilkin) asked me how best to decompress/unzip a file using Google Cloud Functions. The suggestion ended as a sample he provided demonstrating the stream-read-&gt;stream-write pattern with the pertinent input-outputs (input: unziped file; output zipped file). The distinct advantage of stream processing the unzip function is that the data is never held in memory: as the unzipped content gets processed by GCF, its promptly written as a zip file to GCS.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/cloud-functions-dotnet/" class="link black dim">
-        .NET on Google Cloud Functions
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way.
-This is a sample application running a .NET Cloud Function as an HTTP Trigger. While GCF (Google Cloud Functions) currently only supports NodeJS, there are some techniques you can use to launch different language runtimes and delegate control of the socket to that runtime.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
     </section>
   </div>
 
@@ -274,7 +185,7 @@ This is a sample application running a .NET Cloud Function as an HTTP Trigger. W
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.salrashid.me/" >
-    &copy; 2019 blog.salrashid.me
+    &copy; 2020 blog.salrashid.me
   </a>
     <div>
 

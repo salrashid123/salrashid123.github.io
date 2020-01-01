@@ -6,19 +6,10 @@
     <description>Recent content in Tags on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 May 2019 14:34:01 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 30 May 2019 14:34:01 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.salrashid.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Anti Virus</title>
-      <link>https://blog.salrashid.me/tags/anti-virus/</link>
-      <pubDate>Mon, 27 May 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/anti-virus/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Cloudcomposer</title>
@@ -39,24 +30,6 @@
     </item>
     
     <item>
-      <title>Cloudrun</title>
-      <link>https://blog.salrashid.me/tags/cloudrun/</link>
-      <pubDate>Mon, 20 May 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/cloudrun/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Cloudstorage</title>
-      <link>https://blog.salrashid.me/tags/cloudstorage/</link>
-      <pubDate>Mon, 27 May 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/cloudstorage/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Cloudtrace</title>
       <link>https://blog.salrashid.me/tags/cloudtrace/</link>
       <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
@@ -66,92 +39,11 @@
     </item>
     
     <item>
-      <title>Computeengine</title>
-      <link>https://blog.salrashid.me/tags/computeengine/</link>
-      <pubDate>Wed, 17 Aug 2016 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/computeengine/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Computengine</title>
-      <link>https://blog.salrashid.me/tags/computengine/</link>
-      <pubDate>Mon, 04 Nov 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/computengine/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Containerregistry</title>
-      <link>https://blog.salrashid.me/tags/containerregistry/</link>
-      <pubDate>Mon, 20 May 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/containerregistry/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Docker</title>
-      <link>https://blog.salrashid.me/tags/docker/</link>
-      <pubDate>Mon, 01 May 2017 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/docker/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Dotnet</title>
       <link>https://blog.salrashid.me/tags/dotnet/</link>
-      <pubDate>Fri, 28 Jul 2017 14:34:01 -0800</pubDate>
+      <pubDate>Sun, 24 Apr 2016 14:34:01 -0800</pubDate>
       
       <guid>https://blog.salrashid.me/tags/dotnet/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Emulators</title>
-      <link>https://blog.salrashid.me/tags/emulators/</link>
-      <pubDate>Sun, 11 Sep 2016 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/emulators/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Envoy</title>
-      <link>https://blog.salrashid.me/tags/envoy/</link>
-      <pubDate>Tue, 22 Oct 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/envoy/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Fluentd</title>
-      <link>https://blog.salrashid.me/tags/fluentd/</link>
-      <pubDate>Mon, 01 Jul 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/fluentd/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Gcds</title>
-      <link>https://blog.salrashid.me/tags/gcds/</link>
-      <pubDate>Thu, 29 Dec 2016 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/gcds/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Gcloud</title>
-      <link>https://blog.salrashid.me/tags/gcloud/</link>
-      <pubDate>Sun, 11 Sep 2016 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/gcloud/</guid>
       <description></description>
     </item>
     
@@ -165,83 +57,11 @@
     </item>
     
     <item>
-      <title>Gpg</title>
-      <link>https://blog.salrashid.me/tags/gpg/</link>
-      <pubDate>Sun, 28 Apr 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/gpg/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Grpc</title>
-      <link>https://blog.salrashid.me/tags/grpc/</link>
-      <pubDate>Sat, 26 Aug 2017 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/grpc/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Gsuites</title>
-      <link>https://blog.salrashid.me/tags/gsuites/</link>
-      <pubDate>Thu, 29 Dec 2016 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/gsuites/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Iam</title>
-      <link>https://blog.salrashid.me/tags/iam/</link>
-      <pubDate>Thu, 19 Jan 2017 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/iam/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Identityplatform</title>
-      <link>https://blog.salrashid.me/tags/identityplatform/</link>
-      <pubDate>Thu, 29 Dec 2016 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/identityplatform/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Kubernetes</title>
       <link>https://blog.salrashid.me/tags/kubernetes/</link>
       <pubDate>Wed, 01 May 2019 14:34:01 -0800</pubDate>
       
       <guid>https://blog.salrashid.me/tags/kubernetes/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Ldap</title>
-      <link>https://blog.salrashid.me/tags/ldap/</link>
-      <pubDate>Thu, 29 Dec 2016 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/ldap/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Logging</title>
-      <link>https://blog.salrashid.me/tags/logging/</link>
-      <pubDate>Mon, 01 Jul 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/logging/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Metadata</title>
-      <link>https://blog.salrashid.me/tags/metadata/</link>
-      <pubDate>Wed, 17 Aug 2016 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/metadata/</guid>
       <description></description>
     </item>
     
@@ -255,18 +75,9 @@
     </item>
     
     <item>
-      <title>Oauth2</title>
-      <link>https://blog.salrashid.me/tags/oauth2/</link>
-      <pubDate>Thu, 28 Nov 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/oauth2/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Oidc</title>
       <link>https://blog.salrashid.me/tags/oidc/</link>
-      <pubDate>Thu, 28 Nov 2019 14:34:01 -0800</pubDate>
+      <pubDate>Thu, 30 May 2019 14:34:01 -0800</pubDate>
       
       <guid>https://blog.salrashid.me/tags/oidc/</guid>
       <description></description>
@@ -291,74 +102,11 @@
     </item>
     
     <item>
-      <title>Pubsub</title>
-      <link>https://blog.salrashid.me/tags/pubsub/</link>
-      <pubDate>Mon, 20 May 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/pubsub/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Saml</title>
-      <link>https://blog.salrashid.me/tags/saml/</link>
-      <pubDate>Thu, 28 Jul 2016 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/saml/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Serviceaccount</title>
-      <link>https://blog.salrashid.me/tags/serviceaccount/</link>
-      <pubDate>Thu, 19 Jan 2017 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/serviceaccount/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Sso</title>
-      <link>https://blog.salrashid.me/tags/sso/</link>
-      <pubDate>Thu, 29 Dec 2016 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/sso/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Stackdriver</title>
       <link>https://blog.salrashid.me/tags/stackdriver/</link>
       <pubDate>Tue, 24 Dec 2019 14:34:01 -0800</pubDate>
       
       <guid>https://blog.salrashid.me/tags/stackdriver/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Terraform</title>
-      <link>https://blog.salrashid.me/tags/terraform/</link>
-      <pubDate>Sun, 28 Apr 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/terraform/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Tpm</title>
-      <link>https://blog.salrashid.me/tags/tpm/</link>
-      <pubDate>Mon, 04 Nov 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/tpm/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Yubikey</title>
-      <link>https://blog.salrashid.me/tags/yubikey/</link>
-      <pubDate>Mon, 04 Nov 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/yubikey/</guid>
       <description></description>
     </item>
     

@@ -17,34 +17,6 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/tpm2_evp_sign_decrypt/</loc>
-    <lastmod>2019-11-28T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/gpg_tpm_ssh/</loc>
-    <lastmod>2019-11-04T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/envoy_ratelimit/</loc>
-    <lastmod>2019-10-22T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/writing_developer_logs_gcp/</loc>
-    <lastmod>2019-07-01T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/posts/composer_gcf/</loc>
     <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -59,127 +31,8 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/posts/clam_av/</loc>
-    <lastmod>2019-05-27T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/automatic_oidc/</loc>
-    <lastmod>2019-05-20T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/gcr_stats/</loc>
-    <lastmod>2019-05-20T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/automatic_oauth2/</loc>
-    <lastmod>2019-05-20T13:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/posts/binary_auth_demo/</loc>
     <lastmod>2019-05-01T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/gpg_gcf/</loc>
-    <lastmod>2019-04-28T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/terraform_gcp_impersonation/</loc>
-    <lastmod>2019-04-28T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/gcs_post_signedurl_js/</loc>
-    <lastmod>2019-04-28T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/grpc_curl/</loc>
-    <lastmod>2017-08-26T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/cloud-functions-dotnet/</loc>
-    <lastmod>2017-07-28T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/multi_stage_dotnet/</loc>
-    <lastmod>2017-05-01T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/svc_impersonation/</loc>
-    <lastmod>2017-01-19T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/google_cloud_directory_sync/</loc>
-    <lastmod>2016-12-29T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/gcpemulator/</loc>
-    <lastmod>2016-09-11T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/gce_metadata_server/</loc>
-    <lastmod>2016-08-17T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/googlapps-sso/</loc>
-    <lastmod>2016-07-28T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/gcpsamples/</loc>
-    <lastmod>2016-07-25T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/posts/kubehelloworld/</loc>
-    <lastmod>2016-07-19T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -189,13 +42,6 @@
     <lastmod>2016-04-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/anti-virus/</loc>
-    <lastmod>2019-05-27T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -219,20 +65,6 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/cloudrun/</loc>
-    <lastmod>2019-05-20T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/cloudstorage/</loc>
-    <lastmod>2019-05-27T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/tags/cloudtrace/</loc>
     <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -240,36 +72,8 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/computeengine/</loc>
-    <lastmod>2016-08-17T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/computengine/</loc>
-    <lastmod>2019-11-04T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/containerregistry/</loc>
-    <lastmod>2019-05-20T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/docker/</loc>
-    <lastmod>2017-05-01T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/tags/dotnet/</loc>
-    <lastmod>2017-07-28T14:34:01-08:00</lastmod>
+    <lastmod>2016-04-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
@@ -281,78 +85,8 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/emulators/</loc>
-    <lastmod>2016-09-11T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/envoy/</loc>
-    <lastmod>2019-10-22T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/fluentd/</loc>
-    <lastmod>2019-07-01T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/gcds/</loc>
-    <lastmod>2016-12-29T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/gcloud/</loc>
-    <lastmod>2016-09-11T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/tags/gke/</loc>
     <lastmod>2019-05-01T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/gpg/</loc>
-    <lastmod>2019-04-28T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/grpc/</loc>
-    <lastmod>2017-08-26T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/gsuites/</loc>
-    <lastmod>2016-12-29T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/iam/</loc>
-    <lastmod>2017-01-19T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/identityplatform/</loc>
-    <lastmod>2016-12-29T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
@@ -365,27 +99,6 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/ldap/</loc>
-    <lastmod>2016-12-29T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/logging/</loc>
-    <lastmod>2019-07-01T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/metadata/</loc>
-    <lastmod>2016-08-17T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/tags/monitoring/</loc>
     <lastmod>2019-12-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -393,15 +106,8 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/oauth2/</loc>
-    <lastmod>2019-11-28T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/tags/oidc/</loc>
-    <lastmod>2019-11-28T14:34:01-08:00</lastmod>
+    <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
@@ -421,34 +127,6 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/tags/pubsub/</loc>
-    <lastmod>2019-05-20T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/saml/</loc>
-    <lastmod>2016-07-28T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/serviceaccount/</loc>
-    <lastmod>2017-01-19T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/sso/</loc>
-    <lastmod>2016-12-29T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/tags/stackdriver/</loc>
     <lastmod>2019-12-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -457,28 +135,7 @@
   
   <url>
     <loc>https://blog.salrashid.me/tags/</loc>
-    <lastmod>2019-05-27T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/terraform/</loc>
-    <lastmod>2019-04-28T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/tpm/</loc>
-    <lastmod>2019-11-04T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/yubikey/</loc>
-    <lastmod>2019-11-04T14:34:01-08:00</lastmod>
+    <lastmod>2019-05-30T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
