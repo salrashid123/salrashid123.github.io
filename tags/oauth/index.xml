@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Oauth on nonbei alley</title>
+    <link>https://blog.salrashid.me/tags/oauth/</link>
+    <description>Recent content in Oauth on nonbei alley</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Jan 2020 14:34:01 -0800</lastBuildDate>
+    
+	<atom:link href="https://blog.salrashid.me/tags/oauth/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Google Cloud KMS based Service Accounts for Authentication and SignedURLs</title>
+      <link>https://blog.salrashid.me/posts/kms_service_accounts/</link>
+      <pubDate>Mon, 06 Jan 2020 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/kms_service_accounts/</guid>
+      <description>The following procedure details how to embed a Google Cloud KMS key as a Service Account.
+There are two ways to associate a Service Account with a KMS key:
+ Create a private key within KMS and then associate a Service Account with it. or Create a Service Account keypair; export the private key and import that key into KMS.  Once the Serivce Account private key is within KMS, you can do several things:</description>
+    </item>
+    
+  </channel>
+</rss>

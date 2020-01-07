@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>nonbei alley  | Google Cloud KMS based Service Accounts for Authentication and SignedURLs</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Google Cloud KMS based Service Accounts for Authentication and SignedURLs" />
+<meta property="og:description" content="The following procedure details how to embed a Google Cloud KMS key as a Service Account.
+There are two ways to associate a Service Account with a KMS key:
+ Create a private key within KMS and then associate a Service Account with it. or Create a Service Account keypair; export the private key and import that key into KMS.  Once the Serivce Account private key is within KMS, you can do several things:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.salrashid.me/posts/kms_service_accounts/" />
+<meta property="article:published_time" content="2020-01-06T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2020-01-06T14:34:01-08:00"/>
+
+<meta itemprop="name" content="Google Cloud KMS based Service Accounts for Authentication and SignedURLs">
+<meta itemprop="description" content="The following procedure details how to embed a Google Cloud KMS key as a Service Account.
+There are two ways to associate a Service Account with a KMS key:
+ Create a private key within KMS and then associate a Service Account with it. or Create a Service Account keypair; export the private key and import that key into KMS.  Once the Serivce Account private key is within KMS, you can do several things:">
+
+
+<meta itemprop="datePublished" content="2020-01-06T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2020-01-06T14:34:01-08:00" />
+<meta itemprop="wordCount" content="1420">
+
+
+
+<meta itemprop="keywords" content="kms,gcs,oauth," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Google Cloud KMS based Service Accounts for Authentication and SignedURLs"/>
+<meta name="twitter:description" content="The following procedure details how to embed a Google Cloud KMS key as a Service Account.
+There are two ways to associate a Service Account with a KMS key:
+ Create a private key within KMS and then associate a Service Account with it. or Create a Service Account keypair; export the private key and import that key into KMS.  Once the Serivce Account private key is within KMS, you can do several things:"/>
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-155117088-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://blog.salrashid.me/posts/kms_service_accounts/images/key2.png');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog.salrashid.me/" class="f3 fw2 hover-white no-underline white-90 dib">
+      nonbei alley
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">Google Cloud KMS based Service Accounts for Authentication and SignedURLs</h1>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Google Cloud KMS based Service Accounts for Authentication and SignedURLs</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-01-06T14:34:01-08:00">January 6, 2020</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>The following procedure details how to embed a Google Cloud KMS key as a Service Account.</p>
+
+<p>There are two ways to associate a Service Account with a KMS key:</p>
+
+<ol>
+<li>Create a private key within KMS and then associate a Service Account with it.
+or</li>
+<li>Create a Service Account keypair; export the private key and import that key into KMS.</li>
+</ol>
+
+<p>Once the Serivce Account private key is within KMS, you can do several things:</p>
+
+<ol>
+<li>Authenticate as that service account to a variety of GCP Services</li>
+<li>Generate a <a href="https://cloud.google.com/storage/docs/access-control/signed-urls">GCS SignedURL</a> (or generally sign some data)</li>
+</ol>
+
+<p>Ofcourse not matter what you do, you must have IAM access to the KMS key itself before you do anything.  In the case where you&rsquo;re authenticating against a GCP API, you could just have direct access to the target resource but if policies madate you need to use KMS based keys for some reason, you can use this procedure (note, if you just want to impersonate a service account itself to sign or authenticate, consider <a href="https://github.com/salrashid123/oauth2#usage-impersonatedcredentials">Impersonated TokenSOurce</a>)</p>
+
+<blockquote>
+<blockquote>
+<p>Note: this code is <em>NOT</em> supported by Google.  <em>caveat empotor</em></p>
+</blockquote>
+</blockquote>
+
+<h2 id="core-library-implementation-cryto-signer-for-kms">Core library implementation: cryto.Signer for KMS</h2>
+
+<p>The core library used in this sample is an implementation of the <a href="https://golang.org/pkg/crypto/#Signer">crypto.Signer</a> interface in golang for KMS.  The <code>Signer</code> implementation allows developers to use higher-level golang constructs to do a variety of things that rely on cryptographic signing such as using <code>net/http</code> directly for mTLS.  However, in our case, we will use the signing interface to generate a <a href="https://cloud.google.com/storage/docs/access-control/signed-urls">SignedURL</a> and also use it within <a href="https://godoc.org/golang.org/x/oauth2#TokenSource">oauth2 TokenSource</a> that relies on serive account signatures for authentication.</p>
+
+<p>For reference, see:</p>
+
+<ul>
+<li><p>GCP Authentication</p>
+
+<ul>
+<li><a href="https://github.com/salrashid123/oauth2#usage-kmstokensource">KMSTokenSource</a></li>
+</ul></li>
+
+<li><p>KMS based Signer:</p>
+
+<ul>
+<li><a href="https://github.com/salrashid123/signer">https://github.com/salrashid123/signer</a></li>
+<li><a href="https://github.com/salrashid123/kms_golang_signer">KMS golang Signer</a></li>
+</ul></li>
+
+<li><p>KMS based mTLS</p>
+
+<ul>
+<li><a href="https://medium.com/google-cloud/mtls-with-google-cloud-kms-fb17f3ed8219">mTLS with KMS</a></li>
+</ul></li>
+</ul>
+
+<h3 id="setup">Setup</h3>
+
+<p>The steps below will setup two KMS keys:  (1) one where you first generate a service account keypair and then import it into KMS and (2) one where you generate the a key within KMS and then associate it to an ServiceAccount.</p>
+
+<p>In the first technique, the private key for a service account is exposed outside of KMS control (i.e, the private key at one point exists on disk).  In the second, the private key never exists out of KMS control.  The second option is significantly better since the chain of custoday of the key becomes irrelevant.  However, you must ensure the association step to link the public certificate for the service account to the KMS key is carefully controlled.</p>
+
+<p>Anyway, perform the following steps in the same shell (since we use several env-vars together)</p>
+
+<p>1) first setup some environment variables</p>
+
+<pre><code class="language-bash">export PROJECT_ID=`gcloud config get-value core/project`
+export PROJECT_NUMBER=`gcloud projects describe $PROJECT_ID --format=&quot;value(projectNumber)&quot;`
+export SERVICE_ACCOUNT_EMAIL=kms-svc-account@$PROJECT_ID.iam.gserviceaccount.com
+</code></pre>
+
+<p>2) create a service account (we will need this later)</p>
+
+<pre><code class="language-bash">gcloud iam service-accounts create kms-svc-account --display-name &quot;KMS Service Account&quot;
+gcloud iam service-accounts describe $SERVICE_ACCOUNT_EMAIL
+</code></pre>
+
+<p>3) create a bucket and topic to test authentication:</p>
+
+<pre><code class="language-bash">export BUCKET_NAME=$PROJECT_ID-bucket
+export TOPIC_NAME=$PROJECT_ID-topic
+
+gsutil mb gs://$BUCKET_NAME
+echo bar &gt; foo.txt
+gsutil cp foo.txt gs://$BUCKET_NAME/
+gcloud pubsub topics create $TOPIC_NAME
+</code></pre>
+
+<p>4) Allow the service account access to gcs and pubsub</p>
+
+<pre><code class="language-bash"> gcloud projects add-iam-policy-binding $PROJECT_ID     --member=serviceAccount:$SERVICE_ACCOUNT_EMAIL    --role=roles/storage.admin
+ gcloud projects add-iam-policy-binding $PROJECT_ID     --member=serviceAccount:$SERVICE_ACCOUNT_EMAIL    --role=roles/pubsub.admin
+</code></pre>
+
+<p>5) create a keyring:</p>
+
+<pre><code class="language-bash">export LOCATION=us-central1
+export KEYRING_NAME=mycacerts
+export KEY_NAME=key1
+
+gcloud kms keyrings create $KEYRING_NAME --location=$LOCATION
+</code></pre>
+
+<hr />
+
+<h3 id="import-service-account-private-key-to-kms-sa-kms">Import Service Account Private Key to KMS (SA -&gt; KMS)</h3>
+
+<p>In this mode, you first generate a keypair for a Service Account, download it and then import it into KMS as described in <a href="https://cloud.google.com/kms/docs/importing-a-key">Importing a key into Cloud KMS</a>.</p>
+
+<p>The specific steps to follow are:</p>
+
+<p>a. Download <code>.p12</code> key and convert to <code>pem</code>
+b. Create ImportJob
+c. Format  <code>pem</code> key for import
+d. Import formatted key to kms via importJob
+e. Delete the <code>.p12</code> and <code>.pem</code> files on disk</p>
+
+<p>A) Create Service Account Key as .p12</p>
+
+<pre><code class="language-bash">$ gcloud iam service-accounts keys create svc_account.p12 --iam-account=$SERVICE_ACCOUNT_EMAIL --key-file-type=p12
+</code></pre>
+
+<p>for example:</p>
+
+<pre><code class="language-bash">$ gcloud iam service-accounts keys list --iam-account=$SERVICE_ACCOUNT_EMAIL
+KEY_ID                                    CREATED_AT            EXPIRES_AT
+ce4ceffd5f9c8b399df9bf7b5c13327dab65f180  2020-01-07T00:11:07Z  9999-12-31T23:59:59Z &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;  this is the new key
+1f1a216c7e08119926144ad443e6a8e3ec5b9c59  2020-01-07T00:05:47Z  2022-01-13T10:00:31Z
+</code></pre>
+
+<p>Convert to PEM</p>
+
+<pre><code class="language-bash">$ openssl pkcs12 -in svc_account.p12  -nocerts -nodes -passin pass:notasecret | openssl rsa -out privkey.pem
+</code></pre>
+
+<p>B) Create ImportJob</p>
+
+<p>Since we already cretae the keyring in the setup steps, we will just create the import job</p>
+
+<pre><code class="language-bash">export IMPORT_JOB=saimporter
+export VERSION=1
+
+
+$ gcloud beta kms import-jobs create $IMPORT_JOB \
+  --location $LOCATION \
+  --keyring $KEYRING_NAME \
+  --import-method rsa-oaep-3072-sha1-aes-256 \
+  --protection-level hsm
+
+
+$ gcloud kms import-jobs describe $IMPORT_JOB \
+  --location $LOCATION \
+  --keyring $KEYRING_NAME
+</code></pre>
+
+<p>C) Format  <code>pem</code> key for import</p>
+
+<pre><code class="language-bash">$ openssl pkcs8 -topk8 -nocrypt -inform PEM -outform DER     -in privkey.pem     -out formatted.pem
+</code></pre>
+
+<p>D) Import formatted via importJob</p>
+
+<pre><code class="language-bash">$ gcloud kms keys create $KEY_NAME --keyring=$KEYRING_NAME --purpose=asymmetric-signing  --default-algorithm=rsa-sign-pkcs1-2048-sha256 --skip-initial-version-creation --location=$LOCATION --protection-level=hsm
+
+$ gcloud kms keys versions import   --import-job $IMPORT_JOB   --location $LOCATION   --keyring $KEYRING_NAME   --key $KEY_NAME   --algorithm rsa-sign-pkcs1-2048-sha256   --target-key-file formatted.pem
+</code></pre>
+
+<p>The service account key should now exists within KMS:</p>
+
+<p><img src="images/imported_key.png" alt="images/imported_key.png" /></p>
+
+<p>Finally, enable KMS key audit logs so we can see how its being used:</p>
+
+<p><img src="images/kms_audit_log.png" alt="images/kms_audit_log.png" /></p>
+
+<h4 id="test">Test</h4>
+
+<p>Edit Test client <code>main.go</code> and update the the variables defined shown in the <code>var()</code> area. Note, <code>keyId</code> is optional</p>
+
+<p>Run test client</p>
+
+<pre><code class="language-bash">go run main.go
+</code></pre>
+
+<p>You should see the output sequence:</p>
+
+<p>a) A signed URL</p>
+
+<pre><code>$ go run main.go 
+
+2020/01/06 16:52:38 https://storage.googleapis.com/sd-test-246101-bucket/foo.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&amp;X-Goog-Credential=kms-svc-account%40sd-test-246101.iam.gserviceaccount.com%2F20200107%2Fauto%2Fstorage%2Fgoog4_request&amp;X-Goog-Date=20200107T005237Z&amp;X-Goog-Expires=599&amp;X-Goog-Signature=27252d06103f6bac842e1a383592cd5a42127f73c810769685e504737b442242f3aeebeddb08bd4aa3491b9162967158d4683f6bf72a91cf3ec0f23df4aa12236c8022295b7fc8610740f4736c938fee830b1027011ab081c461ea7b863ecc10c519fe6610f4711c49ca66f816bb80f79e041944756127a449e7405d6cbad4d3753403dff49361cc0223f8cc719493f3739859d022112edef9c3340bd723efe177e594c0cc8b2b8dccb86f725e5fbbbf53db8cd7cad11eb93116d9094baa7afe7128e4da50bbd3031174ede05c1396b7189ba21230b8a09001e308844d7c035b9e44d543a0b49548904c8c3b6eaf771d1df6b77c4b425739cf9122466b6e42af&amp;X-Goog-SignedHeaders=host
+</code></pre>
+
+<p>b) Response from an HTTP GET for that signedURL.</p>
+
+<p>In our case its the content of the file we uploaded earlier as well as a <code>200 OK</code> (which means the signedURL worked)</p>
+
+<pre><code>2020/01/06 16:52:38 SignedURL Response :
+ bar
+2020/01/06 16:52:40 Response: 200 OK
+</code></pre>
+
+<p>c) List of the pubsub topics for this project</p>
+
+<pre><code>2020/01/06 16:52:41 Topic: sd-test-246101-topic
+</code></pre>
+
+<p>d) List of the buckets on this project</p>
+
+<pre><code>2020/01/06 16:52:42 sd-test-246101-bucket
+</code></pre>
+
+<p>Finally, since we enabled audit logging, you should see the KMS API calls that got invoked.</p>
+
+<p>In this case its two invocations:  one for the SignedURL and one for the other cloud services apis:</p>
+
+<p><img src="images/key1_log.png" alt="images/key1_log.png" /></p>
+
+<hr />
+
+<h3 id="import-kms-public-certificate-as-service-account-kms-sa">Import KMS Public Certificate as Service Account (KMS -&gt; SA)</h3>
+
+<p>The follwoing procedure generates a key in KMS and associates its public certificte with a given ServiceAccount.  This procedure is basically describe here:
+- <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#uploading">Uploading public keys for service accounts</a></p>
+
+<p>a. Create a keyring
+   (if you haven&rsquo;t done so already)
+b. Create a key with KMS keymaterial/version
+c. Generate <code>x509</code> certificate for KMS key
+d. Create ServiceAccount
+   (if you havent done so already)
+e. Associate <code>x509</code> certificate with ServiceAccount</p>
+
+<p>Jumping straight to</p>
+
+<p>B) Create a key with KMS keymaterial/version</p>
+
+<pre><code class="language-bash">export KEY2_NAME=key2-imported
+
+gcloud kms keys create $KEY2_NAME --keyring=$KEYRING_NAME --purpose=asymmetric-signing  --default-algorithm=rsa-sign-pkcs1-2048-sha256  --location=$LOCATION 
+</code></pre>
+
+<blockquote>
+<blockquote>
+<p>note, unlike the key that we imported, this does not require HSM (i.,e you can omit <code>--protection-level=hsm</code>)</p>
+</blockquote>
+</blockquote>
+
+<p><img src="images/key2.png" alt="images/key2.png" /></p>
+
+<p>C) Generate <code>x509</code> certificate for KMS key</p>
+
+<p>ServiceAccount import requires a the public <code>x509</code> certificate but KMS does not surface an API for <code>x509</code> but rather the public <code>.pem</code> format for a kms key is all that is currently provided (see <a href="https://cloud.google.com/kms/docs/retrieve-public-key">cryptoKeyVersions.getPublicKey</a>)</p>
+
+<p>However, since we&rsquo;ve setup a <code>crypto.Singer</code> for cloud KMS, we can use it to genreate an x509 certificate pretty easily.</p>
+
+<p>Download <code>certgen.go</code>:</p>
+
+<pre><code class="language-bash"> wget https://raw.githubusercontent.com/salrashid123/signer/master/certgen/certgen.go
+</code></pre>
+
+<p>Edit the certgen and specify the variables you used for your project.  Note the keyname here can be <code>key2-imported</code></p>
+
+<pre><code class="language-golang">	r, err := salkms.NewKMSCrypto(&amp;salkms.KMS{
+		ProjectId:  &quot;yourproject&quot;,
+		LocationId: &quot;us-central1&quot;,
+		KeyRing:    &quot;mycacerts&quot;,
+		Key:        &quot;key2-imported&quot;,
+		KeyVersion: &quot;1&quot;,
+	})
+</code></pre>
+
+<p>Generte the x509 cert:</p>
+
+<pre><code class="language-bash">$ go run certgen.go --cn=$SERVICE_ACCOUNT_EMAIL
+2020/01/06 17:17:27 Creating public x509
+2020/01/06 17:17:28 wrote cert.pem
+</code></pre>
+
+<p>Note the certificate is x509 (the cn doens&rsquo;t atter but i&rsquo;ve set it to the service account name)</p>
+
+<pre><code class="language-bash">$ openssl x509 -in cert.pem -text -noout
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            f0:6e:7b:cf:2c:72:0d:8d:f9:16:38:61:ec:1e:a9:2d
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C = US, ST = California, L = Mountain View, O = Acme Co, OU = Enterprise, CN = kms-svc-account@sd-test-246101.iam.gserviceaccount.com
+        Subject: C = US, ST = California, L = Mountain View, O = Acme Co, OU = Enterprise, CN = kms-svc-account@sd-test-246101.iam.gserviceaccount.com
+</code></pre>
+
+<p>D) Associate <code>x509</code> certificate with ServiceAccount</p>
+
+<p>The final step here is to upload and associate the public key with the service account we already created:</p>
+
+<pre><code class="language-bash">$ gcloud alpha iam service-accounts keys upload cert.pem  --iam-account $SERVICE_ACCOUNT_EMAIL
+</code></pre>
+
+<p>You should see a new <code>KEY_ID</code> suddenly show up.  In my case it was:</p>
+
+<pre><code>$ gcloud iam service-accounts keys list --iam-account=$SERVICE_ACCOUNT_EMAIL
+KEY_ID                                    CREATED_AT            EXPIRES_AT
+ce4ceffd5f9c8b399df9bf7b5c13327dab65f180  2020-01-07T00:11:07Z  9999-12-31T23:59:59Z
+db8f0a5af9cf3bd211f4936ab7350788d4c774d8  2020-01-07T01:17:27Z  2021-01-06T01:17:27Z  &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+1f1a216c7e08119926144ad443e6a8e3ec5b9c59  2020-01-07T00:05:47Z  2022-01-13T10:00:31Z
+</code></pre>
+
+<h4 id="test-1">Test</h4>
+
+<p>Edit Test client <code>main.go</code> and update the the variables defined shown in the <code>var()</code> area. Note, <code>keyId</code> is optional.  Remember to update the <code>keyName</code> to <code>key2-imported</code> or whatever you setup earlier.</p>
+
+<p>Run test client</p>
+
+<pre><code class="language-bash">go run main.go
+</code></pre>
+
+<p>The output should be similar to the first procedure.</p>
+
+<p>woooo!!!</p>
+
+<h4 id="tpm-and-yubikey-based-signedurl-and-gcpauthentication">TPM and Yubikey based SignedURL and GCPAuthentication</h4>
+
+<p>You can redo the same procedure using a Trusted Platform Module (TPM) or even a Yubikey too!  I may add in an article about that shortly but for now, see:</p>
+
+<ul>
+<li><a href="https://github.com/salrashid123/signer">TPM Signer</a></li>
+<li><a href="https://github.com/salrashid123/oauth2#usage-tpmtokensource">TPMTokenSource</a></li>
+
+<li><p><a href="https://github.com/salrashid123/tpm2_evp_sign_decrypt">TPM2-TSS-Engine hello world and Google Cloud Authentication</a></p></li>
+
+<li><p><a href="https://medium.com/google-cloud/how-to-get-google-credentials-from-a-yubikey-3ba2ca97721f">YubiKey based TokenSource and Signer</a></p></li>
+</ul>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/kms" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">kms</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/gcs" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">gcs</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/oauth" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">oauth</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-salrashid-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/gae_signedurl/">GCS SignedURL with Google AppEngine Standard (1st gen)</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.salrashid.me/" >
+    &copy; 2020 nonbei alley
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

@@ -3,6 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.salrashid.me/posts/kms_service_accounts/</loc>
+    <lastmod>2020-01-06T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.salrashid.me/posts/</loc>
     <lastmod>2019-12-30T12:00:00-05:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -12,6 +19,13 @@
   <url>
     <loc>https://blog.salrashid.me/posts/opentelemetry_stackdriver/</loc>
     <lastmod>2019-12-24T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/posts/gae_signedurl/</loc>
+    <lastmod>2019-12-22T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -28,6 +42,13 @@
     <lastmod>2016-04-24T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/tags/appengine/</loc>
+    <lastmod>2019-12-22T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -50,8 +71,22 @@
   </url>
   
   <url>
+    <loc>https://blog.salrashid.me/tags/gcs/</loc>
+    <lastmod>2020-01-06T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.salrashid.me/tags/gke/</loc>
     <lastmod>2019-05-01T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/tags/kms/</loc>
+    <lastmod>2020-01-06T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
@@ -71,8 +106,22 @@
   </url>
   
   <url>
+    <loc>https://blog.salrashid.me/tags/oauth/</loc>
+    <lastmod>2020-01-06T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.salrashid.me/tags/opentelemetry/</loc>
     <lastmod>2019-12-24T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/tags/signedurl/</loc>
+    <lastmod>2019-12-22T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
@@ -86,14 +135,14 @@
   
   <url>
     <loc>https://blog.salrashid.me/tags/</loc>
-    <lastmod>2016-04-24T14:34:01-08:00</lastmod>
+    <lastmod>2019-12-22T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.salrashid.me/</loc>
-    <lastmod>2019-12-24T14:34:01-08:00</lastmod>
+    <lastmod>2020-01-06T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

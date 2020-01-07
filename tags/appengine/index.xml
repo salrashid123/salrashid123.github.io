@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Appengine on nonbei alley</title>
+    <link>https://blog.salrashid.me/tags/appengine/</link>
+    <description>Recent content in Appengine on nonbei alley</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 Dec 2019 14:34:01 -0800</lastBuildDate>
+    
+	<atom:link href="https://blog.salrashid.me/tags/appengine/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>GCS SignedURL with Google AppEngine Standard (1st gen)</title>
+      <link>https://blog.salrashid.me/posts/gae_signedurl/</link>
+      <pubDate>Sun, 22 Dec 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/gae_signedurl/</guid>
+      <description>Over the years, I&amp;rsquo;ve repeatedly had to setup samples that use Google AppEngine&amp;rsquo;s (v1) to generate a SignedURL.
+The following is nothing new but my variation of it (since i just had to do this again from scratch)
+Sample code demonstrating GCS SignedURL using original-flavor Appengine (v1).
+Note, if your&amp;rsquo;e reading this and your&amp;rsquo;e using Cloud Run, Cloud Functions or AppEngine v2, its much, much eaiser: just use the google-cloud-storage python library</description>
+    </item>
+    
+  </channel>
+</rss>
