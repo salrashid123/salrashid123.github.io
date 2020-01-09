@@ -1,3 +1,0 @@
-googledatastore==5.0.0b0
-google-api-python-client
-PyOpenSSL==0.15.1
