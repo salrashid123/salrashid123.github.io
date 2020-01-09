@@ -1,0 +1,17 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: istioinit-gke
+  namespace: default
+spec:
+  template:
+    metadata:
+      name: istioinit-gke-0001
+    spec:
+      containers:
+      - image: gcr.io/mineral-minutia-820/istioinit:1
+  traffic:
+  - revisionName: istioinit-gke-0001
+    percent: 50
+  - revisionName: istioinit-gke-0002
+    percent: 50

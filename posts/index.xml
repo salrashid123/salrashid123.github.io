@@ -12,6 +12,18 @@
     
     
     <item>
+      <title>Knative Traffic Splitting</title>
+      <link>https://blog.salrashid.me/posts/knative_traffic_splitting/</link>
+      <pubDate>Wed, 08 Jan 2020 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/knative_traffic_splitting/</guid>
+      <description>Sample getting started tutorial on how to do traffic splitting with Knative Serving using Istio.
+This is just my &amp;ldquo;hello world&amp;rdquo; application demonstrating stuff here:
+ Knative traffic-splitting Routing and managing traffic with blue/green deployment  While you can easily follow those tutorials, this article specifically designed to deconstruct the basic knative serving objects (Services, Congigurations, Routes, Revisions) and how to use them to split traffic.
+We will be showing traffic splitting using</description>
+    </item>
+    
+    <item>
       <title>Google Cloud KMS based Service Accounts for Authentication and SignedURLs</title>
       <link>https://blog.salrashid.me/posts/kms_service_accounts/</link>
       <pubDate>Mon, 06 Jan 2020 14:34:01 -0800</pubDate>
@@ -43,16 +55,6 @@ What step 5 below shows is an inbound request to one microservice (/frontend) wh
 The following is nothing new but my variation of it (since i just had to do this again from scratch)
 Sample code demonstrating GCS SignedURL using original-flavor Appengine (v1).
 Note, if your&amp;rsquo;e reading this and your&amp;rsquo;e using Cloud Run, Cloud Functions or AppEngine v2, its much, much eaiser: just use the google-cloud-storage python library</description>
-    </item>
-    
-    <item>
-      <title>GCP Binary Authorization and Vulnerability Scanning Demo</title>
-      <link>https://blog.salrashid.me/posts/binary_auth_demo/</link>
-      <pubDate>Wed, 01 May 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/posts/binary_auth_demo/</guid>
-      <description>Sample application for GCP Binary Authorization + Vulernability Scanner.
- Creates GKE cluster with Binary Authorization Enables Binary Authoriztion policy on cluster Cloud Builder workflow checks checked in code to Cloud Source repository  Builds container image and pushes to Cloud Container Registry Binary Auhorization step waits for Vulernability Scan to complete If Vulernability Scanner Fails, Deployment Fails If Succeeds, the imae is authorized for deployment to GKE    Note: this sample uses one cloud builder configuration to both build the image and do attestation.</description>
     </item>
     
     <item>

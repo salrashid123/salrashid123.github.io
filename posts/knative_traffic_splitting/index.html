@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>nonbei alley  | Knative Traffic Splitting</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Knative Traffic Splitting" />
+<meta property="og:description" content="Sample getting started tutorial on how to do traffic splitting with Knative Serving using Istio.
+This is just my &ldquo;hello world&rdquo; application demonstrating stuff here:
+ Knative traffic-splitting Routing and managing traffic with blue/green deployment  While you can easily follow those tutorials, this article specifically designed to deconstruct the basic knative serving objects (Services, Congigurations, Routes, Revisions) and how to use them to split traffic.
+We will be showing traffic splitting using" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.salrashid.me/posts/knative_traffic_splitting/" />
+<meta property="article:published_time" content="2020-01-08T14:34:01-08:00"/>
+<meta property="article:modified_time" content="2020-01-08T14:34:01-08:00"/>
+
+<meta itemprop="name" content="Knative Traffic Splitting">
+<meta itemprop="description" content="Sample getting started tutorial on how to do traffic splitting with Knative Serving using Istio.
+This is just my &ldquo;hello world&rdquo; application demonstrating stuff here:
+ Knative traffic-splitting Routing and managing traffic with blue/green deployment  While you can easily follow those tutorials, this article specifically designed to deconstruct the basic knative serving objects (Services, Congigurations, Routes, Revisions) and how to use them to split traffic.
+We will be showing traffic splitting using">
+
+
+<meta itemprop="datePublished" content="2020-01-08T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2020-01-08T14:34:01-08:00" />
+<meta itemprop="wordCount" content="1072">
+
+
+
+<meta itemprop="keywords" content="knative,gke," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Knative Traffic Splitting"/>
+<meta name="twitter:description" content="Sample getting started tutorial on how to do traffic splitting with Knative Serving using Istio.
+This is just my &ldquo;hello world&rdquo; application demonstrating stuff here:
+ Knative traffic-splitting Routing and managing traffic with blue/green deployment  While you can easily follow those tutorials, this article specifically designed to deconstruct the basic knative serving objects (Services, Congigurations, Routes, Revisions) and how to use them to split traffic.
+We will be showing traffic splitting using"/>
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-155117088-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog.salrashid.me/" class="f3 fw2 hover-white no-underline white-90 dib">
+      nonbei alley
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Knative Traffic Splitting</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-01-08T14:34:01-08:00">January 8, 2020</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Sample getting started tutorial on how to do traffic splitting with <a href="https://knative.dev/docs/serving/">Knative Serving</a> using Istio.</p>
+
+<p>This is just my &ldquo;hello world&rdquo; application demonstrating stuff here:</p>
+
+<ul>
+<li><a href="https://knative.dev/docs/serving/samples/traffic-splitting/">Knative traffic-splitting</a></li>
+<li><a href="https://github.com/knative/docs/blob/master/docs/serving/samples/blue-green-deployment.md">Routing and managing traffic with blue/green deployment</a></li>
+</ul>
+
+<p>While you can easily follow those tutorials, this article specifically designed to deconstruct the basic knative serving objects (<code>Services</code>, <code>Congigurations</code>, <code>Routes</code>, <code>Revisions</code>) and how to use them to split traffic.</p>
+
+<p><img src="images/object_model.png" alt="images/object_model.png" /></p>
+
+<p>We will be showing traffic splitting using</p>
+
+<p>(A) <code>Services</code></p>
+
+<ul>
+<li>Deploy Service (v1)
+
+<ul>
+<li>Creates Revision <code>istioinit-gke-0001</code></li>
+<li>100% traffic goes to <code>istioinit-gke-0001</code></li>
+</ul></li>
+<li>Create Revision <code>istioinit-gke-0002</code>
+
+<ul>
+<li>Update Service and split traffic between Revisions</li>
+</ul></li>
+</ul>
+
+<p>(B) <code>Confiuration</code> and <code>Routes</code></p>
+
+<p>The application i&rsquo;ll be using is the handy one i used for various other tutorials that just returns the &lsquo;version&rsquo; number (a simple 1 or 2 denoting the app verion that it hit).  We will use the version number as the signal to confirm the routing scheme we intended to specify got applied.</p>
+
+<p>You can find more info about the app <a href="https://github.com/salrashid123/istio_helloworld#what-is-the-app-you-used">istio_helloworld</a>&hellip;the endpoint we&rsquo;ll use is just <code>/version</code>.</p>
+
+<h3 id="setup">Setup</h3>
+
+<ul>
+<li>Install Istio, Knative on GKE.
+<br /></li>
+</ul>
+
+<p>We will <em>not</em> be using GKE+Istio Addon or Cloud Run;  the installation of Istio and Knative is done by hand as if its installed on k8s directly (<a href="https://knative.dev/docs/install/knative-with-any-k8s/">Knative with any k8s</a>)</p>
+
+<h4 id="install-gke-and-istio">Install GKE and Istio</h4>
+
+<pre><code class="language-bash">gcloud container  clusters create cluster-1 --machine-type &quot;n1-standard-2&quot; --cluster-version=1.16.0 --zone us-central1-a  --num-nodes 4 --enable-ip-alias
+gcloud container clusters get-credentials cluster-1 --zone us-central1-a
+
+kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value core/account)
+kubectl create ns istio-system
+
+export ISTIO_VERSION=1.3.2
+wget https://github.com/istio/istio/releases/download/$ISTIO_VERSION/istio-$ISTIO_VERSION-linux.tar.gz
+tar xvzf istio-$ISTIO_VERSION-linux.tar.gz
+
+wget https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz
+tar xf helm-v2.11.0-linux-amd64.tar.gz
+
+export PATH=`pwd`/istio-$ISTIO_VERSION/bin:`pwd`/linux-amd64/:$PATH
+
+helm template istio-$ISTIO_VERSION/install/kubernetes/helm/istio-init --name istio-init --namespace istio-system | kubectl apply -f -
+
+helm template istio-$ISTIO_VERSION/install/kubernetes/helm/istio --name istio --namespace istio-system  \
+   --set prometheus.enabled=true \
+   --set sidecarInjectorWebhook.enabled=true &gt; istio.yaml
+
+kubectl apply -f istio.yaml
+kubectl label namespace default istio-injection=enabled
+</code></pre>
+
+<p>At this point, you&rsquo;ll have a GKE cluster with Istio running.  You can verify everything is ok by running:</p>
+
+<pre><code class="language-bash">$ kubectl get no,po,rc,svc,ing,deployment -n istio-system
+</code></pre>
+
+<p>Acquire the <code>GATEWAY_IP</code> allocated to istio-ingress</p>
+
+<pre><code>$ export GATEWAY_IP=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+$ echo $GATEWAY_IP
+</code></pre>
+
+<h4 id="install-knative">Install Knative</h4>
+
+<p>We&rsquo;ll instlal Knative on top of Istio now:</p>
+
+<p>Follow the instructions detailed here <a href="https://knative.dev/docs/install/knative-with-any-k8s/">Install on a Kubernetes cluster</a></p>
+
+<h4 id="a-traffic-splitting-with-services">A) Traffic Splitting with Services</h4>
+
+<p>First lets deploy a <code>Service</code> by itself.</p>
+
+<pre><code>$ kubectl apply -f service_1.yaml
+</code></pre>
+
+<pre><code class="language-yaml">apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: istioinit-gke
+  namespace: default
+spec:
+  template:
+    metadata:
+      name: istioinit-gke-0001
+    spec:
+      containers:
+      - image: gcr.io/mineral-minutia-820/istioinit:1
+</code></pre>
+
+<p>This will automatically create a <code>Configuration</code>, <code>Revision</code> and a <code>Route</code> all for you:</p>
+
+<pre><code>$ kubectl get ksvc,configuration,routes,revisions
+NAME                                        URL                                        LATESTCREATED        LATESTREADY          READY   REASON
+service.serving.knative.dev/istioinit-gke   http://istioinit-gke.default.example.com   istioinit-gke-0001   istioinit-gke-0001   True    
+
+NAME                                              LATESTCREATED        LATESTREADY          READY   REASON
+configuration.serving.knative.dev/istioinit-gke   istioinit-gke-0001   istioinit-gke-0001   True    
+
+NAME                                      URL                                        READY   REASON
+route.serving.knative.dev/istioinit-gke   http://istioinit-gke.default.example.com   True    
+
+NAME                                              CONFIG NAME     K8S SERVICE NAME     GENERATION   READY   REASON
+revision.serving.knative.dev/istioinit-gke-0001   istioinit-gke   istioinit-gke-0001   1            True    
+</code></pre>
+
+<p>We can now send it some traffic</p>
+
+<pre><code class="language-bash">$ for i in {1..1000}; do curl -s  -H &quot;Host: istioinit-gke.default.example.com&quot; http://${GATEWAY_IP}/version; sleep 1; done
+11111111111
+</code></pre>
+
+<p>What the simple <code>1</code> there signifies is the version of the application we&rsquo;ve deploy (which is version <code>1</code> since we deployed just <code>gcr.io/mineral-minutia-820/istioinit:1</code>).</p>
+
+<p>A <code>Service</code> by itself needs to target traffic towards a revision&hellip;but so far we only have one revision.  Lets deploy a revision for version <code>2</code> of our application.  That is, a revision that has <code>gcr.io/mineral-minutia-820/istioinit:2</code>:</p>
+
+<pre><code class="language-yaml">apiVersion: serving.knative.dev/v1
+kind: Configuration
+metadata:
+  name: istioinit-gke
+  namespace: default
+spec:
+  template:
+    metadata:
+      name: istioinit-gke-0002
+    spec:
+      containers:
+      - image: gcr.io/mineral-minutia-820/istioinit:2
+        imagePullPolicy: IfNotPresent
+</code></pre>
+
+<pre><code class="language-bash">$ kubectl apply -f config_2.yaml
+
+$ kubectl get ksvc,configuration,routes,revisions
+NAME                                        URL                                        LATESTCREATED        LATESTREADY          READY   REASON
+service.serving.knative.dev/istioinit-gke   http://istioinit-gke.default.example.com   istioinit-gke-0001   istioinit-gke-0001   True    
+
+NAME                                              LATESTCREATED        LATESTREADY          READY   REASON
+configuration.serving.knative.dev/istioinit-gke   istioinit-gke-0001   istioinit-gke-0001   True    
+
+NAME                                      URL                                        READY   REASON
+route.serving.knative.dev/istioinit-gke   http://istioinit-gke.default.example.com   True    
+
+NAME                                              CONFIG NAME     K8S SERVICE NAME     GENERATION   READY     REASON
+revision.serving.knative.dev/istioinit-gke-0001   istioinit-gke   istioinit-gke-0001   1            True      
+revision.serving.knative.dev/istioinit-gke-0002   istioinit-gke   istioinit-gke-0002   2            True
+</code></pre>
+
+<p>We&rsquo;ve got two revisions but the traffic for the Service is still going version 1.</p>
+
+<p>To apply a <sup>50</sup>&frasl;<sub>50</sub> split on the Service itself, we need to add in the <code>traffic</code> section describing the targets</p>
+
+<pre><code class="language-yaml">apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: istioinit-gke
+  namespace: default
+spec:
+  template:
+    metadata:
+      name: istioinit-gke-0002
+    spec:
+      containers:
+      - image: gcr.io/mineral-minutia-820/istioinit:2
+  traffic:
+  - revisionName: istioinit-gke-0001
+    percent: 50
+  - revisionName: istioinit-gke-0002
+    percent: 50
+</code></pre>
+
+<p>Apply the config:</p>
+
+<pre><code class="language-bash">$ kubectl apply -f service_12.yaml
+</code></pre>
+
+<p>At this point, the frontend service traffic should be split evenly-ish:</p>
+
+<pre><code class="language-bash">$ for i in {1..1000}; do curl -s  -H &quot;Host: istioinit-gke.default.example.com&quot; http://${GATEWAY_IP}/version; sleep 1; done
+1222122222212212221121112122111
+</code></pre>
+
+<p>Wonderful! we&rsquo;ve used <code>Services</code> to split traffic.  Lets rollback the config so we can use the <code>Configuration</code> and <code>Revision</code> directly:</p>
+
+<pre><code class="language-bash">kubectl delete -f config_2.yaml -f service_12.yaml
+</code></pre>
+
+<p>Verify:</p>
+
+<pre><code>$ kubectl get ksvc,configuration,routes,revisions
+No resources found.
+
+# you may have to wait a couple of mins for the pods to terminate; this is somthing up w/ the app i have
+
+$ kubectl get po
+No resources found.
+
+</code></pre>
+
+<h3 id="traffic-splitting-with-configurations-and-revisions">Traffic Splitting with Configurations and Revisions</h3>
+
+<p>Now Deploy a config and route to that config for version <code>1</code>:</p>
+
+<pre><code>cd config_revision/
+
+$ kubectl apply -f config_1.yaml -f route_1.yaml
+</code></pre>
+
+<pre><code class="language-yaml">apiVersion: serving.knative.dev/v1
+kind: Configuration
+metadata:
+  name: istioinit-gke
+  namespace: default
+spec:
+  template:
+    metadata:
+      name: istioinit-gke-0001
+    spec:
+      containers:
+      - image: gcr.io/mineral-minutia-820/istioinit:1
+        imagePullPolicy: IfNotPresent
+---
+apiVersion: serving.knative.dev/v1
+kind: Route
+metadata:
+  name: istioinit-gke
+  namespace: default
+spec:
+  traffic:
+  - revisionName: istioinit-gke-0001
+    percent: 100
+</code></pre>
+
+<p>We didn&rsquo;t deploy a service but an endpoite-route does get setup for you:</p>
+
+<pre><code>$ kubectl get ksvc,configuration,routes,revisions
+NAME                                              LATESTCREATED        LATESTREADY          READY   REASON
+configuration.serving.knative.dev/istioinit-gke   istioinit-gke-0001   istioinit-gke-0001   True    
+
+NAME                                      URL                                        READY   REASON
+route.serving.knative.dev/istioinit-gke   http://istioinit-gke.default.example.com   True    
+
+NAME                                              CONFIG NAME     K8S SERVICE NAME     GENERATION   READY   REASON
+revision.serving.knative.dev/istioinit-gke-0001   istioinit-gke   istioinit-gke-0001   1            True    
+</code></pre>
+
+<p>Which means we can send traffic to it just as before:</p>
+
+<pre><code class="language-bash">$ for i in {1..1000}; do curl -s  -H &quot;Host: istioinit-gke.default.example.com&quot; http://${GATEWAY_IP}/version; sleep 1; done
+11111111
+</code></pre>
+
+<p>Now deploy a configuration for version <code>2</code>:</p>
+
+<pre><code class="language-yaml">apiVersion: serving.knative.dev/v1
+kind: Configuration
+metadata:
+  name: istioinit-gke
+  namespace: default
+spec:
+  template:
+    metadata:
+      name: istioinit-gke-0002
+    spec:
+      containers:
+      - image: gcr.io/mineral-minutia-820/istioinit:2
+        imagePullPolicy: IfNotPresent
+</code></pre>
+
+<p>As before we&rsquo;ve got a new revision but traffic still goes to <code>1</code></p>
+
+<pre><code>$ kubectl get ksvc,configuration,routes,revisions
+NAME                                              LATESTCREATED        LATESTREADY          READY   REASON
+configuration.serving.knative.dev/istioinit-gke   istioinit-gke-0002   istioinit-gke-0002   True    
+
+NAME                                      URL                                        READY   REASON
+route.serving.knative.dev/istioinit-gke   http://istioinit-gke.default.example.com   True    
+
+NAME                                              CONFIG NAME     K8S SERVICE NAME     GENERATION   READY   REASON
+revision.serving.knative.dev/istioinit-gke-0001   istioinit-gke   istioinit-gke-0001   1            True    
+revision.serving.knative.dev/istioinit-gke-0002   istioinit-gke   istioinit-gke-0002   2            True
+</code></pre>
+
+<p>To split traffic, we&rsquo;ll update the the route now to send <sup>50</sup>&frasl;<sub>50</sub> traffic split:</p>
+
+<pre><code class="language-yaml">apiVersion: serving.knative.dev/v1
+kind: Route
+metadata:
+  name: istioinit-gke
+  namespace: default
+spec:
+  traffic:
+  - revisionName: istioinit-gke-0001
+    percent: 50
+  - revisionName: istioinit-gke-0002
+    percent: 50    
+---
+</code></pre>
+
+<p>Then Verify:</p>
+
+<pre><code class="language-bash">$ for i in {1..1000}; do curl -s  -H &quot;Host: istioinit-gke.default.example.com&quot; http://${GATEWAY_IP}/version; sleep 1; done
+2111111221222212222112
+</code></pre>
+
+<hr />
+
+<p>Thats it, this is a small snippet that shows traffic splitting w/ knative (well&hellip;atleast ast of 1/9/20).</p>
+
+<p>You can find the yaml on this git repo <a href="https://github.com/salrashid123/salrashid123.github.io">here</a></p>
+
+<p>good luck.</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/knative" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">knative</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/gke" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">gke</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-salrashid-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.salrashid.me/" >
+    &copy; 2020 nonbei alley
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

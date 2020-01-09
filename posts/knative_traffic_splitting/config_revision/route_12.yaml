@@ -1,0 +1,12 @@
+apiVersion: serving.knative.dev/v1
+kind: Route
+metadata:
+  name: istioinit-gke
+  namespace: default
+spec:
+  traffic:
+  - revisionName: istioinit-gke-0001
+    percent: 50
+  - revisionName: istioinit-gke-0002
+    percent: 50    
+---
