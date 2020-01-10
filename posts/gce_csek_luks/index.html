@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>nonbei alley  | Mounting CSEK protected disk with LUKS encryption on Google Compute Engine</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.54.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Mounting CSEK protected disk with LUKS encryption on Google Compute Engine" />
+<meta property="og:description" content="Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you&rsquo;re left with a disk that can only get decrypted if you have both encryption keys:
+For example, the Disk is encrypted with CSEK:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.salrashid.me/posts/gce_csek_luks/" />
+<meta property="article:published_time" content="2020-01-10T01:34:01-08:00"/>
+<meta property="article:modified_time" content="2020-01-10T01:34:01-08:00"/>
+
+<meta itemprop="name" content="Mounting CSEK protected disk with LUKS encryption on Google Compute Engine">
+<meta itemprop="description" content="Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you&rsquo;re left with a disk that can only get decrypted if you have both encryption keys:
+For example, the Disk is encrypted with CSEK:">
+
+
+<meta itemprop="datePublished" content="2020-01-10T01:34:01-08:00" />
+<meta itemprop="dateModified" content="2020-01-10T01:34:01-08:00" />
+<meta itemprop="wordCount" content="986">
+
+
+
+<meta itemprop="keywords" content="gce,luks,encryption," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mounting CSEK protected disk with LUKS encryption on Google Compute Engine"/>
+<meta name="twitter:description" content="Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you&rsquo;re left with a disk that can only get decrypted if you have both encryption keys:
+For example, the Disk is encrypted with CSEK:"/>
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-155117088-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://blog.salrashid.me/" class="f3 fw2 hover-white no-underline white-90 dib">
+      nonbei alley
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Articles page">
+              Articles
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="EHELO sal page">
+              EHELO sal
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Mounting CSEK protected disk with LUKS encryption on Google Compute Engine</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-01-10T01:34:01-08:00">January 10, 2020</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS.
+Essentially, you&rsquo;re left with a disk that can only get decrypted if you have both encryption keys:</p>
+
+<p>For example, the Disk is encrypted with CSEK:</p>
+
+<pre><code class="language-bash">$ gcloud compute disks describe csek-disk --zone us-central1-a
+diskEncryptionKey:
+  sha256: Duz078vq5d+EIic+kfeC4BsRziDe4ulP3w4aeiRkMvM=
+id: '3412210802859031969'
+kind: compute#disk
+name: csek-disk
+</code></pre>
+
+<p>and a mounted volume thats also further encrypted using LUKS:</p>
+
+<pre><code class="language-bash">$ lsblk -f
+NAME                     FSTYPE      LABEL UUID                                 MOUNTPOINT
+sda                                                                             
+└─sda1                   ext4              384f1f4a-cc72-404c-91e4-9cd3ce2bf2c0 /
+sdb                      crypto_LUKS       c5b39010-de81-4cc2-aec4-4ca20e8ab915 
+└─vault_encrypted_volume ext4              5fb89e88-7a85-4f33-8a39-f52e048e416d /media/vaultfs
+</code></pre>
+
+<p>Both encryption keys can be stored anywhere but at a minimum, the LUKS key needs to be accessible from within the VM.
+The full flow outlined here:</p>
+
+<ol>
+<li>Generate LUKS and CSEK keys</li>
+<li>Upload keys to Google Secret Manager</li>
+<li>Create Disk with CESK enabled</li>
+<li>Create GCE Service Account the VM will run as</li>
+<li>Set IAM permissions:
+
+<ul>
+<li>Grant GCE Service account access to both LUKS and CESK secrets</li>
+<li>Grant GCE Service account access to attach the CSEK enabled disk</li>
+</ul></li>
+<li>Create the GCE instance and enable a startup script:
+
+<ul>
+<li>Download both secrets from Google Secret Manager</li>
+<li>Attach the CSEK enabled disk to the VM using the secret</li>
+<li>Add LUKS encryption to the mounted disk using the secret</li>
+</ul></li>
+<li>As the instance is getting created,
+
+<ul>
+<li>Grant GCE Service account access to bind itself to the GCE instance</li>
+</ul></li>
+</ol>
+
+<p>The procedure here runs a startup script which attaches the CSEK disk and mounts a LUKS volume. Its not necessary to &lsquo;self-mount&rsquo; the disk itself but it is necessary to do the luks decryption on the VM itself.</p>
+
+<h3 id="setup">Setup</h3>
+
+<h4 id="set-environment-variables-and-enable-secrets-manager">Set environment variables and enable Secrets Manager</h4>
+
+<pre><code class="language-bash">export PROJECT_ID=`gcloud config get-value core/project`
+export PROJECT_NUMBER=`gcloud projects describe $PROJECT_ID --format=&quot;value(projectNumber)&quot;`
+export ZONE=us-central1-a
+
+gcloud services enable secretmanager.googleapis.com
+</code></pre>
+
+<h4 id="create-csek-and-luks-secrets">Create csek and luks secrets</h4>
+
+<pre><code class="language-bash">export csek_key=`openssl rand 16 | xxd -p`
+export luks_key=`openssl rand 16 | xxd -p`
+
+echo -n $csek_key |  gcloud beta secrets create csek --replication-policy=automatic --data-file=-
+echo -n $luks_key |  gcloud beta secrets create luks --replication-policy=automatic --data-file=-
+gcloud beta secrets versions access 1 --secret csek
+gcloud beta secrets versions access 1 --secret luks
+</code></pre>
+
+<h4 id="create-csek-enabled-disk">Create CSEK enabled disk</h4>
+
+<pre><code class="language-bash">sec=`gcloud beta secrets versions access 1 --secret csek`
+cat &lt;&lt;EOF &gt; csek-key-file.json
+    [
+    {
+    &quot;uri&quot;: &quot;https://www.googleapis.com/compute/v1/projects/$PROJECT_ID/zones/us-central1-a/disks/csek-disk&quot;,
+    &quot;key&quot;: &quot;`echo -n $sec | base64`&quot;,
+    &quot;key-type&quot;: &quot;raw&quot;
+    }
+    ]
+EOF
+
+gcloud compute disks create csek-disk --csek-key-file csek-key-file.json --size 10GB --zone us-central1-a
+</code></pre>
+
+<h4 id="create-the-gce-service-account">Create the GCE service Account</h4>
+
+<pre><code class="language-bash">gcloud iam service-accounts create gce-svc-account --display-name &quot;GCE Service Account&quot;
+gcloud iam service-accounts describe  gce-svc-account@$PROJECT_ID.iam.gserviceaccount.com
+
+export GCE_SERVICE_ACCOUNT=gce-svc-account@$PROJECT_ID.iam.gserviceaccount.com
+</code></pre>
+
+<h4 id="set-iam-permission-on-the-service-account">Set IAM permission on the service account</h4>
+
+<pre><code class="language-bash">gcloud compute disks  add-iam-policy-binding csek-disk  --zone us-central1-a --member=serviceAccount:$GCE_SERVICE_ACCOUNT --role=roles/compute.instanceAdmin  -q
+
+gcloud iam service-accounts add-iam-policy-binding $GCE_SERVICE_ACCOUNT --member=serviceAccount:$GCE_SERVICE_ACCOUNT --role=roles/iam.serviceAccountUser
+
+gcloud beta secrets add-iam-policy-binding csek --member=serviceAccount:$GCE_SERVICE_ACCOUNT --role=roles/secretmanager.secretAccessor -q
+gcloud beta secrets add-iam-policy-binding luks --member=serviceAccount:$GCE_SERVICE_ACCOUNT --role=roles/secretmanager.secretAccessor -q
+</code></pre>
+
+<h4 id="optional-add-logging-iam-role">(optional) Add logging IAM role:</h4>
+
+<p>On the GCP Cloud console, assign the Logging Writer IAM role to: gce-svc-account@$PROJECT.iam.gserviceaccount.com</p>
+
+<h4 id="create-the-gce-instance">Create the GCE instance</h4>
+
+<pre><code class="language-bash">gcloud compute instances create gce-csek --service-account=$GCE_SERVICE_ACCOUNT --scopes=cloud-platform  --metadata enable-oslogin=FALSE,enable-oslogin-2fa=FALSE --metadata-from-file startup-script=startup.sh --image=debian-9-stretch-v20191121 --image-project=debian-cloud 
+
+gcloud compute instances add-iam-policy-binding gce-csek --member=serviceAccount:$GCE_SERVICE_ACCOUNT --role=roles/compute.instanceAdmin
+</code></pre>
+
+<p>The final step sets permissions on the VM to complete attaching the disk.</p>
+
+<blockquote>
+<blockquote>
+<p>Note: The last step has a potential race condition since we need to provision a GCE instance to allow the service account to perform operations on it &ldquo;by itself&rdquo; (i.,e the service account is itself attaching the encrypted disk). The startup script attaches the disk which means the permission should propagate by then. You don&rsquo;t ofcourse have to mount the CSEK disk inline on startup and are free to do omit that step.</p>
+</blockquote>
+</blockquote>
+
+<h3 id="cleanup">Cleanup:</h3>
+
+<pre><code class="language-bash">umount /media/vaultfs
+cryptsetup luksClose vault_encrypted_volume
+gcloud compute instances detach-disk shielded-2 --disk vault-backend 
+
+gcloud compute instances delete gce-csek -q
+gcloud compute disks delete csek-disk -q
+gcloud alpha secrets delete luks -q
+gcloud alpha secrets delete csek -q
+</code></pre>
+
+<h3 id="using-alternative-key-distribution-mechanisms-instead-of-gcloud-secrets">Using alternative key distribution mechanisms instead of &ldquo;gcloud secrets&rdquo;</h3>
+
+<p>The example above used gcloud secrets engine as convenience but you are ofcourse free to distribute the encryption keys in anyway you see necessary. For example, the csek and luks keys can be manged via:</p>
+
+<ul>
+<li>HashiCorp Vault K/V Engine
+VM will authenticate to Vault and Vault returns both keys</li>
+<li>Google Cloud KMS
+Encrypt and Decrypt the keys with KMS.</li>
+<li>Trusted Platform Module in various ways:
+a. Embed a GCP ServiceAccount to a TPM and then with KMS via TPMTokenSource
+b. Encrypt the secret with the TPM&rsquo;s ekPub and securely import or duplicate
+c. Embed the keys directly to the TPM and apply IMA policies on its access. Use the TPM to decrypt the secret
+d. Embed mTLS certificate to the TPM and use that to authenticate to Vault</li>
+</ul>
+
+<p>The core issue in each is bootstrapping: how do you seed the VM to allow access to the keys used for LUKS and CSEK mounted disks. For Vault, the VM will need to authenticate to Vault to ge the keys. For KMS, the VM will need to authenticate and get authorized to access the KMS keys. For TPM, the VM will need to get seeded with the secret or securely transferred.</p>
+
+<p>Ultimately, there are various ways to go about this depending on the complexity involved.</p>
+
+<hr />
+
+<pre><code class="language-bash">#! /bin/bash    
+apt-get update &amp;&amp; DEBIAN_FRONTEND=noninteractive apt-get install -y wget curl cryptsetup apt-transport-https ca-certificates  google-cloud-sdk
+
+curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
+bash install-logging-agent.sh
+service google-fluentd start
+
+export PROJECT_ID=`gcloud config get-value core/project`
+
+sec=`gcloud beta secrets versions access 1 --secret csek`
+cat &lt;&lt;EOF &gt; csek-key-file.json
+    [
+    {
+    &quot;uri&quot;: &quot;https://www.googleapis.com/compute/v1/projects/$PROJECT_ID/zones/us-central1-a/disks/csek-disk&quot;,
+    &quot;key&quot;: &quot;`echo -n $sec | base64`&quot;,
+    &quot;key-type&quot;: &quot;raw&quot;
+    }
+    ]
+EOF
+
+gcloud compute instances attach-disk gce-csek --disk csek-disk --csek-key-file=csek-key-file.json --zone us-central1-a
+
+rm csek-key-file.json
+
+luks=`gcloud beta secrets versions access 1 --secret luks`
+DEV_LUKS=&quot;/dev/sdb&quot;
+cryptsetup isLuks $DEV_LUKS
+if [ $? != &quot;0&quot; ]; then
+   echo  -n $luks | cryptsetup -v luksFormat /dev/sdb -   
+fi
+
+echo  -n $luks | cryptsetup luksOpen /dev/sdb vault_encrypted_volume -
+
+mkdir -p /media/vaultfs
+mount /dev/mapper/vault_encrypted_volume /media/vaultfs
+
+if [ $? != &quot;0&quot; ]; then
+   mkfs.ext4 /dev/mapper/vault_encrypted_volume
+   mount /dev/mapper/vault_encrypted_volume /media/vaultfs 
+fi
+</code></pre>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/gce" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">gce</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/luks" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">luks</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/encryption" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">encryption</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-salrashid-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.salrashid.me/" >
+    &copy; 2020 nonbei alley
+  </a>
+    <div>
+
+
+
+
+
+
+<a href="https://www.linkedin.com/in/salmaan-rashid-26b648" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/salrashid123" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+<a href="https://medium.com/@salmaan.rashid/" target="_blank" class="link-transition medium link dib z-999 pt3 pt0-l mr1" title="Medium link" rel="noopener" aria-label="follow on Medium——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 170 170;" version="1.1" viewBox="0 0 170 170" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M46.5340803,65.2157554 C46.6968378,63.6076572 46.0836,62.018231 44.8828198,60.93592 L32.6512605,46.2010582 L32.6512605,44 L70.6302521,44 L99.9859944,108.380952 L125.794585,44 L162,44 L162,46.2010582 L151.542017,56.2281011 C150.640424,56.9153477 150.193188,58.0448862 150.380019,59.1628454 L150.380019,132.837155 C150.193188,133.955114 150.640424,135.084652 151.542017,135.771899 L161.755369,145.798942 L161.755369,148 L110.38282,148 L110.38282,145.798942 L120.963119,135.527337 C122.002801,134.487948 122.002801,134.182246 122.002801,132.592593 L122.002801,73.0417402 L92.585901,147.755438 L88.6106443,147.755438 L54.3622782,73.0417402 L54.3622782,123.115814 C54.0767278,125.221069 54.7759199,127.3406 56.2581699,128.863022 L70.0186741,145.55438 L70.0186741,147.755438 L31,147.755438 L31,145.55438 L44.7605042,128.863022 C46.2319621,127.338076 46.8903838,125.204485 46.5340803,123.115814 L46.5340803,65.2157554 Z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

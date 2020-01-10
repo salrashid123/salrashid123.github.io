@@ -44,7 +44,7 @@ We will be showing traffic splitting using">
 
 <meta itemprop="datePublished" content="2020-01-08T14:34:01-08:00" />
 <meta itemprop="dateModified" content="2020-01-08T14:34:01-08:00" />
-<meta itemprop="wordCount" content="1109">
+<meta itemprop="wordCount" content="1104">
 
 
 
@@ -207,12 +207,21 @@ if (!doNotTrack) {
 </ul></li>
 </ul>
 
-<p>(B) <code>Confiuration</code> and <code>Routes</code>
-* Deploy Configuration for (v1) and a Route to that Revision
-  - Creates Revision <code>istioinit-gke-0001</code>
-  - 100% traffic goes to <code>istioinit-gke-0001</code>
-* Create Configuration for (v2) and Revision <code>istioinit-gke-0002</code>
-  - Update Route and split traffic between Revisions</p>
+<p>(B) <code>Confiuration</code> and <code>Routes</code></p>
+
+<ul>
+<li>Deploy Configuration for (v1) and a Route to that Revision
+
+<ul>
+<li>Creates Revision <code>istioinit-gke-0001</code></li>
+<li>100% traffic goes to <code>istioinit-gke-0001</code></li>
+</ul></li>
+<li>Create Configuration for (v2) and Revision <code>istioinit-gke-0002</code>
+
+<ul>
+<li>Update Route and split traffic between Revisions</li>
+</ul></li>
+</ul>
 
 <p>The application i&rsquo;ll be using is the handy one i used for various other tutorials that just returns the &lsquo;version&rsquo; number (a simple 1 or 2 denoting the app verion that it hit).  We will use the version number as the signal to confirm the routing scheme we intended to specify got applied.</p>
 

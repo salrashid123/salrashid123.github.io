@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gce on nonbei alley</title>
+    <link>https://blog.salrashid.me/tags/gce/</link>
+    <description>Recent content in Gce on nonbei alley</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 10 Jan 2020 01:34:01 -0800</lastBuildDate>
+    
+	<atom:link href="https://blog.salrashid.me/tags/gce/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Mounting CSEK protected disk with LUKS encryption on Google Compute Engine</title>
+      <link>https://blog.salrashid.me/posts/gce_csek_luks/</link>
+      <pubDate>Fri, 10 Jan 2020 01:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/gce_csek_luks/</guid>
+      <description>Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you&amp;rsquo;re left with a disk that can only get decrypted if you have both encryption keys:
+For example, the Disk is encrypted with CSEK:</description>
+    </item>
+    
+  </channel>
+</rss>

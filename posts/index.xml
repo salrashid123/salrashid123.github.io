@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>Mounting CSEK protected disk with LUKS encryption on Google Compute Engine</title>
+      <link>https://blog.salrashid.me/posts/gce_csek_luks/</link>
+      <pubDate>Fri, 10 Jan 2020 01:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/gce_csek_luks/</guid>
+      <description>Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you&amp;rsquo;re left with a disk that can only get decrypted if you have both encryption keys:
+For example, the Disk is encrypted with CSEK:</description>
+    </item>
+    
+    <item>
       <title>Knative Traffic Splitting</title>
       <link>https://blog.salrashid.me/posts/knative_traffic_splitting/</link>
       <pubDate>Wed, 08 Jan 2020 14:34:01 -0800</pubDate>
