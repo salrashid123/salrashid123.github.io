@@ -23,6 +23,18 @@ Well, you can to a limited degree and with some hacks.</description>
     </item>
     
     <item>
+      <title>Redis with Envoy</title>
+      <link>https://blog.salrashid.me/posts/redis_envoy/</link>
+      <pubDate>Mon, 03 Feb 2020 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/redis_envoy/</guid>
+      <description>Cheatsheet to setup Envoy to proxy Redis traffic using TLS and Redis AUTH.
+I&amp;rsquo;m writing this up since i found it really tricky to setup the envoy side of things&amp;hellip;especially with both downstream and upstream AUTH:
+hope this helps you spend some hours on other things..
+What we&amp;rsquo;re going to do: Setup a go redis client app to talk via TLS to envoy. Envoy will then proxy requests to Redis server.</description>
+    </item>
+    
+    <item>
       <title>Mounting CSEK protected disk with LUKS encryption on Google Compute Engine</title>
       <link>https://blog.salrashid.me/posts/gce_csek_luks/</link>
       <pubDate>Mon, 20 Jan 2020 01:34:01 -0800</pubDate>

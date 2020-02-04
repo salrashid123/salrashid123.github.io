@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://blog.salrashid.me/tags/envoy/</loc>
+    <lastmod>2020-02-03T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.salrashid.me/tags/knative/</loc>
     <lastmod>2020-02-03T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -25,6 +32,20 @@
   
   <url>
     <loc>https://blog.salrashid.me/</loc>
+    <lastmod>2020-02-03T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/tags/redis/</loc>
+    <lastmod>2020-02-03T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/posts/redis_envoy/</loc>
     <lastmod>2020-02-03T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

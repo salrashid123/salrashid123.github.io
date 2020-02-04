@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>envoy on blog.salrashid.me</title>
-    <link>https://blog.salrashid.me/tags/envoy/</link>
-    <description>Recent content in envoy on blog.salrashid.me</description>
+    <title>redis on blog.salrashid.me</title>
+    <link>https://blog.salrashid.me/tags/redis/</link>
+    <description>Recent content in redis on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 03 Feb 2020 14:34:01 -0800</lastBuildDate>
     
-	<atom:link href="https://blog.salrashid.me/tags/envoy/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.salrashid.me/tags/redis/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>

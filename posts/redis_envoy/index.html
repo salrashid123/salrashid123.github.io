@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>blog.salrashid.me  | envoy</title>
+    <title>blog.salrashid.me  | Redis with Envoy</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="generator" content="Hugo 0.57.2" />
     
@@ -25,23 +25,35 @@
 
     
     
-      <link href="/tags/envoy/index.xml" rel="alternate" type="application/rss+xml" title="blog.salrashid.me" />
-      <link href="/tags/envoy/index.xml" rel="feed" type="application/rss+xml" title="blog.salrashid.me" />
-      
-    
-    
-    <meta property="og:title" content="envoy" />
-<meta property="og:description" content="wow...its full of 6equj5" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog.salrashid.me/tags/envoy/" />
+    <meta property="og:title" content="Redis with Envoy" />
+<meta property="og:description" content="Cheatsheet to setup Envoy to proxy Redis traffic using TLS and Redis AUTH.
+I&rsquo;m writing this up since i found it really tricky to setup the envoy side of things&hellip;especially with both downstream and upstream AUTH:
+hope this helps you spend some hours on other things..
+What we&rsquo;re going to do: Setup a go redis client app to talk via TLS to envoy. Envoy will then proxy requests to Redis server." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.salrashid.me/posts/redis_envoy/" />
+<meta property="article:published_time" content="2020-02-03T14:34:01-08:00" />
+<meta property="article:modified_time" content="2020-02-03T14:34:01-08:00" />
+<meta itemprop="name" content="Redis with Envoy">
+<meta itemprop="description" content="Cheatsheet to setup Envoy to proxy Redis traffic using TLS and Redis AUTH.
+I&rsquo;m writing this up since i found it really tricky to setup the envoy side of things&hellip;especially with both downstream and upstream AUTH:
+hope this helps you spend some hours on other things..
+What we&rsquo;re going to do: Setup a go redis client app to talk via TLS to envoy. Envoy will then proxy requests to Redis server.">
 
-<meta property="og:updated_time" content="2020-02-03T14:34:01-08:00" />
-<meta itemprop="name" content="envoy">
-<meta itemprop="description" content="wow...its full of 6equj5">
 
+<meta itemprop="datePublished" content="2020-02-03T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2020-02-03T14:34:01-08:00" />
+<meta itemprop="wordCount" content="578">
+
+
+
+<meta itemprop="keywords" content="redis,envoy," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="envoy"/>
-<meta name="twitter:description" content="wow...its full of 6equj5"/>
+<meta name="twitter:title" content="Redis with Envoy"/>
+<meta name="twitter:description" content="Cheatsheet to setup Envoy to proxy Redis traffic using TLS and Redis AUTH.
+I&rsquo;m writing this up since i found it really tricky to setup the envoy side of things&hellip;especially with both downstream and upstream AUTH:
+hope this helps you spend some hours on other things..
+What we&rsquo;re going to do: Setup a go redis client app to talk via TLS to envoy. Envoy will then proxy requests to Redis server."/>
 
       
 <script type="application/javascript">
@@ -61,11 +73,11 @@ if (!doNotTrack) {
   <body class="ma0 avenir bg-near-white production">
 
     
+   
+  
 
-  
-  
-  <header class="cover bg-top" style="background-image: url('https://blog.salrashid.me/images/main.jpg');">
-    <div class="bg-black-60">
+  <header>
+    <div class="bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
     <a href="https://blog.salrashid.me/" class="f3 fw2 hover-white no-underline white-90 dib">
@@ -138,48 +150,275 @@ if (!doNotTrack) {
   </div>
 </nav>
 
-      <div class="tc-l pv4 pv6-l ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 white-90 mb0 lh-title">
-          envoy
-        </h1>
-        
-      </div>
     </div>
   </header>
 
 
+
     <main class="pb7" role="main">
       
-  <article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “envoy”</p>
-    </div>
-  </article>
-  <div class="mw8 center">    
-    <section class="flex-ns flex-wrap justify-around mt5">
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/redis_envoy/" class="link black dim">
-        Redis with Envoy
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Cheatsheet to setup Envoy to proxy Redis traffic using TLS and Redis AUTH.
-I&rsquo;m writing this up since i found it really tricky to setup the envoy side of things&hellip;especially with both downstream and upstream AUTH:
-hope this helps you spend some hours on other things..
-What we&rsquo;re going to do: Setup a go redis client app to talk via TLS to envoy. Envoy will then proxy requests to Redis server.
-    </div>
-  </div>
-</div>
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
 
-        </div>
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Redis with Envoy</h1>
       
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-02-03T14:34:01-08:00">February 3, 2020</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Cheatsheet to setup Envoy to proxy Redis traffic using TLS and Redis <code>AUTH</code>.</p>
+
+<p>I&rsquo;m writing this up since i found it really tricky to setup the envoy side of things&hellip;especially with both downstream and upstream <code>AUTH</code>:</p>
+
+<p>hope this helps you spend some hours on other things..</p>
+
+<h2 id="what-we-re-going-to-do">What we&rsquo;re going to do:</h2>
+
+<p>Setup a go redis client app to talk via TLS to envoy.  Envoy will then proxy requests to Redis server.</p>
+
+<p>Both <code>client-&gt;envoy-&gt;redis</code> is secured by <code>redis AUTH</code></p>
+
+<p><code>client-&gt;envoy--&gt;redis</code> uses mTLS end to end.  <code>client-&gt;redis</code> is on port <code>:6000</code> while <code>envoy-&gt;redis</code> is on port <code>:6379</code></p>
+
+<h2 id="what-you-ll-need">What you&rsquo;ll need:</h2>
+
+<ul>
+<li>Redis 6.0: <a href="https://redis.io/download">download</a></li>
+<li>Envoy <code>1.13_</code>: <a href="https://www.getenvoy.io/">download</a></li>
+<li>golang <a href="https://golang.org/dl/">dowload</a></li>
+</ul>
+
+<h2 id="setup">Setup</h2>
+
+<p>Download the source files froe the git repo here.  You should end up with:</p>
+
+<ul>
+<li><code>basic.yaml</code>: Envoy config file</li>
+<li><code>CA_crt.epm</code>: The CA Cert for mtls</li>
+<li><code>server.crt</code>, <code>server.key</code>:  Server certs envoy will use</li>
+<li><code>client.crt</code>, <code>client.key</code>: client side certs the go app will use</li>
+<li><code>main.go</code>:  Redis golang client that will connect to Envoy</li>
+</ul>
+
+<p>First edit <code>/etc/hosts</code> and add the following to make it easier for TLS handshake</p>
+
+<pre><code class="language-bash">127.0.0.1 server.domain.com
+</code></pre>
+
+<h3 id="redis">Redis</h3>
+
+<p>Once you donwload redis, edit <code>redis.conf</code> and uncomment the following line to enable default user <code>AUTH</code>:</p>
+
+<pre><code># IMPORTANT NOTE: starting with Redis 6 &quot;requirepass&quot; is just a compatiblity
+# layer on top of the new ACL system. The option effect will be just setting
+# the password for the default user. Clients will still authenticate using
+# AUTH &lt;password&gt; as usually, or more explicitly with AUTH default &lt;password&gt;
+# if they follow the new protocol: both will work.
+#
+requirepass foobared
+</code></pre>
+
+<p>Start Redis:</p>
+
+<pre><code>redis-server --tls-port 6379 --port 0  \
+         --tls-cert-file server.crt    \
+         --tls-key-file server.key     \
+         --tls-ca-cert-file CA_crt.pem
+</code></pre>
+
+<h3 id="envoy">Envoy</h3>
+
+<p>Start Envoy:</p>
+
+<pre><code class="language-bash">envoy  -c basic.yaml  -l debug
+</code></pre>
+
+<p>The whole reason for this article is because i found it hard to configure enovy&hellip;so here it is:</p>
+
+<p>Some things to point out below:</p>
+
+<ul>
+<li>Envoy Listens on mTLS:  the config <code>tls_context</code> that</li>
+<li>Clients connecting to envoy must provide a redis password: <code>foo</code></li>
+<li>Envoy connect to Redis outbound with mtls:  the config <code>transport_socket</code> does that</li>
+<li>Envoy connects to Redis must provide a redis: <code>foobared</code></li>
+</ul>
+
+<blockquote>
+<blockquote>
+<p>In enovy-speak, the client is <em>downstream</em> while redis is <em>upstream</em> as far as envoy is concerned.</p>
+</blockquote>
+</blockquote>
+
+<pre><code class="language-yaml">static_resources:
+  listeners:
+  - name: redis_listener
+    address:
+      socket_address:
+        address: 0.0.0.0
+        port_value: 6000
+
+    filter_chains:
+    - filters:
+      - name: envoy.redis_proxy
+        typed_config:
+          &quot;@type&quot;: type.googleapis.com/envoy.config.filter.network.redis_proxy.v2.RedisProxy
+          stat_prefix: egress_redis
+          settings:
+            op_timeout: 5s
+          prefix_routes:
+            catch_all_route:
+              cluster: redis_cluster 
+          downstream_auth_password:
+            inline_string: &quot;bar&quot;
+      tls_context:
+        common_tls_context:
+          tls_certificates:
+          - certificate_chain:
+              filename: &quot;server.crt&quot;
+            private_key:
+              filename: &quot;server.key&quot;
+          validation_context:
+            trusted_ca:
+              filename: CA_crt.pem
+  clusters:
+  - name: redis_cluster
+    connect_timeout: 1s
+    type: strict_dns
+    load_assignment:
+      cluster_name: redis_cluster
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: 127.0.0.1
+                port_value: 6379
+    typed_extension_protocol_options:
+      envoy.redis_proxy:
+        &quot;@type&quot;: type.googleapis.com/google.protobuf.Struct
+        value:
+          auth_password:
+            inline_string: &quot;foobared&quot;
+    transport_socket:
+      name: envoy.transport_sockets.tls
+      typed_config:
+        &quot;@type&quot;: type.googleapis.com/envoy.api.v2.auth.UpstreamTlsContext
+        common_tls_context:
+          tls_certificates:
+            certificate_chain: { &quot;filename&quot;: &quot;client.crt&quot; }
+            private_key: { &quot;filename&quot;: &quot;client.key&quot; }
+          validation_context:
+            trusted_ca:
+              filename: CA_crt.pem
+
+admin:
+  access_log_path: &quot;/dev/null&quot;
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 8001
+
+</code></pre>
+
+<h3 id="start-go-redis-client">Start go redis client</h3>
+
+<p><code>main.go</code> connects to envoy on port <code>:6000</code> and presents a client certificate to it:</p>
+
+<pre><code class="language-golang">	caCert, err := ioutil.ReadFile(&quot;CA_crt.pem&quot;)
+	caCertPool := x509.NewCertPool()
+	caCertPool.AppendCertsFromPEM(caCert)
+
+	cer, err := tls.LoadX509KeyPair(&quot;client.crt&quot;, &quot;client.key&quot;)
+	if err != nil {
+		fmt.Printf(&quot;%v&quot;, err)
+		return
+	}
+
+	config := &amp;tls.Config{
+		RootCAs:      caCertPool,
+		Certificates: []tls.Certificate{cer},
+		ServerName:   &quot;server.domain.com&quot;,
+	}
+
+	client := redis.NewClient(&amp;redis.Options{
+		Addr:      &quot;server.domain.com:6000&quot;, // &quot;server.domain.com:6379&quot;,
+		Password:  &quot;bar&quot;,
+		DB:        0, // use default DB
+		TLSConfig: config,
+	})
+
+	pong, err := client.Ping().Result()
+	if err != nil {
+		fmt.Printf(&quot;Unable to ping %v\n&quot;, err)
+		return
+	}
+	fmt.Println(pong, err)
+</code></pre>
+
+<p>If you run the app now you&rsquo;ll see a pong and the value you just saved:</p>
+
+<pre><code class="language-bash">$ go run main.go 
+PONG &lt;nil&gt;
+key value
+</code></pre>
+
+<p>&hellip;yeah, thats it..</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/redis" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">redis</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/envoy" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">envoy</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-salrashid-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
     </section>
-  </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
