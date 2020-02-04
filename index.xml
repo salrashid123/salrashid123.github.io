@@ -17,7 +17,7 @@
       <pubDate>Mon, 03 Feb 2020 14:34:01 -0800</pubDate>
       
       <guid>https://blog.salrashid.me/posts/knative_cli_with_cloud_run/</guid>
-      <description>A very limited hack to use [Knative CLI)[https://github.com/knative/client] cli to do basic operations on Cloud Run (managed)
+      <description>A very limited hack to use Knative CLI cli to do basic operations on Cloud Run (managed)
 I was looking at the API calls yesterday to understand how GCP&amp;rsquo;s gcloud deploys and manages an app on Cloud Run. Cloud Run at the core used Knative so i figured &amp;ldquo;how hard is it to use knative&amp;rsquo;s on CLI to manage Cloud Run?&amp;rdquo;.
 Well, you can to a limited degree and with some hacks.</description>
     </item>
