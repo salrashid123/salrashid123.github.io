@@ -190,63 +190,78 @@ if (!doNotTrack) {
 <p>What you&rsquo;ll see is a sequece of API calls&hellip;the main, unrepeated polling ones are shown below</p>
 
 <ol>
-<li><p><code>GET https://us-central1-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/snuffleupagus-420/services/service</code>
-First a <code>GET</code> to find if the service exists</p></li>
+<li><p><code>GET https://us-central1-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/snuffleupagus-420/services/service</code></p>
 
-<li><p><code>POST https://us-central1-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/snuffleupagus-420/services</code>
-Then a POST with payload to create it  Note the <code>namespace</code>.  THe namespace Cloud Run&rsquo;s infrastructure uses as aboundary is your own project (in my case, its <code>snuffleupagus-420</code> )</p>
+<ul>
+<li>First a <code>GET</code> to find if the service exists</li>
+</ul></li>
+
+<li><p><code>POST https://us-central1-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/snuffleupagus-420/services</code></p>
+
+<ul>
+<li><p>Then a POST with payload to create it  Note the <code>namespace</code>.  THe namespace Cloud Run&rsquo;s infrastructure uses as aboundary is your own project (in my case, its <code>snuffleupagus-420</code> )</p>
 
 <pre><code class="language-json">{
-  &quot;apiVersion&quot;: &quot;serving.knative.dev/v1&quot;,
-  &quot;kind&quot;: &quot;Service&quot;,
+&quot;apiVersion&quot;: &quot;serving.knative.dev/v1&quot;,
+&quot;kind&quot;: &quot;Service&quot;,
+&quot;metadata&quot;: {
+&quot;annotations&quot;: {
+  &quot;client.knative.dev/user-image&quot;: &quot;gcr.io/snuffleupagus-420/http_server:1&quot;,
+  &quot;run.googleapis.com/client-name&quot;: &quot;gcloud&quot;,
+  &quot;run.googleapis.com/client-version&quot;: &quot;278.0.0&quot;
+},
+&quot;labels&quot;: {},
+&quot;name&quot;: &quot;service&quot;,
+&quot;namespace&quot;: &quot;snuffleupagus-420&quot;
+},
+&quot;spec&quot;: {
+&quot;template&quot;: {
   &quot;metadata&quot;: {
     &quot;annotations&quot;: {
-      &quot;client.knative.dev/user-image&quot;: &quot;gcr.io/snuffleupagus-420/http_server:1&quot;,
-      &quot;run.googleapis.com/client-name&quot;: &quot;gcloud&quot;,
-      &quot;run.googleapis.com/client-version&quot;: &quot;278.0.0&quot;
-    },
-    &quot;labels&quot;: {},
-    &quot;name&quot;: &quot;service&quot;,
-    &quot;namespace&quot;: &quot;snuffleupagus-420&quot;
-  },
-  &quot;spec&quot;: {
-    &quot;template&quot;: {
-      &quot;metadata&quot;: {
-        &quot;annotations&quot;: {
-          &quot;client.knative.dev/user-image&quot;: &quot;gcr.io/snuffleupagus-420/http_server:1&quot;
-        }
-      }
+      &quot;client.knative.dev/user-image&quot;: &quot;gcr.io/snuffleupagus-420/http_server:1&quot;
     }
-  },
-  &quot;status&quot;: {
-    &quot;address&quot;: {}
   }
 }
+},
+&quot;status&quot;: {
+&quot;address&quot;: {}
+}
+}
 </code></pre></li>
+</ul></li>
 
-<li><p><code>GET https://run.googleapis.com/v1/projects/snuffleupagus-420/locations/us-central1/services/service:getIamPolicy</code>
-Get the IAM Policy first</p></li>
+<li><p><code>GET https://run.googleapis.com/v1/projects/snuffleupagus-420/locations/us-central1/services/service:getIamPolicy</code></p>
 
-<li><p><code>POST https://run.googleapis.com/v1/projects/snuffleupagus-420/locations/us-central1/services/service:setIamPolicy</code>
-Then set the policy</p>
+<ul>
+<li>Get the IAM Policy first</li>
+</ul></li>
+
+<li><p><code>POST https://run.googleapis.com/v1/projects/snuffleupagus-420/locations/us-central1/services/service:setIamPolicy</code></p>
+
+<ul>
+<li><p>Then set the policy</p>
 
 <pre><code class="language-json">{
-  &quot;policy&quot;: {
-    &quot;bindings&quot;: [
-      {
-        &quot;members&quot;: [
-          &quot;allUsers&quot;
-        ],
-        &quot;role&quot;: &quot;roles/run.invoker&quot;
-      }
+&quot;policy&quot;: {
+&quot;bindings&quot;: [
+  {
+    &quot;members&quot;: [
+      &quot;allUsers&quot;
     ],
-    &quot;etag&quot;: &quot;ACAB&quot;
+    &quot;role&quot;: &quot;roles/run.invoker&quot;
   }
+],
+&quot;etag&quot;: &quot;ACAB&quot;
+}
 }
 </code></pre></li>
+</ul></li>
 
-<li><p><code>GET https://us-central1-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/snuffleupagus-420/services/service</code>
-Finally poll until its ready</p></li>
+<li><p><code>GET https://us-central1-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/snuffleupagus-420/services/service</code></p>
+
+<ul>
+<li>Finally poll until its ready</li>
+</ul></li>
 </ol>
 
 <p>So, <code>kn</code> should be able to do all of the steps above except <code>3,4</code>&hellip;lets just do the parts we can.</p>
@@ -293,17 +308,26 @@ users:
 <p>So lets look at it a bit more&hellip;</p>
 
 <ul>
-<li><p>what is this config file?<br />
-its just the <code>v1.Config</code> file</p></li>
-
-<li><p>whats <code>/path/to/ca.crt</code>?
-Thats the public cert chain for Google.  You can get that by running
-<code>openssl s_client --connect us-central1-run.googleapis.com:443 --showcerts</code>
-or <a href="https://gist.githubusercontent.com/salrashid123/85c5964c39e128ea158491c83bf4a8ab/raw/b544c248028367682df1637ebb434f5a934c3818/ca.crt">here</a></p></li>
-
-<li><p>why is the namespace <code>snuffleupagus-420</code>?
-Cloud Run uses your project as the namespace.</p></li>
+<li>what is this config file?<br /></li>
 </ul>
+
+<p>its just the <code>v1.Config</code> file</p>
+
+<ul>
+<li>whats <code>/path/to/ca.crt</code>?</li>
+</ul>
+
+<p>Thats the public cert chain for Google.  You can get that by running
+  <code>openssl s_client --connect us-central1-run.googleapis.com:443 --showcerts</code>
+  or <a href="https://gist.githubusercontent.com/salrashid123/85c5964c39e128ea158491c83bf4a8ab/raw/b544c248028367682df1637ebb434f5a934c3818/ca.crt">here</a></p>
+
+<ul>
+<li>why is the namespace <code>snuffleupagus-420</code>?</li>
+</ul>
+
+<p>Cloud Run uses your project as the namespace.</p>
+
+<hr />
 
 <p>ok, now download knative binaries <a href="https://github.com/knative/client/blob/master/docs/README.md#installing-kn">here</a></p>
 
