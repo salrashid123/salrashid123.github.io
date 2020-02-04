@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Knative on nonbei alley</title>
+    <title>knative on blog.salrashid.me</title>
     <link>https://blog.salrashid.me/tags/knative/</link>
-    <description>Recent content in Knative on nonbei alley</description>
+    <description>Recent content in knative on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Jan 2020 14:34:01 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 03 Feb 2020 14:34:01 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.salrashid.me/tags/knative/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Knative cli with Cloud Run (managed)</title>
+      <link>https://blog.salrashid.me/posts/knative_cli_with_cloud_run/</link>
+      <pubDate>Mon, 03 Feb 2020 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/knative_cli_with_cloud_run/</guid>
+      <description>A very limited hack to use [Knative CLI)[https://github.com/knative/client] cli to do basic operations on Cloud Run (managed)
+I was looking at the API calls yesterday to understand how GCP&amp;rsquo;s gcloud deploys and manages an app on Cloud Run. Cloud Run at the core used Knative so i figured &amp;ldquo;how hard is it to use knative&amp;rsquo;s on CLI to manage Cloud Run?&amp;rdquo;.
+Well, you can to a limited degree and with some hacks.</description>
+    </item>
     
     <item>
       <title>Knative Traffic Splitting</title>
@@ -20,7 +31,7 @@
       <description>Sample getting started tutorial on how to do traffic splitting with Knative Serving using Istio.
 This is just my &amp;ldquo;hello world&amp;rdquo; application demonstrating stuff here:
  Knative traffic-splitting Routing and managing traffic with blue/green deployment  While you can easily follow those tutorials, this article specifically designed to deconstruct the basic knative serving objects (Services, Congigurations, Routes, Revisions) and how to use them to split traffic.
-We will be showing traffic splitting using</description>
+  Note: GCP Cloud RUn does not yet suport tags</description>
     </item>
     
   </channel>

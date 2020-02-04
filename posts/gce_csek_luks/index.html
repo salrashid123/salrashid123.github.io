@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>nonbei alley  | Mounting CSEK protected disk with LUKS encryption on Google Compute Engine</title>
+    <title>blog.salrashid.me  | Mounting CSEK protected disk with LUKS encryption on Google Compute Engine</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.54.0" />
+    <meta name="generator" content="Hugo 0.57.2" />
     
     
       <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
@@ -26,28 +26,27 @@
     
     
     <meta property="og:title" content="Mounting CSEK protected disk with LUKS encryption on Google Compute Engine" />
-<meta property="og:description" content="Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you&rsquo;re left with a disk that can only get decrypted if you have both encryption keys:
+<meta property="og:description" content="Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you’re left with a disk that can only get decrypted if you have both encryption keys:
 For example, the Disk is encrypted with CSEK:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.salrashid.me/posts/gce_csek_luks/" />
-<meta property="article:published_time" content="2020-01-10T01:34:01-08:00"/>
-<meta property="article:modified_time" content="2020-01-10T01:34:01-08:00"/>
-
+<meta property="article:published_time" content="2020-01-20T01:34:01-08:00" />
+<meta property="article:modified_time" content="2020-01-20T01:34:01-08:00" />
 <meta itemprop="name" content="Mounting CSEK protected disk with LUKS encryption on Google Compute Engine">
-<meta itemprop="description" content="Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you&rsquo;re left with a disk that can only get decrypted if you have both encryption keys:
+<meta itemprop="description" content="Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you’re left with a disk that can only get decrypted if you have both encryption keys:
 For example, the Disk is encrypted with CSEK:">
 
 
-<meta itemprop="datePublished" content="2020-01-10T01:34:01-08:00" />
-<meta itemprop="dateModified" content="2020-01-10T01:34:01-08:00" />
+<meta itemprop="datePublished" content="2020-01-20T01:34:01-08:00" />
+<meta itemprop="dateModified" content="2020-01-20T01:34:01-08:00" />
 <meta itemprop="wordCount" content="986">
 
 
 
-<meta itemprop="keywords" content="gce,luks,encryption," />
+<meta itemprop="keywords" content="gce," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Mounting CSEK protected disk with LUKS encryption on Google Compute Engine"/>
-<meta name="twitter:description" content="Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you&rsquo;re left with a disk that can only get decrypted if you have both encryption keys:
+<meta name="twitter:description" content="Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you’re left with a disk that can only get decrypted if you have both encryption keys:
 For example, the Disk is encrypted with CSEK:"/>
 
       
@@ -76,7 +75,7 @@ if (!doNotTrack) {
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
     <a href="https://blog.salrashid.me/" class="f3 fw2 hover-white no-underline white-90 dib">
-      nonbei alley
+      blog.salrashid.me
     </a>
     <div class="flex-l items-center">
       
@@ -163,7 +162,7 @@ if (!doNotTrack) {
       <h1 class="f1 athelas mb1">Mounting CSEK protected disk with LUKS encryption on Google Compute Engine</h1>
       
       
-      <time class="f6 mv4 dib tracked" datetime="2020-01-10T01:34:01-08:00">January 10, 2020</time>
+      <time class="f6 mv4 dib tracked" datetime="2020-01-20T01:34:01-08:00">January 20, 2020</time>
       
       
     </header>
@@ -171,11 +170,11 @@ if (!doNotTrack) {
     <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
 
 <p>Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS.
-Essentially, you&rsquo;re left with a disk that can only get decrypted if you have both encryption keys:</p>
+Essentially, you’re left with a disk that can only get decrypted if you have both encryption keys:</p>
 
 <p>For example, the Disk is encrypted with CSEK:</p>
 
-<pre><code class="language-bash">$ gcloud compute disks describe csek-disk --zone us-central1-a
+<pre><code>$ gcloud compute disks describe csek-disk --zone us-central1-a
 diskEncryptionKey:
   sha256: Duz078vq5d+EIic+kfeC4BsRziDe4ulP3w4aeiRkMvM=
 id: '3412210802859031969'
@@ -185,7 +184,7 @@ name: csek-disk
 
 <p>and a mounted volume thats also further encrypted using LUKS:</p>
 
-<pre><code class="language-bash">$ lsblk -f
+<pre><code>$ lsblk -f
 NAME                     FSTYPE      LABEL UUID                                 MOUNTPOINT
 sda                                                                             
 └─sda1                   ext4              384f1f4a-cc72-404c-91e4-9cd3ce2bf2c0 /
@@ -193,8 +192,7 @@ sdb                      crypto_LUKS       c5b39010-de81-4cc2-aec4-4ca20e8ab915
 └─vault_encrypted_volume ext4              5fb89e88-7a85-4f33-8a39-f52e048e416d /media/vaultfs
 </code></pre>
 
-<p>Both encryption keys can be stored anywhere but at a minimum, the LUKS key needs to be accessible from within the VM.
-The full flow outlined here:</p>
+<p>Both encryption keys can be stored anywhere but at a minimum, the LUKS key needs to be accessible from within the VM. The full flow outlined here:</p>
 
 <ol>
 <li>Generate LUKS and CSEK keys</li>
@@ -221,13 +219,13 @@ The full flow outlined here:</p>
 </ul></li>
 </ol>
 
-<p>The procedure here runs a startup script which attaches the CSEK disk and mounts a LUKS volume. Its not necessary to &lsquo;self-mount&rsquo; the disk itself but it is necessary to do the luks decryption on the VM itself.</p>
+<p>The procedure here runs a startup script which attaches the CSEK disk and mounts a LUKS volume. Its not necessary to ‘self-mount’ the disk itself but it is necessary to do the luks decryption on the VM itself.</p>
 
 <h3 id="setup">Setup</h3>
 
-<h4 id="set-environment-variables-and-enable-secrets-manager">Set environment variables and enable Secrets Manager</h4>
+<p>Set environment variables and enable Secrets Manager</p>
 
-<pre><code class="language-bash">export PROJECT_ID=`gcloud config get-value core/project`
+<pre><code>export PROJECT_ID=`gcloud config get-value core/project`
 export PROJECT_NUMBER=`gcloud projects describe $PROJECT_ID --format=&quot;value(projectNumber)&quot;`
 export ZONE=us-central1-a
 
@@ -236,7 +234,7 @@ gcloud services enable secretmanager.googleapis.com
 
 <h4 id="create-csek-and-luks-secrets">Create csek and luks secrets</h4>
 
-<pre><code class="language-bash">export csek_key=`openssl rand 16 | xxd -p`
+<pre><code>export csek_key=`openssl rand 16 | xxd -p`
 export luks_key=`openssl rand 16 | xxd -p`
 
 echo -n $csek_key |  gcloud beta secrets create csek --replication-policy=automatic --data-file=-
@@ -245,9 +243,9 @@ gcloud beta secrets versions access 1 --secret csek
 gcloud beta secrets versions access 1 --secret luks
 </code></pre>
 
-<h4 id="create-csek-enabled-disk">Create CSEK enabled disk</h4>
+<h3 id="create-csek-enabled-disk">Create CSEK enabled disk</h3>
 
-<pre><code class="language-bash">sec=`gcloud beta secrets versions access 1 --secret csek`
+<pre><code>sec=`gcloud beta secrets versions access 1 --secret csek`
 cat &lt;&lt;EOF &gt; csek-key-file.json
     [
     {
@@ -261,17 +259,17 @@ EOF
 gcloud compute disks create csek-disk --csek-key-file csek-key-file.json --size 10GB --zone us-central1-a
 </code></pre>
 
-<h4 id="create-the-gce-service-account">Create the GCE service Account</h4>
+<h3 id="create-the-gce-service-account">Create the GCE service Account</h3>
 
-<pre><code class="language-bash">gcloud iam service-accounts create gce-svc-account --display-name &quot;GCE Service Account&quot;
+<pre><code>gcloud iam service-accounts create gce-svc-account --display-name &quot;GCE Service Account&quot;
 gcloud iam service-accounts describe  gce-svc-account@$PROJECT_ID.iam.gserviceaccount.com
 
 export GCE_SERVICE_ACCOUNT=gce-svc-account@$PROJECT_ID.iam.gserviceaccount.com
 </code></pre>
 
-<h4 id="set-iam-permission-on-the-service-account">Set IAM permission on the service account</h4>
+<h3 id="set-iam-permission-on-the-service-account">Set IAM permission on the service account</h3>
 
-<pre><code class="language-bash">gcloud compute disks  add-iam-policy-binding csek-disk  --zone us-central1-a --member=serviceAccount:$GCE_SERVICE_ACCOUNT --role=roles/compute.instanceAdmin  -q
+<pre><code>gcloud compute disks  add-iam-policy-binding csek-disk  --zone us-central1-a --member=serviceAccount:$GCE_SERVICE_ACCOUNT --role=roles/compute.instanceAdmin  -q
 
 gcloud iam service-accounts add-iam-policy-binding $GCE_SERVICE_ACCOUNT --member=serviceAccount:$GCE_SERVICE_ACCOUNT --role=roles/iam.serviceAccountUser
 
@@ -279,13 +277,13 @@ gcloud beta secrets add-iam-policy-binding csek --member=serviceAccount:$GCE_SER
 gcloud beta secrets add-iam-policy-binding luks --member=serviceAccount:$GCE_SERVICE_ACCOUNT --role=roles/secretmanager.secretAccessor -q
 </code></pre>
 
-<h4 id="optional-add-logging-iam-role">(optional) Add logging IAM role:</h4>
+<h3 id="optional-add-logging-iam-role">(optional) Add logging IAM role:</h3>
 
 <p>On the GCP Cloud console, assign the Logging Writer IAM role to: gce-svc-account@$PROJECT.iam.gserviceaccount.com</p>
 
-<h4 id="create-the-gce-instance">Create the GCE instance</h4>
+<h3 id="create-the-gce-instance">Create the GCE instance</h3>
 
-<pre><code class="language-bash">gcloud compute instances create gce-csek --service-account=$GCE_SERVICE_ACCOUNT --scopes=cloud-platform  --metadata enable-oslogin=FALSE,enable-oslogin-2fa=FALSE --metadata-from-file startup-script=startup.sh --image=debian-9-stretch-v20191121 --image-project=debian-cloud 
+<pre><code>gcloud compute instances create gce-csek --service-account=$GCE_SERVICE_ACCOUNT --scopes=cloud-platform  --metadata enable-oslogin=FALSE,enable-oslogin-2fa=FALSE --metadata-from-file startup-script=startup.sh --image=debian-9-stretch-v20191121 --image-project=debian-cloud 
 
 gcloud compute instances add-iam-policy-binding gce-csek --member=serviceAccount:$GCE_SERVICE_ACCOUNT --role=roles/compute.instanceAdmin
 </code></pre>
@@ -294,13 +292,13 @@ gcloud compute instances add-iam-policy-binding gce-csek --member=serviceAccount
 
 <blockquote>
 <blockquote>
-<p>Note: The last step has a potential race condition since we need to provision a GCE instance to allow the service account to perform operations on it &ldquo;by itself&rdquo; (i.,e the service account is itself attaching the encrypted disk). The startup script attaches the disk which means the permission should propagate by then. You don&rsquo;t ofcourse have to mount the CSEK disk inline on startup and are free to do omit that step.</p>
+<p>Note: The last step has a potential race condition since we need to provision a GCE instance to allow the service account to perform operations on it “by itself” (i.,e the service account is itself attaching the encrypted disk). The startup script attaches the disk which means the permission should propagate by then. You don’t ofcourse have to mount the CSEK disk inline on startup and are free to do omit that step.</p>
 </blockquote>
 </blockquote>
 
 <h3 id="cleanup">Cleanup:</h3>
 
-<pre><code class="language-bash">umount /media/vaultfs
+<pre><code>umount /media/vaultfs
 cryptsetup luksClose vault_encrypted_volume
 gcloud compute instances detach-disk shielded-2 --disk vault-backend 
 
@@ -310,27 +308,18 @@ gcloud alpha secrets delete luks -q
 gcloud alpha secrets delete csek -q
 </code></pre>
 
-<h3 id="using-alternative-key-distribution-mechanisms-instead-of-gcloud-secrets">Using alternative key distribution mechanisms instead of &ldquo;gcloud secrets&rdquo;</h3>
+<h3 id="using-alternative-key-distribution-mechanisms-instead-of-gcloud-secrets">Using alternative key distribution mechanisms instead of “gcloud secrets”</h3>
 
 <p>The example above used gcloud secrets engine as convenience but you are ofcourse free to distribute the encryption keys in anyway you see necessary. For example, the csek and luks keys can be manged via:</p>
 
 <ul>
-<li>HashiCorp Vault K/V Engine
-VM will authenticate to Vault and Vault returns both keys</li>
-<li>Google Cloud KMS
-Encrypt and Decrypt the keys with KMS.</li>
-<li>Trusted Platform Module in various ways:
-a. Embed a GCP ServiceAccount to a TPM and then with KMS via TPMTokenSource
-b. Encrypt the secret with the TPM&rsquo;s ekPub and securely import or duplicate
-c. Embed the keys directly to the TPM and apply IMA policies on its access. Use the TPM to decrypt the secret
-d. Embed mTLS certificate to the TPM and use that to authenticate to Vault</li>
+<li>HashiCorp Vault K/V Engine VM will authenticate to Vault and Vault returns both keys</li>
+<li>Google Cloud KMS Encrypt and Decrypt the keys with KMS.</li>
+<li>Trusted Platform Module in various ways: a. Embed a GCP ServiceAccount to a TPM and then with KMS via TPMTokenSource b. Encrypt the secret with the TPM’s ekPub and securely import or duplicate c. Embed the keys directly to the TPM and apply IMA policies on its access. Use the TPM to decrypt the secret d. Embed mTLS certificate to the TPM and use that to authenticate to Vault
+The core issue in each is bootstrapping: how do you seed the VM to allow access to the keys used for LUKS and CSEK mounted disks. For Vault, the VM will need to authenticate to Vault to ge the keys. For KMS, the VM will need to authenticate and get authorized to access the KMS keys. For TPM, the VM will need to get seeded with the secret or securely transferred.</li>
 </ul>
 
-<p>The core issue in each is bootstrapping: how do you seed the VM to allow access to the keys used for LUKS and CSEK mounted disks. For Vault, the VM will need to authenticate to Vault to ge the keys. For KMS, the VM will need to authenticate and get authorized to access the KMS keys. For TPM, the VM will need to get seeded with the secret or securely transferred.</p>
-
 <p>Ultimately, there are various ways to go about this depending on the complexity involved.</p>
-
-<hr />
 
 <pre><code class="language-bash">#! /bin/bash    
 apt-get update &amp;&amp; DEBIAN_FRONTEND=noninteractive apt-get install -y wget curl cryptsetup apt-transport-https ca-certificates  google-cloud-sdk
@@ -379,14 +368,6 @@ fi
      <a href="/tags/gce" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">gce</a>
    </li>
   
-   <li class="list">
-     <a href="/tags/luks" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">luks</a>
-   </li>
-  
-   <li class="list">
-     <a href="/tags/encryption" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">encryption</a>
-   </li>
-  
 </ul>
 <div class="mt6">
       
@@ -428,7 +409,7 @@ fi
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.salrashid.me/" >
-    &copy; 2020 nonbei alley
+    &copy; 2020 blog.salrashid.me
   </a>
     <div>
 

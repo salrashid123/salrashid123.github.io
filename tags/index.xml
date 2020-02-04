@@ -1,63 +1,45 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on nonbei alley</title>
+    <title>Tags on blog.salrashid.me</title>
     <link>https://blog.salrashid.me/tags/</link>
-    <description>Recent content in Tags on nonbei alley</description>
+    <description>Recent content in Tags on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Dec 2019 14:34:01 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 03 Feb 2020 14:34:01 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.salrashid.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Appengine</title>
-      <link>https://blog.salrashid.me/tags/appengine/</link>
-      <pubDate>Sun, 22 Dec 2019 14:34:01 -0800</pubDate>
+      <title>cloudrun</title>
+      <link>https://blog.salrashid.me/tags/cloudrun/</link>
+      <pubDate>Mon, 03 Feb 2020 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/tags/appengine/</guid>
+      <guid>https://blog.salrashid.me/tags/cloudrun/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Dotnet</title>
-      <link>https://blog.salrashid.me/tags/dotnet/</link>
-      <pubDate>Sun, 24 Apr 2016 14:34:01 -0800</pubDate>
+      <title>knative</title>
+      <link>https://blog.salrashid.me/tags/knative/</link>
+      <pubDate>Mon, 03 Feb 2020 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/tags/dotnet/</guid>
+      <guid>https://blog.salrashid.me/tags/knative/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Encryption</title>
-      <link>https://blog.salrashid.me/tags/encryption/</link>
-      <pubDate>Fri, 10 Jan 2020 01:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/encryption/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Gce</title>
+      <title>gce</title>
       <link>https://blog.salrashid.me/tags/gce/</link>
-      <pubDate>Fri, 10 Jan 2020 01:34:01 -0800</pubDate>
+      <pubDate>Mon, 20 Jan 2020 01:34:01 -0800</pubDate>
       
       <guid>https://blog.salrashid.me/tags/gce/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Gcs</title>
-      <link>https://blog.salrashid.me/tags/gcs/</link>
-      <pubDate>Mon, 06 Jan 2020 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/gcs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Gke</title>
+      <title>gke</title>
       <link>https://blog.salrashid.me/tags/gke/</link>
       <pubDate>Wed, 08 Jan 2020 14:34:01 -0800</pubDate>
       
@@ -66,7 +48,16 @@
     </item>
     
     <item>
-      <title>Kms</title>
+      <title>gcs</title>
+      <link>https://blog.salrashid.me/tags/gcs/</link>
+      <pubDate>Mon, 06 Jan 2020 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/tags/gcs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kms</title>
       <link>https://blog.salrashid.me/tags/kms/</link>
       <pubDate>Mon, 06 Jan 2020 14:34:01 -0800</pubDate>
       
@@ -75,43 +66,7 @@
     </item>
     
     <item>
-      <title>Knative</title>
-      <link>https://blog.salrashid.me/tags/knative/</link>
-      <pubDate>Wed, 08 Jan 2020 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/knative/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Kubernetes</title>
-      <link>https://blog.salrashid.me/tags/kubernetes/</link>
-      <pubDate>Sun, 24 Apr 2016 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/kubernetes/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Luks</title>
-      <link>https://blog.salrashid.me/tags/luks/</link>
-      <pubDate>Fri, 10 Jan 2020 01:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/luks/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Monitoring</title>
-      <link>https://blog.salrashid.me/tags/monitoring/</link>
-      <pubDate>Tue, 24 Dec 2019 14:34:01 -0800</pubDate>
-      
-      <guid>https://blog.salrashid.me/tags/monitoring/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Oauth</title>
+      <title>oauth</title>
       <link>https://blog.salrashid.me/tags/oauth/</link>
       <pubDate>Mon, 06 Jan 2020 14:34:01 -0800</pubDate>
       
@@ -120,7 +75,16 @@
     </item>
     
     <item>
-      <title>Opentelemetry</title>
+      <title>monitoring</title>
+      <link>https://blog.salrashid.me/tags/monitoring/</link>
+      <pubDate>Tue, 24 Dec 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/tags/monitoring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>opentelemetry</title>
       <link>https://blog.salrashid.me/tags/opentelemetry/</link>
       <pubDate>Tue, 24 Dec 2019 14:34:01 -0800</pubDate>
       
@@ -129,7 +93,25 @@
     </item>
     
     <item>
-      <title>Signedurl</title>
+      <title>stackdriver</title>
+      <link>https://blog.salrashid.me/tags/stackdriver/</link>
+      <pubDate>Tue, 24 Dec 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/tags/stackdriver/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>appengine</title>
+      <link>https://blog.salrashid.me/tags/appengine/</link>
+      <pubDate>Sun, 22 Dec 2019 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/tags/appengine/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>signedurl</title>
       <link>https://blog.salrashid.me/tags/signedurl/</link>
       <pubDate>Sun, 22 Dec 2019 14:34:01 -0800</pubDate>
       
@@ -138,11 +120,20 @@
     </item>
     
     <item>
-      <title>Stackdriver</title>
-      <link>https://blog.salrashid.me/tags/stackdriver/</link>
-      <pubDate>Tue, 24 Dec 2019 14:34:01 -0800</pubDate>
+      <title>dotnet</title>
+      <link>https://blog.salrashid.me/tags/dotnet/</link>
+      <pubDate>Sun, 24 Apr 2016 14:34:01 -0800</pubDate>
       
-      <guid>https://blog.salrashid.me/tags/stackdriver/</guid>
+      <guid>https://blog.salrashid.me/tags/dotnet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://blog.salrashid.me/tags/kubernetes/</link>
+      <pubDate>Sun, 24 Apr 2016 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/tags/kubernetes/</guid>
       <description></description>
     </item>
     

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Articles on nonbei alley</title>
+    <title>Articles on blog.salrashid.me</title>
     <link>https://blog.salrashid.me/posts/</link>
-    <description>Recent content in Articles on nonbei alley</description>
+    <description>Recent content in Articles on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 30 Dec 2019 12:00:00 -0500</lastBuildDate>
@@ -12,12 +12,23 @@
     
     
     <item>
+      <title>Knative cli with Cloud Run (managed)</title>
+      <link>https://blog.salrashid.me/posts/knative_cli_with_cloud_run/</link>
+      <pubDate>Mon, 03 Feb 2020 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/knative_cli_with_cloud_run/</guid>
+      <description>A very limited hack to use [Knative CLI)[https://github.com/knative/client] cli to do basic operations on Cloud Run (managed)
+I was looking at the API calls yesterday to understand how GCP&amp;rsquo;s gcloud deploys and manages an app on Cloud Run. Cloud Run at the core used Knative so i figured &amp;ldquo;how hard is it to use knative&amp;rsquo;s on CLI to manage Cloud Run?&amp;rdquo;.
+Well, you can to a limited degree and with some hacks.</description>
+    </item>
+    
+    <item>
       <title>Mounting CSEK protected disk with LUKS encryption on Google Compute Engine</title>
       <link>https://blog.salrashid.me/posts/gce_csek_luks/</link>
-      <pubDate>Fri, 10 Jan 2020 01:34:01 -0800</pubDate>
+      <pubDate>Mon, 20 Jan 2020 01:34:01 -0800</pubDate>
       
       <guid>https://blog.salrashid.me/posts/gce_csek_luks/</guid>
-      <description>Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you&amp;rsquo;re left with a disk that can only get decrypted if you have both encryption keys:
+      <description>Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you’re left with a disk that can only get decrypted if you have both encryption keys:
 For example, the Disk is encrypted with CSEK:</description>
     </item>
     
@@ -30,7 +41,7 @@ For example, the Disk is encrypted with CSEK:</description>
       <description>Sample getting started tutorial on how to do traffic splitting with Knative Serving using Istio.
 This is just my &amp;ldquo;hello world&amp;rdquo; application demonstrating stuff here:
  Knative traffic-splitting Routing and managing traffic with blue/green deployment  While you can easily follow those tutorials, this article specifically designed to deconstruct the basic knative serving objects (Services, Congigurations, Routes, Revisions) and how to use them to split traffic.
-We will be showing traffic splitting using</description>
+  Note: GCP Cloud RUn does not yet suport tags</description>
     </item>
     
     <item>
