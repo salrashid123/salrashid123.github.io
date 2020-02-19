@@ -3,6 +3,41 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.salrashid.me/tags/cloud-identity/</loc>
+    <lastmod>2020-02-17T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/tags/firebase/</loc>
+    <lastmod>2020-02-17T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/posts/firebase_salted_user_import/</loc>
+    <lastmod>2020-02-17T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/</loc>
+    <lastmod>2020-02-17T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/tags/</loc>
+    <lastmod>2020-02-17T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.salrashid.me/tags/cloudrun/</loc>
     <lastmod>2020-02-03T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -31,13 +66,6 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/</loc>
-    <lastmod>2020-02-03T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/tags/redis/</loc>
     <lastmod>2020-02-03T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -46,13 +74,6 @@
   
   <url>
     <loc>https://blog.salrashid.me/posts/redis_envoy/</loc>
-    <lastmod>2020-02-03T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/</loc>
     <lastmod>2020-02-03T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

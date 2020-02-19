@@ -6,10 +6,20 @@
     <description>Recent content in nonbei alley on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Feb 2020 14:34:01 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 17 Feb 2020 14:34:01 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.salrashid.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Importing SHA hashed password into Firebase and Identity Platform</title>
+      <link>https://blog.salrashid.me/posts/firebase_salted_user_import/</link>
+      <pubDate>Mon, 17 Feb 2020 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/firebase_salted_user_import/</guid>
+      <description>or&amp;hellip;how i learned that firebase imports passwords as hash(salt+password)&amp;hellip;the really hard way.
+Last week i assisted a customer in getting ready to import their existing users into Google Identity Platform. As is the case with many companies, their userbase&amp;rsquo;s identity store was your basic run of the mill salted password store. This is usually a no-brainer to migrate and the identity platform, firebase docs cover that ad nauseam (see Migrating users from an existing app</description>
+    </item>
     
     <item>
       <title>Knative cli with Cloud Run (managed)</title>

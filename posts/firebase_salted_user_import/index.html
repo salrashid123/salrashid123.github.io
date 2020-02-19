@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>blog.salrashid.me  | Articles</title>
+    <title>blog.salrashid.me  | Importing SHA hashed password into Firebase and Identity Platform</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="generator" content="Hugo 0.57.2" />
     
@@ -25,23 +25,29 @@
 
     
     
-      <link href="/posts/index.xml" rel="alternate" type="application/rss+xml" title="blog.salrashid.me" />
-      <link href="/posts/index.xml" rel="feed" type="application/rss+xml" title="blog.salrashid.me" />
-      
-    
-    
-    <meta property="og:title" content="Articles" />
-<meta property="og:description" content="wow...its full of 6equj5" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog.salrashid.me/posts/" />
+    <meta property="og:title" content="Importing SHA hashed password into Firebase and Identity Platform" />
+<meta property="og:description" content="or&hellip;how i learned that firebase imports passwords as hash(salt&#43;password)&hellip;the really hard way.
+Last week i assisted a customer in getting ready to import their existing users into Google Identity Platform. As is the case with many companies, their userbase&rsquo;s identity store was your basic run of the mill salted password store. This is usually a no-brainer to migrate and the identity platform, firebase docs cover that ad nauseam (see Migrating users from an existing app" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.salrashid.me/posts/firebase_salted_user_import/" />
+<meta property="article:published_time" content="2020-02-17T14:34:01-08:00" />
+<meta property="article:modified_time" content="2020-02-17T14:34:01-08:00" />
+<meta itemprop="name" content="Importing SHA hashed password into Firebase and Identity Platform">
+<meta itemprop="description" content="or&hellip;how i learned that firebase imports passwords as hash(salt&#43;password)&hellip;the really hard way.
+Last week i assisted a customer in getting ready to import their existing users into Google Identity Platform. As is the case with many companies, their userbase&rsquo;s identity store was your basic run of the mill salted password store. This is usually a no-brainer to migrate and the identity platform, firebase docs cover that ad nauseam (see Migrating users from an existing app">
 
-<meta property="og:updated_time" content="2019-12-30T12:00:00-05:00" />
-<meta itemprop="name" content="Articles">
-<meta itemprop="description" content="wow...its full of 6equj5">
 
+<meta itemprop="datePublished" content="2020-02-17T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2020-02-17T14:34:01-08:00" />
+<meta itemprop="wordCount" content="663">
+
+
+
+<meta itemprop="keywords" content="cloud identity,firebase," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Articles"/>
-<meta name="twitter:description" content="wow...its full of 6equj5"/>
+<meta name="twitter:title" content="Importing SHA hashed password into Firebase and Identity Platform"/>
+<meta name="twitter:description" content="or&hellip;how i learned that firebase imports passwords as hash(salt&#43;password)&hellip;the really hard way.
+Last week i assisted a customer in getting ready to import their existing users into Google Identity Platform. As is the case with many companies, their userbase&rsquo;s identity store was your basic run of the mill salted password store. This is usually a no-brainer to migrate and the identity platform, firebase docs cover that ad nauseam (see Migrating users from an existing app"/>
 
       
 <script type="application/javascript">
@@ -61,11 +67,11 @@ if (!doNotTrack) {
   <body class="ma0 avenir bg-near-white production">
 
     
+   
+  
 
-  
-  
-  <header class="cover bg-top" style="background-image: url('https://blog.salrashid.me/images/main.jpg');">
-    <div class="bg-black-60">
+  <header>
+    <div class="bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
     <a href="https://blog.salrashid.me/" class="f3 fw2 hover-white no-underline white-90 dib">
@@ -138,181 +144,226 @@ if (!doNotTrack) {
   </div>
 </nav>
 
-      <div class="tc-l pv4 pv6-l ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 white-90 mb0 lh-title">
-          Articles
-        </h1>
-        
-      </div>
     </div>
   </header>
 
 
+
     <main class="pb7" role="main">
       
-  <article class="pa3 pa4-ns nested-copy-line-height nested-img">
-    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"><p>You can find the sourcecode for most of the articles on my gitrepo&hellip;either in its own repo or under the catchall gitubpages liink.  I may crosspost with medium but prefer this.</p>
-</section>
-    <section class="flex-ns flex-wrap justify-around mt5">
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Importing SHA hashed password into Firebase and Identity Platform</h1>
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/firebase_salted_user_import/" class="link black dim">
-        Importing SHA hashed password into Firebase and Identity Platform
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      or&hellip;how i learned that firebase imports passwords as hash(salt+password)&hellip;the really hard way.
-Last week i assisted a customer in getting ready to import their existing users into Google Identity Platform. As is the case with many companies, their userbase&rsquo;s identity store was your basic run of the mill salted password store. This is usually a no-brainer to migrate and the identity platform, firebase docs cover that ad nauseam (see Migrating users from an existing app
-    </div>
-  </div>
-</div>
-</div>
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/knative_cli_with_cloud_run/" class="link black dim">
-        Knative cli with Cloud Run (managed)
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      A very limited hack to use Knative CLI cli to do basic operations on Cloud Run (managed)
-I was looking at the API calls yesterday to understand how GCP&rsquo;s gcloud deploys and manages an app on Cloud Run. Cloud Run at the core used Knative so i figured &ldquo;how hard is it to use knative&rsquo;s on CLI to manage Cloud Run?&rdquo;.
-Well, you can to a limited degree and with some hacks.
-    </div>
-  </div>
-</div>
-</div>
+      <time class="f6 mv4 dib tracked" datetime="2020-02-17T14:34:01-08:00">February 17, 2020</time>
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/redis_envoy/" class="link black dim">
-        Redis with Envoy
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Cheatsheet to setup Envoy to proxy Redis traffic using TLS and Redis AUTH.
-I&rsquo;m writing this up since i found it really tricky to setup the envoy side of things&hellip;especially with both downstream and upstream AUTH:
-hope this helps you spend some hours on other things..
-What we&rsquo;re going to do: Setup a go redis client app to talk via TLS to envoy. Envoy will then proxy requests to Redis server.
-    </div>
-  </div>
-</div>
-</div>
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gce_csek_luks/" class="link black dim">
-        Mounting CSEK protected disk with LUKS encryption on Google Compute Engine
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Simple procedure that attaches a GCE persistent disk to a VM where the disk itself is encrypted by a key you define (Customer Supplied Encryption Key). In addition, the startup script also does a final round of encryption on top of that on the mounted disk using LUKS. Essentially, you’re left with a disk that can only get decrypted if you have both encryption keys:
-For example, the Disk is encrypted with CSEK:
-    </div>
-  </div>
-</div>
-</div>
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>or&hellip;how i learned that firebase imports passwords as <code>hash(salt+password)</code>&hellip;the really hard way.</p>
+
+<p>Last week i assisted a customer in getting ready to import their existing users into <a href="https://cloud.google.com/identity-platform">Google Identity Platform</a>.  As is the case with many companies, their userbase&rsquo;s identity store was your basic run of the mill <a href="https://en.wikipedia.org/wiki/Salt_(cryptography)">salted password store</a>.   This is usually a no-brainer to migrate and the identity platform, firebase docs cover that <em>ad nauseam</em> (see <a href="https://cloud.google.com/identity-platform/docs/migrating-users#pbkdf">Migrating users from an existing app</a></p>
+
+<p>What stood apart in with this customer was the choice of they had i their existing system: <code>SHA-1</code>.  No big deal i thought, the docs cover it.</p>
+
+<p>However, the story more complicated quickly:  a known password for a test user just didn&rsquo;t work&hellip;the customer knew the original password, the salt used and given those two the password hash to import:</p>
+
+<pre><code class="language-bash">email = dev@foooo.com
+raw_password = Password1
+password_hash= kfjS+dtoePcY0vEKx1w5ol2ZJ88=
+raw_salt = XiwiihQ=
+</code></pre>
+
+<p>I looked at this for hours and then noticed how they seeded their users in their users store:</p>
+
+<p><code>sha1(password+salt)</code></p>
+
+<p>the salt value was appended to the password and those two together got hashed&hellip;that left me thinking of the scheme firebase/cloud identity uses..I then looked around the firebase SDK for anyplace where you set/define the order since it may well be defaulting to <code>hash(password+salt)</code>..</p>
+
+<p>It turns the ability to set the order is <em>not</em> surfaced in the SDK but <em>is</em> there in the <a href="https://firebase.google.com/docs/cli/auth#authimport">firebase cli</a> as the <code>--hash-input-order=</code> switch here <a href="https://github.com/firebase/firebase-tools/blob/master/src/commands/auth-import.js#L42">deep in the code</a>.</p>
+
+<pre><code class="language-javascript"> &quot;--hash-input-order &lt;hashInputOrder&gt;&quot;,
+    &quot;specify the order of password and salt. Possible values are SALT_FIRST and PASSWORD_FIRST. &quot; +
+</code></pre>
+
+<p>So then i went ahead to test this.  I had to setup the firebase CLI, create an import file using the hash  i was given and the b64 encoded salt</p>
+
+<pre><code class="language-json">  {
+    &quot;users&quot;: [
+      {
+        &quot;localId&quot;: &quot;dev@foooo.com&quot;,
+        &quot;email&quot;: &quot;dev@foooo.com&quot;,
+        &quot;passwordHash&quot;: &quot;kfjS+dtoePcY0vEKx1w5ol2ZJ88=&quot;,
+        &quot;salt&quot;: &quot;WGl3aWloUT0=&quot;,
+        &quot;displayName&quot;: &quot;dev@foooo.com&quot;
+      }
+    ]
+  }
+</code></pre>
+
+<p>in python, the values derived from the original password and hash woud&rsquo;ve been:</p>
+
+<pre><code class="language-bash">raw_password = 'Password1'
+raw_salt = 'XiwiihQ='
+
+print hashlib.sha1(  raw_password + raw_salt ).hexdigest().decode(&quot;hex&quot;).encode(&quot;base64&quot;)
+print raw_salt.encode(&quot;base64&quot;)
+</code></pre>
+
+<p>Then ran the import using the cli:</p>
+
+<pre><code class="language-bash">$ firebase auth:import user.json --hash-algo=SHA1 --rounds=1 --hash-input-order=PASSWORD_FIRST
+Processing user.json (239 bytes)
+Starting importing 1 account(s).
+✔  Imported successfully.
+</code></pre>
+
+<p>At that point, i used the sample firebase &ldquo;login client&rdquo; below to test..take my word for it&hellip;success!</p>
+
+<p>Now..your next question is &ldquo;why can&rsquo;t i use an sdk client?&rdquo;&hellip;well, i don&rsquo;t know, i&rsquo;ll file a FR to the git repo to add it in&hellip;but in a quick look at the code, it just looks like you&rsquo;d need to add in the following parameter to each user&rsquo;s entry:</p>
+
+<ul>
+<li><code>passwordHashOrder</code>: <code>&quot;SALT_AND_PASSWORD&quot;</code> , or <code>&quot;PASSWORD_AND_SALT&quot;</code></li>
+</ul>
+
+<p>thats all&hellip;i spent maybe 7 hours on this one little thing&hellip;hope this helps someone out.</p>
+
+<hr />
+
+<h4 id="login-js"><code>login.js</code>:</h4>
+
+<p>The following is a sample firebase &lsquo;login&rsquo; client which will take an email/password and attempt a login.</p>
+
+<pre><code class="language-javascript">var firebase = require(&quot;firebase/app&quot;);
+require(&quot;firebase/auth&quot;);
+
+
+const email = &quot;dev@fooooo.com&quot;;
+const password = &quot;Password1&quot;;
+
+var firebaseConfig = {
+    apiKey: &quot;your_api_key&quot;,
+    authDomain: &quot;yourproject.firebaseapp.com&quot;,
+    databaseURL: &quot;https://yourproject.firebaseio.com&quot;,
+    projectId: &quot;yourproject&quot;,
+    appId: &quot;yourproject&quot;,
+  };
+
+firebase.initializeApp(firebaseConfig);
+
+firebase.auth().signInWithEmailAndPassword(email, password).then(result =&gt; {
+  console.log(&quot;logged in as: &quot; + result.user.email);
+}).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log(errorMessage);
+  });
+</code></pre>
+
+<h4 id="import-js"><code>import.js</code>:</h4>
+
+<p>Just for reference, here is the sample admin client you&rsquo;d normally use to import&hellip;this won&rsquo;t work since the sdk libraries don&rsquo;t support the hash order but i&rsquo;m adding it in just for reference&hellip;.It will work if you toggle the password scheme back to the defaults. i.,e
+use <code>shasum.update(raw_password + raw_salt);</code> in the snippet below</p>
+
+<p>Sample app to import users to firebase.  Will always use <code>salt+password</code></p>
+
+<pre><code class="language-javascript">var admin = require('firebase-admin');
+
+//export GOOGLE_APPLICATION_CREDENTIALS=/path/to/svc_account.json
+
+admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+});
+  
+const email = &quot;dev@foooo.com&quot;;
+const raw_password = 'Password1'
+const raw_salt = 'XiwiihQ='
+
+const crypto = require('crypto')
+  , shasum = crypto.createHash('sha1');
+//shasum.update(raw_salt + raw_password);
+shasum.update(raw_password + raw_salt);
+const password_hash = shasum.digest()
+
+console.log(&quot;SHA1: &quot; +  Buffer.from(password_hash).toString('base64'))
+console.log(&quot;Salt (b64): &quot; + Buffer.from(raw_salt).toString('base64'));
+
+admin.auth().importUsers([{
+    uid: email,
+    email: email,
+    passwordHash: Buffer.from(password_hash),
+    passwordSalt: Buffer.from(raw_salt)
+  }], {
+    hash: {
+      algorithm: 'SHA1',
+      rounds: 1
+    }
+  })
+    .then(function(results) {
+      console.log(results);
+      return process.exit(0);
+    })
+    .catch(function(error) {
+      console.log('Error importing users:', error);
+      return process.exit(1);
+    });
+</code></pre>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/cloud-identity" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">cloud identity</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/firebase" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">firebase</a>
+   </li>
+  
+</ul>
+<div class="mt6">
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/knative_traffic_splitting/" class="link black dim">
-        Knative Traffic Splitting
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sample getting started tutorial on how to do traffic splitting with Knative Serving using Istio.
-This is just my &ldquo;hello world&rdquo; application demonstrating stuff here:
- Knative traffic-splitting Routing and managing traffic with blue/green deployment  While you can easily follow those tutorials, this article specifically designed to deconstruct the basic knative serving objects (Services, Congigurations, Routes, Revisions) and how to use them to split traffic.
-  Note: GCP Cloud RUn does not yet suport tags
-    </div>
-  </div>
-</div>
-</div>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-salrashid-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/kms_service_accounts/" class="link black dim">
-        Google Cloud KMS based Service Accounts for Authentication and SignedURLs
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      The following procedure details how to embed a Google Cloud KMS key as a Service Account.
-There are two ways to associate a Service Account with a KMS key:
- Create a private key within KMS and then associate a Service Account with it. or Create a Service Account keypair; export the private key and import that key into KMS.  Once the Serivce Account private key is within KMS, you can do several things:
-    </div>
-  </div>
-</div>
-</div>
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/opentelemetry_stackdriver/" class="link black dim">
-        Simple distributed tracing with OpenTracing and Stackdriver
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Nothing much, just my variation/helloworld for opentelemetry in golang..its my variation of Opentelemetry-Distributed Tracing sample
-This is a simple frontend-backend application you can run on your laptop which demonstrates distributed tracing between microservices.
-What step 5 below shows is an inbound request to one microservice (/frontend) which emits some subspans, then makes an http call to a backend app (/backend) which also emits some spans. The final trace you see is a combined end-to-end trace between microservices.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gae_signedurl/" class="link black dim">
-        GCS SignedURL with Google AppEngine Standard (1st gen)
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Over the years, I&rsquo;ve repeatedly had to setup samples that use Google AppEngine&rsquo;s (v1) to generate a SignedURL.
-The following is nothing new but my variation of it (since i just had to do this again from scratch)
-Sample code demonstrating GCS SignedURL using original-flavor Appengine (v1).
-Note, if your&rsquo;e reading this and your&rsquo;e using Cloud Run, Cloud Functions or AppEngine v2, its much, much eaiser: just use the google-cloud-storage python library
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gcpdotnet/" class="link black dim">
-        .NET on GCP
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
- Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
-These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
-The example here uses Microsofts&rsquo;s .NET Core 1.
-    </div>
-  </div>
-</div>
-</div>
-      
+      </div>
     </section>
 
-</article>
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
