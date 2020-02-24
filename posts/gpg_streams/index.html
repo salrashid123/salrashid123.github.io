@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>blog.salrashid.me  | gpg</title>
+    <title>blog.salrashid.me  | GPG Stream Encryption in golang by chaining Pipes</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="generator" content="Hugo 0.57.2" />
     
@@ -25,23 +25,29 @@
 
     
     
-      <link href="/tags/gpg/index.xml" rel="alternate" type="application/rss+xml" title="blog.salrashid.me" />
-      <link href="/tags/gpg/index.xml" rel="feed" type="application/rss+xml" title="blog.salrashid.me" />
-      
-    
-    
-    <meta property="og:title" content="gpg" />
-<meta property="og:description" content="wow...its full of 6equj5" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog.salrashid.me/tags/gpg/" />
+    <meta property="og:title" content="GPG Stream Encryption in golang by chaining Pipes" />
+<meta property="og:description" content="Sometime last year i wroteup a small article about how to use Cloud Run and Cloud Functions to encrypt data &lsquo;on the fly&rsquo;:
+ GPG stream encryption and decryption on Google Cloud Functions and Cloud Run  In that article a source file in a Google Cloud Storage bucket is read in by a Cloud Function/Run, encrypted &ldquo;on the fly&rdquo; and saved in another GCS Bucket. All this happens in a way where the data is encrypted as a stream so as to minimize memory footprint." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.salrashid.me/posts/gpg_streams/" />
+<meta property="article:published_time" content="2020-02-21T14:34:01-08:00" />
+<meta property="article:modified_time" content="2020-02-21T14:34:01-08:00" />
+<meta itemprop="name" content="GPG Stream Encryption in golang by chaining Pipes">
+<meta itemprop="description" content="Sometime last year i wroteup a small article about how to use Cloud Run and Cloud Functions to encrypt data &lsquo;on the fly&rsquo;:
+ GPG stream encryption and decryption on Google Cloud Functions and Cloud Run  In that article a source file in a Google Cloud Storage bucket is read in by a Cloud Function/Run, encrypted &ldquo;on the fly&rdquo; and saved in another GCS Bucket. All this happens in a way where the data is encrypted as a stream so as to minimize memory footprint.">
 
-<meta property="og:updated_time" content="2020-02-21T14:34:01-08:00" />
-<meta itemprop="name" content="gpg">
-<meta itemprop="description" content="wow...its full of 6equj5">
 
+<meta itemprop="datePublished" content="2020-02-21T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2020-02-21T14:34:01-08:00" />
+<meta itemprop="wordCount" content="862">
+
+
+
+<meta itemprop="keywords" content="gpg," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="gpg"/>
-<meta name="twitter:description" content="wow...its full of 6equj5"/>
+<meta name="twitter:title" content="GPG Stream Encryption in golang by chaining Pipes"/>
+<meta name="twitter:description" content="Sometime last year i wroteup a small article about how to use Cloud Run and Cloud Functions to encrypt data &lsquo;on the fly&rsquo;:
+ GPG stream encryption and decryption on Google Cloud Functions and Cloud Run  In that article a source file in a Google Cloud Storage bucket is read in by a Cloud Function/Run, encrypted &ldquo;on the fly&rdquo; and saved in another GCS Bucket. All this happens in a way where the data is encrypted as a stream so as to minimize memory footprint."/>
 
       
 <script type="application/javascript">
@@ -61,11 +67,11 @@ if (!doNotTrack) {
   <body class="ma0 avenir bg-near-white production">
 
     
+   
+  
 
-  
-  
-  <header class="cover bg-top" style="background-image: url('https://blog.salrashid.me/images/main.jpg');">
-    <div class="bg-black-60">
+  <header>
+    <div class="bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
     <a href="https://blog.salrashid.me/" class="f3 fw2 hover-white no-underline white-90 dib">
@@ -138,46 +144,289 @@ if (!doNotTrack) {
   </div>
 </nav>
 
-      <div class="tc-l pv4 pv6-l ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 white-90 mb0 lh-title">
-          gpg
-        </h1>
-        
-      </div>
     </div>
   </header>
 
 
+
     <main class="pb7" role="main">
       
-  <article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “gpg”</p>
-    </div>
-  </article>
-  <div class="mw8 center">    
-    <section class="flex-ns flex-wrap justify-around mt5">
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gpg_streams/" class="link black dim">
-        GPG Stream Encryption in golang by chaining Pipes
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sometime last year i wroteup a small article about how to use Cloud Run and Cloud Functions to encrypt data &lsquo;on the fly&rsquo;:
- GPG stream encryption and decryption on Google Cloud Functions and Cloud Run  In that article a source file in a Google Cloud Storage bucket is read in by a Cloud Function/Run, encrypted &ldquo;on the fly&rdquo; and saved in another GCS Bucket. All this happens in a way where the data is encrypted as a stream so as to minimize memory footprint.
-    </div>
-  </div>
-</div>
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
 
-        </div>
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">GPG Stream Encryption in golang by chaining Pipes</h1>
       
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-02-21T14:34:01-08:00">February 21, 2020</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Sometime last year i wroteup a small article about how to use Cloud Run and Cloud Functions to encrypt data &lsquo;on the fly&rsquo;:</p>
+
+<ul>
+<li><a href="https://github.com/salrashid123/gpg_gcf">GPG stream encryption and decryption on Google Cloud Functions and Cloud Run</a></li>
+</ul>
+
+<p>In that article a source file in a Google Cloud Storage bucket is read in by a Cloud Function/Run, encrypted &ldquo;on the fly&rdquo; and saved in another GCS Bucket.  All this happens in a way where the data is encrypted as a stream so as to minimize memory footprint.</p>
+
+<p>As a followup, tHis is just a standalone app that demonstrates the same technology except the source file is just a named pipe in linux.</p>
+
+<p>The reason i&rsquo;m writing this is because it chains golang&rsquo;s <code>io.Pipe</code> <strong>TWICE</strong> because we&rsquo;re going to chain one reader into GPG&rsquo;s reader/writer stream subsystem which inturn writes to GCS!</p>
+
+<p>for more info, please see this excellent article here:</p>
+
+<ul>
+<li><a href="https://medium.com/learning-the-go-programming-language/streaming-io-in-go-d93507931185">Streaming IO in Go</a></li>
+</ul>
+
+<hr />
+
+<p>So..start with a plain io pipe on the filesystem:</p>
+
+<pre><code class="language-bash">mkfifo /tmp/testpipe
+</code></pre>
+
+<p>Create a reader for whatever comes into it</p>
+
+<pre><code class="language-golang">	fileSrcReader := bufio.NewReader(&quot;/tmp/testpipe&quot;)
+</code></pre>
+
+<p>Create temp Pipe (we need this to help broker data between the input, GPG and GCS  (we will use this shortly)</p>
+
+<pre><code class="language-golang">	pr, pw := io.Pipe()
+</code></pre>
+
+<p>In a go routine, use GPG to encrypt and encode data using the &lsquo;writer&rsquo; end of the temp pipe as the output <code>pw</code> (again, which we haven&rsquo;t used this yet)</p>
+
+<pre><code class="language-golang">		wm, err := armor.Encode(pw, &quot;PGP MESSAGE&quot;, nil)	
+</code></pre>
+
+<p><a href="https://godoc.org/golang.org/x/crypto/openpgp/armor#Encode">armor.Encode</a></p>
+
+<pre><code class="language-golang">func Encode(out io.Writer, blockType string, headers map[string]string) (w io.WriteCloser, err error)
+</code></pre>
+
+<p><code>Encode returns a WriteCloser which will encode the data written to it in OpenPGP armor.</code></p>
+
+<p>This will encode the data provided into the <code>io.WriteCloser</code> (<code>wm</code>) and output that to an <code>io.Writer</code>, <code>pw</code></p>
+
+<p>The Encode function itself receives the output of the actual encryption from <a href="https://godoc.org/golang.org/x/crypto/openpgp#SymmetricallyEncrypt">opengpg.SymmetricallyEncrypt</a> call:</p>
+
+<pre><code class="language-golang">		pt, err := openpgp.SymmetricallyEncrypt(wm, password, nil, packetConfig)	
+</code></pre>
+
+<pre><code class="language-golang">func SymmetricallyEncrypt(ciphertext io.Writer, passphrase []byte, hints *FileHints, config *packet.Config) (plaintext io.WriteCloser, err error)
+</code></pre>
+
+<p><code>SymmetricallyEncrypt acts like gpg -c: it encrypts a file with a passphrase. The resulting WriteCloser must be closed after the contents of the file have been written. If config is nil, sensible defaults will be used.</code></p>
+
+<p>This does the same writecloser-writer flow we did in the encode step&hellip;</p>
+
+<p>So how do we get the input data to this function kick everything off?</p>
+
+<p>Copy the file input to of GPG&rsquo;s writeCloser for <code>SymmetricallyEncrypt</code> (yes, you need to send the plaintext data into <code>pt</code>&hellip;once you do that, the encrypted data come out as <code>wm</code> variable which will again be used by the <code>Encode</code> function&hellip;</p>
+
+<p>The Encode function will output one half of the original temp pipe writer, <code>pw</code></p>
+
+<p>&hellip;er..ok, so remember that writer <code>pw</code> was declared as one end of a pipe to another reader <code>pr</code>.</p>
+
+<p>remember from earlier:</p>
+
+<pre><code class="language-golang">	pr, pw := io.Pipe()
+</code></pre>
+
+<p>Finally take the reader <code>pr</code> and write it to GCS&rsquo;s writer:</p>
+
+<pre><code class="language-golang">io.Copy(gcsDstWriter, pr)
+</code></pre>
+
+<p>Basically, you&rsquo;ve chained IO pipes, readers such that the original input is read in as GPG&rsquo;s encryption reader is written out as a writer again to a final reader which writes to GCS! right&hellip;.right, (i hope i got that right&hellip;you should really read the article cited in the opening paragraph&hellip;thats the real deal&hellip;i&rsquo;m just pretending)</p>
+
+<p>anyway, here is the code and usage..</p>
+
+<h3 id="usage">Usage:</h3>
+
+<ol>
+<li><p>create the pipe
+ mkfifo /tmp/testpipe</p></li>
+
+<li><p>run the app
+ go run main.go</p></li>
+
+<li><p>Add some data to the source pipe
+ echo &ldquo;foooooo&rdquo; &gt; /tmp/testpipe</p>
+
+<pre><code class="language-bash">$ go run main.go
+		open a named pipe file for read.
+		2020/02/23 08:24:45 Encrypter: 231 bytes are received.
+
+$ gsutil cp gs://yourbucket/streamedFile.gpg .
+		Copying gs://yourbucket/streamedFile.gpg...
+		/ [1 files][  231.0 B/  231.0 B]
+		Operation completed over 1 objects/231.0 B.
+
+$ cat streamedFile.gpg
+		-----BEGIN PGP MESSAGE-----
+
+		wy4ECQMIN+AE+bxjmjdgG3pN4XsnGrljVNBwxCeHnqnLINN7TwrsHms0v9Ipq2VM
+		0uAB5OlMCdLKvVqOYqB3E61vbbThA23gd+B64QpZ4LziLdF7oOA+4+ZE+DUw/SQ/
+		4L3kXZhXU6BUyyevuQMvRvXBMOI7XiHa4TvkAA==
+		=9zmb
+		-----END PGP MESSAGE-----
+
+$  gpg  --decrypt streamedFile.gpg
+		gpg: AES256 encrypted session key
+		gpg: encrypted with 1 passphrase
+
+		foooooo
+</code></pre></li>
+</ol>
+
+<h3 id="source">Source:</h3>
+
+<pre><code class="language-golang">package main
+
+/*
+
+  &quot;on the fly&quot; stream encryption with Google Cloud Storage and GPG
+
+  Snippet below reads data from a named pipe, encrypts it with a
+  symmetric GPG key, then uploads it to GCS all within a stream.
+
+  ref: https://github.com/salrashid123/gpg_gcf
+*/
+
+import (
+	&quot;fmt&quot;
+	&quot;log&quot;
+
+	&quot;bufio&quot;
+	&quot;context&quot;
+	&quot;io&quot;
+	&quot;os&quot;
+
+	&quot;cloud.google.com/go/storage&quot;
+	&quot;golang.org/x/crypto/openpgp&quot;
+	&quot;golang.org/x/crypto/openpgp/armor&quot;
+	&quot;golang.org/x/crypto/openpgp/packet&quot;
+)
+
+var (
+	bucketName = &quot;your-bucket&quot;
+	fileName   = &quot;streamedFile.gpg&quot;
+	pipeFile   = &quot;/tmp/testpipe&quot;
+
+	password = []byte(&quot;helloworld&quot;)
+
+	packetConfig = &amp;packet.Config{
+		DefaultCipher: packet.CipherAES256,
+	}
+)
+
+func main() {
+
+	ctx := context.Background()
+	gcsClient, err := storage.NewClient(ctx)
+	if err != nil {
+		log.Fatalf(&quot;Error creating gcs client %v&quot;, err)
+	}
+	defer gcsClient.Close()
+
+	dstBucket := gcsClient.Bucket(bucketName)
+	gcsDstObject := dstBucket.Object(fileName)
+	gcsDstWriter := gcsDstObject.NewWriter(ctx)
+
+	fmt.Println(&quot;open a named pipe file for read.&quot;)
+	file, err := os.OpenFile(pipeFile, os.O_RDONLY, os.ModeNamedPipe)
+	if err != nil {
+		log.Fatal(&quot;Open named pipe file error:&quot;, err)
+	}
+
+	fileSrcReader := bufio.NewReader(file)
+
+	pr, pw := io.Pipe()
+
+	go func() {
+		defer pw.Close()
+
+		wm, err := armor.Encode(pw, &quot;PGP MESSAGE&quot;, nil)
+		if err != nil {
+			log.Fatalf(&quot;[Encrypter] armor.Encode(pw,, nil): (%s) &quot;, err)
+		}
+		pt, err := openpgp.SymmetricallyEncrypt(wm, password, nil, packetConfig)
+		if err != nil {
+			log.Fatalf(&quot;[Encrypter] openpgp.SymmetricallyEncrypt: (%s) &quot;, err)
+		}
+
+		if _, err := io.Copy(pt, fileSrcReader); err != nil {
+			log.Fatalf(&quot;[Encrypter] Error io.Copy(pt, r.Body): (%s) &quot;, err)
+		}
+		pt.Close()
+		wm.Close()
+	}()
+
+	n, err := io.Copy(gcsDstWriter, pr)
+	if err != nil {
+		log.Fatalf(&quot;[Encrypter] Error io.Copy(gcsDstWriter, encbuf): (%s) &quot;, err)
+	}
+
+	err = gcsDstWriter.Close()
+	if err != nil {
+		log.Fatalf(&quot;[Encrypter] Error gcsDstWriter.Close: (%s) &quot;, err)
+	}
+	log.Printf(&quot;Encrypter: %d bytes are received.\n&quot;, n)
+}
+</code></pre>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/gpg" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">gpg</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-salrashid-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
     </section>
-  </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">

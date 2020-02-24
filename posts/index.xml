@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>GPG Stream Encryption in golang by chaining Pipes</title>
+      <link>https://blog.salrashid.me/posts/gpg_streams/</link>
+      <pubDate>Fri, 21 Feb 2020 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/gpg_streams/</guid>
+      <description>Sometime last year i wroteup a small article about how to use Cloud Run and Cloud Functions to encrypt data &amp;lsquo;on the fly&amp;rsquo;:
+ GPG stream encryption and decryption on Google Cloud Functions and Cloud Run  In that article a source file in a Google Cloud Storage bucket is read in by a Cloud Function/Run, encrypted &amp;ldquo;on the fly&amp;rdquo; and saved in another GCS Bucket. All this happens in a way where the data is encrypted as a stream so as to minimize memory footprint.</description>
+    </item>
+    
+    <item>
       <title>Importing SHA hashed password into Firebase and Identity Platform</title>
       <link>https://blog.salrashid.me/posts/firebase_salted_user_import/</link>
       <pubDate>Mon, 17 Feb 2020 14:34:01 -0800</pubDate>
