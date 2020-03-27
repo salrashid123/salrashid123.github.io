@@ -6,7 +6,7 @@
     
     <title>blog.salrashid.me  | Mounting CSEK protected disk with LUKS encryption on Google Compute Engine</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.57.2" />
+    <meta name="generator" content="Hugo 0.58.3" />
     
     
       <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
@@ -39,7 +39,7 @@ For example, the Disk is encrypted with CSEK:">
 
 <meta itemprop="datePublished" content="2020-01-20T01:34:01-08:00" />
 <meta itemprop="dateModified" content="2020-01-20T01:34:01-08:00" />
-<meta itemprop="wordCount" content="986">
+<meta itemprop="wordCount" content="979">
 
 
 
@@ -329,21 +329,9 @@ bash install-logging-agent.sh
 service google-fluentd start
 
 export PROJECT_ID=`gcloud config get-value core/project`
-
 sec=`gcloud beta secrets versions access 1 --secret csek`
-cat &lt;&lt;EOF &gt; csek-key-file.json
-    [
-    {
-    &quot;uri&quot;: &quot;https://www.googleapis.com/compute/v1/projects/$PROJECT_ID/zones/us-central1-a/disks/csek-disk&quot;,
-    &quot;key&quot;: &quot;`echo -n $sec | base64`&quot;,
-    &quot;key-type&quot;: &quot;raw&quot;
-    }
-    ]
-EOF
-
-gcloud compute instances attach-disk gce-csek --disk csek-disk --csek-key-file=csek-key-file.json --zone us-central1-a
-
-rm csek-key-file.json
+export KEY=`echo -n $sec | base64`
+echo &quot;[{\&quot;uri\&quot;: \&quot;https://www.googleapis.com/compute/v1/projects/$PROJECT_ID/zones/us-central1-a/disks/csek-disk\&quot;, \&quot;key\&quot;: \&quot;$KEY\&quot;, \&quot;key-type\&quot;:  \&quot;raw\&quot;}]&quot; | gcloud compute instances attach-disk gce-csek --disk csek-disk --zone us-central1-a --csek-key-file=-
 
 luks=`gcloud beta secrets versions access 1 --secret luks`
 DEV_LUKS=&quot;/dev/sdb&quot;

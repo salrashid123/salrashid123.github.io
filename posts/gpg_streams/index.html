@@ -6,7 +6,7 @@
     
     <title>blog.salrashid.me  | GPG Stream Encryption in golang by chaining Pipes</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.57.2" />
+    <meta name="generator" content="Hugo 0.58.3" />
     
     
       <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
@@ -196,17 +196,17 @@ if (!doNotTrack) {
 
 <p>Create a reader for whatever comes into it</p>
 
-<pre><code class="language-golang">	fileSrcReader := bufio.NewReader(&quot;/tmp/testpipe&quot;)
+<pre><code class="language-golang">fileSrcReader := bufio.NewReader(&quot;/tmp/testpipe&quot;)
 </code></pre>
 
 <p>Create temp Pipe (we need this to help broker data between the input, GPG and GCS  (we will use this shortly)</p>
 
-<pre><code class="language-golang">	pr, pw := io.Pipe()
+<pre><code class="language-golang">pr, pw := io.Pipe()
 </code></pre>
 
 <p>In a go routine, use GPG to encrypt and encode data using the &lsquo;writer&rsquo; end of the temp pipe as the output <code>pw</code> (again, which we haven&rsquo;t used this yet)</p>
 
-<pre><code class="language-golang">		wm, err := armor.Encode(pw, &quot;PGP MESSAGE&quot;, nil)	
+<pre><code class="language-golang">wm, err := armor.Encode(pw, &quot;PGP MESSAGE&quot;, nil)	
 </code></pre>
 
 <p><a href="https://godoc.org/golang.org/x/crypto/openpgp/armor#Encode">armor.Encode</a></p>
@@ -220,7 +220,7 @@ if (!doNotTrack) {
 
 <p>The Encode function itself receives the output of the actual encryption from <a href="https://godoc.org/golang.org/x/crypto/openpgp#SymmetricallyEncrypt">opengpg.SymmetricallyEncrypt</a> call:</p>
 
-<pre><code class="language-golang">		pt, err := openpgp.SymmetricallyEncrypt(wm, password, nil, packetConfig)	
+<pre><code class="language-golang">pt, err := openpgp.SymmetricallyEncrypt(wm, password, nil, packetConfig)	
 </code></pre>
 
 <pre><code class="language-golang">func SymmetricallyEncrypt(ciphertext io.Writer, passphrase []byte, hints *FileHints, config *packet.Config) (plaintext io.WriteCloser, err error)
@@ -240,7 +240,7 @@ if (!doNotTrack) {
 
 <p>remember from earlier:</p>
 
-<pre><code class="language-golang">	pr, pw := io.Pipe()
+<pre><code class="language-golang">pr, pw := io.Pipe()
 </code></pre>
 
 <p>Finally take the reader <code>pr</code> and write it to GCS&rsquo;s writer:</p>
