@@ -1,0 +1,8 @@
+{    
+    "authorization-plugins": ["openpolicyagent/opa-docker-authz-v2:0.4"], 
+    "tlsverify": true,
+    "tlscacert": "/home/srashid/Desktop/tpm_poc/docker_plugin/certs/CA_crt.pem",
+    "tlscert": "/home/srashid/Desktop/tpm_poc/docker_plugin/certs/server_crt.pem",
+    "tlskey": "/home/srashid/Desktop/tpm_poc/docker_plugin/certs/server_key.pem",
+    "hosts": ["127.0.0.1:2376"]
+}

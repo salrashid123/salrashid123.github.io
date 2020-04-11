@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>blog.salrashid.me  | docker</title>
+    <title>blog.salrashid.me  | Docker mTLS ACLs with Open Policy Agent </title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="generator" content="Hugo 0.58.3" />
     
@@ -25,23 +25,32 @@
 
     
     
-      <link href="/tags/docker/index.xml" rel="alternate" type="application/rss+xml" title="blog.salrashid.me" />
-      <link href="/tags/docker/index.xml" rel="feed" type="application/rss+xml" title="blog.salrashid.me" />
-      
-    
-    
-    <meta property="og:title" content="docker" />
-<meta property="og:description" content="wow...its full of 6equj5" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog.salrashid.me/tags/docker/" />
+    <meta property="og:title" content="Docker mTLS ACLs with Open Policy Agent " />
+<meta property="og:description" content="Last week i was working with the docker daemon to help prepare it for remote cli access (which to be clear, isn&rsquo;t a good idea but i&rsquo;ll detail this anyway)
+By default, the docker daemon runs locally and you use the docker cli to access the daemon which in turn does all the heavy lifting for you (as root usually, by the way!).
+The docker daemon accepts requests from the cli as plain old REST api call which you can read about here under Develop with Docker Engine API." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.salrashid.me/posts/docker_opa/" />
+<meta property="article:published_time" content="2020-04-10T14:34:01-08:00" />
+<meta property="article:modified_time" content="2020-04-10T14:34:01-08:00" />
+<meta itemprop="name" content="Docker mTLS ACLs with Open Policy Agent ">
+<meta itemprop="description" content="Last week i was working with the docker daemon to help prepare it for remote cli access (which to be clear, isn&rsquo;t a good idea but i&rsquo;ll detail this anyway)
+By default, the docker daemon runs locally and you use the docker cli to access the daemon which in turn does all the heavy lifting for you (as root usually, by the way!).
+The docker daemon accepts requests from the cli as plain old REST api call which you can read about here under Develop with Docker Engine API.">
 
-<meta property="og:updated_time" content="2020-04-10T14:34:01-08:00" />
-<meta itemprop="name" content="docker">
-<meta itemprop="description" content="wow...its full of 6equj5">
 
+<meta itemprop="datePublished" content="2020-04-10T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2020-04-10T14:34:01-08:00" />
+<meta itemprop="wordCount" content="794">
+
+
+
+<meta itemprop="keywords" content="docker," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="docker"/>
-<meta name="twitter:description" content="wow...its full of 6equj5"/>
+<meta name="twitter:title" content="Docker mTLS ACLs with Open Policy Agent "/>
+<meta name="twitter:description" content="Last week i was working with the docker daemon to help prepare it for remote cli access (which to be clear, isn&rsquo;t a good idea but i&rsquo;ll detail this anyway)
+By default, the docker daemon runs locally and you use the docker cli to access the daemon which in turn does all the heavy lifting for you (as root usually, by the way!).
+The docker daemon accepts requests from the cli as plain old REST api call which you can read about here under Develop with Docker Engine API."/>
 
       
 <script type="application/javascript">
@@ -61,11 +70,11 @@ if (!doNotTrack) {
   <body class="ma0 avenir bg-near-white production">
 
     
+   
+  
 
-  
-  
-  <header class="cover bg-top" style="background-image: url('https://blog.salrashid.me/images/main.jpg');">
-    <div class="bg-black-60">
+  <header>
+    <div class="bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
     <a href="https://blog.salrashid.me/" class="f3 fw2 hover-white no-underline white-90 dib">
@@ -138,47 +147,219 @@ if (!doNotTrack) {
   </div>
 </nav>
 
-      <div class="tc-l pv4 pv6-l ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 white-90 mb0 lh-title">
-          docker
-        </h1>
-        
-      </div>
     </div>
   </header>
 
 
+
     <main class="pb7" role="main">
       
-  <article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “docker”</p>
-    </div>
-  </article>
-  <div class="mw8 center">    
-    <section class="flex-ns flex-wrap justify-around mt5">
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/docker_opa/" class="link black dim">
-        Docker mTLS ACLs with Open Policy Agent 
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Last week i was working with the docker daemon to help prepare it for remote cli access (which to be clear, isn&rsquo;t a good idea but i&rsquo;ll detail this anyway)
-By default, the docker daemon runs locally and you use the docker cli to access the daemon which in turn does all the heavy lifting for you (as root usually, by the way!).
-The docker daemon accepts requests from the cli as plain old REST api call which you can read about here under Develop with Docker Engine API.
-    </div>
-  </div>
-</div>
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
 
-        </div>
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        ARTICLES
+      </p>
+      <h1 class="f1 athelas mb1">Docker mTLS ACLs with Open Policy Agent </h1>
       
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-04-10T14:34:01-08:00">April 10, 2020</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Last week i was working with the <code>docker daemon</code> to help prepare it for remote cli access (which to be clear, isn&rsquo;t a good idea but i&rsquo;ll detail this anyway)</p>
+
+<p>By default, the docker daemon runs locally and you use the <code>docker cli</code> to access the daemon which in turn does all the heavy lifting for you (as root usually, by the way!).</p>
+
+<p>The docker daemon accepts requests from the cli as plain old REST api call which you can read about here under <a href="https://docs.docker.com/engine/api/">Develop with Docker Engine API</a>.  As it is just a rest api, you can invoke it directly if its interface is listening.  As mentioned, the only interface docker daemon installs by default is on local domain named pipes so that only local docker cli can access it (see <a href="https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface">Docker daemon attack surface</a>).</p>
+
+<p>I had to look into ways where a remote VMs docker daemon was exposed to external clients with the requirements that:</p>
+
+<ul>
+<li>clients connecting to it had to use mTLS</li>
+<li>different users/clients use use certificates to identify themselves</li>
+<li>different clients would be allowed different capabilities (ACL permission) on the docker daemon</li>
+</ul>
+
+<p>This led me to look a bit more into the docker&rsquo;s <a href="https://docs.docker.com/engine/extend/plugins_authorization/">authorization plugin</a> which is a pretty simple admission controller that provides the plugin metadata about the requestor and action attempted and returns back a allow/deny decision (similar kubernetes RBAC)</p>
+
+<p>Thats great&hellip;but do i have to write the controller from scratch?</p>
+
+<p>Nope, may others have done that to ofcourse&hellip;and i ended up using <a href="https://github.com/open-policy-agent/opa-docker-authz">Open Policy Agents</a></p>
+
+<hr />
+
+<p>This tutorial is a simple walkthrough on how i set it up locally&hellip;its nothing new; you can follow OPA&rsquo;s github page if you want to or <a href="https://www.openpolicyagent.org/docs/latest/docker-authorization/">here</a></p>
+
+<p>What we will do is configure your local docker daemon to use mTLS certificates and configure selective access for two different users:</p>
+
+<h3 id="clone-the-certificates">Clone the certificates</h3>
+
+<p>This article will use certificates you can find <a href="https://github.com/salrashid123/salrashid123.github.io/tree/master/posts/docker_opa">here</a> (feel free to clone+download or just copy the certs over)</p>
+
+<h3 id="define-opa-policy-handler">Define OPA policy handler</h3>
+
+<p>We will define the OPA policy handler to use for this demo</p>
+
+<p>First create the policy file here <code>/etc/docker/policies/authz.rego</code></p>
+
+<p>with content like this:</p>
+
+<pre><code>package docker.authz
+
+default allow = false
+users = {
+    &quot;user1@domain.com&quot;: {&quot;readOnly&quot;: true},
+    &quot;user2@domain.com&quot;: {&quot;readOnly&quot;: false},    
+}
+
+allow {
+    users[input.User].readOnly
+    input.Method == &quot;GET&quot;
+}
+</code></pre>
+
+<p>What does that mean?  Well, its OPAs <a href="https://www.openpolicyagent.org/docs/latest/policy-reference/">rego</a> language which basically says:</p>
+
+<ul>
+<li>&ldquo;dont allow anyone access by default&rdquo;</li>
+<li>&ldquo;define two users where <code>user1</code> has a label &ldquo;readOnly&rdquo; which evalutes to <code>true</code> and <code>user2</code> which evaluates to false.</li>
+<li>For any &ldquo;GET&rdquo; request, lookup a user based on the CN value provided in the certificate in the users dictionary.</li>
+<li>In the users dictionary, evaluate the request by using the users <code>readOnly</code> label.</li>
+<li>If the its true, allow access, false otherwise.</li>
+</ul>
+
+<p>OPA automatically extracts the CN value for the user and places it into  <code>input.User</code></p>
+
+<p>For example, you can decode <code>user1 and user2</code> certificates like this</p>
+
+<pre><code>openssl x509 -in client_crt.pem -text -noout
+   Subject: C = US, ST = California, O = Google, OU = Enterprise, CN = user1@domain.com   
+</code></pre>
+
+<pre><code>openssl x509 -in client2_crt.pem -text -noout
+  Subject: C = US, ST = California, O = Google, OU = Enterprise, CN = user2.domain.com
+</code></pre>
+
+<p>The <code>CN=</code> value for gets extracted and populated as the <code>input.User</code> field.</p>
+
+<p>For more information, see: <a href="https://www.openpolicyagent.org/docs/latest/docker-authorization/#6-update-the-policy-to-reject-requests-with-the-unconfined-seccomp-https-en-wikipedia-org-wiki-seccomp-profile">OPA Request Attributes</a></p>
+
+<h3 id="install-opa-plugin">Install OPA Plugin</h3>
+
+<p>Install the OPA plugin and point towards the policy file:</p>
+
+<pre><code class="language-bash">docker plugin install openpolicyagent/opa-docker-authz-v2:0.4 opa-args=&quot;-policy-file /opa/policies/authz.rego&quot;
+</code></pre>
+
+<h3 id="create-custom-docker-daemon-for-mtls">Create custom docker daemon for mtls</h3>
+
+<p>Create the docker daemon file at <code>/etc/docker/daemon.json</code> like this:</p>
+
+<p>Remember to download the <em>TEST</em> certificates provided in this repo and place them in the path appropriate for the file:</p>
+
+<ul>
+<li><p><code>/etc/docker/daemon.json</code></p>
+
+<pre><code>{    
+  &quot;authorization-plugins&quot;: [&quot;openpolicyagent/opa-docker-authz-v2:0.4&quot;], 
+  &quot;tlsverify&quot;: true,
+  &quot;tlscacert&quot;: &quot;/path/to/CA_crt.pem&quot;,
+  &quot;tlscert&quot;: &quot;/path/to/server_crt.pem&quot;,
+  &quot;tlskey&quot;: &quot;/path/to/server_key.pem&quot;,
+  &quot;hosts&quot;: [&quot;127.0.0.1:2376&quot;]
+}
+</code></pre></li>
+
+<li><p>Edit <code>/etc/hosts</code> file for Certificate CN value.
+The server certificates provided in this repo have a hardcoded value for <code>server.domain.com</code> which is intended to represent your remote docker daemons&rsquo;s host.
+In our case its just localhost so add this</p>
+
+<pre><code>127.0.0.1  server.domain.com
+</code></pre></li>
+
+<li><p>Restart docker</p>
+
+<pre><code>sudo service docker restart
+</code></pre></li>
+</ul>
+
+<h3 id="test">Test</h3>
+
+<p>Use <code>user1</code> certificate to list operations on the daemon:
+eg</p>
+
+<pre><code class="language-bash">$ docker --tlsverify --tlscacert=CA_crt.pem --tlscert=client_crt.pem --tlskey=client_key.pem -H=server.domain.com:2376 images
+REPOSITORY                              TAG                 IMAGE ID            CREATED             SIZE
+server.domain.com/alpine                latest              a187dde48cd2        2 weeks ago         5.6MB
+</code></pre>
+
+<p>Now as try to run an image:</p>
+
+<pre><code>$ docker --tlsverify --tlscacert=CA_crt.pem --tlscert=client_crt.pem --tlskey=client_key.pem -H=server.domain.com:2376 run -ti server.domain.com/alpine 
+docker: Error response from daemon: authorization denied by plugin openpolicyagent/opa-docker-authz-v2:0.4: request rejected by administrative policy.
+</code></pre>
+
+<p>This failed since we only allow  <code>GET</code> operations (docker run will create a VM)</p>
+
+<p>Use <code>user2</code> to perform even a simple operation</p>
+
+<pre><code>$ docker --tlsverify --tlscacert=CA_crt.pem --tlscert=client2_crt.pem --tlskey=client2_key.pem -H=server.domain.com:2376 images
+Error response from daemon: authorization denied by plugin openpolicyagent/opa-docker-authz-v2:0.4: request rejected by administrative policy
+</code></pre>
+
+<p>which fails since user2 isn&rsquo;t allowed to do anything</p>
+
+<hr />
+
+<p>Thats it, really..you&rsquo;ll notice i didn&rsquo;t even allow admin acess to do any thing in there&hellip;thats left upto the reader and rego-jockys!</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/docker" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">docker</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "blog-salrashid-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+      
+      </div>
     </section>
-  </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">

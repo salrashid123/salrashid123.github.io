@@ -3,6 +3,34 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.salrashid.me/tags/docker/</loc>
+    <lastmod>2020-04-10T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/posts/docker_opa/</loc>
+    <lastmod>2020-04-10T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/</loc>
+    <lastmod>2020-04-10T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/tags/</loc>
+    <lastmod>2020-04-10T14:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.salrashid.me/tags/gpg/</loc>
     <lastmod>2020-02-21T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -11,20 +39,6 @@
   
   <url>
     <loc>https://blog.salrashid.me/posts/gpg_streams/</loc>
-    <lastmod>2020-02-21T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/</loc>
-    <lastmod>2020-02-21T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/</loc>
     <lastmod>2020-02-21T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>Docker mTLS ACLs with Open Policy Agent </title>
+      <link>https://blog.salrashid.me/posts/docker_opa/</link>
+      <pubDate>Fri, 10 Apr 2020 14:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/docker_opa/</guid>
+      <description>Last week i was working with the docker daemon to help prepare it for remote cli access (which to be clear, isn&amp;rsquo;t a good idea but i&amp;rsquo;ll detail this anyway)
+By default, the docker daemon runs locally and you use the docker cli to access the daemon which in turn does all the heavy lifting for you (as root usually, by the way!).
+The docker daemon accepts requests from the cli as plain old REST api call which you can read about here under Develop with Docker Engine API.</description>
+    </item>
+    
+    <item>
       <title>GPG Stream Encryption in golang by chaining Pipes</title>
       <link>https://blog.salrashid.me/posts/gpg_streams/</link>
       <pubDate>Fri, 21 Feb 2020 14:34:01 -0800</pubDate>

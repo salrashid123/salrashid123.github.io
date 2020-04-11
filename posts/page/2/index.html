@@ -6,7 +6,7 @@
     
     <title>blog.salrashid.me  | Articles</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.54.0" />
+    <meta name="generator" content="Hugo 0.58.3" />
     
     
       <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
@@ -35,8 +35,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.salrashid.me/posts/" />
 
-<meta property="og:updated_time" content="2019-05-20T13:34:01-08:00"/>
-
+<meta property="og:updated_time" content="2019-12-30T12:00:00-05:00" />
 <meta itemprop="name" content="Articles">
 <meta itemprop="description" content="wow...its full of 6equj5">
 
@@ -160,155 +159,15 @@ if (!doNotTrack) {
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/automatic_oauth2/" class="link black dim">
-        Automatic oauth2:  Using Cloud Scheduler and Tasks to call Google APIs
+      <a href="https://blog.salrashid.me/posts/gcpdotnet/" class="link black dim">
+        .NET on GCP
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      A month ago or so I tried out a pretty versatile feature in Cloud Scheduler and Cloud Tasks and Cloud Tasks that emits OpenIDConnect or oauth2 access_token to outbound webhook calls.
-When a Scheduled task fires and calls an HTTP endpoint, it can optionally automatically carry credentials for use with a GCP REST Endpoint. What does that mean? Well, you can automatically trigger most Google APIs directly do to any number of things on schedule or as a task instead of creating and running a cron elsewhere.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/binary_auth_demo/" class="link black dim">
-        GCP Binary Authorization and Vulnerability Scanning Demo
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sample application for GCP Binary Authorization + Vulernability Scanner.
- Creates GKE cluster with Binary Authorization Enables Binary Authoriztion policy on cluster Cloud Builder workflow checks checked in code to Cloud Source repository  Builds container image and pushes to Cloud Container Registry Binary Auhorization step waits for Vulernability Scan to complete If Vulernability Scanner Fails, Deployment Fails If Succeeds, the imae is authorized for deployment to GKE    Note: this sample uses one cloud builder configuration to both build the image and do attestation.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gpg_gcf/" class="link black dim">
-        GPG stream encryption and decryption on Google Cloud Functions and Cloud Run
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      About a year+ ago a colleague of mine (Daz Wilkin) asked me how best to decompress/unzip a file using Google Cloud Functions. The suggestion ended as a sample he provided demonstrating the stream-read-&gt;stream-write pattern with the pertinent input-outputs (input: unziped file; output zipped file). The distinct advantage of stream processing the unzip function is that the data is never held in memory: as the unzipped content gets processed by GCF, its promptly written as a zip file to GCS.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/terraform_gcp_impersonation/" class="link black dim">
-        Terraform &#39;Assume Role&#39; and service Account impersonation on Google Cloud
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      About two months ago, someone asked me to help them setup Terraform to automatically provision GCP projects. It was the first time I actually used it and found it capabilities pretty powerful: it&rsquo;s easy to manage complex resources and maintain a picture of the state change. However, one aspect of its capabilities that struck me was its need to directly have permissions on all GCP resources it provisioned or manage.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gcs_post_signedurl_js/" class="link black dim">
-        Upload/Download files from a browser with GCS Signed URLs and Signed Policy Documents
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Small javascript application showing how to upload/download files with GCS Signed URLs and Signed Policy Documents. This article will not cover in detail what those two mechanisms are but rather demonstrate a basic application that exercises both on the browser. This is a simple client-server app that uploads files using these two mechanisms from a user&rsquo;s browser. SignedURLs w/ javascript has been done many times before (see references); this article describes SignedURLs and Policy document differences and implementations.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/grpc_curl/" class="link black dim">
-        gRPC with curl
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sample procedure to use curl to make a gRPC call.
-gRPC is built on top of HTTP2 and is used to make remote procedure calls using protocol buffers.
-gRPC by design is fast, efficient, extensible and portable across many languages. The only real way to invoke the remote procedure is to use a generated gRPC client which internally does all the marshalling to encode the protbuf messages into gRPC&rsquo;s wire format:
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/cloud-functions-dotnet/" class="link black dim">
-        .NET on Google Cloud Functions
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way.
-This is a sample application running a .NET Cloud Function as an HTTP Trigger. While GCF (Google Cloud Functions) currently only supports NodeJS, there are some techniques you can use to launch different language runtimes and delegate control of the socket to that runtime.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/multi_stage_dotnet/" class="link black dim">
-        Multi-stage Docker builds with .NET
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      A colleague of mine recently pointed out an article by Travis Reeder regarding the new multi-stage docker builds for Go images:
- Multi-Stage Docker Builds for Creating Tiny Go Images I’ve talked about how to make tiny Docker images a fair bit in the past, but now that Docker has multi-stage builds, it…  I didn’t even know about this upcoming feature so I decided to try it out on using a simple .
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/svc_impersonation/" class="link black dim">
-        Using serviceAccountActor IAM role for account impersonation on Google Cloud Platform
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      The serviceAccountActor IAM role on Google Cloud has some very useful and powerful capabilities. It is an IAM role that allows you to grant another user or serviceAccount the ability to impersonate a service Account. In this way, you can have service account A impersonate B and acquire the access_tokens or id_tokens for B.
-This article covers how you can acquire id and access tokens for service account B by service account A.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/google_cloud_directory_sync/" class="link black dim">
-        Google Cloud Directory Sync with OpenLDAP
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      This is a tutorial on how to provision users and groups from a local LDAP server (OpenLDAP) into your G Suite domain. Any users and groups present in your local LDAP server will get created in G Suite. Once your users are present in your G Suite domain, you can authorize these users and groups access to Google Cloud Resources and other G Suite features.
-This article is simply a tutorial on the simplified steps you would take for your on-prem directory server (ActiveDirectory, OpenLDAP).
+      12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
+ Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
+These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
+The example here uses Microsofts&rsquo;s .NET Core 1.
     </div>
   </div>
 </div>
@@ -325,6 +184,7 @@ This article is simply a tutorial on the simplified steps you would take for you
     <li class="page-item">
     <a href="/posts/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
     </li>
+    
     
     
     
@@ -349,33 +209,23 @@ This article is simply a tutorial on the simplified steps you would take for you
     <li class="page-item active"><a class="page-link" href="/posts/page/2/">2</a></li>
     
     
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/3/">3</a></li>
-    
-    
-    <li class="page-item">
-    <a href="/posts/page/3/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+    <li class="page-item disabled">
+    <a  class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
     </li>
     
     <li class="page-item">
-        <a href="/posts/page/3/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/posts/page/2/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
     </li>
     
 </ul>
+
 </article>
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.salrashid.me/" >
-    &copy; 2019 blog.salrashid.me
+    &copy; 2020 blog.salrashid.me
   </a>
     <div>
 

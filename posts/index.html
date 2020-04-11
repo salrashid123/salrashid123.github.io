@@ -159,6 +159,23 @@ if (!doNotTrack) {
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="https://blog.salrashid.me/posts/docker_opa/" class="link black dim">
+        Docker mTLS ACLs with Open Policy Agent 
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Last week i was working with the docker daemon to help prepare it for remote cli access (which to be clear, isn&rsquo;t a good idea but i&rsquo;ll detail this anyway)
+By default, the docker daemon runs locally and you use the docker cli to access the daemon which in turn does all the heavy lifting for you (as root usually, by the way!).
+The docker daemon accepts requests from the cli as plain old REST api call which you can read about here under Develop with Docker Engine API.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="https://blog.salrashid.me/posts/gpg_streams/" class="link black dim">
         GPG Stream Encryption in golang by chaining Pipes
       </a>
@@ -308,25 +325,51 @@ Note, if your&rsquo;e reading this and your&rsquo;e using Cloud Run, Cloud Funct
 </div>
 </div>
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gcpdotnet/" class="link black dim">
-        .NET on GCP
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
- Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
-These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
-The example here uses Microsofts&rsquo;s .NET Core 1.
-    </div>
-  </div>
-</div>
-</div>
-      
     </section>
+
+<ul class="pagination">
+    
+    <li class="page-item">
+        <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+    </li>
+    
+    <li class="page-item disabled">
+    <a  class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item active"><a class="page-link" href="/posts/">1</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/posts/page/2/">2</a></li>
+    
+    
+    <li class="page-item">
+    <a href="/posts/page/2/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+    </li>
+    
+    <li class="page-item">
+        <a href="/posts/page/2/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+    </li>
+    
+</ul>
 
 </article>
 
