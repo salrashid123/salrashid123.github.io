@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>blog.salrashid.me  | Articles</title>
+    <title>blog.salrashid.me  | storage</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.54.0" />
+    <meta name="generator" content="Hugo 0.59.1" />
     
     
       <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
@@ -25,23 +25,22 @@
 
     
     
-      <link href="/posts/index.xml" rel="alternate" type="application/rss+xml" title="blog.salrashid.me" />
-      <link href="/posts/index.xml" rel="feed" type="application/rss+xml" title="blog.salrashid.me" />
+      <link href="/tags/storage/index.xml" rel="alternate" type="application/rss+xml" title="blog.salrashid.me" />
+      <link href="/tags/storage/index.xml" rel="feed" type="application/rss+xml" title="blog.salrashid.me" />
       
     
     
-    <meta property="og:title" content="Articles" />
+    <meta property="og:title" content="storage" />
 <meta property="og:description" content="wow...its full of 6equj5" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog.salrashid.me/posts/" />
+<meta property="og:url" content="https://blog.salrashid.me/tags/storage/" />
 
-<meta property="og:updated_time" content="2016-09-11T14:34:01-08:00"/>
-
-<meta itemprop="name" content="Articles">
+<meta property="og:updated_time" content="2020-05-10T14:34:01-08:00" />
+<meta itemprop="name" content="storage">
 <meta itemprop="description" content="wow...its full of 6equj5">
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Articles"/>
+<meta name="twitter:title" content="storage"/>
 <meta name="twitter:description" content="wow...its full of 6equj5"/>
 
       
@@ -141,7 +140,7 @@ if (!doNotTrack) {
 
       <div class="tc-l pv4 pv6-l ph3 ph4-ns">
         <h1 class="f2 f-subheadline-l fw2 white-90 mb0 lh-title">
-          Articles
+          storage
         </h1>
         
       </div>
@@ -151,179 +150,40 @@ if (!doNotTrack) {
 
     <main class="pb7" role="main">
       
-  <article class="pa3 pa4-ns nested-copy-line-height nested-img">
-    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"><p>You can find the sourcecode for most of the articles on my gitrepo&hellip;either in its own repo or under the catchall gitubpages liink.  I may crosspost with medium but prefer this.</p>
-</section>
+  <article class="cf pa3 pa4-m pa4-l">
+    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
+      <p>Below you will find pages that utilize the taxonomy term “storage”</p>
+    </div>
+  </article>
+  <div class="mw8 center">    
     <section class="flex-ns flex-wrap justify-around mt5">
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+        <div class="relative w-100  mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gcpemulator/" class="link black dim">
-        Proxy container for Google Cloud Platofrm pubsub and datastore emulators.
+      <a href="https://blog.salrashid.me/posts/firebase_storage_rules/" class="link black dim">
+        Firebase Storage and Authorization Rules engine &#39;helloworld&#39;
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      NOTE: 12/30/19 : This article is very old; while it probably does run to some extent, i&rsquo;m not sure if the tooling is still needed. I&rsquo;ve removed this from GCP Blog to reduce some noise; i&rsquo;m keeping it in my archive here&hellip;.
-  Proxy server and container for GCP Cloud PubSub and Cloud Datastore emulators. In addition, the container runs an nginx HTTPS proxy infront of the PubSub|Datastore emulators so that even direct references to pubsub.
+      A couple days ago i finally started to tinker with firebase storage and its rules engine.
+I did know about the rules engine for many years now and knew it was pretty flexible but never really noticed that it can use both request and resource attributes. What i mean by that is a firebase rule can evaluate and grant access at runtime using both something contained within the request (eg, id_token) and something about the target being accessed (eg a resource attribute).
     </div>
   </div>
 </div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gce_metadata_server/" class="link black dim">
-        GCE Metadata Server Emulator
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      This script acts as a GCE&rsquo;s internal metadata server for local testing/emulation.
-It returns a live access_token that can be used directly by Application Default Credentials transparently.
-This is useful to test any script or code locally that my need to contact GCE&rsquo;s metadata server for custom, user-defined variables or access_tokens.
-Another usecase for this is to verify how Application Defaults will behave while running a local docker container. A local running docker container will not have access to GCE&rsquo;s metadata server but by bridging your container to the emulator, you are basically allowing GCP API access directly from within a container on your local workstation (vs.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/googlapps-sso/" class="link black dim">
-        Simple SAML SSO server for Google Cloud and Apps
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Sample app for SSO between google apps domains.
-This demonstrates SAML SSO with google properties and is is intended for testing/POC only.
-The script basically runs a SAML IDP within a docker container and will allow you to login to google apps/gsuites to test out your configuration.
-  You can find the source here:
-  Configure Google Apps SAML/SSO  Login to your google apps admin console (admin.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gcpsamples/" class="link black dim">
-        Google Cloud Platform API hello world samples
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      This article describes the various mechanisms to access GCP Services using our APIs. I find it pretty confusing to keep track of all the various ways to access a service and that coupled with the changes in the library set accross languages, i often lose trac….so I’ve kept this repo as a running reference. Hope you find some of the samples useful.
-This article will only describe the libraries in general terms but point back to a gitRepo for all the code samples.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/kubehelloworld/" class="link black dim">
-        Kubernetes Services HelloWorld
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      NOTE: 12/20/19: While this demo will work, its quite dated (i wrote is this &lsquo;16..there are much more comprehensive articles that cover this..)
- Anyway&hellip;
-Sample application that deploys a trivial Kubernetes service to connect a frontend system (fe) with a backend (be).
-This is merely to demonstrate Kubernetes service discovery in Google Container Engine (GKE), nothing more and is based off the guestbook service example.
-Parts of this sample code is from the default kubernetes &lsquo;environment-guide&rsquo; example.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/gcpdotnet/" class="link black dim">
-        .NET on GCP
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      12/30/19: NOTE: as you can clearly tell, this article is dated. DO NOT use this (i&rsquo;m leavig it up as a matter of record)
- Sample code demonstrating running trivial .NET web applications on Google Cloud Platform services.
-These simply builds off of existing technologies and samples but configures it to run on GCP effeciently with healh checking and load balancing.
-The example here uses Microsofts&rsquo;s .NET Core 1.
-    </div>
-  </div>
-</div>
-</div>
+
+        </div>
       
     </section>
-
-<ul class="pagination">
-    
-    <li class="page-item">
-        <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-    </li>
-    
-    <li class="page-item">
-    <a href="/posts/page/2/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-    </li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/">1</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item"><a class="page-link" href="/posts/page/2/">2</a></li>
-    
-    
-    
-    
-    
-    
-        
-        
-    
-    
-    <li class="page-item active"><a class="page-link" href="/posts/page/3/">3</a></li>
-    
-    
-    <li class="page-item disabled">
-    <a href="" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-    </li>
-    
-    <li class="page-item">
-        <a href="/posts/page/3/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-    </li>
-    
-</ul>
-</article>
+  </div>
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.salrashid.me/" >
-    &copy; 2019 blog.salrashid.me
+    &copy; 2020 blog.salrashid.me
   </a>
     <div>
 

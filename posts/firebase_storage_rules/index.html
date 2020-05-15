@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>blog.salrashid.me  | Docker mTLS ACLs with Open Policy Agent </title>
+    <title>blog.salrashid.me  | Firebase Storage and Authorization Rules engine &#39;helloworld&#39;</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="generator" content="Hugo 0.59.1" />
     
@@ -25,32 +25,29 @@
 
     
     
-    <meta property="og:title" content="Docker mTLS ACLs with Open Policy Agent " />
-<meta property="og:description" content="Last week i was working with the docker daemon to help prepare it for remote cli access (which to be clear, isn&rsquo;t a good idea but i&rsquo;ll detail this anyway)
-By default, the docker daemon runs locally and you use the docker cli to access the daemon which in turn does all the heavy lifting for you (as root usually, by the way!).
-The docker daemon accepts requests from the cli as plain old REST api call which you can read about here under Develop with Docker Engine API." />
+    <meta property="og:title" content="Firebase Storage and Authorization Rules engine &#39;helloworld&#39;" />
+<meta property="og:description" content="A couple days ago i finally started to tinker with firebase storage and its rules engine.
+I did know about the rules engine for many years now and knew it was pretty flexible but never really noticed that it can use both request and resource attributes. What i mean by that is a firebase rule can evaluate and grant access at runtime using both something contained within the request (eg, id_token) and something about the target being accessed (eg a resource attribute)." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.salrashid.me/posts/docker_opa/" />
-<meta property="article:published_time" content="2020-04-10T14:34:01-08:00" />
-<meta property="article:modified_time" content="2020-04-10T14:34:01-08:00" />
-<meta itemprop="name" content="Docker mTLS ACLs with Open Policy Agent ">
-<meta itemprop="description" content="Last week i was working with the docker daemon to help prepare it for remote cli access (which to be clear, isn&rsquo;t a good idea but i&rsquo;ll detail this anyway)
-By default, the docker daemon runs locally and you use the docker cli to access the daemon which in turn does all the heavy lifting for you (as root usually, by the way!).
-The docker daemon accepts requests from the cli as plain old REST api call which you can read about here under Develop with Docker Engine API.">
+<meta property="og:url" content="https://blog.salrashid.me/posts/firebase_storage_rules/" />
+<meta property="article:published_time" content="2020-05-10T14:34:01-08:00" />
+<meta property="article:modified_time" content="2020-05-10T14:34:01-08:00" />
+<meta itemprop="name" content="Firebase Storage and Authorization Rules engine &#39;helloworld&#39;">
+<meta itemprop="description" content="A couple days ago i finally started to tinker with firebase storage and its rules engine.
+I did know about the rules engine for many years now and knew it was pretty flexible but never really noticed that it can use both request and resource attributes. What i mean by that is a firebase rule can evaluate and grant access at runtime using both something contained within the request (eg, id_token) and something about the target being accessed (eg a resource attribute).">
 
 
-<meta itemprop="datePublished" content="2020-04-10T14:34:01-08:00" />
-<meta itemprop="dateModified" content="2020-04-10T14:34:01-08:00" />
-<meta itemprop="wordCount" content="794">
+<meta itemprop="datePublished" content="2020-05-10T14:34:01-08:00" />
+<meta itemprop="dateModified" content="2020-05-10T14:34:01-08:00" />
+<meta itemprop="wordCount" content="823">
 
 
 
-<meta itemprop="keywords" content="docker," />
+<meta itemprop="keywords" content="firebase,storage," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Docker mTLS ACLs with Open Policy Agent "/>
-<meta name="twitter:description" content="Last week i was working with the docker daemon to help prepare it for remote cli access (which to be clear, isn&rsquo;t a good idea but i&rsquo;ll detail this anyway)
-By default, the docker daemon runs locally and you use the docker cli to access the daemon which in turn does all the heavy lifting for you (as root usually, by the way!).
-The docker daemon accepts requests from the cli as plain old REST api call which you can read about here under Develop with Docker Engine API."/>
+<meta name="twitter:title" content="Firebase Storage and Authorization Rules engine &#39;helloworld&#39;"/>
+<meta name="twitter:description" content="A couple days ago i finally started to tinker with firebase storage and its rules engine.
+I did know about the rules engine for many years now and knew it was pretty flexible but never really noticed that it can use both request and resource attributes. What i mean by that is a firebase rule can evaluate and grant access at runtime using both something contained within the request (eg, id_token) and something about the target being accessed (eg a resource attribute)."/>
 
       
 <script type="application/javascript">
@@ -162,166 +159,259 @@ if (!doNotTrack) {
           
         ARTICLES
       </p>
-      <h1 class="f1 athelas mb1">Docker mTLS ACLs with Open Policy Agent </h1>
+      <h1 class="f1 athelas mb1">Firebase Storage and Authorization Rules engine &#39;helloworld&#39;</h1>
       
       
-      <time class="f6 mv4 dib tracked" datetime="2020-04-10T14:34:01-08:00">April 10, 2020</time>
+      <time class="f6 mv4 dib tracked" datetime="2020-05-10T14:34:01-08:00">May 10, 2020</time>
       
       
     </header>
 
     <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
 
-<p>Last week i was working with the <code>docker daemon</code> to help prepare it for remote cli access (which to be clear, isn&rsquo;t a good idea but i&rsquo;ll detail this anyway)</p>
+<p>A couple days ago i <em>finally</em> started to tinker with <a href="https://firebase.google.com/docs/storage/security/start">firebase storage and its rules engine</a>.</p>
 
-<p>By default, the docker daemon runs locally and you use the <code>docker cli</code> to access the daemon which in turn does all the heavy lifting for you (as root usually, by the way!).</p>
+<p>I did know about the rules engine for many years now and knew it was pretty flexible but never really noticed that it can use both <em>request</em> and <em>resource</em> attributes.  What i mean by that is a firebase rule can evaluate and grant access at runtime using both something contained within the request (eg, <code>id_token</code>) and something about the target being accessed (eg a resource attribute).</p>
 
-<p>The docker daemon accepts requests from the cli as plain old REST api call which you can read about here under <a href="https://docs.docker.com/engine/api/">Develop with Docker Engine API</a>.  As it is just a rest api, you can invoke it directly if its interface is listening.  As mentioned, the only interface docker daemon installs by default is on local domain named pipes so that only local docker cli can access it (see <a href="https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface">Docker daemon attack surface</a>).</p>
+<p>As a concrete example, you can setup a rule that decodes a users JWT <code>id_token</code>, extract out some custom claim there, then use that field value in a rule.  Well, thats nice but the real cool thing is it can also use some metadata on the resource <em>being</em> accessed.  In our case, is some custom metadata we associated with the Storage Object.</p>
 
-<p>I had to look into ways where a remote VMs docker daemon was exposed to external clients with the requirements that:</p>
+<p>This small snippet details a simple POC similar to the &lsquo;getting started&rsquo; guide for firebase:</p>
+
+<p>We will create a firebase project and enable Storage.</p>
+
+<p>An admin will upload a file to Storage and set some custom metadata on that: eg,</p>
+
+<pre><code>    Metadata:               
+        owner:              12345
+</code></pre>
+
+<p>An admin will associate a Custom Claim with a given user&rsquo;s entry:</p>
+
+<blockquote>
+<p>&ldquo;groupId&rdquo;: &ldquo;12345&rdquo;,</p>
+</blockquote>
+
+<p>Create a firebase rule that says _&ldquo;allow a user to read a file only if their id<em>token has a custom claim called &ldquo;groupId&rdquo; and the value contained in that matches the Storage Objects metadata value for &ldquo;owner&rdquo;</em></p>
+
+<p>THAT pretty cool to me!</p>
+
+<p>You can set this up and play around with other firebase rules and constructs!</p>
+
+<p>You can find the code links in the following gists:</p>
 
 <ul>
-<li>clients connecting to it had to use mTLS</li>
-<li>different users/clients use use certificates to identify themselves</li>
-<li>different clients would be allowed different capabilities (ACL permission) on the docker daemon</li>
+<li><a href="https://gist.github.com/salrashid123/79b0d22e7171bd2c20b363b76f9066fe">admin.js</a></li>
+<li><a href="https://gist.github.com/salrashid123/0eb4642dcc8125177c6a206e11e0f714">login.js</a></li>
 </ul>
-
-<p>This led me to look a bit more into the docker&rsquo;s <a href="https://docs.docker.com/engine/extend/plugins_authorization/">authorization plugin</a> which is a pretty simple admission controller that provides the plugin metadata about the requestor and action attempted and returns back a allow/deny decision (similar kubernetes RBAC)</p>
-
-<p>Thats great&hellip;but do i have to write the controller from scratch?</p>
-
-<p>Nope, may others have done that to ofcourse&hellip;and i ended up using <a href="https://github.com/open-policy-agent/opa-docker-authz">Open Policy Agents</a></p>
 
 <hr />
 
-<p>This tutorial is a simple walkthrough on how i set it up locally&hellip;its nothing new; you can follow OPA&rsquo;s github page if you want to or <a href="https://www.openpolicyagent.org/docs/latest/docker-authorization/">here</a></p>
+<h3 id="setup">Setup</h3>
 
-<p>What we will do is configure your local docker daemon to use mTLS certificates and configure selective access for two different users:</p>
+<p><code>1</code> <a href="https://console.firebase.google.com">Create Firebase Project</a></p>
 
-<h3 id="clone-the-certificates">Clone the certificates</h3>
+<p><code>2</code> <a href="https://firebase.google.com/docs/auth/web/password-auth">Enable Email/Password authentication</a></p>
 
-<p>This article will use certificates you can find <a href="https://github.com/salrashid123/salrashid123.github.io/tree/master/posts/docker_opa">here</a> (feel free to clone+download or just copy the certs over)</p>
+<p><code>3</code> <em>Enable Firebase Storage</em></p>
 
-<h3 id="define-opa-policy-handler">Define OPA policy handler</h3>
+<pre><code>Add Rule `match`
+```
+    // allow the user to write to a path that includes the unique userID
+    match /{userId}/{fileName} {
+        allow write: if request.auth.uid == userId;
+    }
 
-<p>We will define the OPA policy handler to use for this demo</p>
+    // allow the user read only if the GCS's object has metadata called &quot;owner&quot; which has the 
+    // value &quot;12345&quot;  **and** that value is present in the id_token presented to firebase
+    // Also, allow write only if the users token includes a claim where the groupID field
+    // matches the path to write to. (i.,e if the claim has groupId=12345, the user can only write
+    // to gs://project.appspot.com/12345/filename)
+    // With these rules, if a user writes a new file, it must have metadata &quot;owner&quot; set to
+    // the groupID...otherwise, it can't get read back later by any user.
 
-<p>First create the policy file here <code>/etc/docker/policies/authz.rego</code></p>
-
-<p>with content like this:</p>
-
-<pre><code>package docker.authz
-
-default allow = false
-users = {
-    &quot;user1@domain.com&quot;: {&quot;readOnly&quot;: true},
-    &quot;user2@domain.com&quot;: {&quot;readOnly&quot;: false},    
-}
-
-allow {
-    users[input.User].readOnly
-    input.Method == &quot;GET&quot;
-}
+    match /{groupId}/{fileName} {
+        allow read: if resource.metadata.owner == request.auth.token.groupId;
+        //allow read: if request.auth.token.groupId == groupId;
+        allow write: if request.auth.token.groupId == groupId;
+    }
+  }
+```
 </code></pre>
 
-<p>What does that mean?  Well, its OPAs <a href="https://www.openpolicyagent.org/docs/latest/policy-reference/">rego</a> language which basically says:</p>
+<p><img src="images/rule.png" alt="images/rule.png" /></p>
+
+<p><code>4</code> <em>Download Firebase Service Account</em></p>
+
+<p>Save it as <code>fb-svc-account.json</code></p>
+
+<p><img src="images/service_account.png" alt="images/service_account.png" /></p>
+
+<p><code>5</code> <em>Create Application</em>
+   Under &ldquo;Project Settings &gt; Add App&rdquo;
+   Name it anything (eg, <code>storageapp</code>)</p>
+
+<pre><code>Copy the Configuration Settings
+
+```javascript
+&lt;script&gt;
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: &quot;AIzaSyDS32ruqLyTQGSoFUcV01g2rS8&quot;,
+    authDomain: &quot;sa-broker.firebaseapp.com&quot;,
+    databaseURL: &quot;https://sa-broker.firebaseio.com&quot;,
+    projectId: &quot;sa-broker&quot;,
+    storageBucket: &quot;sa-broker.appspot.com&quot;,
+    messagingSenderId: &quot;653262156156&quot;,
+    appId: &quot;1:653262156156:web:6e8c116d19d5c6&quot;
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+&lt;/script&gt;
+```
+</code></pre>
+
+<p><img src="images/appconfig.png" alt="images/appconfig.png" /></p>
+
+<p><code>6</code> Run &ldquo;client&rdquo;</p>
+
+<p>Edit  <code>login.js</code>
+  Add <code>firebaseConfig</code> into the app</p>
+
+<p><code>7</code> Create user</p>
+
+<pre><code>The following setp will create a user with the following username and password `123456`
+
+```bash
+$ node login.js createuser sal@somedomain.com 123456
+  user created
+    sal@somedomain.com
+```
+
+Note at this point a user was created dynamically
+
+  ![images/user.png](images/user.png)
+</code></pre>
+
+<p><code>8</code> Run &ldquo;server&rdquo;</p>
+
+<p>Edit <code>admin.js</code>, Add configuration and service Account</p>
+
+<pre><code>```javascript
+var serviceAccount = require(&quot;/path/to/fb-svc-account.json&quot;);
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+
+    apiKey: &quot;AIzaSyDS32ruqLyTQGSoFUcV&quot;,
+    authDomain: &quot;sa-broker.firebaseapp.com&quot;,
+    databaseURL: &quot;https://sa-broker.firebaseio.com&quot;,
+    projectId: &quot;sa-broker&quot;,
+    storageBucket: &quot;sa-broker.appspot.com&quot;,
+    messagingSenderId: &quot;653262156156&quot;,
+    appId: &quot;1:653262156156:web:6e8c116d19d5&quot;    
+
+});
+```
+</code></pre>
+
+<p><code>9</code> Add custom claim to user</p>
+
+<pre><code>The following will attach a custom claim called `groupId` to the user with value `12345`
+
+
+```
+$ node admin.js updateuser sal@somedomain.com 12345
+```
+
+Note, the `customClaim` section is empty because whats shown there is the original insert of the user.
+If you run the script again, you'll see the cliaclaimsms are returned back.
+
+```json
+{
+  &quot;admin&quot;: true,
+  &quot;groupId&quot;: &quot;12345&quot;,          &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+  &quot;iss&quot;: &quot;https://securetoken.google.com/sa-broker&quot;,
+  &quot;aud&quot;: &quot;sa-broker&quot;,
+  &quot;auth_time&quot;: 1589582639,
+  &quot;user_id&quot;: &quot;N14MY2U5t6TRT7drPytTp779EUv1&quot;,
+  &quot;sub&quot;: &quot;N14MY2U5t6TRT7drPytTp779EUv1&quot;,
+  &quot;iat&quot;: 1589582640,
+  &quot;exp&quot;: 1589586240,
+  &quot;email&quot;: &quot;sal@somedomain.com&quot;,
+  &quot;email_verified&quot;: false,
+  &quot;firebase&quot;: {
+    &quot;identities&quot;: {
+      &quot;email&quot;: [
+        &quot;sal@somedomain.com&quot;
+      ]
+    },
+    &quot;sign_in_provider&quot;: &quot;password&quot;
+  }
+}
+```
+</code></pre>
+
+<p><code>10</code> Upload a file</p>
+
+<pre><code>As an admin, upload a file to Storage with some metadata.  In this case the metdata is `owner=12345`
+```
+echo &quot;hello world&quot; &gt;/tmp/file.txt
+
+node admin.js upload /tmp/file.txt 12345/file.txt 12345
+```
+
+Note, the file as just created:
+
+![images/file.png](images/file.png
+
+has custom metadata
+
+```bash
+$ gsutil stat gs://sa-broker.appspot.com/12345/file.txt
+gs://sa-broker.appspot.com/12345/file.txt:
+    Creation time:          Fri, 15 May 2020 20:23:36 GMT
+    Update time:            Fri, 15 May 2020 20:31:02 GMT
+    Storage class:          STANDARD
+    Content-Length:         12
+    Content-Type:           text/plain; charset=utf-8
+    Metadata:               
+        owner:              12345
+    Hash (crc32c):          8P9ykg==
+    Hash (md5):             b1kCrCNwJL3QwXbLkwY9xA==
+    ETag:                   CMLPoLTZtukCEAI=
+    Generation:             1589574216722370
+    Metageneration:         2
+```
+</code></pre>
+
+<p><code>11</code> Download file as user</p>
+
+<pre><code>Now the user can download the file...login as the user and  try to download the file in path `12345/file.txt`:
+
+```
+$ node login.js download sal@somedomain.com 123456 12345/file.txt
+```
+</code></pre>
+
+<h2 id="thats-it-nothing-big-i-just-wrote-this-up-for-my-own-use">Thats it!.  nothing big.  I just wrote this up for my own use</h2>
+
+<p>Note that the Storage bucket is owned entirely by the firebase&rsquo;s <code>own</code> service account:</p>
+
+<p><img src="images/sa-owner.png" alt="images/sa-owner.png" /></p>
+
+<h4 id="references">References</h4>
 
 <ul>
-<li>&ldquo;dont allow anyone access by default&rdquo;</li>
-<li>&ldquo;define two users where <code>user1</code> has a label &ldquo;readOnly&rdquo; which evalutes to <code>true</code> and <code>user2</code> which evaluates to false.</li>
-<li>For any &ldquo;GET&rdquo; request, lookup a user based on the CN value provided in the certificate in the users dictionary.</li>
-<li>In the users dictionary, evaluate the request by using the users <code>readOnly</code> label.</li>
-<li>If the its true, allow access, false otherwise.</li>
+<li></li>
 </ul>
-
-<p>OPA automatically extracts the CN value for the user and places it into  <code>input.User</code></p>
-
-<p>For example, you can decode <code>user1 and user2</code> certificates like this</p>
-
-<pre><code>openssl x509 -in client_crt.pem -text -noout
-   Subject: C = US, ST = California, O = Google, OU = Enterprise, CN = user1@domain.com   
-</code></pre>
-
-<pre><code>openssl x509 -in client2_crt.pem -text -noout
-  Subject: C = US, ST = California, O = Google, OU = Enterprise, CN = user2.domain.com
-</code></pre>
-
-<p>The <code>CN=</code> value for gets extracted and populated as the <code>input.User</code> field.</p>
-
-<p>For more information, see: <a href="https://www.openpolicyagent.org/docs/latest/docker-authorization/#6-update-the-policy-to-reject-requests-with-the-unconfined-seccomp-https-en-wikipedia-org-wiki-seccomp-profile">OPA Request Attributes</a></p>
-
-<h3 id="install-opa-plugin">Install OPA Plugin</h3>
-
-<p>Install the OPA plugin and point towards the policy file:</p>
-
-<pre><code class="language-bash">docker plugin install openpolicyagent/opa-docker-authz-v2:0.4 opa-args=&quot;-policy-file /opa/policies/authz.rego&quot;
-</code></pre>
-
-<h3 id="create-custom-docker-daemon-for-mtls">Create custom docker daemon for mtls</h3>
-
-<p>Create the docker daemon file at <code>/etc/docker/daemon.json</code> like this:</p>
-
-<p>Remember to download the <em>TEST</em> certificates provided in this repo and place them in the path appropriate for the file:</p>
-
-<ul>
-<li><p><code>/etc/docker/daemon.json</code></p>
-
-<pre><code>{    
-  &quot;authorization-plugins&quot;: [&quot;openpolicyagent/opa-docker-authz-v2:0.4&quot;], 
-  &quot;tlsverify&quot;: true,
-  &quot;tlscacert&quot;: &quot;/path/to/CA_crt.pem&quot;,
-  &quot;tlscert&quot;: &quot;/path/to/server_crt.pem&quot;,
-  &quot;tlskey&quot;: &quot;/path/to/server_key.pem&quot;,
-  &quot;hosts&quot;: [&quot;127.0.0.1:2376&quot;]
-}
-</code></pre></li>
-
-<li><p>Edit <code>/etc/hosts</code> file for Certificate CN value.
-The server certificates provided in this repo have a hardcoded value for <code>server.domain.com</code> which is intended to represent your remote docker daemons&rsquo;s host.
-In our case its just localhost so add this</p>
-
-<pre><code>127.0.0.1  server.domain.com
-</code></pre></li>
-
-<li><p>Restart docker</p>
-
-<pre><code>sudo service docker restart
-</code></pre></li>
-</ul>
-
-<h3 id="test">Test</h3>
-
-<p>Use <code>user1</code> certificate to list operations on the daemon:
-eg</p>
-
-<pre><code class="language-bash">$ docker --tlsverify --tlscacert=CA_crt.pem --tlscert=client_crt.pem --tlskey=client_key.pem -H=server.domain.com:2376 images
-REPOSITORY                              TAG                 IMAGE ID            CREATED             SIZE
-server.domain.com/alpine                latest              a187dde48cd2        2 weeks ago         5.6MB
-</code></pre>
-
-<p>Now as try to run an image:</p>
-
-<pre><code>$ docker --tlsverify --tlscacert=CA_crt.pem --tlscert=client_crt.pem --tlskey=client_key.pem -H=server.domain.com:2376 run -ti server.domain.com/alpine 
-docker: Error response from daemon: authorization denied by plugin openpolicyagent/opa-docker-authz-v2:0.4: request rejected by administrative policy.
-</code></pre>
-
-<p>This failed since we only allow  <code>GET</code> operations (docker run will create a VM)</p>
-
-<p>Use <code>user2</code> to perform even a simple operation</p>
-
-<pre><code>$ docker --tlsverify --tlscacert=CA_crt.pem --tlscert=client2_crt.pem --tlskey=client2_key.pem -H=server.domain.com:2376 images
-Error response from daemon: authorization denied by plugin openpolicyagent/opa-docker-authz-v2:0.4: request rejected by administrative policy
-</code></pre>
-
-<p>which fails since user2 isn&rsquo;t allowed to do anything</p>
-
-<hr />
-
-<p>Thats it, really..you&rsquo;ll notice i didn&rsquo;t even allow admin acess to do any thing in there&hellip;thats left upto the reader and rego-jockys!</p>
 <ul class="pa0">
   
    <li class="list">
-     <a href="/tags/docker" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">docker</a>
+     <a href="/tags/firebase" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">firebase</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/storage" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">storage</a>
    </li>
   
 </ul>
@@ -356,6 +446,17 @@ Error response from daemon: authorization denied by plugin openpolicyagent/opa-d
 
 
 
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/firebase_salted_user_import/">Importing SHA hashed password into Firebase and Identity Platform</a>
+        </li>
+	    
+    </ul>
+</div>
 
 </aside>
 
