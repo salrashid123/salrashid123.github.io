@@ -6,10 +6,23 @@
     <description>Recent content in nonbei alley on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2020 14:34:01 -0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2020 01:34:01 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.salrashid.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>BigQuery HMAC-SHA256 User-defined Function</title>
+      <link>https://blog.salrashid.me/posts/bigquery_hmac_sha/</link>
+      <pubDate>Sat, 20 Jun 2020 01:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/posts/bigquery_hmac_sha/</guid>
+      <description>Google Cloud BigQuery User-defined function to perform HMAC with SHA256.
+BigQuery built in functions support various HASH functions like SHA256 but currently (6/21/20) do not support HMAC.
+The following Standard SQL User-defined function for BQ provides a simple way to do hmac+sha.
+As with a UDF, you need to source javascript. The library below uses crypto-js:
+&amp;lt;script src=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&amp;quot;https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script&amp;gt; var hash = CryptoJS.HmacSHA256(&amp;quot;Message&amp;quot;, &amp;quot;secret&amp;quot;); var hashInBase64 = CryptoJS.</description>
+    </item>
     
     <item>
       <title>Firebase Storage and Authorization Rules engine &#39;helloworld&#39;</title>

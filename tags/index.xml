@@ -6,10 +6,19 @@
     <description>Recent content in Tags on blog.salrashid.me</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 May 2020 14:34:01 -0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2020 01:34:01 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.salrashid.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>bigquery</title>
+      <link>https://blog.salrashid.me/tags/bigquery/</link>
+      <pubDate>Sat, 20 Jun 2020 01:34:01 -0800</pubDate>
+      
+      <guid>https://blog.salrashid.me/tags/bigquery/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>firebase</title>

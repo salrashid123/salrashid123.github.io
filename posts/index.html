@@ -159,6 +159,25 @@ if (!doNotTrack) {
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="https://blog.salrashid.me/posts/bigquery_hmac_sha/" class="link black dim">
+        BigQuery HMAC-SHA256 User-defined Function
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Google Cloud BigQuery User-defined function to perform HMAC with SHA256.
+BigQuery built in functions support various HASH functions like SHA256 but currently (6/21/20) do not support HMAC.
+The following Standard SQL User-defined function for BQ provides a simple way to do hmac+sha.
+As with a UDF, you need to source javascript. The library below uses crypto-js:
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js&quot;&gt;&lt;/script&gt; &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js&quot;&gt;&lt;/script&gt; &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js&quot;&gt;&lt;/script&gt; &lt;script&gt; var hash = CryptoJS.HmacSHA256(&quot;Message&quot;, &quot;secret&quot;); var hashInBase64 = CryptoJS.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="https://blog.salrashid.me/posts/firebase_storage_rules/" class="link black dim">
         Firebase Storage and Authorization Rules engine &#39;helloworld&#39;
       </a>
@@ -301,23 +320,6 @@ This is just my &ldquo;hello world&rdquo; application demonstrating stuff here:
       The following procedure details how to embed a Google Cloud KMS key as a Service Account.
 There are two ways to associate a Service Account with a KMS key:
  Create a private key within KMS and then associate a Service Account with it. or Create a Service Account keypair; export the private key and import that key into KMS.  Once the Serivce Account private key is within KMS, you can do several things:
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://blog.salrashid.me/posts/opentelemetry_stackdriver/" class="link black dim">
-        Simple distributed tracing with OpenTracing and Stackdriver
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Nothing much, just my variation/helloworld for opentelemetry in golang..its my variation of Opentelemetry-Distributed Tracing sample
-This is a simple frontend-backend application you can run on your laptop which demonstrates distributed tracing between microservices.
-What step 5 below shows is an inbound request to one microservice (/frontend) which emits some subspans, then makes an http call to a backend app (/backend) which also emits some spans. The final trace you see is a combined end-to-end trace between microservices.
     </div>
   </div>
 </div>

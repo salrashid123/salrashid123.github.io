@@ -3,6 +3,34 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.salrashid.me/tags/bigquery/</loc>
+    <lastmod>2020-06-20T01:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/posts/bigquery_hmac_sha/</loc>
+    <lastmod>2020-06-20T01:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/</loc>
+    <lastmod>2020-06-20T01:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.salrashid.me/tags/</loc>
+    <lastmod>2020-06-20T01:34:01-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.salrashid.me/tags/firebase/</loc>
     <lastmod>2020-05-10T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -17,21 +45,7 @@
   </url>
   
   <url>
-    <loc>https://blog.salrashid.me/</loc>
-    <lastmod>2020-05-10T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.salrashid.me/tags/storage/</loc>
-    <lastmod>2020-05-10T14:34:01-08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.salrashid.me/tags/</loc>
     <lastmod>2020-05-10T14:34:01-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
